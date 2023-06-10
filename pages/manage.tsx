@@ -121,7 +121,7 @@ const ManagePage: NextPage = () => {
     }
   };
 
-  const sendproFileToIPFS = async (e:any) => {
+  const sendproFileToIPFS = async (e: any) => {
     if (e) {
       try {
         const formData = new FormData();
@@ -235,7 +235,7 @@ const ManagePage: NextPage = () => {
           </Heading>
           {!isLoading ? (
             <Flex mt={6} direction={'column'} gap={4} width="100%">
-              <Link href={VENOMSCAN_NFT + json.venomAddress} target="_blank"  >
+              <Link href={VENOMSCAN_NFT + json.venomAddress} target="_blank">
                 <Button
                   variant="solid"
                   size="lg"
@@ -248,14 +248,12 @@ const ManagePage: NextPage = () => {
                 </Button>
               </Link>
               <InputGroup size="lg" minWidth="xs">
-                <InputLeftAddon
-                  children={
-                    <Flex>
-                      {notMobile && <BTC />}
-                      BTC {notMobile && 'Address'}
-                    </Flex>
-                  }
-                />
+                <InputLeftAddon>
+                  <Flex>
+                    {notMobile && <BTC />}
+                    BTC {notMobile && 'Address'}
+                  </Flex>
+                </InputLeftAddon>
                 <Input
                   placeholder={'Enter Your BTC Address'}
                   value={json ? btc : 'Loading'}
@@ -263,14 +261,13 @@ const ManagePage: NextPage = () => {
                 />
               </InputGroup>
               <InputGroup size="lg" minWidth="xs">
-                <InputLeftAddon
-                  children={
-                    <Flex>
-                      {notMobile && <ETH />}
-                      ETH {notMobile && 'Address'}
-                    </Flex>
-                  }
-                />
+                <InputLeftAddon>
+                  <Flex>
+                    {notMobile && <ETH />}
+                    ETH {notMobile && 'Address'}
+                  </Flex>
+                </InputLeftAddon>
+
                 <Input
                   placeholder={'Enter Your ETH Address'}
                   value={json ? eth : 'Loading'}
