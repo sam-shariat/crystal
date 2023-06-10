@@ -240,7 +240,7 @@ const ManagePage: NextPage = () => {
                   variant="solid"
                   size="lg"
                   backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
-                  minWidth="xs">
+                  minWidth={notMobile ? "md" : "xs"}>
                   <VenomFoundation /> Venom Address{' '}
                   <Text px={2} color="var(--venom1)">
                     {truncAddress(json.venomAddress)}

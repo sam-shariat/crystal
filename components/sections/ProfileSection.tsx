@@ -29,10 +29,10 @@ export default function ProfileSection() {
               <Center display="flex" flexDirection="column">
                 <Venom srcUrl="/screens/profileScreen.png" size={notMobile ? 'lg' : 'xs'} />
               </Center>
-              <Link href={SITE_PROFILE_URL} target="_blank" minWidth="300px !important"><Button background="var(--blue1)" size="lg" minWidth="300px">
+              <Link href={SITE_PROFILE_URL} target="_blank" minWidth="300px !important"><Button background="var(--blue1)" size="lg" width="100%">
                 {t('linkWebsiteButton')}
               </Button></Link>
-              <Link href={'/link'} target="_blank" minWidth="300px !important"><Button size="lg" minWidth="300px" mt={2}>
+              <Link href={'/link'} target="_blank" minWidth="300px !important"><Button size="lg" width="100%" mt={2}>
                 {t('linkDemoWebsiteButton')}
               </Button></Link>
             </Box>
