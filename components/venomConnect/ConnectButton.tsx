@@ -137,7 +137,7 @@ export default function ConnectButton() {
         <Button variant="solid" onClick={onDisconnect}>
           <VenomFoundation />
           <Text mx={2} color="var(--venom1)">
-            {Math.round(balance / 10e5) / 10e2}
+            {Math.round(Number(balance) / 10e5) / 10e2}
           </Text>
           {notMobile && truncAddress(address)}
         </Button>
