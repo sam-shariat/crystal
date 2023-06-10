@@ -15,6 +15,7 @@ import {
   Textarea,
   Spinner,
   Center,
+  Link,
 } from '@chakra-ui/react';
 import { VenomFoundation, BTC, ETH } from 'components/logos';
 import { useTranslate } from 'core/lib/hooks/use-translate';
@@ -43,7 +44,7 @@ import {
   jsonHashAtom,
   jsonAtom,
 } from 'core/atoms';
-import { SITE_DESCRIPTION, SITE_TITLE } from 'core/utils/constants';
+import { SITE_DESCRIPTION, SITE_TITLE, VENOMSCAN_NFT } from 'core/utils/constants';
 
 const PINATA_API_KEY = 'dcca70e972f1baccb51e';
 const PINATA_API_SECRET = '53499a4c990104e74e67c06c8b694554862f1df2979646d64b5e6ab343c9b981';
@@ -80,7 +81,7 @@ const ManagePage: NextPage = () => {
       const fileSelector = document.createElement('input');
       fileSelector.type = 'file';
       fileSelector.multiple = false;
-      fileSelector.onchange = async (e:any) => {
+      fileSelector.onchange = async (e: any) => {
         sendproFileToIPFS(e.target.files[0]);
       };
       fileSelector.accept = 'image/x-png,image/gif,image/jpeg';
@@ -120,7 +121,7 @@ const ManagePage: NextPage = () => {
     }
   };
 
-  const sendproFileToIPFS = async (e) => {
+  const sendproFileToIPFS = async (e:any) => {
     if (e) {
       try {
         const formData = new FormData();
@@ -234,16 +235,18 @@ const ManagePage: NextPage = () => {
           </Heading>
           {!isLoading ? (
             <Flex mt={6} direction={'column'} gap={4} width="100%">
-              <Button
-                variant="solid"
-                size="lg"
-                backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
-                minWidth="xs">
-                <VenomFoundation /> Venom Address{' '}
-                <Text px={2} color="var(--venom1)">
-                  {truncAddress(json.venomAddress)}
-                </Text>
-              </Button>
+              <Link href={VENOMSCAN_NFT + json.venomAddress} target="_blank">
+                <Button
+                  variant="solid"
+                  size="lg"
+                  backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
+                  minWidth="xs">
+                  <VenomFoundation /> Venom Address{' '}
+                  <Text px={2} color="var(--venom1)">
+                    {truncAddress(json.venomAddress)}
+                  </Text>
+                </Button>
+              </Link>
               <InputGroup size="lg" minWidth="xs">
                 <InputLeftAddon
                   children={
