@@ -18,7 +18,13 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
-import { nameAtom, venomContractAtom, venomSProviderAtom, addressAtom, venomContractAddressAtom } from 'core/atoms';
+import {
+  nameAtom,
+  venomContractAtom,
+  venomSProviderAtom,
+  addressAtom,
+  venomContractAddressAtom,
+} from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
@@ -26,7 +32,7 @@ import { useMediaQuery, useColorMode } from '@chakra-ui/react';
 import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL } from 'core/utils/constants';
 
 interface Message {
-  type: "info" | "error" | "success" | "warning" | undefined;
+  type: 'info' | 'error' | 'success' | 'warning' | undefined;
   title: string;
   msg: string;
   link?: string;
@@ -36,13 +42,13 @@ export default function ClaimSection() {
   const { t } = useTranslate();
   const { colorMode } = useColorMode();
   const provider = useAtomValue(venomSProviderAtom);
-  const userAddress = useAtomValue(addressAtom)
+  const userAddress = useAtomValue(addressAtom);
   const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
   const [fee, setFee] = useState(-1);
-  const [message,setMessage] = useState<Message>({type:'',title:'',msg:'',link:''});
+  const [message, setMessage] = useState<Message>({ type: '', title: '', msg: '', link: '' });
   const [nameExists, setNameExists] = useState(false);
-  const [claimedName,setClaimedName] = useState('')
+  const [claimedName, setClaimedName] = useState('');
   const venomContract = useAtomValue(venomContractAtom);
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   const minFee = 100000000;
@@ -66,11 +72,11 @@ export default function ClaimSection() {
     external_url: SITE_PROFILE_URL + name,
   };
 
-  async function inputChange(e:string){
+  async function inputChange(e: string) {
     const _name = e;
     setName(_name);
     if (_name.length > 2 && venomContract?.methods !== undefined) {
-      setFeeIsLoading(true)
+      setFeeIsLoading(true);
       const { value0: _fee } = await venomContract.methods
         .calculateMintingFee({ name: _name })
         .call();
@@ -79,68 +85,87 @@ export default function ClaimSection() {
         .call();
       setNameExists(_nameExists);
       setFee(_fee);
-      setFeeIsLoading(false)
+      setFeeIsLoading(false);
     }
-  };
+  }
 
-  async function claimVid () {
-    setMessage({type:'',title:'',msg:''});
-    if(provider === undefined) { 
-      setMessage({type:'info',title:'connect wallet',msg:'please connect your venom wallet'});
-      return
+  async function claimVid() {
+    setMessage({ type: '', title: '', msg: '' });
+    if (provider === undefined) {
+      setMessage({
+        type: 'info',
+        title: 'connect wallet',
+        msg: 'please connect your venom wallet',
+      });
+      return;
     }
     if (name.length >= 3 && !nameExists) {
-      console.log('minting')
+      console.log('minting');
       setIsMinting(true);
-      const mintTx = await venomContract.methods.mintNft({
-        json: JSON.stringify(json),
-        name: name
-      }).send({
-        amount: minFee + fee,
-        bounce: true,
-        from: userAddress
-      }).catch((e:any) => {
-        if (e.code ===3) {
-          // rejected by a user
-          setIsMinting(false);
-          return Promise.resolve(null);
-        } else {
-          setIsMinting(false);
-          return Promise.reject(e);
-        }
-      });
+      const mintTx = await venomContract.methods
+        .mintNft({
+          json: JSON.stringify(json),
+          name: name,
+        })
+        .send({
+          amount: minFee + fee,
+          bounce: true,
+          from: userAddress,
+        })
+        .catch((e: any) => {
+          if (e.code === 3) {
+            // rejected by a user
+            setIsMinting(false);
+            return Promise.resolve(null);
+          } else {
+            setIsMinting(false);
+            return Promise.reject(e);
+          }
+        });
 
       if (mintTx) {
         setClaimedName(name);
-        console.log("mint tx : ",mintTx)
-      
+        console.log('mint tx : ', mintTx);
+
         let receiptTx;
         const subscriber = new (provider as any).Subscriber();
-        await subscriber.trace(mintTx).tap((tx_in_tree:any) => {
-          console.log("tx_in_tree : ",tx_in_tree)
-          if (tx_in_tree.account.equals(VenomContractAddress)) {
-            receiptTx = tx_in_tree;
-          }
-        }).finished();
-      
+        await subscriber
+          .trace(mintTx)
+          .tap((tx_in_tree: any) => {
+            console.log('tx_in_tree : ', tx_in_tree);
+            if (tx_in_tree.account.equals(VenomContractAddress)) {
+              receiptTx = tx_in_tree;
+            }
+          })
+          .finished();
+
         // Decode events by using abi
         // we are looking for event Game(address player, uint8 bet, uint8 result, uint128 prize);
-      
-        let events = await venomContract.decodeTransactionEvents({transaction: receiptTx})
-        console.log(events)
+
+        let events = await venomContract.decodeTransactionEvents({ transaction: receiptTx });
+        console.log(events);
 
         if (events.length !== 1 || events[0].event !== 'NftCreated') {
-          setMessage({type:'error',title:'Error',msg:'Something went wrong, Please try again'});
+          setMessage({
+            type: 'error',
+            title: 'Error',
+            msg: 'Something went wrong, Please try again',
+          });
         } else {
           const nftAddress = events[0].data.nft._address;
-          setMessage({type:'success',title:'Mint Successful',msg:'Venom ID Claimed Successfuly, You can now manage and share your venom profile',link: VENOMSCAN_NFT + nftAddress});
+          setMessage({
+            type: 'success',
+            title: 'Mint Successful',
+            msg: 'Venom ID Claimed Successfuly, You can now manage and share your venom profile',
+            link: VENOMSCAN_NFT + nftAddress,
+          });
         }
         setIsMinting(false);
-        console.log(events)
+        console.log(events);
       }
-      console.log('mint finished')
+      console.log('mint finished');
     }
-  };
+  }
 
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   return (
@@ -166,27 +191,47 @@ export default function ClaimSection() {
               </Text>
             </Box>
           </SimpleGrid>
-          {message.msg.length > 0 && 
-          <Alert 
-          flexDirection={notMobile ? 'row' : 'column'}
-          alignItems={notMobile ? 'left' : 'center'}
-          justifyContent={notMobile ? 'left' : 'center'}
-          textAlign={notMobile ? 'left' : 'center'}
-          status={message.type} gap={2} borderRadius={10}>
-            <AlertIcon />
-            <Box>
-              <AlertTitle>{message.title.toUpperCase()}</AlertTitle>
-              <AlertDescription>
-                {message.msg}
-              </AlertDescription>
-            </Box>
-            {message.link && <Box><Link href={message.link} taget="_blank" id={`venom-id-nft-link`}><Button m={1} minWidth={120}>View NFT</Button></Link>
-            <Link href={SITE_MANAGE_URL+claimedName} taget="_blank" id={`venom-id-manage-nft-link`}><Button m={1} minWidth={120}>Manage VID</Button></Link></Box>}
-          </Alert>}
+          {message.msg.length > 0 && (
+            <Alert
+              flexDirection={notMobile ? 'row' : 'column'}
+              alignItems={notMobile ? 'left' : 'center'}
+              justifyContent={notMobile ? 'left' : 'center'}
+              textAlign={notMobile ? 'left' : 'center'}
+              status={message.type}
+              gap={2}
+              borderRadius={10}>
+              <AlertIcon />
+              <Box>
+                <AlertTitle>{message.title.toUpperCase()}</AlertTitle>
+                <AlertDescription>{message.msg}</AlertDescription>
+              </Box>
+              {message.link && (
+                <Box>
+                  <Link href={message.link} taget="_blank" id={`venom-id-nft-link`}>
+                    <Button m={1} minWidth={120}>
+                      View NFT
+                    </Button>
+                  </Link>
+                  <Link
+                    href={SITE_MANAGE_URL + claimedName}
+                    taget="_blank"
+                    id={`venom-id-manage-nft-link`}>
+                    <Button m={1} minWidth={120}>
+                      Manage VID
+                    </Button>
+                  </Link>
+                </Box>
+              )}
+            </Alert>
+          )}
           <Stack direction={['column', 'row']} pb={6} pt={notMobile ? 10 : 6} width="100%">
             <InputGroup size="lg">
               <InputLeftAddon children="venomid.link/" />
-              <Input placeholder="samy" value={name}  onChange={(e)=> inputChange(e.target.value)} />
+              <Input
+                placeholder="samy"
+                value={name}
+                onChange={(e) => inputChange(e.target.value)}
+              />
             </InputGroup>
             <Button
               backgroundColor="var(--venom2)"
@@ -194,18 +239,30 @@ export default function ClaimSection() {
               minWidth="300px"
               disabled={name.length < 3 || nameExists}
               isLoading={feeIsLoading || isMinting}
-              onClick={()=> claimVid}>
+              onClick={() => claimVid}>
               {t('claimButton')}
             </Button>
           </Stack>
           {name.length > 2 && fee !== -1 && venomContract?.methods && (
-            <Flex width={'100%'} borderColor={'whiteAlpha.100'} borderWidth={1} borderRadius={10} justifyContent={'space-between'} mb={4} p={5} bgColor={'blackAlpha.200'}>
+            <Flex
+              width={'100%'}
+              borderColor={'whiteAlpha.100'}
+              borderWidth={1}
+              borderRadius={10}
+              justifyContent={'space-between'}
+              mb={4}
+              p={5}
+              bgColor={'blackAlpha.200'}>
               <Text fontWeight={'bold'}>
                 Minting Fee : {fee && !feeIsLoading ? `0.00000000${fee}` : 'Calculating'}
               </Text>
-              {!feeIsLoading ? <Text fontWeight={'bold'} color={nameExists ? 'var(--red1)' : 'var(--venom1)'}>
-                {nameExists ? name + '.VID is Taken' : name + '.VID is Available'}
-              </Text> : <Text fontWeight={'bold'}>Checking Availibility</Text>}
+              {!feeIsLoading ? (
+                <Text fontWeight={'bold'} color={nameExists ? 'var(--red1)' : 'var(--venom1)'}>
+                  {nameExists ? name + '.VID is Taken' : name + '.VID is Available'}
+                </Text>
+              ) : (
+                <Text fontWeight={'bold'}>Checking Availibility</Text>
+              )}
             </Flex>
           )}
           <Text fontWeight="light" fontSize={notMobile ? '2xl' : 'xl'} mb={notMobile ? 10 : 6}>
