@@ -116,7 +116,7 @@ export default function ClaimSection() {
       
         let receiptTx;
         const subscriber = new (provider as any).Subscriber();
-        await subscriber.trace(mintTx).tap(tx_in_tree => {
+        await subscriber.trace(mintTx).tap((tx_in_tree:any) => {
           console.log("tx_in_tree : ",tx_in_tree)
           if (tx_in_tree.account.equals(VenomContractAddress)) {
             receiptTx = tx_in_tree;
