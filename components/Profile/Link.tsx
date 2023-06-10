@@ -2,7 +2,7 @@ import { Button, useColorMode, Text, Link as ChakraLink } from '@chakra-ui/react
 
 interface Props {
     title : string
-    icon : React.CElement
+    icon : JSX.Element
     url : string
 }
 export default function Link({title,icon,url}: Props) {
