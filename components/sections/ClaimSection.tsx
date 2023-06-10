@@ -207,14 +207,14 @@ export default function ClaimSection() {
               </Box>
               {message.link && (
                 <Box>
-                  <Link href={message.link} taget="_blank" id={`venom-id-nft-link`}>
+                  <Link href={message.link} target="_blank" id={`venom-id-nft-link`}>
                     <Button m={1} minWidth={120}>
                       View NFT
                     </Button>
                   </Link>
                   <Link
                     href={SITE_MANAGE_URL + claimedName}
-                    taget="_blank"
+                    target="_blank"
                     id={`venom-id-manage-nft-link`}>
                     <Button m={1} minWidth={120}>
                       Manage VID
