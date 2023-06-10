@@ -66,10 +66,10 @@ export default function ClaimSection() {
     external_url: SITE_PROFILE_URL + name,
   };
 
-  const inputChange = async (e:ChangeEventHandler) => {
-    const _name = e.target.value;
+  async function inputChange(e:string){
+    const _name = e;
     setName(_name);
-    if (e.target.value.length > 2 && venomContract?.methods !== undefined) {
+    if (_name.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true)
       const { value0: _fee } = await venomContract.methods
         .calculateMintingFee({ name: _name })
@@ -83,7 +83,7 @@ export default function ClaimSection() {
     }
   };
 
-  const claimVid = async (e:MouseEventHandler) => {
+  async function claimVid () {
     setMessage({type:'',title:'',msg:''});
     if (name.length >= 3 && !nameExists) {
       console.log('minting')
@@ -182,7 +182,7 @@ export default function ClaimSection() {
           <Stack direction={['column', 'row']} pb={6} pt={notMobile ? 10 : 6} width="100%">
             <InputGroup size="lg">
               <InputLeftAddon children="venomid.link/" />
-              <Input placeholder="samy" value={name}  onChange={inputChange} />
+              <Input placeholder="samy" value={name}  onChange={(e)=> inputChange(e.target.value)} />
             </InputGroup>
             <Button
               backgroundColor="var(--venom2)"
@@ -190,7 +190,7 @@ export default function ClaimSection() {
               minWidth="300px"
               disabled={name.length < 3 || nameExists}
               isLoading={feeIsLoading || isMinting}
-              onClick={claimVid}>
+              onClick={()=> claimVid}>
               {t('claimButton')}
             </Button>
           </Stack>
