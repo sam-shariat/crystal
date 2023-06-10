@@ -46,7 +46,7 @@ export default function Header() {
         <Flex justifyContent="space-between">
           <HStack>
             {!notMobile && (
-              <IconButton variant="ghost" onClick={onOpen}>
+              <IconButton aria-label='venomid-mobile-menu' variant="ghost" onClick={onOpen}>
                 <RiMenu2Fill />
               </IconButton>
             )}
