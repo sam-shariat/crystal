@@ -226,7 +226,7 @@ const ManagePage: NextPage = () => {
             isLoading={avatarUploading}
             my={4}
             backgroundColor="var(--venom1)"
-            onClick={() => imageFileSelect.click()}>
+            onClick={() => imageFileSelect !== undefined && imageFileSelect.click()}>
             Select Avatar Image
           </Button>
 
@@ -235,7 +235,7 @@ const ManagePage: NextPage = () => {
           </Heading>
           {!isLoading ? (
             <Flex mt={6} direction={'column'} gap={4} width="100%">
-              <Link href={VENOMSCAN_NFT + json.venomAddress} target="_blank">
+              <Link href={VENOMSCAN_NFT + json.venomAddress} target="_blank"  >
                 <Button
                   variant="solid"
                   size="lg"
