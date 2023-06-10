@@ -235,7 +235,7 @@ const ManagePage: NextPage = () => {
           </Heading>
           {!isLoading ? (
             <Flex mt={6} direction={'column'} gap={4} width="100%">
-              <Link href={VENOMSCAN_NFT + json.venomAddress} target="_blank">
+              <Link size='lg' href={VENOMSCAN_NFT + json.venomAddress} target="_blank" width={'100%'}>
                 <Button
                   variant="solid"
                   size="lg"
