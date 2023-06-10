@@ -176,8 +176,8 @@ export default function ClaimSection() {
                 {message.msg}
               </AlertDescription>
             </Box>
-            {message.link && <Box><Link href={message.link} passHref taget="_blank"><Button m={1} minWidth={120}>View NFT</Button></Link>
-            <Link href={SITE_MANAGE_URL+claimedName} passHref taget="_blank"><Button m={1} minWidth={120}>Manage VID</Button></Link></Box>}
+            {message.link && <Box><Link href={message.link} passHref taget="_blank" id={`venom-id-nft-link`}><Button m={1} minWidth={120}>View NFT</Button></Link>
+            <Link href={SITE_MANAGE_URL+claimedName} passHref taget="_blank" id={`venom-id-manage-nft-link`}><Button m={1} minWidth={120}>Manage VID</Button></Link></Box>}
           </Alert>}
           <Stack direction={['column', 'row']} pb={6} pt={notMobile ? 10 : 6} width="100%">
             <InputGroup size="lg">

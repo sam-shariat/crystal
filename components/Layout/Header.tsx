@@ -50,35 +50,35 @@ export default function Header() {
                 <RiMenu2Fill />
               </IconButton>
             )}
-            <NextLink href="/" id="logo" passHref>
+            <NextLink href="/" passHref>
               <Button color="var(--venom1)" fontWeight="bold" variant="ghost">
                 <Logo />
                 <Text pl={1}>VenomID</Text>
               </Button>
             </NextLink>
             {notMobile && (
-              <NextLink href="#manage" passHref>
+              <NextLink href="#manage" passHref id="venomid-manage">
                 <Button fontWeight="bold" variant="ghost" textAlign="left">
                   Manage
                 </Button>
               </NextLink>
             )}
             {notMobile && (
-              <NextLink href="#profile" passHref>
+              <NextLink href="#profile" passHref id="venomid-profile">
                 <Button fontWeight="bold" variant="ghost" textAlign="left">
                   Profile
                 </Button>
               </NextLink>
             )}
             {notMobile && (
-              <NextLink href="#roadmap" passHref>
+              <NextLink href="#roadmap" passHref id="venomid-roadmap">
                 <Button fontWeight="bold" variant="ghost" textAlign="left">
                   RoadMap
                 </Button>
               </NextLink>
             )}
             {notMobile && (
-              <NextLink href="#about" passHref>
+              <NextLink href="#about" passHref id="venomid-about">
                 <Button fontWeight="bold" variant="ghost" textAlign="left">
                   About
                 </Button>
@@ -114,7 +114,7 @@ export default function Header() {
             borderBottomWidth="1px"
             spacing="32px"
             justifyContent="space-between">
-            <NextLink href="/" passHref>
+            <NextLink href="/" passHref id="venomid-home">
               <Button color="var(--venom1)" fontWeight="bold" variant="ghost">
                 <Logo />
                 <Text pl={1}>VenomID</Text>
@@ -134,22 +134,22 @@ export default function Header() {
           </DrawerHeader>
           <DrawerBody>
             <Stack py={4}>
-              <NextLink href="#manage" passHref>
+              <NextLink href="#manage" passHref id="venom-id-manage">
                 <Button fontWeight="bold" variant="ghost" width="100%" justifyContent="left">
                   Manage
                 </Button>
               </NextLink>
-              <NextLink href="#profile" passHref>
+              <NextLink href="#profile" passHref id="venom-id-profile">
                 <Button fontWeight="bold" variant="ghost" width="100%" justifyContent="left">
                   Profile
                 </Button>
               </NextLink>
-              <NextLink href="#roadmap" passHref>
+              <NextLink href="#roadmap" passHref id="venom-id-roadmap">
                 <Button fontWeight="bold" variant="ghost" width="100%" justifyContent="left">
                   RoadMap
                 </Button>
               </NextLink>
-              <NextLink href="#about" passHref>
+              <NextLink href="#about" passHref id="venom-id-about">
                 <Button fontWeight="bold" variant="ghost" width="100%" justifyContent="left">
                   About
                 </Button>

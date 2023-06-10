@@ -9,7 +9,7 @@ export default function Link({title,icon,url}: Props) {
   const { colorMode } = useColorMode();
 
   return (
-    <ChakraLink href={url} target="_blank" passHref>
+    <ChakraLink href={url} target="_blank" passHref id={`venom-id-${title}-link`}>
       <Button size="lg" minWidth="xs" backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100':'blackAlpha.100'}>
         {icon}
         <Text px={2}>{title}</Text>

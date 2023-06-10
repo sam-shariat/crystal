@@ -4,7 +4,7 @@ export default function Footer() {
     <Box as="footer" w="full" py={5} mt={10} backgroundColor={'blackAlpha.200'}>
       <Container maxW="container.md" display="flex" justifyContent="space-between">
         <Text>2023 Venom Blockchain Hackathon</Text>
-        <Link href="https://github.com/samshariat/venomid-app">Github</Link>
+        <Link id="venomid-app-github" href="https://github.com/samshariat/venomidapp">Github</Link>
       </Container>
     </Box>
   );
