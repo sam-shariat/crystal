@@ -26,7 +26,7 @@ import { useMediaQuery, useColorMode } from '@chakra-ui/react';
 import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL } from 'core/utils/constants';
 
 interface Message {
-  type: "error" | "info" | "success" | "warning" | undefined;
+  type: string | undefined;
   title: string;
   msg: string;
   link?: string;
