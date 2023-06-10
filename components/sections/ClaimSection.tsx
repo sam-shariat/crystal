@@ -95,7 +95,7 @@ export default function ClaimSection() {
         amount: minFee + fee,
         bounce: true,
         from: userAddress
-      }).catch((e) => {
+      }).catch((e:any) => {
         if (e.code ===3) {
           // rejected by a user
           setIsMinting(false);
