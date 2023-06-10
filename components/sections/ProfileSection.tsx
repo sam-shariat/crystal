@@ -19,7 +19,7 @@ export default function ProfileSection() {
         placeItems="center"
         minH="75vh">
         <>
-          <Box spacing="32px" my={10}>
+          <Box gap={4} my={10}>
             <Box display="flex" flexDirection="column" justifyContent="center">
               <Heading fontWeight="bold" fontSize="5xl" textAlign={notMobile ? 'center' : 'left'}>
                 {t('profile')}
