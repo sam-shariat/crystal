@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   useMediaQuery,
   useColorMode,
@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { VenomFoundation, BTC, ETH } from 'components/logos';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import Avatar from 'components/profile/Avatar';
+import { Avatar } from 'components/Profile';
 import { truncAddress } from 'core/utils';
 import axios from 'axios';
 import ManageSocials from 'components/manage/ManageSocials';
@@ -72,15 +72,15 @@ const ManagePage: NextPage = () => {
   const [avatar, setAvatar] = useAtom(avatarAtom);
   const [jsonHash, setJsonHash] = useAtom(jsonHashAtom);
   const [json, setJson] = useAtom(jsonAtom);
-  const [avatarUploading,setAvatarUploading] = useState(false)
-  const [jsonUploading,setJsonUploading] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [jsonUploading, setJsonUploading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   function buildFileSelector() {
     if (process.browser) {
       const fileSelector = document.createElement('input');
       fileSelector.type = 'file';
       fileSelector.multiple = false;
-      fileSelector.onchange = async (e) => {
+      fileSelector.onchange = async (e:any) => {
         sendproFileToIPFS(e.target.files[0]);
       };
       fileSelector.accept = 'image/x-png,image/gif,image/jpeg';
@@ -90,9 +90,9 @@ const ManagePage: NextPage = () => {
 
   const imageFileSelect = buildFileSelector();
 
-  const uploadJson = async() => {
+  const uploadJson = async () => {
     const data = JSON.stringify(changedJson);
-    console.log(data)
+    console.log(data);
     try {
       console.log('uploading description to ipfs');
       setJsonUploading(true);
@@ -108,9 +108,9 @@ const ManagePage: NextPage = () => {
         },
       });
 
-      setJsonHash('https://ipfs.io/ipfs/' + resFile.data.IpfsHash)
+      setJsonHash('https://ipfs.io/ipfs/' + resFile.data.IpfsHash);
       setJsonUploading(false);
-      console.log('https://ipfs.io/ipfs/' + resFile.data.IpfsHash)
+      console.log('https://ipfs.io/ipfs/' + resFile.data.IpfsHash);
       //Take a look at your Pinata Pinned section, you will see a new file added to you list.
     } catch (error) {
       setJsonUploading(false);
@@ -175,12 +175,14 @@ const ManagePage: NextPage = () => {
   };
 
   useEffect(() => {
-    async function getProfileJson(){
+    async function getProfileJson() {
       setIsLoading(true);
       try {
-        const res = await axios.get('https://ipfs.io/ipfs/QmbVfnejQqU71jSN4p5Wc42HFveR479mc62u2xUJwo4M7t');
+        const res = await axios.get(
+          'https://ipfs.io/ipfs/QmbVfnejQqU71jSN4p5Wc42HFveR479mc62u2xUJwo4M7t'
+        );
         setJson(res.data);
-        console.log(res.data)
+        console.log(res.data);
         setName(res.data.name);
         setBio(res.data.bio);
         setBtc(res.data.btcAddress);
@@ -190,7 +192,6 @@ const ManagePage: NextPage = () => {
       } catch (error) {
         setIsLoading(false);
       }
-      
     }
     getProfileJson();
   }, []);
@@ -199,10 +200,16 @@ const ManagePage: NextPage = () => {
     <>
       <Head>
         <title>
-          {json && !isLoading ? json.name : SITE_TITLE } | {json && !isLoading ? json.bio : SITE_DESCRIPTION}
+          {json && !isLoading ? json.name : SITE_TITLE} |{' '}
+          {json && !isLoading ? json.bio : SITE_DESCRIPTION}
         </title>
-        <meta name="description" content={`${json && !isLoading ? json.name : SITE_TITLE } | ${json && !isLoading ? json.bio : SITE_DESCRIPTION}`} />
-        <link rel="icon" href={json && !isLoading ? json.avatar : "/logos/vidicon.svg"} />
+        <meta
+          name="description"
+          content={`${json && !isLoading ? json.name : SITE_TITLE} | ${
+            json && !isLoading ? json.bio : SITE_DESCRIPTION
+          }`}
+        />
+        <link rel="icon" href={json && !isLoading ? json.avatar : '/logos/vidicon.svg'} />
       </Head>
 
       <Container
@@ -214,55 +221,65 @@ const ManagePage: NextPage = () => {
         minH="75vh">
         <>
           {avatar ? <Avatar url={avatar} /> : <Avatar url={'/logos/vidbg.svg'} />}
-          <Button isLoading={avatarUploading} my={4} backgroundColor="var(--venom1)" onClick={() => imageFileSelect.click()}>
+          <Button
+            isLoading={avatarUploading}
+            my={4}
+            backgroundColor="var(--venom1)"
+            onClick={() => imageFileSelect.click()}>
             Select Avatar Image
           </Button>
 
           <Heading fontWeight="bold" fontSize="2xl" my={4}>
             {!isLoading ? json.name : 'Loading Venom ID'}
           </Heading>
-          {!isLoading ? <Flex mt={6} direction={'column'} gap={4} width="100%">
-            <Button
-              variant="solid"
-              size="lg"
-              backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
-              minWidth="xs">
-              <VenomFoundation /> Venom Address{' '}
-              <Text px={2} color="var(--venom1)">
-                {truncAddress(json.venomAddress)}
-              </Text>
-            </Button>
-            <InputGroup size="lg" minWidth="xs">
-              <InputLeftAddon
-                children={
-                  <Flex>
-                    {notMobile && <BTC />}
-                    BTC {notMobile && 'Address'}
-                  </Flex>
-                }
-              />
-              <Input
-                placeholder={'Enter Your BTC Address'}
-                value={json ? btc : 'Loading'}
-                onChange={(e) => setBtc(e.currentTarget.value)}
-              />
-            </InputGroup>
-            <InputGroup size="lg" minWidth="xs">
-              <InputLeftAddon
-                children={
-                  <Flex>
-                    {notMobile && <ETH />}
-                    ETH {notMobile && 'Address'}
-                  </Flex>
-                }
-              />
-              <Input
-                placeholder={'Enter Your ETH Address'}
-                value={json ? eth : 'Loading'}
-                onChange={(e) => setEth(e.currentTarget.value)}
-              />
-            </InputGroup>
-          </Flex> : <Center width={'100%'} height={150}><Spinner size='lg'/></Center>}
+          {!isLoading ? (
+            <Flex mt={6} direction={'column'} gap={4} width="100%">
+              <Button
+                variant="solid"
+                size="lg"
+                backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
+                minWidth="xs">
+                <VenomFoundation /> Venom Address{' '}
+                <Text px={2} color="var(--venom1)">
+                  {truncAddress(json.venomAddress)}
+                </Text>
+              </Button>
+              <InputGroup size="lg" minWidth="xs">
+                <InputLeftAddon
+                  children={
+                    <Flex>
+                      {notMobile && <BTC />}
+                      BTC {notMobile && 'Address'}
+                    </Flex>
+                  }
+                />
+                <Input
+                  placeholder={'Enter Your BTC Address'}
+                  value={json ? btc : 'Loading'}
+                  onChange={(e) => setBtc(e.currentTarget.value)}
+                />
+              </InputGroup>
+              <InputGroup size="lg" minWidth="xs">
+                <InputLeftAddon
+                  children={
+                    <Flex>
+                      {notMobile && <ETH />}
+                      ETH {notMobile && 'Address'}
+                    </Flex>
+                  }
+                />
+                <Input
+                  placeholder={'Enter Your ETH Address'}
+                  value={json ? eth : 'Loading'}
+                  onChange={(e) => setEth(e.currentTarget.value)}
+                />
+              </InputGroup>
+            </Flex>
+          ) : (
+            <Center width={'100%'} height={150}>
+              <Spinner size="lg" />
+            </Center>
+          )}
           <Text mt={10} fontWeight="bold" fontSize="xl">
             Bio & Socials
           </Text>
