@@ -17,7 +17,7 @@ import {
 
 interface Props {
   title: string;
-  icon: React.Element;
+  icon: JSX.Element;
   url: string;
   setUrl: any;
 }
