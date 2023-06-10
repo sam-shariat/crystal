@@ -1,30 +1,66 @@
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { initialAuthState } from './initialState';
+import { VenomConnect } from 'venom-connect';
+import { ProviderRpcClient } from 'everscale-inpage-provider';
+import { CONTRACT_ADDRESS } from 'core/utils/constants';
 
-/**
- * An atom represents a piece of state. All you need is to specify an initial value,
- * which can be primitive values like strings and numbers, objects and arrays.
- *  You can create as many primitive atoms as you want.
- */
-
-/**
- * Hydration basically means if the app is fully loaded in a client side to avoid some conflict and request dublication
- */
+const walletAtom = atom<VenomConnect | undefined>();
+const venomProviderAtom = atom<any>();
+const jsonAtom = atom<any>();
+const nameAtom = atom("");
+const btcAtom = atom("");
+const ethAtom = atom("");
+const bioAtom = atom("");
+const avatarAtom = atom("");
+const twitterAtom = atom("");
+const discordAtom = atom("");
+const mediumAtom = atom("");
+const youtubeAtom = atom("");
+const pinterestAtom = atom("");
+const linkedinAtom = atom("");
+const githubAtom = atom("");
+const instagramAtom = atom("");
+const openseaAtom = atom("");
+const facebookAtom = atom("");
+const telegramAtom = atom("");
+const addressAtom = atom("");
+const jsonHashAtom = atom("");
+const balanceAtom = atom('0');
+const venomContractAddressAtom = atom(CONTRACT_ADDRESS)
+const venomSProviderAtom = atom<ProviderRpcClient | undefined>(undefined);
+const venomContractAtom = atom<any>(undefined);
 const hydratedAtom = atom<boolean>(false);
-
-/**
- * Auth atom hold user authentication info like token and it uses "atomWithStorage" function because the data need to be
- * saved and synced with locale storage
- */
 const authAtom = atomWithStorage('user', initialAuthState);
-
-/**
- * Language atom hold the language and the locale of the app
- */
 const localeAtom = atomWithStorage<string>('locale', 'en');
 
-/**
- * Exports
- */
-export { localeAtom, authAtom, hydratedAtom };
+export {
+  walletAtom,
+  jsonAtom,
+  jsonHashAtom,
+  nameAtom,
+  venomProviderAtom,
+  venomSProviderAtom,
+  addressAtom,
+  btcAtom,
+  bioAtom,
+  avatarAtom,
+  ethAtom,
+  twitterAtom,
+  discordAtom,
+  mediumAtom,
+  youtubeAtom,
+  pinterestAtom,
+  linkedinAtom,
+  githubAtom,
+  instagramAtom,
+  openseaAtom,
+  facebookAtom,
+  telegramAtom,
+  balanceAtom,
+  venomContractAtom,
+  venomContractAddressAtom,
+  localeAtom,
+  authAtom,
+  hydratedAtom,
+};

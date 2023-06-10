@@ -26,6 +26,7 @@ const useRequest = (
   const { data, mutate, error, isValidating } = useSWR(
     shouldFtech ? url : null
   );
+  console.log(data)
   return { data, isLoading: !error && !data, isValidating, error, mutate };
 };
 

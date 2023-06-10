@@ -2,8 +2,7 @@ import terms from 'translations/terms';
 
 enum Locale {
   En = 'en',
-  Ku = 'ku',
-  Ar = 'ar',
+  Fa = 'fa',
 }
 
 enum Direction {

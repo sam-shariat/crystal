@@ -1,9 +1,5 @@
 import { type ReactElement } from 'react';
-import {
-  ChakraProvider,
-  extendTheme,
-  type ThemeExtension,
-} from '@chakra-ui/react';
+import { ChakraProvider, extendTheme, type ThemeExtension } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 import { useAtomValue } from 'jotai';
 import { localeAtom } from 'core/atoms';
@@ -24,7 +20,7 @@ const ThemeProvider = ({ children }: IThemeProvider) => {
   const styles = {
     global: (props: ThemeExtension) => ({
       body: {
-        bg: mode('gray.50', 'gray.900')(props),
+        bg: mode('gray.100', 'var(--darkGradient)')(props),
       },
     }),
   };
@@ -40,10 +36,7 @@ const ThemeProvider = ({ children }: IThemeProvider) => {
 
 export const getDirection = (locale: string) => {
   switch (locale) {
-    case Locale.Ar:
-      return Direction.RightToLeft;
-
-    case Locale.Ku:
+    case Locale.Fa:
       return Direction.RightToLeft;
 
     default:

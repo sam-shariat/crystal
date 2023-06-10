@@ -3,11 +3,13 @@ import { Image, ImageProps } from '@chakra-ui/react';
 import { motion, MotionProps } from 'framer-motion';
 
 const ImageMotion = motion<MotionProps | ImageProps>(Image as ComponentType);
-
-const Crystal = () => {
+interface Props {
+    url: string
+}
+const Avatar = ({url} : Props) => {
   return (
     <ImageMotion
-      initial={{ scale: 0.9 }}
+      initial={{ scale: 0.96 }}
       animate={{ scale: 1 }}
       transition={{
         duration: 2,
@@ -20,13 +22,16 @@ const Crystal = () => {
       dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
       dragElastic={0.5}
       onDragEnd={(e, info) => {}}
+      borderRadius={"100%"}
       whileTap={{ cursor: 'grabbing' }}
-      src="/crystal.svg"
-      width="xs"
-      mb={5}
+      src={url}
+      width="3xs"
+      boxShadow="0 0 20px #00000070"
+      my={5}
+      zIndex={100}
       alt="netspot"
     />
   );
-};
+}
 
-export default Crystal;
+export default Avatar;
