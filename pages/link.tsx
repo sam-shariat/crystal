@@ -6,12 +6,12 @@ import { Button, Container, Heading, Text, Flex, useMediaQuery, Center, Spinner,
 import { VenomFoundation, BTC, ETH } from 'components/logos';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { Avatar,Socials } from 'components/Profile';
-import { BTCSCAN_ADDRESS, ETHERSCAN_ADDRESS, SITE_DESCRIPTION, SITE_TITLE } from 'core/utils/constants';
+import { BTCSCAN_ADDRESS, ETHERSCAN_ADDRESS, SITE_DESCRIPTION, SITE_TITLE, VENOMSCAN_NFT } from 'core/utils/constants';
 
 const LinkPage: NextPage = () => {
   const { t } = useTranslate();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-  const [json,setJson] = useState({});
+  const [json,setJson] = useState(undefined);
   const [isLoading,setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -33,10 +33,10 @@ const LinkPage: NextPage = () => {
     <>
       <Head>
       <title>
-          {json && !isLoading ? json.name : SITE_TITLE } | {json && !isLoading ? json.bio : SITE_DESCRIPTION}
+          {json !== undefined && !isLoading ? json.name : SITE_TITLE } | {json !== undefined  && !isLoading ? json.bio : SITE_DESCRIPTION}
         </title>
-        <meta name="description" content={`${json && !isLoading ? json.name : SITE_TITLE } | ${json && !isLoading ? json.bio : SITE_DESCRIPTION}`} />
-        <link rel="icon" href={json && !isLoading ? json.avatar : "/logos/vidicon.svg"} />
+        <meta name="description" content={`${json !== undefined  && !isLoading ? json.name : SITE_TITLE } | ${json !== undefined  && !isLoading ? json.bio : SITE_DESCRIPTION}`} />
+        <link rel="icon" href={json !== undefined  && !isLoading ? json.avatar : "/logos/vidicon.svg"} />
       </Head>
 
       <Container
@@ -52,12 +52,14 @@ const LinkPage: NextPage = () => {
             {json.name}
           </Heading>
           <Flex mt={6} direction={notMobile ? 'row' : 'column'} gap={2}>
+          <Link href={VENOMSCAN_NFT + json.venomAddress} target='_blank'>
             <Button
               variant="solid"
               backgroundColor="blackAlpha.300"
               width={notMobile ? 'auto' : '100%'}>
               <VenomFoundation /> Venom Address
             </Button>
+            </Link>
             {json.btcAddress && (
               <Link href={BTCSCAN_ADDRESS + json.btcAddress} target='_blank'>
               <Button variant="solid" backgroundColor="blackAlpha.300">
