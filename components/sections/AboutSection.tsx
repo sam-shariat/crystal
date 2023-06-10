@@ -27,7 +27,7 @@ export default function AboutSection() {
               <Text fontWeight="light" fontSize={notMobile ? '2xl' : 'xl'} mb={8}>
                 {t('aboutDescription')}
               </Text>
-              <NextLink href={SITE_PROFILE_URL} passHref id={`venom-id-aboutus-link`}><Button backgroundColor="var(--venom1)" size="lg" minWidth="100%">
+              <NextLink href={SITE_PROFILE_URL} passHref><Button backgroundColor="var(--venom1)" size="lg" minWidth="100%">
                 {t('aboutButton')}
               </Button></NextLink>
             </Center>

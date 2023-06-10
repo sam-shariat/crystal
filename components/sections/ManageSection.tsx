@@ -26,10 +26,10 @@ export default function ManageSection() {
               <Text fontWeight="bold" fontSize={notMobile ? '3xl' : '2xl'} my={10}>
                 {t('manageDescription')}
               </Text>
-              <NextLink id="venomid-app-manage-link" href={SITE_MANAGE_URL} passHref><Button backgroundColor="var(--purple1)" size="lg" minWidth="100%">
+              <NextLink href={SITE_MANAGE_URL} passHref><Button backgroundColor="var(--purple1)" size="lg" minWidth="100%">
                 {t('manageWebsiteButton')}
               </Button></NextLink>
-              <NextLink id="venomid-app-manage-demo-link" href={'/manage'} passHref><Button size="lg" minWidth="100%" mt={2}>
+              <NextLink href={'/manage'} passHref><Button size="lg" minWidth="100%" mt={2}>
                 {t('manageDemoWebsiteButton')}
               </Button></NextLink>
             </Center>
