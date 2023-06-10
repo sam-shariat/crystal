@@ -30,7 +30,6 @@ export default function ConnectButton() {
   const [venomContract,setVenomContract] = useAtom(venomContractAtom);
   const [address, setAddress] = useAtom(addressAtom);
   const [balance, setBalance] = useAtom(balanceAtom);
-  let tokenWalletAddress: string | undefined;
 
   // This method allows us to gen a wallet address from inpage provider
   const getAddress = async (provider: any) => {
@@ -98,9 +97,8 @@ export default function ConnectButton() {
   // By click logout. We need to reset address and balance.
   const onDisconnect = async () => {
     venomProvider?.disconnect();
-    setAddress(undefined);
-    setBalance(undefined);
-    tokenWalletAddress = undefined;
+    setAddress("");
+    setBalance("");
   };
 
   // When our provider is ready, we need to get address and balance from.
