@@ -226,7 +226,7 @@ export default function ClaimSection() {
           )}
           <Stack direction={['column', 'row']} pb={6} pt={notMobile ? 10 : 6} width="100%">
             <InputGroup size="lg">
-              <InputLeftAddon children="venomid.link/" />
+              <InputLeftAddon>venomid.link/</InputLeftAddon>
               <Input
                 placeholder="samy"
                 value={name}
