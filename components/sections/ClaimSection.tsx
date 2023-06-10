@@ -17,7 +17,7 @@ import {
   Flex,
   Link,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
 import { nameAtom, venomContractAtom, venomSProviderAtom, addressAtom, venomContractAddressAtom } from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslate } from 'core/lib/hooks/use-translate';
@@ -66,7 +66,7 @@ export default function ClaimSection() {
     external_url: SITE_PROFILE_URL + name,
   };
 
-  const inputChange = async (e) => {
+  const inputChange = async (e:ChangeEventHandler) => {
     const _name = e.target.value;
     setName(_name);
     if (e.target.value.length > 2 && venomContract?.methods !== undefined) {
@@ -83,7 +83,7 @@ export default function ClaimSection() {
     }
   };
 
-  const claimVid = async (e) => {
+  const claimVid = async (e:MouseEventHandler) => {
     setMessage({type:'',title:'',msg:''});
     if (name.length >= 3 && !nameExists) {
       console.log('minting')
@@ -176,13 +176,13 @@ export default function ClaimSection() {
                 {message.msg}
               </AlertDescription>
             </Box>
-            {message.link && <Box><Link href={message.link} passHref taget="_blank" id={`venom-id-nft-link`}><Button m={1} minWidth={120}>View NFT</Button></Link>
-            <Link href={SITE_MANAGE_URL+claimedName} passHref taget="_blank" id={`venom-id-manage-nft-link`}><Button m={1} minWidth={120}>Manage VID</Button></Link></Box>}
+            {message.link && <Box><Link href={message.link} taget="_blank" id={`venom-id-nft-link`}><Button m={1} minWidth={120}>View NFT</Button></Link>
+            <Link href={SITE_MANAGE_URL+claimedName} taget="_blank" id={`venom-id-manage-nft-link`}><Button m={1} minWidth={120}>Manage VID</Button></Link></Box>}
           </Alert>}
           <Stack direction={['column', 'row']} pb={6} pt={notMobile ? 10 : 6} width="100%">
             <InputGroup size="lg">
               <InputLeftAddon children="venomid.link/" />
-              <Input placeholder="samy" value={name} onChange={inputChange} />
+              <Input placeholder="samy" value={name}  onChange={inputChange} />
             </InputGroup>
             <Button
               backgroundColor="var(--venom2)"
