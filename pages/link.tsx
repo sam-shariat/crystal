@@ -2,11 +2,11 @@ import type { NextPage } from 'next';
 import axios from 'axios';
 import Head from 'next/head';
 import React, { useEffect, useState} from 'react';
-import { Button, Container, Heading, Text, Flex, useMediaQuery, Center, Spinner } from '@chakra-ui/react';
+import { Button, Container, Heading, Text, Flex, useMediaQuery, Center, Spinner, Link } from '@chakra-ui/react';
 import { VenomFoundation, BTC, ETH } from 'components/logos';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import {Avatar,Socials} from 'components/profile';
-import { SITE_DESCRIPTION, SITE_TITLE } from 'core/utils/constants';
+import { Avatar,Socials } from 'components/Profile';
+import { BTCSCAN_ADDRESS, ETHERSCAN_ADDRESS, SITE_DESCRIPTION, SITE_TITLE } from 'core/utils/constants';
 
 const LinkPage: NextPage = () => {
   const { t } = useTranslate();
@@ -59,16 +59,20 @@ const LinkPage: NextPage = () => {
               <VenomFoundation /> Venom Address
             </Button>
             {json.btcAddress && (
+              <Link href={BTCSCAN_ADDRESS + json.btcAddress} target='_blank'>
               <Button variant="solid" backgroundColor="blackAlpha.300">
                 <BTC />
                 BTC Address
               </Button>
+              </Link>
             )}
             {json.ethAddress && (
+              <Link href={ETHERSCAN_ADDRESS + json.ethAddress} target='_blank'>
               <Button variant="solid" backgroundColor="blackAlpha.300">
                 <ETH />
                 ETH Address
               </Button>
+              </Link>
             )}
           </Flex>
           <Text fontWeight="light" fontSize={notMobile ? 'xl' : 'lg'} my={8} textAlign={'center'}>
