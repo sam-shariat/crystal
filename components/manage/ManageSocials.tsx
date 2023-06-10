@@ -69,7 +69,7 @@ export default function ManageSocials({ json }: Props) {
     setOpensea(json.socials.opensea);
     setTelegram(json.socials.telegram);
     setFacebook(json.socials.facebook);
-  }, [json]);
+  },);
 
   return (
     <Stack my={2}>
