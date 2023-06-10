@@ -112,7 +112,7 @@ export default function Header() {
           <DrawerHeader
             display="flex"
             borderBottomWidth="1px"
-            spacing="32px"
+            gap={4}
             justifyContent="space-between">
             <NextLink href="/" passHref>
               <Button color="var(--venom1)" fontWeight="bold" variant="ghost">
