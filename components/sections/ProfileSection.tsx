@@ -1,8 +1,7 @@
-import { Button, Container, Heading, Text, useMediaQuery, Box, Center, useColorMode } from '@chakra-ui/react';
+import { Button, Container, Heading, Text, useMediaQuery, Box, Center, useColorMode, Link } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
 import { SITE_PROFILE_URL } from 'core/utils/constants';
-import Link from 'next/link';
 
 export default function ProfileSection() {
   const { t } = useTranslate();
