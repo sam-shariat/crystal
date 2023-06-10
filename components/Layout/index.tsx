@@ -17,7 +17,7 @@ const Layout = ({ children }: Props) => {
   };
   useEffect(() => {
     init();
-  }, []);
+  },);
   return (
     <>
       <Header/>
