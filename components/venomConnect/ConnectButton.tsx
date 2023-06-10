@@ -113,7 +113,7 @@ export default function ConnectButton() {
   useEffect(() => {
     // connect event handler
     const off = venomConnect?.on('connect', onConnect);
-    if (venomConnect) {
+    if (venomConnect && venomConnect.show) {
       checkAuth(venomConnect);
     }
     // just an empty callback, cuz we don't need it
