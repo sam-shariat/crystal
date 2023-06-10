@@ -11,7 +11,15 @@ import { BTCSCAN_ADDRESS, ETHERSCAN_ADDRESS, SITE_DESCRIPTION, SITE_TITLE, VENOM
 const LinkPage: NextPage = () => {
   const { t } = useTranslate();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-  const [json,setJson] = useState(undefined);
+  const [json,setJson] = useState({name: '',
+    venomAddress: '',
+    btcAddress: '',
+    ethAddress: '',
+    bio: '',
+    avatar: '',
+    socials: {
+    },
+    lineIcons: false});
   const [isLoading,setIsLoading] = useState(true);
 
   useEffect(() => {
