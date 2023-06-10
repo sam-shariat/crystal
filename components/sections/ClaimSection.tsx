@@ -85,6 +85,10 @@ export default function ClaimSection() {
 
   async function claimVid () {
     setMessage({type:'',title:'',msg:''});
+    if(provider === undefined) { 
+      setMessage({type:'info',title:'connect wallet',msg:'please connect your venom wallet'});
+      return
+    }
     if (name.length >= 3 && !nameExists) {
       console.log('minting')
       setIsMinting(true);
@@ -111,7 +115,7 @@ export default function ClaimSection() {
         console.log("mint tx : ",mintTx)
       
         let receiptTx;
-        const subscriber = new provider?.Subscriber();
+        const subscriber = new (provider as any).Subscriber();
         await subscriber.trace(mintTx).tap(tx_in_tree => {
           console.log("tx_in_tree : ",tx_in_tree)
           if (tx_in_tree.account.equals(VenomContractAddress)) {
