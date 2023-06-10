@@ -5,7 +5,7 @@ import { VenomConnect } from 'venom-connect';
 import { ProviderRpcClient } from 'everscale-inpage-provider';
 import { CONTRACT_ADDRESS } from 'core/utils/constants';
 
-const walletAtom = atom<VenomConnect | undefined>();
+const walletAtom = atom<VenomConnect | undefined>(undefined);
 const venomProviderAtom = atom<any>();
 const jsonAtom = atom<any>();
 const nameAtom = atom("");
