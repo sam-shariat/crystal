@@ -257,7 +257,7 @@ export default function ClaimSection() {
               minWidth="300px"
               disabled={name.length < 3 || nameExists}
               isLoading={feeIsLoading || isMinting}
-              onClick={(e) => claimVid(e.target.disabled)}>
+              onClick={(e) => claimVid(e.target.value)}>
               {t('claimButton')}
             </Button>
           </Stack>
