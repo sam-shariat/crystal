@@ -1,4 +1,4 @@
-import { Button, useMediaQuery, Text } from '@chakra-ui/react';
+import { Button, Box, useMediaQuery, Text } from '@chakra-ui/react';
 import { VenomFoundation } from 'components/logos';
 import { truncAddress } from 'core/utils';
 import { useAtom, useAtomValue } from 'jotai';
@@ -10,6 +10,7 @@ import {
   venomSProviderAtom,
   venomContractAtom,
   venomContractAddressAtom,
+  isConnectedAtom,
 } from 'core/atoms';
 import VenomAbi from 'abi/Collection.abi.json';
 import { Address, ProviderRpcClient } from 'everscale-inpage-provider';
@@ -19,6 +20,7 @@ export default function ConnectButton() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom)
   const venomConnect = useAtomValue(walletAtom);
+  const [isConnected,setIsConnected] = useAtom(isConnectedAtom);
   const login = async () => {
     if (!venomConnect) return;
     console.log('connecting ...', venomConnect.getStandalone());
@@ -46,8 +48,8 @@ export default function ConnectButton() {
     const standalone: ProviderRpcClient | undefined = await venomConnect?.getStandalone(
       'venomwallet'
     );
-    setVenomSProvider(standalone);
     if (standalone) {
+      setVenomSProvider(standalone);
       const nativeBalance = await standalone.getBalance(new Address(address));
       setBalance(nativeBalance);
       // if (!tokenWalletAddress) {
@@ -89,6 +91,11 @@ export default function ConnectButton() {
   // This handler will be called after venomConnect.login() action
   // connect method returns provider to interact with wallet, so we just store it in state
   const onConnect = async (provider: any) => {
+    const venomWalletAddress = provider ? await getAddress(provider) : undefined;
+    setAddress(venomWalletAddress);
+    setIsConnected(true);
+    const _venomContract = provider ? new provider.Contract(VenomAbi, VenomContractAddress) : undefined;
+    setVenomContract(_venomContract);
     setVenomProvider(provider);
     await onProviderReady(provider);
   };
@@ -98,6 +105,7 @@ export default function ConnectButton() {
   const onDisconnect = async () => {
     venomProvider?.disconnect();
     setAddress("");
+    setIsConnected(false);
     setBalance("");
   };
 
@@ -107,6 +115,7 @@ export default function ConnectButton() {
     setAddress(venomWalletAddress);
     const _venomContract = provider ? new provider.Contract(VenomAbi, VenomContractAddress) : undefined;
     setVenomContract(_venomContract);
+    console.log(_venomContract);
     console.log(venomWalletAddress);
   };
 
@@ -114,7 +123,7 @@ export default function ConnectButton() {
     // connect event handler
     const off = venomConnect?.on('connect', onConnect);
     if (venomConnect) {
-      checkAuth(venomConnect);
+      (async () => await venomConnect.checkAuth())();
     }
     // just an empty callback, cuz we don't need it
     return () => {
@@ -126,8 +135,10 @@ export default function ConnectButton() {
   useEffect(() => {
     if (address) getBalance(address);
   }, [address]);
+
   return (
     <>
+    <Box>
       {!address ? (
         <Button variant="solid" onClick={login}>
           <VenomFoundation />
@@ -142,6 +153,7 @@ export default function ConnectButton() {
           {notMobile && truncAddress(address)}
         </Button>
       )}
+      </Box>
     </>
   );
 }

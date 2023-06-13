@@ -17,13 +17,14 @@ import {
   Flex,
   Link,
 } from '@chakra-ui/react';
-import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
+import { useState } from 'react';
 import {
   nameAtom,
   venomContractAtom,
   venomSProviderAtom,
   addressAtom,
   venomContractAddressAtom,
+  isConnectedAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslate } from 'core/lib/hooks/use-translate';
@@ -42,6 +43,7 @@ export default function ClaimSection() {
   const { t } = useTranslate();
   const { colorMode } = useColorMode();
   const provider = useAtomValue(venomSProviderAtom);
+  const isConnected = useAtomValue(isConnectedAtom);
   const userAddress = useAtomValue(addressAtom);
   const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
@@ -75,6 +77,20 @@ export default function ClaimSection() {
   async function inputChange(e: string) {
     const _name = e;
     setName(_name);
+    if (!isConnected) {
+      setMessage({
+        type: 'info',
+        title: 'connect wallet',
+        msg: 'please connect your venom wallet',
+      });
+      return;
+    } else if(message.type !== "error"){
+      setMessage({
+        type: '',
+        title: '',
+        msg: '',
+      });
+    }
     if (_name.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true);
       const { value0: _fee } = await venomContract.methods
@@ -91,7 +107,7 @@ export default function ClaimSection() {
 
   async function claimVid() {
     setMessage({ type: '', title: '', msg: '' });
-    if (provider === undefined) {
+    if (!isConnected) {
       setMessage({
         type: 'info',
         title: 'connect wallet',

@@ -30,11 +30,13 @@ const balanceAtom = atom('0');
 const venomContractAddressAtom = atom(CONTRACT_ADDRESS)
 const venomSProviderAtom = atom<ProviderRpcClient | undefined>(undefined);
 const venomContractAtom = atom<any>(undefined);
+const isConnectedAtom = atom(false);
 const hydratedAtom = atom<boolean>(false);
 const authAtom = atomWithStorage('user', initialAuthState);
 const localeAtom = atomWithStorage<string>('locale', 'en');
 
 export {
+  isConnectedAtom,
   walletAtom,
   jsonAtom,
   jsonHashAtom,
