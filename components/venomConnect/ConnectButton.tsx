@@ -123,7 +123,7 @@ export default function ConnectButton() {
     // connect event handler
     const off = venomConnect?.on('connect', onConnect);
     if (venomConnect) {
-      (async () => await venomConnect.checkAuth())();
+      checkAuth(venomConnect);
     }
     // just an empty callback, cuz we don't need it
     return () => {

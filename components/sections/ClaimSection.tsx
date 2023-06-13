@@ -105,8 +105,7 @@ export default function ClaimSection() {
     }
   }
 
-  async function claimVid() {
-    setMessage({ type: '', title: '', msg: '' });
+  async function claimVid(e:string) {
     if (!isConnected) {
       setMessage({
         type: 'info',
@@ -115,6 +114,9 @@ export default function ClaimSection() {
       });
       return;
     }
+    setMessage({ type: '', title: '', msg: '' });
+    console.log('before minting');
+
     if (name.length >= 3 && !nameExists) {
       console.log('minting');
       setIsMinting(true);
@@ -255,7 +257,7 @@ export default function ClaimSection() {
               minWidth="300px"
               disabled={name.length < 3 || nameExists}
               isLoading={feeIsLoading || isMinting}
-              onClick={() => claimVid}>
+              onClick={(e) => claimVid(e.target.disabled)}>
               {t('claimButton')}
             </Button>
           </Stack>
