@@ -93,10 +93,11 @@ export default function ConnectButton() {
   const onConnect = async (provider: any) => {
     const venomWalletAddress = provider ? await getAddress(provider) : undefined;
     setAddress(venomWalletAddress);
-    setIsConnected(true);
+    console.log(provider)
     const _venomContract = provider ? new provider.Contract(VenomAbi, VenomContractAddress) : undefined;
     setVenomContract(_venomContract);
     setVenomProvider(provider);
+    setIsConnected(true);
     await onProviderReady(provider);
   };
 
