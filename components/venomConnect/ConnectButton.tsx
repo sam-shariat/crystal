@@ -71,13 +71,20 @@ export default function ConnectButton() {
   const onConnect = async (provider: any) => {
     console.log('provider ',provider)
     setIsConnected(true);
+    console.log('connected')
     setVenomProvider(provider);
+    console.log('provider set')
+
     const _venomContract = provider
       ? new provider.Contract(VenomAbi, VenomContractAddress)
       : undefined;
     setVenomContract(_venomContract);
+    console.log('contract set')
+
     const venomWalletAddress = provider ? await getAddress(provider) : undefined;
     setAddress(venomWalletAddress);
+    console.log('address set')
+
   };
 
   // This handler will be called after venomConnect.disconnect() action
