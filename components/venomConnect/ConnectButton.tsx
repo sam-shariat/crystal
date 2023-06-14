@@ -98,7 +98,6 @@ export default function ConnectButton() {
     setVenomContract(_venomContract);
     setVenomProvider(provider);
     setIsConnected(true);
-    await onProviderReady(provider);
   };
 
   // This handler will be called after venomConnect.disconnect() action
@@ -111,14 +110,7 @@ export default function ConnectButton() {
   };
 
   // When our provider is ready, we need to get address and balance from.
-  const onProviderReady = async (provider: any) => {
-    const venomWalletAddress = provider ? await getAddress(provider) : undefined;
-    setAddress(venomWalletAddress);
-    const _venomContract = provider ? new provider.Contract(VenomAbi, VenomContractAddress) : undefined;
-    setVenomContract(_venomContract);
-    console.log(_venomContract);
-    console.log(venomWalletAddress);
-  };
+  
 
   useEffect(() => {
     // connect event handler
