@@ -26,11 +26,13 @@ import {
   venomContractAddressAtom,
   isConnectedAtom,
 } from 'core/atoms';
+import VenomAbi from 'abi/Collection.abi.json';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
 import { useMediaQuery, useColorMode } from '@chakra-ui/react';
 import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL } from 'core/utils/constants';
+import { Address } from 'everscale-inpage-provider';
 
 interface Message {
   type: any;
@@ -51,8 +53,8 @@ export default function ClaimSection() {
   const [message, setMessage] = useState<Message>({ type: '', title: '', msg: '', link: '' });
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
-  const venomContract = useAtomValue(venomContractAtom);
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
+  const venomContract = provider ? new provider.Contract(VenomAbi, new Address(VenomContractAddress)) : undefined;
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
 
@@ -91,6 +93,7 @@ export default function ClaimSection() {
         msg: '',
       });
     }
+
     if (_name.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true);
       const { value0: _fee } = await venomContract.methods
@@ -102,6 +105,13 @@ export default function ClaimSection() {
       setNameExists(_nameExists);
       setFee(_fee);
       setFeeIsLoading(false);
+    } else if(venomContract?.methods === undefined) {
+      setMessage({
+        type: 'warning',
+        title: 'Error connecting to smart contract',
+        msg: 'Something goes wrong when trying to get data from the smart contract',
+      });
+      return;
     }
   }
 
