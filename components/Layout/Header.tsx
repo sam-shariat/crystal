@@ -19,7 +19,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerBody,
-  useDisclosure,
+  useDisclosure
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { localeAtom } from 'core/atoms';
@@ -34,6 +34,7 @@ export default function Header() {
   const [locale, setLocale] = useAtom(localeAtom);
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const loc = use
 
   return (
     <Box
@@ -56,7 +57,7 @@ export default function Header() {
                 <Text pl={1}>VenomID</Text>
               </Button>
             </NextLink>
-            {notMobile && (
+            {notMobile && home && (
               <NextLink href="#manage" passHref>
                 <Button fontWeight="bold" variant="ghost" textAlign="left">
                   Manage
