@@ -1,4 +1,4 @@
-import { Button, Box, useMediaQuery, Text } from '@chakra-ui/react';
+import { Button, Box, useMediaQuery, Text, Center } from '@chakra-ui/react';
 import { VenomFoundation } from 'components/logos';
 import { truncAddress } from 'core/utils';
 import { useAtom, useAtomValue } from 'jotai';
@@ -18,9 +18,9 @@ import React, { useEffect } from 'react';
 
 export default function ConnectButton() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-  const VenomContractAddress = useAtomValue(venomContractAddressAtom)
+  const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   const venomConnect = useAtomValue(walletAtom);
-  const [isConnected,setIsConnected] = useAtom(isConnectedAtom);
+  const [isConnected, setIsConnected] = useAtom(isConnectedAtom);
   const login = async () => {
     if (!venomConnect) return;
     console.log('connecting ...', venomConnect.getStandalone());
@@ -29,7 +29,7 @@ export default function ConnectButton() {
   };
   const [venomProvider, setVenomProvider] = useAtom(venomProviderAtom);
   const [venomSProvider, setVenomSProvider] = useAtom(venomSProviderAtom);
-  const [venomContract,setVenomContract] = useAtom(venomContractAtom);
+  const [venomContract, setVenomContract] = useAtom(venomContractAtom);
   const [address, setAddress] = useAtom(addressAtom);
   const [balance, setBalance] = useAtom(balanceAtom);
 
@@ -52,31 +52,6 @@ export default function ConnectButton() {
       setVenomSProvider(standalone);
       const nativeBalance = await standalone.getBalance(new Address(address));
       setBalance(nativeBalance);
-      // if (!tokenWalletAddress) {
-      //   await setupTokenWalletAddress(standalone, wallet);
-      // }
-      // if (!venomProvider || !tokenWalletAddress) return;
-      // try {
-      //   const contractAddress = new Address(tokenWalletAddress);
-      //   const contract = new standalone.Contract(tokenWalletAbi, contractAddress);
-      //   // We check a contract state here to acknowledge if TokenWallet already deployed
-      //   // As you remember, wallet can be deployed with first transfer on it.
-      //   // If our wallet isn't deployed, so it's balance is 0 :)
-      //   const contractState = await venomProvider.rawApi.getFullContractState({
-      //     address: tokenWalletAddress,
-      //   });
-      //   if (contractState.state) {
-      //     // But if this deployed, just call a balance function
-      //     const result = (await contract.methods.balance({ answerId: 0 } as never).call()) as any;
-      //     const tokenBalance = result.value0; // It will be with decimals. Format if you want by dividing with 10**decimals
-      //     setBalance(tokenBalance);
-      //     console.log(tokenBalance);
-      //   } else {
-      //     setBalance('0');
-      //   }
-      // } catch (e) {
-      //   console.error(e);
-      // }
     } else {
       alert('Standalone is not available now');
     }
@@ -93,8 +68,10 @@ export default function ConnectButton() {
   const onConnect = async (provider: any) => {
     const venomWalletAddress = provider ? await getAddress(provider) : undefined;
     setAddress(venomWalletAddress);
-    console.log(provider)
-    const _venomContract = provider ? new provider.Contract(VenomAbi, VenomContractAddress) : undefined;
+    console.log(provider);
+    const _venomContract = provider
+      ? new provider.Contract(VenomAbi, VenomContractAddress)
+      : undefined;
     setVenomContract(_venomContract);
     setVenomProvider(provider);
     setIsConnected(true);
@@ -104,13 +81,12 @@ export default function ConnectButton() {
   // By click logout. We need to reset address and balance.
   const onDisconnect = async () => {
     venomProvider?.disconnect();
-    setAddress("");
+    setAddress('');
     setIsConnected(false);
-    setBalance("");
+    setBalance('');
   };
 
   // When our provider is ready, we need to get address and balance from.
-  
 
   useEffect(() => {
     // connect event handler
@@ -131,21 +107,25 @@ export default function ConnectButton() {
 
   return (
     <>
-    <Box>
-      {!address ? (
-        <Button variant="solid" onClick={login}>
-          <VenomFoundation />
-          Connect
-        </Button>
-      ) : (
-        <Button variant="solid" onClick={onDisconnect}>
-          <VenomFoundation />
-          <Text mx={2} color="var(--venom1)">
-            {Math.round(Number(balance) / 10e5) / 10e2}
-          </Text>
-          {notMobile && truncAddress(address)}
-        </Button>
-      )}
+      <Box>
+        {!address ? (
+          <Button variant='solid' onClick={login}>
+            <Center>
+              <VenomFoundation />
+              Connect
+            </Center>
+          </Button>
+        ) : (
+          <Button variant='solid' onClick={onDisconnect}>
+            <Center>
+              <VenomFoundation />
+              <Text mx={2} color="var(--venom1)">
+                {Math.round(Number(balance) / 10e5) / 10e2}
+              </Text>
+              {notMobile && truncAddress(address)}
+            </Center>
+          </Button>
+        )}
       </Box>
     </>
   );

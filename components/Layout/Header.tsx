@@ -28,14 +28,15 @@ import { useAtom } from 'jotai';
 import Logo from './Logo';
 import { RiMoonFill, RiSunFill, RiMenu2Fill, RiCloseFill } from 'react-icons/ri';
 import { Locale } from 'translations';
+import { useRouter } from 'next/router'
 
 export default function Header() {
   const { colorMode, toggleColorMode } = useColorMode();
   const [locale, setLocale] = useAtom(localeAtom);
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const loc = use
-
+  const { pathname } = useRouter()
+  const home = pathname === '/' ? true : false;
   return (
     <Box
       as="nav"
@@ -57,28 +58,28 @@ export default function Header() {
                 <Text pl={1}>VenomID</Text>
               </Button>
             </NextLink>
-            {notMobile && home && (
+            {notMobile && home &&(
               <NextLink href="#manage" passHref>
                 <Button fontWeight="bold" variant="ghost" textAlign="left">
                   Manage
                 </Button>
               </NextLink>
             )}
-            {notMobile && (
+            {notMobile && home && (
               <NextLink href="#profile" passHref>
                 <Button fontWeight="bold" variant="ghost" textAlign="left">
                   Profile
                 </Button>
               </NextLink>
             )}
-            {notMobile && (
+            {notMobile && home && (
               <NextLink href="#roadmap" passHref>
                 <Button fontWeight="bold" variant="ghost" textAlign="left">
                   RoadMap
                 </Button>
               </NextLink>
             )}
-            {notMobile && (
+            {notMobile && home && (
               <NextLink href="#about" passHref>
                 <Button fontWeight="bold" variant="ghost" textAlign="left">
                   About
@@ -88,7 +89,7 @@ export default function Header() {
           </HStack>
           <HStack dir="ltr">
             <ConnectButton />
-            {notMobile && (
+            {notMobile && home &&(
               <Menu>
                 <MenuButton as={Button}>{locale.toUpperCase()}</MenuButton>
                 <MenuList width={100}>
@@ -134,7 +135,7 @@ export default function Header() {
             </HStack>
           </DrawerHeader>
           <DrawerBody>
-            <Stack py={4}>
+            {home && <Stack py={4}>
               <NextLink href="#manage" passHref>
                 <Button fontWeight="bold" variant="ghost" width="100%" justifyContent="left">
                   Manage
@@ -155,8 +156,8 @@ export default function Header() {
                   About
                 </Button>
               </NextLink>
-            </Stack>
-            <Stack borderTopWidth="1px" width="100%" py={4}>
+            </Stack>}
+            {home && <Stack borderTopWidth="1px" width="100%" py={4}>
               <Button
                 onClick={() => setLocale(Locale.En)}
                 fontWeight="bold"
@@ -173,7 +174,7 @@ export default function Header() {
                 justifyContent="left">
                 فارسی
               </Button>
-            </Stack>
+            </Stack>}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

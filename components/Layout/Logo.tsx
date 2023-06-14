@@ -4,7 +4,7 @@ import {  Box
 function Logo() {
   return (
     <Box width={'36px'} height={'36px'}>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 36px 36px' width={36} height={36}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox='0 0 36 36' width={36} height={36}>
       <defs>
         <image
           width={601}
