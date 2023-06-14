@@ -70,14 +70,14 @@ export default function ConnectButton() {
   // connect method returns provider to interact with wallet, so we just store it in state
   const onConnect = async (provider: any) => {
     console.log('provider ',provider)
-    const venomWalletAddress = provider ? await getAddress(provider) : undefined;
-    setAddress(venomWalletAddress);
+    setIsConnected(true);
+    setVenomProvider(provider);
     const _venomContract = provider
       ? new provider.Contract(VenomAbi, VenomContractAddress)
       : undefined;
     setVenomContract(_venomContract);
-    setVenomProvider(provider);
-    setIsConnected(true);
+    const venomWalletAddress = provider ? await getAddress(provider) : undefined;
+    setAddress(venomWalletAddress);
   };
 
   // This handler will be called after venomConnect.disconnect() action
