@@ -21,12 +21,14 @@ export default function ConnectButton() {
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   const venomConnect = useAtomValue(walletAtom);
   const [isConnected, setIsConnected] = useAtom(isConnectedAtom);
+
   const login = async () => {
     if (!venomConnect) return;
     console.log('connecting ...', venomConnect.getStandalone());
     console.log('current :', venomConnect.currentProvider);
     await venomConnect.connect();
   };
+
   const [venomProvider, setVenomProvider] = useAtom(venomProviderAtom);
   const [venomSProvider, setVenomSProvider] = useAtom(venomSProviderAtom);
   const [venomContract, setVenomContract] = useAtom(venomContractAtom);
@@ -60,15 +62,16 @@ export default function ConnectButton() {
   // Any interaction with venom-wallet (address fetching is included) needs to be authentificated
   const checkAuth = async (_venomConnect: any) => {
     const auth = await _venomConnect?.checkAuth();
+    console.log("auth : ",auth)
     if (auth) await getAddress(_venomConnect);
   };
 
   // This handler will be called after venomConnect.login() action
   // connect method returns provider to interact with wallet, so we just store it in state
   const onConnect = async (provider: any) => {
+    console.log('provider ',provider)
     const venomWalletAddress = provider ? await getAddress(provider) : undefined;
     setAddress(venomWalletAddress);
-    console.log(provider);
     const _venomContract = provider
       ? new provider.Contract(VenomAbi, VenomContractAddress)
       : undefined;
@@ -90,14 +93,15 @@ export default function ConnectButton() {
 
   useEffect(() => {
     // connect event handler
-    const off = venomConnect?.on('connect', onConnect);
-    if (venomConnect) {
-      checkAuth(venomConnect);
-    }
-    // just an empty callback, cuz we don't need it
-    return () => {
-      off?.();
+    //const off = venomConnect?.on('connect', onConnect);
+    function auth(){
+      venomConnect?.on('extension-auth', onConnect);
+      venomConnect?.on('connect', onConnect);
+      if (venomConnect) {
+        checkAuth(venomConnect);
+      }
     };
+    auth();
   }, [venomConnect]);
 
   // Hook for balance setup
