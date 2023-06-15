@@ -54,7 +54,9 @@ export default function ClaimSection() {
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
-  const venomContract = provider ? new provider.Contract(VenomAbi, new Address(VenomContractAddress)) : undefined;
+  const venomContract = provider
+    ? new provider.Contract(VenomAbi, new Address(VenomContractAddress))
+    : undefined;
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
 
@@ -86,7 +88,7 @@ export default function ClaimSection() {
         msg: 'please connect your venom wallet',
       });
       return;
-    } else if(message.type !== "error"){
+    } else if (message.type !== 'error') {
       setMessage({
         type: '',
         title: '',
@@ -97,7 +99,7 @@ export default function ClaimSection() {
     if (_name.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true);
       const { value0: _fee } = await venomContract?.methods
-        .calculateMintingFee({ name: String(_name) })
+        ?.calculateMintingFee({ name: String(_name) })
         .call();
       const { value0: _nameExists } = await venomContract?.methods
         .nameExists({ name: String(_name) })
@@ -105,7 +107,7 @@ export default function ClaimSection() {
       setNameExists(_nameExists);
       setFee(_fee);
       setFeeIsLoading(false);
-    } else if(venomContract?.methods === undefined) {
+    } else if (venomContract?.methods === undefined) {
       setMessage({
         type: 'warning',
         title: 'Error connecting to smart contract',
@@ -115,7 +117,7 @@ export default function ClaimSection() {
     }
   }
 
-  async function claimVid(e:string) {
+  async function claimVid(e: string) {
     if (!isConnected) {
       setMessage({
         type: 'info',
@@ -133,7 +135,7 @@ export default function ClaimSection() {
       const mintTx = await venomContract?.methods
         .mintNft({
           json: String(JSON.stringify(json)),
-          name: String(name),
+          name: String(name)
         })
         .send({
           amount: String(minFee + fee),
@@ -155,7 +157,7 @@ export default function ClaimSection() {
         setClaimedName(name);
         console.log('mint tx : ', mintTx);
 
-        let receiptTx:Transaction;
+        let receiptTx;
         const subscriber = new (provider as any).Subscriber();
         await subscriber
           .trace(mintTx)
