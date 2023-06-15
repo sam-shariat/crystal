@@ -33,12 +33,21 @@ import Venom from 'components/Venom';
 import { useMediaQuery, useColorMode } from '@chakra-ui/react';
 import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL } from 'core/utils/constants';
 import { Address, Transaction } from 'everscale-inpage-provider';
+import { convertToAddressObject } from 'everscale-standalone-client/client/utils';
 
 interface Message {
   type: any;
   title: string;
   msg: string;
   link?: string;
+}
+
+interface Fee {
+  value0: number;
+}
+
+interface NameParams {
+  name: string;
 }
 
 export default function ClaimSection() {
@@ -98,12 +107,11 @@ export default function ClaimSection() {
 
     if (_name.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true);
-      const { value0: _fee } = await venomContract?.methods
-        ?.calculateMintingFee({ name: String(_name) })
+      // @ts-ignore: Unreachable code error
+      const { value0: _fee }:Fee = await venomContract.methods.calculateMintingFee({ name: String(_name) })
         .call();
-      const { value0: _nameExists } = await venomContract?.methods
-        .nameExists({ name: String(_name) })
-        .call();
+      // @ts-ignore: Unreachable code error
+      const { value0: _nameExists } = await venomContract?.methods.nameExists({ name: String(_name) }).call();
       setNameExists(_nameExists);
       setFee(_fee);
       setFeeIsLoading(false);
@@ -132,15 +140,14 @@ export default function ClaimSection() {
     if (name.length >= 3 && !nameExists && venomContract?.methods !== undefined) {
       console.log('minting');
       setIsMinting(true);
-      const mintTx = await venomContract?.methods
-        .mintNft({
-          json: String(JSON.stringify(json)),
-          name: String(name)
-        })
-        .send({
+      // @ts-ignore: Unreachable code error
+      const mintTx = await venomContract?.methods.mintNft({
+          json: JSON.stringify(json),
+          name: name
+        }).send({
           amount: String(minFee + fee),
           bounce: true,
-          from: new Address(userAddress),
+          from: convertToAddressObject(userAddress)
         })
         .catch((e: any) => {
           if (e.code === 3) {
@@ -149,6 +156,7 @@ export default function ClaimSection() {
             return Promise.resolve(null);
           } else {
             setIsMinting(false);
+            console.log(e)
             return Promise.reject(e);
           }
         });
@@ -157,8 +165,9 @@ export default function ClaimSection() {
         setClaimedName(name);
         console.log('mint tx : ', mintTx);
 
-        let receiptTx: Transaction;
-        const subscriber = new (provider as any).Subscriber();
+        let receiptTx: Transaction | undefined;
+        const subscriber = provider && new provider.Subscriber();
+        if(subscriber)
         await subscriber
           .trace(mintTx)
           .tap((tx_in_tree: any) => {
@@ -169,10 +178,12 @@ export default function ClaimSection() {
           })
           .finished();
 
+          
+
         // Decode events by using abi
         // we are looking for event Game(address player, uint8 bet, uint8 result, uint128 prize);
 
-        let events = await venomContract.decodeTransactionEvents({ transaction: receiptTx });
+        let events = await venomContract.decodeTransactionEvents({ transaction: receiptTx as Transaction });
         console.log(events);
 
         if (events.length !== 1 || events[0].event !== 'NftCreated') {
@@ -182,7 +193,8 @@ export default function ClaimSection() {
             msg: 'Something went wrong, Please try again',
           });
         } else {
-          const nftAddress = events[0].data.nft._address;
+          
+          const nftAddress = events[0].data?.nft?._address;
           setMessage({
             type: 'success',
             title: 'Mint Successful',

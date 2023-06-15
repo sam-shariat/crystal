@@ -51,6 +51,7 @@ export default function ConnectButton() {
       'venomwallet'
     );
     if (standalone) {
+      console.log('standalone set',standalone)
       setVenomSProvider(standalone);
       const nativeBalance = await standalone.getBalance(new Address(address));
       setBalance(nativeBalance);
