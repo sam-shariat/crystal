@@ -60,7 +60,6 @@ export default function ClaimSection() {
   const venomContract = provider ? new provider.Contract(VenomAbi, new Address(VenomContractAddress)) : undefined;
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
-  const nameP: NameProp = { name : name };
 
   const image = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
   const json = {
@@ -81,7 +80,7 @@ export default function ClaimSection() {
   };
 
   async function inputChange(e: string) {
-    const _name = e;
+    const _name :NameProp = {name : e};
     setName(_name);
     if (!isConnected) {
       setMessage({
@@ -101,10 +100,10 @@ export default function ClaimSection() {
     if (_name.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true);
       const { value0: _fee } = await venomContract?.methods
-        .calculateMintingFee({ name: String(_name) })
+        .calculateMintingFee(_name)
         .call();
       const { value0: _nameExists } = await venomContract?.methods
-        .nameExists({ name: String(_name) })
+        .nameExists(_name)
         .call();
       setNameExists(_nameExists);
       setFee(_fee);
