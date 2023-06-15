@@ -141,10 +141,7 @@ export default function ClaimSection() {
       console.log('minting');
       setIsMinting(true);
       // @ts-ignore: Unreachable code error
-      const mintTx = await venomContract?.methods.mintNft({
-          json: JSON.stringify(json),
-          name: name
-        }).send({
+      const mintTx = await venomContract?.methods.mintNft({json: JSON.stringify(json),name: name}).send({
           amount: String(minFee + fee),
           bounce: true,
           from: convertToAddressObject(userAddress)
