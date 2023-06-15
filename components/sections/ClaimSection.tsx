@@ -157,7 +157,7 @@ export default function ClaimSection() {
         setClaimedName(name);
         console.log('mint tx : ', mintTx);
 
-        let receiptTx;
+        let receiptTx: Transaction;
         const subscriber = new (provider as any).Subscriber();
         await subscriber
           .trace(mintTx)
