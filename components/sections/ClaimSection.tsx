@@ -81,7 +81,7 @@ export default function ClaimSection() {
 
   async function inputChange(e: string) {
     const _name :NameProp = {name : e};
-    setName(_name);
+    setName(e);
     if (!isConnected) {
       setMessage({
         type: 'info',
