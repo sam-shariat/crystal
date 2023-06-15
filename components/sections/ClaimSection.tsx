@@ -32,7 +32,7 @@ import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
 import { useMediaQuery, useColorMode } from '@chakra-ui/react';
 import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL } from 'core/utils/constants';
-import { Address } from 'everscale-inpage-provider';
+import { Address, Transaction } from 'everscale-inpage-provider';
 
 interface Message {
   type: any;
@@ -41,6 +41,9 @@ interface Message {
   link?: string;
 }
 
+interface NameProp {
+  name: string;
+}
 export default function ClaimSection() {
   const { t } = useTranslate();
   const { colorMode } = useColorMode();
@@ -57,6 +60,7 @@ export default function ClaimSection() {
   const venomContract = provider ? new provider.Contract(VenomAbi, new Address(VenomContractAddress)) : undefined;
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
+  const nameP: NameProp = { name : name };
 
   const image = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
   const json = {
@@ -96,11 +100,11 @@ export default function ClaimSection() {
 
     if (_name.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true);
-      const { value0: _fee } = await venomContract.methods
-        .calculateMintingFee({ name: _name })
+      const { value0: _fee } = await venomContract?.methods
+        .calculateMintingFee({ name: String(_name) })
         .call();
-      const { value0: _nameExists } = await venomContract.methods
-        .nameExists({ name: _name })
+      const { value0: _nameExists } = await venomContract?.methods
+        .nameExists({ name: String(_name) })
         .call();
       setNameExists(_nameExists);
       setFee(_fee);
@@ -127,18 +131,18 @@ export default function ClaimSection() {
     setMessage({ type: '', title: '', msg: '' });
     console.log('before minting');
 
-    if (name.length >= 3 && !nameExists) {
+    if (name.length >= 3 && !nameExists && venomContract?.methods !== undefined) {
       console.log('minting');
       setIsMinting(true);
-      const mintTx = await venomContract.methods
+      const mintTx = await venomContract?.methods
         .mintNft({
-          json: JSON.stringify(json),
-          name: name,
+          json: String(JSON.stringify(json)),
+          name: String(name),
         })
         .send({
-          amount: minFee + fee,
+          amount: String(minFee + fee),
           bounce: true,
-          from: userAddress,
+          from: new Address(userAddress),
         })
         .catch((e: any) => {
           if (e.code === 3) {
@@ -155,7 +159,7 @@ export default function ClaimSection() {
         setClaimedName(name);
         console.log('mint tx : ', mintTx);
 
-        let receiptTx;
+        let receiptTx:Transaction;
         const subscriber = new (provider as any).Subscriber();
         await subscriber
           .trace(mintTx)
