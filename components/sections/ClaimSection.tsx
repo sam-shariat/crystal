@@ -191,7 +191,8 @@ export default function ClaimSection() {
           });
         } else {
           
-          const nftAddress = events[0].data?.nft?._address;
+          // @ts-ignore: Unreachable code error
+          const nftAddress = events[0].data?.nft && events[0].data?.nft?._address;
           setMessage({
             type: 'success',
             title: 'Mint Successful',
