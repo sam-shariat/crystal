@@ -97,7 +97,7 @@ export default function ClaimSection() {
       });
     }
 
-    if (_name.length > 2 && venomContract?.methods !== undefined) {
+    if (e.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true);
       const { value0: _fee } = await venomContract?.methods
         .calculateMintingFee(_name)
