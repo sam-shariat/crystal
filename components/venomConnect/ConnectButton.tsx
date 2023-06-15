@@ -55,6 +55,7 @@ export default function ConnectButton() {
       setVenomSProvider(standalone);
       const nativeBalance = await standalone.getBalance(new Address(address));
       setBalance(nativeBalance);
+      console.log('balance is',nativeBalance)
     } else {
       alert('Standalone is not available now');
     }
@@ -96,7 +97,7 @@ export default function ConnectButton() {
     // connect event handler
     //const off = venomConnect?.on('connect', onConnect);
     function auth(){
-      venomConnect?.on('extension-auth', onConnect);
+      //venomConnect?.on('extension-auth', onConnect);
       venomConnect?.on('connect', onConnect);
       if (venomConnect) {
         checkAuth(venomConnect);
