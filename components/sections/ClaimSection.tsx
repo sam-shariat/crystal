@@ -41,9 +41,6 @@ interface Message {
   link?: string;
 }
 
-interface NameProp {
-  name: string;
-}
 export default function ClaimSection() {
   const { t } = useTranslate();
   const { colorMode } = useColorMode();
@@ -80,8 +77,8 @@ export default function ClaimSection() {
   };
 
   async function inputChange(e: string) {
-    const _name :NameProp = {name : e};
-    setName(e);
+    const _name = e;
+    setName(_name);
     if (!isConnected) {
       setMessage({
         type: 'info',
@@ -97,13 +94,13 @@ export default function ClaimSection() {
       });
     }
 
-    if (e.length > 2 && venomContract?.methods !== undefined) {
+    if (_name.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true);
       const { value0: _fee } = await venomContract?.methods
-        .calculateMintingFee({name : e})
+        .calculateMintingFee({ name: String(_name) })
         .call();
       const { value0: _nameExists } = await venomContract?.methods
-        .nameExists(_name)
+        .nameExists({ name: String(_name) })
         .call();
       setNameExists(_nameExists);
       setFee(_fee);
