@@ -100,7 +100,7 @@ export default function ClaimSection() {
     if (e.length > 2 && venomContract?.methods !== undefined) {
       setFeeIsLoading(true);
       const { value0: _fee } = await venomContract?.methods
-        .calculateMintingFee({answerId: 0, name : e})
+        .calculateMintingFee({name : e})
         .call();
       const { value0: _nameExists } = await venomContract?.methods
         .nameExists(_name)
