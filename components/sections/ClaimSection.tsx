@@ -33,7 +33,6 @@ import Venom from 'components/Venom';
 import { useMediaQuery, useColorMode } from '@chakra-ui/react';
 import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL } from 'core/utils/constants';
 import { Address, Transaction } from 'everscale-inpage-provider';
-import { convertToAddressObject } from 'everscale-standalone-client/client/utils';
 
 interface Message {
   type: any;
@@ -58,7 +57,7 @@ export default function ClaimSection() {
   const userAddress = useAtomValue(addressAtom);
   const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
-  const [fee, setFee] = useState(-1);
+  const [fee, setFee] = useState<number | null>();
   const [message, setMessage] = useState<Message>({ type: '', title: '', msg: '', link: '' });
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
@@ -136,15 +135,14 @@ export default function ClaimSection() {
     }
     setMessage({ type: '', title: '', msg: '' });
     console.log('before minting');
-
-    if (name.length >= 3 && !nameExists && venomContract?.methods !== undefined) {
+    if (name.length >= 3 && !nameExists && venomContract?.methods) {
       console.log('minting');
       setIsMinting(true);
       // @ts-ignore: Unreachable code error
       const mintTx = await venomContract?.methods.mintNft({json: JSON.stringify(json),name: name}).send({
           amount: String(minFee + fee),
           bounce: true,
-          from: convertToAddressObject(userAddress)
+          from: new Address(userAddress)
         })
         .catch((e: any) => {
           if (e.code === 3) {
@@ -192,7 +190,7 @@ export default function ClaimSection() {
         } else {
           
           // @ts-ignore: Unreachable code error
-          const nftAddress = events[0].data?.nft && events[0].data?.nft?._address;
+          const nftAddress = String(events[0].data?.nft && events[0].data?.nft?._address);
           setMessage({
             type: 'success',
             title: 'Mint Successful',
