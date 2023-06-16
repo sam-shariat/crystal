@@ -15,7 +15,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/logos/vidicon.svg" />
       </Head>
 
-      {/* <ClaimSection /> */}
+      <ClaimSection />
       <ManageSection />
       <ProfileSection />
       <RoadmapSection />

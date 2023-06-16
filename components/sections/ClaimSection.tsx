@@ -45,10 +45,6 @@ interface Fee {
   value0: number;
 }
 
-interface NameParams {
-  name: string;
-}
-
 export default function ClaimSection() {
   const { t } = useTranslate();
   const { colorMode } = useColorMode();
@@ -65,7 +61,6 @@ export default function ClaimSection() {
   const [venomContract, setVenomContract] = useState<any>();
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
-  console.log('claim section contract', venomContract);
 
   const image = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
   const json = {
@@ -214,7 +209,7 @@ export default function ClaimSection() {
 
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   useEffect(() => {
-    if (provider && venomContract === undefined && isConnected) {
+    if (provider?.isInitialized && venomContract === undefined && isConnected) {
       setVenomContract(new provider.Contract(VenomAbi, new Address(VenomContractAddress)));
     }
   }, [provider]);
