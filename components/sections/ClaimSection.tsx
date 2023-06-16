@@ -62,7 +62,7 @@ export default function ClaimSection() {
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
-  const [venomContract, setVenomContract] = useState<any>(undefined);
+  const [venomContract, setVenomContract] = useState<any>();
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
   console.log('claim section contract', venomContract);
