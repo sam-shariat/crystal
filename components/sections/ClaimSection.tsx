@@ -212,8 +212,8 @@ export default function ClaimSection() {
   useEffect(() => {
     if (provider?.isInitialized && venomContract === undefined && isConnected && VenomContractAddress) {
       const _venomContract = new provider.Contract(VenomAbi, new Address(VenomContractAddress));
-      setVenomContract(_venomContract);
       console.log("venom contract",_venomContract)
+      setVenomContract(_venomContract);
     }
   }, [provider]);
 
