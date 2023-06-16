@@ -16,7 +16,7 @@ const Layout = ({ children }: Props) => {
     setVenomConnect(_venomConnect);
   };
   useEffect(() => {
-    init();
+    if(!venomConnect) init();
   },[]);
   return (
     <>
