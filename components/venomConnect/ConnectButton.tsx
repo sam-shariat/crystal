@@ -109,8 +109,8 @@ export default function ConnectButton() {
     // connect event handler
     //const off = venomConnect?.on('connect', onConnect);
     function auth() {
-      venomConnect?.on('extension-auth', onConnect);
-      //venomConnect?.on('connect', onConnect);
+      //venomConnect?.on('extension-auth', onConnect);
+      venomConnect?.on('connect', onConnect);
       if (venomConnect) {
         checkAuth(venomConnect);
       }

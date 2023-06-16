@@ -58,7 +58,7 @@ export default function ClaimSection() {
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
-  const [venomContract, setVenomContract] = useState<any>();
+  const [venomContract, setVenomContract] = useState<any>(undefined);
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
 
@@ -98,11 +98,11 @@ export default function ClaimSection() {
       });
     }
 
-    if (_name.length > 2 && venomContract?.methods !== undefined) {
+    if (_name.length > 2 && venomContract && venomContract?.methods !== undefined) {
       try {
         setFeeIsLoading(true);
         // @ts-ignore: Unreachable code error
-        const { value0: _fee }: Fee = await venomContract.methods
+        const { value0: _fee } = await venomContract.methods
           .calculateMintingFee({ name: String(_name) })
           .call();
         // @ts-ignore: Unreachable code error
@@ -114,6 +114,7 @@ export default function ClaimSection() {
         setFeeIsLoading(false);
       } catch (er) {
         console.log(er);
+        return
       }
     } else if (venomContract?.methods === undefined) {
       setMessage({
