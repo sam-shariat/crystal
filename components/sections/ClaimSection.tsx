@@ -54,13 +54,14 @@ export default function ClaimSection() {
   const userAddress = useAtomValue(addressAtom);
   const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
   const [fee, setFee] = useState<number | null>();
   const [message, setMessage] = useState<Message>({ type: '', title: '', msg: '', link: '' });
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   //const [venomContract, setVenomContract] = useState<any>(undefined);
-  const minFee = 330000000;
+  const minFee = 660000000;
   const [name, setName] = useAtom(nameAtom);
 
   const image = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
@@ -164,7 +165,7 @@ export default function ClaimSection() {
       if (mintTx) {
         setClaimedName(name);
         console.log('mint tx : ', mintTx);
-
+        setIsConfirming(true)
         let receiptTx: Transaction | undefined;
         const subscriber = provider && new provider.Subscriber();
         if (subscriber)
@@ -185,7 +186,6 @@ export default function ClaimSection() {
           transaction: receiptTx as Transaction,
         });
         console.log(events);
-
         if (events.length !== 1 || events[0].event !== 'NftCreated') {
           setMessage({
             type: 'error',
@@ -203,6 +203,7 @@ export default function ClaimSection() {
           });
         }
         setIsMinting(false);
+        setIsConfirming(false);
         console.log(events);
       }
       console.log('mint finished');
@@ -287,6 +288,7 @@ export default function ClaimSection() {
               minWidth="300px"
               disabled={name.length < 3 || nameExists}
               isLoading={feeIsLoading || isMinting}
+              loadingText={isMinting && !isConfirming ? 'Claiming ...' : isMinting && isConfirming ? 'Confirming ...' : ''}
               onClick={(e) => claimVid(e.currentTarget.value)}>
               {t('claimButton')}
             </Button>
@@ -309,7 +311,7 @@ export default function ClaimSection() {
                   {nameExists ? name + '.VID is Taken' : name + '.VID is Available'}
                 </Text>
               ) : (
-                <Text fontWeight={'bold'}>Checking Availibility</Text>
+                <Text fontWeight={'light'}>Checking Availibility</Text>
               )}
             </Flex>
           )}
