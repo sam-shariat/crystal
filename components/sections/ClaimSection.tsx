@@ -67,7 +67,7 @@ export default function ClaimSection() {
     : undefined;
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
-  
+  console.log('claim section contract',venomContract)
 
   const image = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
   const json = {
