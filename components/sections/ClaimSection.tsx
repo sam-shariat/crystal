@@ -17,7 +17,7 @@ import {
   Flex,
   Link,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   nameAtom,
   venomContractAtom,
@@ -62,9 +62,7 @@ export default function ClaimSection() {
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
-  const venomContract = provider
-    ? new provider.Contract(VenomAbi, new Address(VenomContractAddress))
-    : undefined;
+  const [venomContract,setVenomContract] = useState<any>(undefined);
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
   console.log('claim section contract',venomContract)
@@ -212,7 +210,11 @@ export default function ClaimSection() {
   }
 
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-
+  useEffect(()=> {
+    if(provider && venomContract === undefined){
+      setVenomContract(new provider.Contract(VenomAbi, new Address(VenomContractAddress)))
+    }
+  },[provider])
   return (
     <Box backgroundColor={colorMode === 'dark' ? 'blackAlpha.200' : 'auto'}>
       <Container
