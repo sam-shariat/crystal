@@ -46,7 +46,7 @@ export default function ConnectButton() {
   // Same idea for token balance fetching. Usage of standalone client and balance method of TIP-3 TokenWallet
   // We already knows user's TokenWallet address
   const getBalance = async (wallet: string) => {
-    if (!venomConnect) return;
+    try {if (!venomConnect) return;
     const standalone: ProviderRpcClient | undefined = await venomConnect?.getStandalone(
       'venomwallet'
     );
@@ -58,14 +58,18 @@ export default function ConnectButton() {
       console.log('balance is',nativeBalance)
     } else {
       alert('Standalone is not available now');
+    }} catch(e){
+      console.log("error balance",e)
     }
   };
 
   // Any interaction with venom-wallet (address fetching is included) needs to be authentificated
   const checkAuth = async (_venomConnect: any) => {
-    const auth = await _venomConnect?.checkAuth();
+    try{const auth = await _venomConnect?.checkAuth();
     console.log("auth : ",auth)
-    if (auth) await getAddress(_venomConnect);
+    if (auth) await getAddress(_venomConnect);}catch(e){
+      console.log('auth error ',e)
+    }
   };
 
   // This handler will be called after venomConnect.login() action

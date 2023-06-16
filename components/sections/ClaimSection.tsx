@@ -67,6 +67,7 @@ export default function ClaimSection() {
     : undefined;
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
+  
 
   const image = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
   const json = {
@@ -211,6 +212,7 @@ export default function ClaimSection() {
   }
 
   const [notMobile] = useMediaQuery('(min-width: 800px)');
+
   return (
     <Box backgroundColor={colorMode === 'dark' ? 'blackAlpha.200' : 'auto'}>
       <Container
