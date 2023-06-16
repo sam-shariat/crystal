@@ -210,8 +210,10 @@ export default function ClaimSection() {
 
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   useEffect(() => {
-    if (provider?.isInitialized && venomContract === undefined && isConnected) {
-      setVenomContract(new provider.Contract(VenomAbi, new Address(VenomContractAddress)));
+    if (provider?.isInitialized && venomContract === undefined && isConnected && VenomContractAddress) {
+      const _venomContract = new provider.Contract(VenomAbi, new Address(VenomContractAddress));
+      setVenomContract(_venomContract);
+      console.log("venom contract",_venomContract)
     }
   }, [provider?.isInitialized]);
 
