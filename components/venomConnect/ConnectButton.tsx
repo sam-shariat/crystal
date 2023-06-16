@@ -46,46 +46,52 @@ export default function ConnectButton() {
   // Same idea for token balance fetching. Usage of standalone client and balance method of TIP-3 TokenWallet
   // We already knows user's TokenWallet address
   const getBalance = async (wallet: string) => {
-    try {if (!venomConnect) return;
-    const standalone: ProviderRpcClient | undefined = await venomConnect?.getStandalone(
-      'venomwallet'
-    );
-    if (standalone) {
-      console.log('standalone set',standalone)
-      setVenomSProvider(standalone);
-      const nativeBalance = await standalone.getBalance(new Address(address));
-      setBalance(nativeBalance);
-      console.log('balance is',nativeBalance)
-    } else {
-      alert('Standalone is not available now');
-    }} catch(e){
-      console.log("error balance",e)
+    try {
+      if (!venomConnect) return;
+      const standalone: ProviderRpcClient | undefined = await venomConnect?.getStandalone(
+        'venomwallet'
+      );
+      if (standalone) {
+        console.log('standalone set', standalone);
+        setVenomSProvider(standalone);
+        const nativeBalance = await standalone.getBalance(new Address(address));
+        setBalance(nativeBalance);
+        console.log('balance is', nativeBalance);
+      } else {
+        alert('Standalone is not available now');
+      }
+    } catch (e) {
+      console.log('error balance', e);
     }
   };
 
   // Any interaction with venom-wallet (address fetching is included) needs to be authentificated
   const checkAuth = async (_venomConnect: any) => {
-    try{const auth = await _venomConnect?.checkAuth();
-    console.log("auth : ",auth)
-    if (auth) await getAddress(_venomConnect);}catch(e){
-      console.log('auth error ',e)
+    try {
+      const auth = await _venomConnect?.checkAuth();
+      console.log('auth : ', auth);
+      if (auth) await getAddress(_venomConnect);
+    } catch (e) {
+      console.log('auth error ', e);
     }
   };
 
   // This handler will be called after venomConnect.login() action
   // connect method returns provider to interact with wallet, so we just store it in state
   const onConnect = async (provider: any) => {
-    try {console.log('provider ',provider)
-    setIsConnected(true);
-    console.log('connected')
-    setVenomProvider(provider);
-    console.log('provider set')
-    const venomWalletAddress = provider ? await getAddress(provider) : undefined;
-    setAddress(venomWalletAddress);
-    console.log('address set')} catch(e){
-      console.log(e)
+    try {
+      console.log('provider ', provider);
+      if(!provider) return
+      setIsConnected(true);
+      console.log('connected');
+      setVenomProvider(provider);
+      console.log('provider set');
+      const venomWalletAddress = provider ? await getAddress(provider) : undefined;
+      setAddress(venomWalletAddress);
+      console.log('address set');
+    } catch (e) {
+      console.log(e);
     }
-
   };
 
   // This handler will be called after venomConnect.disconnect() action
@@ -102,14 +108,14 @@ export default function ConnectButton() {
   useEffect(() => {
     // connect event handler
     //const off = venomConnect?.on('connect', onConnect);
-    function auth(){
+    function auth() {
       //venomConnect?.on('extension-auth', onConnect);
       venomConnect?.on('connect', onConnect);
       if (venomConnect) {
         checkAuth(venomConnect);
       }
-    };
-    if(venomConnect && !isConnected){
+    }
+    if (venomConnect && !isConnected) {
       auth();
     }
   }, [venomConnect]);
@@ -123,14 +129,14 @@ export default function ConnectButton() {
     <>
       <Box>
         {!address ? (
-          <Button variant='solid' onClick={login}>
+          <Button variant="solid" onClick={login}>
             <Center>
               <VenomFoundation />
               Connect
             </Center>
           </Button>
         ) : (
-          <Button variant='solid' onClick={onDisconnect}>
+          <Button variant="solid" onClick={onDisconnect}>
             <Center>
               <VenomFoundation />
               <Text mx={2} color="var(--venom1)">

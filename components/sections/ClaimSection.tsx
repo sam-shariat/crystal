@@ -62,10 +62,10 @@ export default function ClaimSection() {
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
-  const [venomContract,setVenomContract] = useState<any>(undefined);
+  const [venomContract, setVenomContract] = useState<any>(undefined);
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
-  console.log('claim section contract',venomContract)
+  console.log('claim section contract', venomContract);
 
   const image = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
   const json = {
@@ -104,20 +104,22 @@ export default function ClaimSection() {
     }
 
     if (_name.length > 2 && venomContract?.methods !== undefined) {
-    try {
-
-      setFeeIsLoading(true);
-      // @ts-ignore: Unreachable code error
-      const { value0: _fee }:Fee = await venomContract.methods.calculateMintingFee({ name: String(_name) })
-        .call();
-      // @ts-ignore: Unreachable code error
-      const { value0: _nameExists } = await venomContract?.methods.nameExists({ name: String(_name) }).call();
-      setNameExists(_nameExists);
-      setFee(_fee);
-      setFeeIsLoading(false);
-    } catch(er){
-      console.log(er)
-    }
+      try {
+        setFeeIsLoading(true);
+        // @ts-ignore: Unreachable code error
+        const { value0: _fee }: Fee = await venomContract.methods
+          .calculateMintingFee({ name: String(_name) })
+          .call();
+        // @ts-ignore: Unreachable code error
+        const { value0: _nameExists } = await venomContract?.methods
+          .nameExists({ name: String(_name) })
+          .call();
+        setNameExists(_nameExists);
+        setFee(_fee);
+        setFeeIsLoading(false);
+      } catch (er) {
+        console.log(er);
+      }
     } else if (venomContract?.methods === undefined) {
       setMessage({
         type: 'warning',
@@ -143,10 +145,12 @@ export default function ClaimSection() {
       console.log('minting');
       setIsMinting(true);
       // @ts-ignore: Unreachable code error
-      const mintTx = await venomContract?.methods.mintNft({json: JSON.stringify(json),name: name}).send({
+      const mintTx = await venomContract?.methods
+        .mintNft({ json: JSON.stringify(json), name: name })
+        .send({
           amount: String(minFee + Number(fee)),
           bounce: true,
-          from: new Address(userAddress)
+          from: new Address(userAddress),
         })
         .catch((e: any) => {
           if (e.code === 3) {
@@ -155,7 +159,7 @@ export default function ClaimSection() {
             return Promise.resolve(null);
           } else {
             setIsMinting(false);
-            console.log(e)
+            console.log(e);
             return Promise.reject(e);
           }
         });
@@ -166,23 +170,23 @@ export default function ClaimSection() {
 
         let receiptTx: Transaction | undefined;
         const subscriber = provider && new provider.Subscriber();
-        if(subscriber)
-        await subscriber
-          .trace(mintTx)
-          .tap((tx_in_tree: any) => {
-            console.log('tx_in_tree : ', tx_in_tree);
-            if (tx_in_tree.account.equals(VenomContractAddress)) {
-              receiptTx = tx_in_tree;
-            }
-          })
-          .finished();
-
-          
+        if (subscriber)
+          await subscriber
+            .trace(mintTx)
+            .tap((tx_in_tree: any) => {
+              console.log('tx_in_tree : ', tx_in_tree);
+              if (tx_in_tree.account.equals(VenomContractAddress)) {
+                receiptTx = tx_in_tree;
+              }
+            })
+            .finished();
 
         // Decode events by using abi
         // we are looking for event Game(address player, uint8 bet, uint8 result, uint128 prize);
 
-        let events = await venomContract.decodeTransactionEvents({ transaction: receiptTx as Transaction });
+        let events = await venomContract.decodeTransactionEvents({
+          transaction: receiptTx as Transaction,
+        });
         console.log(events);
 
         if (events.length !== 1 || events[0].event !== 'NftCreated') {
@@ -192,7 +196,6 @@ export default function ClaimSection() {
             msg: 'Something went wrong, Please try again',
           });
         } else {
-          
           // @ts-ignore: Unreachable code error
           const nftAddress = String(events[0].data?.nft && events[0].data?.nft?._address);
           setMessage({
@@ -210,11 +213,12 @@ export default function ClaimSection() {
   }
 
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-  useEffect(()=> {
-    if(provider && venomContract === undefined){
-      setVenomContract(new provider.Contract(VenomAbi, new Address(VenomContractAddress)))
+  useEffect(() => {
+    if (provider && venomContract === undefined && isConnected) {
+      setVenomContract(new provider.Contract(VenomAbi, new Address(VenomContractAddress)));
     }
-  },[provider])
+  }, [provider]);
+
   return (
     <Box backgroundColor={colorMode === 'dark' ? 'blackAlpha.200' : 'auto'}>
       <Container
