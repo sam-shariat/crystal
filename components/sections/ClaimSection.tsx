@@ -212,7 +212,7 @@ export default function ClaimSection() {
     if (provider?.isInitialized && venomContract === undefined && isConnected) {
       setVenomContract(new provider.Contract(VenomAbi, new Address(VenomContractAddress)));
     }
-  }, [provider]);
+  }, [provider?.isInitialized]);
 
   return (
     <Box backgroundColor={colorMode === 'dark' ? 'blackAlpha.200' : 'auto'}>
