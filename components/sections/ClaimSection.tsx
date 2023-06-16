@@ -60,7 +60,7 @@ export default function ClaimSection() {
   const [claimedName, setClaimedName] = useState('');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   //const [venomContract, setVenomContract] = useState<any>(undefined);
-  const minFee = 1000000000;
+  const minFee = 330000000;
   const [name, setName] = useAtom(nameAtom);
 
   const image = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
