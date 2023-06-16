@@ -89,6 +89,9 @@ export default function ConnectButton() {
       const venomWalletAddress = provider ? await getAddress(provider) : undefined;
       setAddress(venomWalletAddress);
       console.log('address set');
+      const _venomContract = new provider.Contract(VenomAbi, new Address(VenomContractAddress));
+      setVenomContract(_venomContract);
+      console.log("venomid contract set",_venomContract)
     } catch (e) {
       console.log(e);
     }

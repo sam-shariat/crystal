@@ -49,6 +49,7 @@ export default function ClaimSection() {
   const { t } = useTranslate();
   const { colorMode } = useColorMode();
   const provider = useAtomValue(venomSProviderAtom);
+  const venomContract = useAtomValue(venomContractAtom);
   const isConnected = useAtomValue(isConnectedAtom);
   const userAddress = useAtomValue(addressAtom);
   const [feeIsLoading, setFeeIsLoading] = useState(false);
@@ -58,7 +59,7 @@ export default function ClaimSection() {
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
-  const [venomContract, setVenomContract] = useState<any>(undefined);
+  //const [venomContract, setVenomContract] = useState<any>(undefined);
   const minFee = 100000000;
   const [name, setName] = useAtom(nameAtom);
 
@@ -210,10 +211,8 @@ export default function ClaimSection() {
 
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   useEffect(() => {
-    if (provider?.isInitialized && venomContract === undefined && isConnected && VenomContractAddress) {
-      const _venomContract = new provider.Contract(VenomAbi, new Address(VenomContractAddress));
-      console.log("venom contract",_venomContract)
-      setVenomContract(_venomContract);
+    if (provider?.isInitialized && venomContract !== undefined && isConnected) {
+      console.log("venom contract ",venomContract)
     }
   }, [provider]);
 
