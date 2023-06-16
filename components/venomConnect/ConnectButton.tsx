@@ -71,14 +71,16 @@ export default function ConnectButton() {
   // This handler will be called after venomConnect.login() action
   // connect method returns provider to interact with wallet, so we just store it in state
   const onConnect = async (provider: any) => {
-    console.log('provider ',provider)
+    try {console.log('provider ',provider)
     setIsConnected(true);
     console.log('connected')
     setVenomProvider(provider);
     console.log('provider set')
     const venomWalletAddress = provider ? await getAddress(provider) : undefined;
     setAddress(venomWalletAddress);
-    console.log('address set')
+    console.log('address set')} catch(e){
+      console.log(e)
+    }
 
   };
 
@@ -103,7 +105,9 @@ export default function ConnectButton() {
         checkAuth(venomConnect);
       }
     };
-    auth();
+    if(venomConnect && !isConnected){
+      auth();
+    }
   }, [venomConnect]);
 
   // Hook for balance setup

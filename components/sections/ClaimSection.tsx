@@ -105,6 +105,8 @@ export default function ClaimSection() {
     }
 
     if (_name.length > 2 && venomContract?.methods !== undefined) {
+    try {
+
       setFeeIsLoading(true);
       // @ts-ignore: Unreachable code error
       const { value0: _fee }:Fee = await venomContract.methods.calculateMintingFee({ name: String(_name) })
@@ -114,6 +116,9 @@ export default function ClaimSection() {
       setNameExists(_nameExists);
       setFee(_fee);
       setFeeIsLoading(false);
+    } catch(er){
+      console.log(er)
+    }
     } else if (venomContract?.methods === undefined) {
       setMessage({
         type: 'warning',
