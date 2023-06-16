@@ -14,8 +14,8 @@ const ThemeProvider = ({ children }: IThemeProvider) => {
   const direction = getDirection(locale);
 
   const config = {
-    useSystemColorMode: false,
-    initialColorMode: 'dark'
+    initialColorMode: 'dark',
+    useSystemColorMode: false
   };
 
   const styles = {

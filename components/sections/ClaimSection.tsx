@@ -307,7 +307,7 @@ export default function ClaimSection() {
                 Minting Fee : {fee && !feeIsLoading ? `0.00000000${fee}` : 'Calculating'}
               </Text>
               {!feeIsLoading ? (
-                <Text fontWeight={'bold'} color={nameExists ? 'var(--red1)' : 'var(--venom1)'}>
+                <Text fontWeight={'light'} color={nameExists ? 'var(--red1)' : 'var(--venom1)'}>
                   {nameExists ? name + '.VID is Taken' : name + '.VID is Available'}
                 </Text>
               ) : (
