@@ -215,7 +215,7 @@ export default function ClaimSection() {
       setVenomContract(_venomContract);
       console.log("venom contract",_venomContract)
     }
-  }, [provider?.isInitialized]);
+  }, [provider]);
 
   return (
     <Box backgroundColor={colorMode === 'dark' ? 'blackAlpha.200' : 'auto'}>
