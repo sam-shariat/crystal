@@ -250,7 +250,7 @@ export default function ClaimSection() {
               gap={2}
               borderRadius={10}>
               <AlertIcon />
-              <Box>
+              <Box width={'100%'}>
                 <AlertTitle>{message.title.toUpperCase()}</AlertTitle>
                 <AlertDescription>{message.msg}</AlertDescription>
               </Box>
@@ -265,7 +265,7 @@ export default function ClaimSection() {
                     href={SITE_MANAGE_URL + claimedName}
                     target="_blank"
                     id={`venom-id-manage-nft-link`}>
-                    <Button m={1} minWidth={120}>
+                    <Button m={1} minWidth={120} bgColor={'var(--purple0)'}>
                       Manage VID
                     </Button>
                   </Link>
