@@ -53,7 +53,7 @@ export default function Header() {
               </IconButton>
             )}
             <NextLink href="/" passHref>
-              <Button color="var(--venom1)" fontWeight="bold" variant="ghost">
+              <Button color="var(--venom1)" fontWeight="bold" variant="ghost" px={2}>
                 <Logo />
                 <Text pl={1}>VenomID</Text>
               </Button>
