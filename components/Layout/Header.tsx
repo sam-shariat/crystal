@@ -60,28 +60,28 @@ export default function Header() {
             </NextLink>
             {notMobile && home &&(
               <NextLink href="#manage" passHref>
-                <Button fontWeight="bold" variant="ghost" textAlign="left">
+                <Button variant="ghost" textAlign="left">
                   Manage
                 </Button>
               </NextLink>
             )}
             {notMobile && home && (
               <NextLink href="#profile" passHref>
-                <Button fontWeight="bold" variant="ghost" textAlign="left">
+                <Button variant="ghost" textAlign="left">
                   Profile
                 </Button>
               </NextLink>
             )}
             {notMobile && home && (
               <NextLink href="#roadmap" passHref>
-                <Button fontWeight="bold" variant="ghost" textAlign="left">
+                <Button variant="ghost" textAlign="left">
                   RoadMap
                 </Button>
               </NextLink>
             )}
             {notMobile && home && (
               <NextLink href="#about" passHref>
-                <Button fontWeight="bold" variant="ghost" textAlign="left">
+                <Button variant="ghost" textAlign="left">
                   About
                 </Button>
               </NextLink>
@@ -137,22 +137,22 @@ export default function Header() {
           <DrawerBody>
             {home && <Stack py={4}>
               <NextLink href="#manage" passHref>
-                <Button fontWeight="bold" variant="ghost" width="100%" justifyContent="left">
+                <Button variant="ghost" width="100%" justifyContent="left">
                   Manage
                 </Button>
               </NextLink>
               <NextLink href="#profile" passHref>
-                <Button fontWeight="bold" variant="ghost" width="100%" justifyContent="left">
+                <Button variant="ghost" width="100%" justifyContent="left">
                   Profile
                 </Button>
               </NextLink>
               <NextLink href="#roadmap" passHref>
-                <Button fontWeight="bold" variant="ghost" width="100%" justifyContent="left">
+                <Button variant="ghost" width="100%" justifyContent="left">
                   RoadMap
                 </Button>
               </NextLink>
               <NextLink href="#about" passHref>
-                <Button fontWeight="bold" variant="ghost" width="100%" justifyContent="left">
+                <Button variant="ghost" width="100%" justifyContent="left">
                   About
                 </Button>
               </NextLink>
