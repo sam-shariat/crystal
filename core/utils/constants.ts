@@ -1,9 +1,12 @@
 export const SITE_URL = "https://venomid.network/"
 export const SITE_TITLE = "Venom ID"
 export const SITE_DESCRIPTION = "Your entire virtual identity in the blockchain in one simple link"
+export const SITE_FULL_DESCRIPTION = "Venom IDentities (VID) serve as secure and easy-to-use domain names for managing your online presence. Venom IDentities (VID) are user-friendly solution to streamline your virtual identity management on the Venom blockchain. With VID, you can easily assign human-readable names to your blockchain and non-blockchain resources, such as Venom and Ethereum addresses, Social Media handles, website URLs, and more. VID enables these resources to be effectively managed and accessed via one, simple name."
 export const SITE_MANAGE_URL = "https://venomid.tools/"
 export const SITE_PROFILE_URL = "https://venomid.link/"
 export const VENOMSCAN_NFT = "https://devnet.venomscan.com/accounts/"
 export const BTCSCAN_ADDRESS = "https://blockchair.com/bitcoin/"
 export const ETHERSCAN_ADDRESS = "https://etherscan.io/address/"
 export const CONTRACT_ADDRESS = "0:247682756b04b9e2290fd1801bcd7cd9ab5e46a167ff339e3e176355b5db4901";
+export const SOCIAL_TWITTER = "venomid_network";
+export const TWITTER_URL = "https://twitter.com/"
