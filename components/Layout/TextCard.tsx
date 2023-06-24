@@ -3,6 +3,7 @@ import {
   Box,
   useColorMode,
   Center,
+  Flex,
   Button
 } from '@chakra-ui/react';
 
@@ -17,10 +18,10 @@ export default function TextCard({ header, domain, text, icon }: Props) {
   return (
     <Center as={Button} key={header} bg={colorMode === 'dark' ? 'var(--darkGradient)' : 'var(--lightGradient)'}  flexDirection="column" borderRadius={12} borderWidth={1} borderColor="grey" p={4} width={'100%'} minH={200}>
         <Box my={4}>{icon}</Box>
-      <Text display={'flex'} fontSize={'xl'} fontWeight="bold">
+      <Flex fontSize={'xl'} fontWeight="bold" my={1}>
         {header}<Text color="var(--venom1)">{domain}</Text>
-      </Text>
-      <Text fontSize={'lg'} fontWeight="light" my={1} color={'default'}>
+      </Flex>
+      <Text fontSize={'lg'} fontWeight='light'>
         {text}
       </Text>
     </Center>
