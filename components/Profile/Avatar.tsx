@@ -4,9 +4,10 @@ import { motion, MotionProps } from 'framer-motion';
 
 const ImageMotion = motion<MotionProps | ImageProps>(Image as ComponentType);
 interface Props {
-    url: string
+    url: string;
+    alt: string;
 }
-const Avatar = ({url} : Props) => {
+const Avatar = ({url,alt} : Props) => {
   return (
     <ImageMotion
       initial={{ scale: 0.96 }}
@@ -29,7 +30,7 @@ const Avatar = ({url} : Props) => {
       boxShadow="0 0 20px #00000070"
       my={5}
       zIndex={100}
-      alt="netspot"
+      alt={alt}
     />
   );
 }

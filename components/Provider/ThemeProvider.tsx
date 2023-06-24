@@ -21,7 +21,7 @@ const ThemeProvider = ({ children }: IThemeProvider) => {
   const styles = {
     global: (props: ThemeExtension) => ({
       body: {
-        bg: mode('gray.100', 'var(--darkGradient)')(props),
+        bg: mode('var(--lightGradient)', 'var(--darkGradient)')(props),
       },
     }),
   };

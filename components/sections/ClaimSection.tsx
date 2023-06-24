@@ -30,10 +30,11 @@ import VenomAbi from 'abi/Collection.abi.json';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
+import TextCard from 'components/Layout/TextCard';
 import { useMediaQuery, useColorMode } from '@chakra-ui/react';
 import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL } from 'core/utils/constants';
 import { Address, Transaction } from 'everscale-inpage-provider';
-
+import { RiFingerprint2Line, RiSettings3Line, RiProfileLine} from 'react-icons/ri';
 interface Message {
   type: any;
   title: string;
@@ -274,16 +275,18 @@ export default function ClaimSection() {
             </Alert>
           )}
           <Stack direction={['column', 'row']} pb={6} pt={notMobile ? 10 : 6} width="100%">
-            <InputGroup size="lg">
+            <InputGroup size="lg" border={1} borderColor={'grey'}>
               <InputLeftAddon>venomid.link/</InputLeftAddon>
               <Input
                 placeholder="samy"
                 value={name}
                 onChange={(e) => inputChange(e.target.value)}
+                bg={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
               />
             </InputGroup>
             <Button
               backgroundColor="var(--venom2)"
+              color="white"
               size="lg"
               minWidth="300px"
               disabled={name.length < 3 || nameExists}
@@ -304,20 +307,25 @@ export default function ClaimSection() {
               p={5}
               bgColor={'blackAlpha.200'}>
               <Text fontWeight={'bold'}>
-                Minting Fee : {fee && !feeIsLoading ? `0.00000000${fee}` : 'Calculating'}
+                {t('mintingFee')} : {fee && !feeIsLoading ? `0.00000000${fee}` : t('calculating')}
               </Text>
               {!feeIsLoading ? (
-                <Text fontWeight={'light'} color={nameExists ? 'var(--red1)' : 'var(--venom1)'}>
-                  {nameExists ? name + '.VID is Taken' : name + '.VID is Available'}
+                <Text fontWeight={colorMode ==='light' ? 'bold' : 'light'} color={nameExists ? 'var(--red1)' : 'var(--venom2)'}>
+                  {nameExists ? name + '.VID '+ t('taken') : name + '.VID ' + t('available')}
                 </Text>
               ) : (
-                <Text fontWeight={'light'}>Checking Availibility</Text>
+                <Text fontWeight={colorMode ==='light' ? 'bold' : 'light'}> {t('availability')}</Text>
               )}
             </Flex>
           )}
-          <Text fontWeight="light" fontSize={notMobile ? '2xl' : 'xl'} mb={notMobile ? 10 : 6}>
+          <Text fontWeight="light" fontSize={'xl'} my={4}>
             {t('claimDescription')}
           </Text>
+          <SimpleGrid columns={[1,1,3]} gap={4} my={10} width={'100%'}>
+            <TextCard icon={<RiFingerprint2Line size='46px'/>} header="venomid" domain=".network" text={t('venomidnetwork')} />
+            <TextCard icon={<RiSettings3Line size='46px'/>} header="venomid" domain=".tools" text={t('venomidtools')} />
+            <TextCard icon={<RiProfileLine size='46px'/>} header="venomid" domain=".link" text={t('venomidlink')} />
+          </SimpleGrid>
         </>
       </Container>
     </Box>

@@ -21,7 +21,7 @@ export default function ProfileSection() {
           <Box gap={4} my={10}>
             <Box display="flex" flexDirection="column" justifyContent="center">
               <Heading fontWeight="bold" fontSize="5xl" textAlign={notMobile ? 'center' : 'left'}>
-                {t('profile')}
+                {t('profileLink')}
               </Heading>
               <Text fontWeight="bold" fontSize={notMobile ? '3xl' : '2xl'} my={6} textAlign={notMobile ? 'center' : 'left'}>
                 {t('profileDescription')}
@@ -29,7 +29,7 @@ export default function ProfileSection() {
               <Center display="flex" flexDirection="column">
                 <Venom srcUrl="/screens/profileScreen.png" size={notMobile ? 'lg' : 'xs'} />
               </Center>
-              <Link href={SITE_PROFILE_URL} target="_blank" minWidth="300px !important"><Button background="var(--blue1)" size="lg" width="100%">
+              <Link href={SITE_PROFILE_URL} target="_blank" minWidth="300px !important"><Button color="white" background="var(--blue1)" size="lg" width="100%">
                 {t('linkWebsiteButton')}
               </Button></Link>
               <Link href={'/link'} target="_blank" minWidth="300px !important"><Button size="lg" width="100%" mt={2}>

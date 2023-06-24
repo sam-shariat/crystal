@@ -8,10 +8,10 @@
   );
   --lightGradient: radial-gradient(
     farthest-corner  at 60% 55%,
-    #f55b38 10%,
-    #724c76 45%,
-    #6d3861 60%,
-    #327051 90%
+    #e5dedc 10%,
+    #e7e1e7 45%,
+    #ebe6ea 60%,
+    #dfe5e2 90%
   );
   --lightLinearGradient: linear-gradient(
     to right,

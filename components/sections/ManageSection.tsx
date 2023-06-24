@@ -21,12 +21,12 @@ export default function ManageSection() {
           <SimpleGrid columns={[1, 2]} spacing="32px" my={10}>
             <Center display="flex" flexDirection="column">
               <Heading fontWeight="bold" fontSize="5xl">
-                {t('manage')}
+                {t('easyManagement')}
               </Heading>
               <Text fontWeight="bold" fontSize={notMobile ? '3xl' : '2xl'} my={10}>
                 {t('manageDescription')}
               </Text>
-              <NextLink href={SITE_MANAGE_URL} passHref><Button backgroundColor="var(--purple1)" size="lg" minWidth="100%">
+              <NextLink href={SITE_MANAGE_URL} passHref><Button color="white" backgroundColor="var(--purple1)" size="lg" minWidth="100%">
                 {t('manageWebsiteButton')}
               </Button></NextLink>
               <NextLink href={'/manage'} passHref><Button size="lg" minWidth="100%" mt={2}>

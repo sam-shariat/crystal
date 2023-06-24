@@ -221,7 +221,14 @@ const ManagePage: NextPage = () => {
         placeItems="center"
         minH="75vh">
         <>
-          {avatar ? <Avatar url={avatar} /> : <Avatar url={'/logos/vidbg.svg'} />}
+          <Heading fontWeight="bold" fontSize="2xl" my={10}>
+            {!isLoading ? json.name : 'Loading Venom ID'}
+          </Heading>
+          {avatar ? (
+            <Avatar url={avatar} alt={json.name + 'avatar image'} />
+          ) : (
+            <Avatar url={'/logos/vidbg.svg'} alt={'venom id avatar image'} />
+          )}
           <Button
             isLoading={avatarUploading}
             my={4}
@@ -229,18 +236,18 @@ const ManagePage: NextPage = () => {
             onClick={() => imageFileSelect !== undefined && imageFileSelect.click()}>
             Select Avatar Image
           </Button>
-
-          <Heading fontWeight="bold" fontSize="2xl" my={4}>
-            {!isLoading ? json.name : 'Loading Venom ID'}
-          </Heading>
           {!isLoading ? (
             <Flex mt={6} direction={'column'} gap={4} width="100%">
-              <Link size='lg' href={VENOMSCAN_NFT + json.venomAddress} target="_blank" width={'100% !important'}>
+              <Link
+                size="lg"
+                href={VENOMSCAN_NFT + json.venomAddress}
+                target="_blank"
+                width={'100% !important'}>
                 <Button
                   variant="solid"
                   size="lg"
                   backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
-                  minWidth={notMobile ? "md" : "xs"}>
+                  minWidth={notMobile ? 'md' : 'xs'}>
                   <VenomFoundation /> Venom Address{' '}
                   <Text px={2} color="var(--venom1)">
                     {truncAddress(json.venomAddress)}

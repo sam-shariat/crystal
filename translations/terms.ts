@@ -8,6 +8,26 @@ const terms: Terms = {
     fa: 'ونوم آی دی'
   },
   manage: {
+    en: 'Manage',
+    fa: 'مدیریت'
+  },
+  profile: {
+    en: 'Profile',
+    fa: 'پروفایل'
+  },
+  venomidnetwork: {
+    en: 'Venom ID Network',
+    fa: 'شبکه ونوم آی دی'
+  },
+  venomidtools: {
+    en: 'Venom ID Management',
+    fa: 'مدیریت ونوم آی دی'
+  },
+  venomidlink: {
+    en: 'Venom ID Profile Link',
+    fa: 'لینک پروفایل ونوم آی دی'
+  },
+  easyManagement: {
     en: 'Easy Management',
     fa: 'مدیریت آسان'
   },
@@ -16,7 +36,7 @@ const terms: Terms = {
     fa: 'هویت مجازی شما در بلاک‌چین با یک لینک ساده'
   },
   claimDescription: {
-    en: 'Your entire virtual identity in the blockchain through one simple link with Venom ID. Claim yours now',
+    en: 'Your entire virtual identity in the blockchain through one simple link with Venom ID',
     fa: 'هویت مجازی شما در بلاکچین به وسیله یک لینک ساده با ونوم آیدی'
   },
   claimButton: {
@@ -39,7 +59,7 @@ const terms: Terms = {
     en: 'Management Demo',
     fa: 'دمو بخش مدیریت'
   },
-  profile: {
+  profileLink: {
     en: 'Venomid.link',
     fa: 'Venomid.link'
   },
@@ -125,12 +145,32 @@ const terms: Terms = {
   },
   aboutDescription: {
     en: `Venom IDentities (VID) are user-friendly solution for your virtual identity management on the Venom blockchain. With VID, you can easily assign human-readable names to your blockchain and non-blockchain resources, such as Venom and Ethereum addresses, Social Media , website URLs, and more.`,
-    fa: 'درباره ما'
+    fa: 'ونوم آی دی ها (VID) راه حلی کاربرپسند برای مدیریت هویت مجازی شما در بلاک چین ونوم است. با VID، می‌توانید به راحتی نام‌های قابل خواندن برای انسان را به منابع بلاک چین و غیربلاک چین خود، مانند آدرس‌های ونوم و اتریم ، رسانه‌های اجتماعی، آدرس‌های وب‌سایت و موارد دیگر اختصاص دهید.'
   },
   aboutButton: {
     en: `Our Contact Info`,
     fa: ' اطلاعات تماس ما'
   },
+  mintingFee: {
+    en: `Minting Fee`,
+    fa: ' هزینه مینت '
+  },
+  availability: {
+    en: `Checking Availability`,
+    fa: ' در حال بررسی دسترسی '
+  },
+  available: {
+    en: `is Available`,
+    fa: ' در دسترس است '
+  },
+  taken: {
+    en: `is Taken`,
+    fa: ' در دسترس نیست '
+  },
+  calculating: {
+    en: 'Calculating',
+    fa: 'در حال محاسبه فی'
+  }
 };
 
 export default terms;

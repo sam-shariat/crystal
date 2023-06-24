@@ -22,21 +22,34 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { localeAtom } from 'core/atoms';
+import { localeAtom, colorModeAtom } from 'core/atoms';
 import { ConnectButton } from 'components/venomConnect';
 import { useAtom } from 'jotai';
 import Logo from './Logo';
 import { RiMoonFill, RiSunFill, RiMenu2Fill, RiCloseFill } from 'react-icons/ri';
 import { Locale } from 'translations';
 import { useRouter } from 'next/router'
+import { useEffect } from 'react';
+import { useTranslate } from 'core/lib/hooks/use-translate';
 
 export default function Header() {
+  const [colorM,setColorM] = useAtom(colorModeAtom);
   const { colorMode, toggleColorMode } = useColorMode();
   const [locale, setLocale] = useAtom(localeAtom);
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { pathname } = useRouter()
+  const { t } = useTranslate();
   const home = pathname === '/' ? true : false;
+
+  useEffect(()=> {
+    console.log(colorMode + " is " + colorM)
+    if(colorMode !== colorM){
+      
+      toggleColorMode();
+    }
+  },[colorMode])
+
   return (
     <Box
       as="nav"
@@ -53,36 +66,36 @@ export default function Header() {
               </IconButton>
             )}
             <NextLink href="/" passHref>
-              <Button color="var(--venom1)" fontWeight="bold" variant="ghost" px={2}>
+              <Button id="venomidlogo" color="var(--venom1)" fontWeight="bold" variant="ghost" px={2}>
                 <Logo />
                 <Text pl={1}>VenomID</Text>
               </Button>
             </NextLink>
             {notMobile && home &&(
               <NextLink href="#manage" passHref>
-                <Button variant="ghost" textAlign="left">
-                  Manage
+                <Button variant="ghost">
+                  {t('manage')}
                 </Button>
               </NextLink>
             )}
             {notMobile && home && (
               <NextLink href="#profile" passHref>
-                <Button variant="ghost" textAlign="left">
-                  Profile
+                <Button variant="ghost">
+                  {t('profile')}
                 </Button>
               </NextLink>
             )}
             {notMobile && home && (
               <NextLink href="#roadmap" passHref>
-                <Button variant="ghost" textAlign="left">
-                  RoadMap
+                <Button variant="ghost">
+                  {t('roadmap')}
                 </Button>
               </NextLink>
             )}
             {notMobile && home && (
               <NextLink href="#about" passHref>
-                <Button variant="ghost" textAlign="left">
-                  About
+                <Button variant="ghost">
+                  {t('about')}
                 </Button>
               </NextLink>
             )}
@@ -101,7 +114,8 @@ export default function Header() {
             {notMobile && (
               <IconButton
                 aria-label="theme"
-                onClick={toggleColorMode}
+                onClick={()=> {setColorM(colorMode === 'light' ? 'dark' : 'light'); toggleColorMode()} }
+                
                 icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunFill />}
               />
             )}
@@ -126,7 +140,8 @@ export default function Header() {
               <IconButton
                 variant="ghost"
                 aria-label="theme"
-                onClick={toggleColorMode}
+                onClick={()=> {setColorM(colorMode === 'light' ? 'dark' : 'light'); toggleColorMode()} }
+                
                 icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunFill />}
               />
               <IconButton aria-label='closemenu' variant="ghost" onClick={onClose}>
@@ -138,22 +153,22 @@ export default function Header() {
             {home && <Stack py={4}>
               <NextLink href="#manage" passHref>
                 <Button variant="ghost" width="100%" justifyContent="left">
-                  Manage
+                  {t('manage')}
                 </Button>
               </NextLink>
               <NextLink href="#profile" passHref>
                 <Button variant="ghost" width="100%" justifyContent="left">
-                  Profile
+                {t('profile')}
                 </Button>
               </NextLink>
               <NextLink href="#roadmap" passHref>
                 <Button variant="ghost" width="100%" justifyContent="left">
-                  RoadMap
+                {t('roadmap')}
                 </Button>
               </NextLink>
               <NextLink href="#about" passHref>
                 <Button variant="ghost" width="100%" justifyContent="left">
-                  About
+                {t('about')}
                 </Button>
               </NextLink>
             </Stack>}

@@ -55,7 +55,7 @@ const LinkPage: NextPage = () => {
         placeItems="center"
         minH="75vh">
         {!isLoading ? <>
-          <Avatar url={json.avatar} />
+          <Avatar url={json.avatar} alt={json.name + "avatar image"}/>
           <Heading fontWeight="bold" fontSize="2xl" mt={2}>
             {json.name}
           </Heading>
