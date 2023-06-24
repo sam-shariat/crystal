@@ -20,7 +20,7 @@ export default function TextCard({ header, domain, text, icon }: Props) {
       <Text display={'flex'} fontSize={'xl'} fontWeight="bold">
         {header}<Text color="var(--venom1)">{domain}</Text>
       </Text>
-      <Text fontSize={'lg'} fontWeight="light" my={1}>
+      <Text fontSize={'lg'} fontWeight="light" my={1} color={'default'}>
         {text}
       </Text>
     </Center>
