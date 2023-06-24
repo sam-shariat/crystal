@@ -10,7 +10,7 @@ interface Props {
   header: string;
   domain: string;
   text: string;
-  icon: React.Element;
+  icon: JSX.Element;
 }
 export default function TextCard({ header, domain, text, icon }: Props) {
     const {colorMode} = useColorMode();
