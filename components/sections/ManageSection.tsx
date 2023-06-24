@@ -37,7 +37,7 @@ export default function ManageSection() {
               <Venom srcUrl="/screens/manageScreen.jpg" />
             </Center>
           </SimpleGrid>
-          <Text fontWeight="light" fontSize={notMobile ? '2xl' : 'xl'}  pb={notMobile ? 10 : 4}>
+          <Text fontWeight="light" fontSize={'xl'} mb={4} pb={notMobile ? 10 : 4}>
             {t('dappDescription')}
           </Text>
         </>

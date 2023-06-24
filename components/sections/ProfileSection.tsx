@@ -37,7 +37,7 @@ export default function ProfileSection() {
               </Button></Link>
             </Box>
           </Box>
-          <Text fontWeight="light" fontSize={notMobile ? '2xl' : 'xl'} pb={notMobile ? 10 : 6}>
+          <Text fontWeight="light" fontSize={'xl'} mb={4} pb={notMobile ? 10 : 6}>
             {t('linkDescription')}
           </Text>
         </>
