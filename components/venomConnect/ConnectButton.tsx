@@ -10,9 +10,11 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  Link
+  LinkBox,
+  LinkOverlay,
+  useClipboard,
 } from '@chakra-ui/react';
-import { VenomFoundation } from 'components/logos';
+import { VenomFoundation, VenomScanIcon } from 'components/logos';
 import { truncAddress } from 'core/utils';
 import { useAtom, useAtomValue } from 'jotai';
 import {
@@ -26,12 +28,13 @@ import {
   isConnectedAtom,
   primaryNameAtom,
 } from 'core/atoms';
-import { SITE_PROFILE_URL } from 'core/utils/constants';
+import { SITE_PROFILE_URL, VENOMSCAN_NFT } from 'core/utils/constants';
 import VenomAbi from 'abi/Collection.abi.json';
 import { Address, ProviderRpcClient } from 'everscale-inpage-provider';
 import React, { useEffect } from 'react';
 import { FaSignOutAlt, FaRegCopy } from 'react-icons/fa';
-import LogoIcon from '../Layout/LogoIcon'
+import { RiScan2Line } from 'react-icons/ri';
+import LogoIcon from '../Layout/LogoIcon';
 
 export default function ConnectButton() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
@@ -40,6 +43,12 @@ export default function ConnectButton() {
   const [isConnected, setIsConnected] = useAtom(isConnectedAtom);
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
   const { colorMode } = useColorMode();
+  const [venomProvider, setVenomProvider] = useAtom(venomProviderAtom);
+  const [venomSProvider, setVenomSProvider] = useAtom(venomSProviderAtom);
+  const [venomContract, setVenomContract] = useAtom(venomContractAtom);
+  const [address, setAddress] = useAtom(addressAtom);
+  const [balance, setBalance] = useAtom(balanceAtom);
+  const { onCopy } = useClipboard(address);
 
   const login = async () => {
     if (!venomConnect) return;
@@ -47,12 +56,6 @@ export default function ConnectButton() {
     console.log('current :', venomConnect.currentProvider);
     await venomConnect.connect();
   };
-
-  const [venomProvider, setVenomProvider] = useAtom(venomProviderAtom);
-  const [venomSProvider, setVenomSProvider] = useAtom(venomSProviderAtom);
-  const [venomContract, setVenomContract] = useAtom(venomContractAtom);
-  const [address, setAddress] = useAtom(addressAtom);
-  const [balance, setBalance] = useAtom(balanceAtom);
 
   // This method allows us to gen a wallet address from inpage provider
   const getAddress = async (provider: any) => {
@@ -107,6 +110,7 @@ export default function ConnectButton() {
       console.log('provider set');
       const venomWalletAddress = provider ? await getAddress(provider) : undefined;
       setAddress(venomWalletAddress);
+
       console.log('address set');
       const _venomContract = new provider.Contract(VenomAbi, new Address(VenomContractAddress));
       setVenomContract(_venomContract);
@@ -191,9 +195,35 @@ export default function ConnectButton() {
               border={1}
               borderColor={'grey'}
               bg={colorMode === 'light' ? 'var(--lightGrey)' : 'var(--darkGradient)'}>
-              {primaryName.name !== '' && <MenuItem as={Link} href={SITE_PROFILE_URL + primaryName.name} target="_blank" display='flex' gap={2} ><LogoIcon />View VenomID</MenuItem>}
-              <MenuItem display='flex' gap={2}><FaRegCopy />Copy {truncAddress(address)}</MenuItem>
-              <MenuItem onClick={onDisconnect} display='flex' gap={2}><FaSignOutAlt/> Logout</MenuItem>
+              {primaryName.name !== '' && (
+                <LinkBox as={MenuItem}>
+                  <LinkOverlay
+                    display="flex"
+                    gap={2}
+                    href={SITE_PROFILE_URL + primaryName.name}
+                    target="_blank">
+                    <LogoIcon />
+                    View VenomID
+                  </LinkOverlay>
+                </LinkBox>
+              )}
+              <LinkBox as={MenuItem}>
+                <LinkOverlay
+                  display="flex"
+                  gap={2}
+                  href={VENOMSCAN_NFT + address}
+                  target="_blank">
+                  <VenomScanIcon />
+                  View on VenomScan
+                </LinkOverlay>
+              </LinkBox>
+              <MenuItem display="flex" gap={2} onClick={onCopy}>
+                <FaRegCopy />
+                Copy {truncAddress(address)}
+              </MenuItem>
+              <MenuItem onClick={onDisconnect} display="flex" gap={2}>
+                <FaSignOutAlt /> Logout
+              </MenuItem>
             </MenuList>
           </Menu>
         )}
