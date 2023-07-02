@@ -1,4 +1,17 @@
-import { Button, Box, useMediaQuery, Text, Center } from '@chakra-ui/react';
+import {
+  Button,
+  Box,
+  useMediaQuery,
+  Text,
+  Center,
+  Stack,
+  useColorMode,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Link
+} from '@chakra-ui/react';
 import { VenomFoundation } from 'components/logos';
 import { truncAddress } from 'core/utils';
 import { useAtom, useAtomValue } from 'jotai';
@@ -11,16 +24,22 @@ import {
   venomContractAtom,
   venomContractAddressAtom,
   isConnectedAtom,
+  primaryNameAtom,
 } from 'core/atoms';
+import { SITE_PROFILE_URL } from 'core/utils/constants';
 import VenomAbi from 'abi/Collection.abi.json';
 import { Address, ProviderRpcClient } from 'everscale-inpage-provider';
 import React, { useEffect } from 'react';
+import { FaSignOutAlt, FaRegCopy } from 'react-icons/fa';
+import LogoIcon from '../Layout/LogoIcon'
 
 export default function ConnectButton() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   const venomConnect = useAtomValue(walletAtom);
   const [isConnected, setIsConnected] = useAtom(isConnectedAtom);
+  const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
+  const { colorMode } = useColorMode();
 
   const login = async () => {
     if (!venomConnect) return;
@@ -81,7 +100,7 @@ export default function ConnectButton() {
   const onConnect = async (provider: any) => {
     try {
       console.log('provider ', provider);
-      if(!provider) return
+      if (!provider) return;
       setIsConnected(true);
       console.log('connected');
       setVenomProvider(provider);
@@ -91,7 +110,13 @@ export default function ConnectButton() {
       console.log('address set');
       const _venomContract = new provider.Contract(VenomAbi, new Address(VenomContractAddress));
       setVenomContract(_venomContract);
-      console.log("venomid contract set",_venomContract)
+      const { value0: primaryName } = await _venomContract.methods
+        .getPrimaryName({ _owner: new Address(venomWalletAddress) })
+        .call();
+      if (primaryName.name !== '') {
+        setPrimaryName(primaryName);
+      }
+      console.log('venomid contract set', _venomContract);
     } catch (e) {
       console.log(e);
     }
@@ -139,15 +164,38 @@ export default function ConnectButton() {
             </Center>
           </Button>
         ) : (
-          <Button variant="solid" onClick={onDisconnect}>
-            <Center>
-              <VenomFoundation />
-              <Text mx={2} color="var(--venom1)">
-                {Math.round(Number(balance) / 10e5) / 10e2}
-              </Text>
-              {notMobile && truncAddress(address)}
-            </Center>
-          </Button>
+          <Menu>
+            <MenuButton as={Button} minH={'46px'}>
+              <Center>
+                <VenomFoundation />
+                <Stack gap={0} mx={1}>
+                  <Text
+                    fontWeight={colorMode === 'light' ? 'semibold' : 'light'}
+                    textAlign={'left'}
+                    my={'0 !important'}>
+                    {primaryName.name !== '' ? primaryName.name : truncAddress(address)}
+                  </Text>
+                  <Text
+                    fontWeight={colorMode === 'light' ? 'semibold' : 'light'}
+                    textAlign={'left'}
+                    my={'0 !important'}
+                    color="var(--venom1)">
+                    {Math.round(Number(balance) / 10e5) / 10e2} {notMobile ? 'VENOM' : ''}
+                  </Text>
+                </Stack>
+              </Center>
+            </MenuButton>
+            <MenuList
+              width={100}
+              py={0}
+              border={1}
+              borderColor={'grey'}
+              bg={colorMode === 'light' ? 'var(--lightGrey)' : 'var(--darkGradient)'}>
+              {primaryName.name !== '' && <MenuItem as={Link} href={SITE_PROFILE_URL + primaryName.name} target="_blank" display='flex' gap={2} ><LogoIcon />View VenomID</MenuItem>}
+              <MenuItem display='flex' gap={2}><FaRegCopy />Copy {truncAddress(address)}</MenuItem>
+              <MenuItem onClick={onDisconnect} display='flex' gap={2}><FaSignOutAlt/> Logout</MenuItem>
+            </MenuList>
+          </Menu>
         )}
       </Box>
     </>

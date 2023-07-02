@@ -31,6 +31,10 @@ const terms: Terms = {
     en: 'Easy Management',
     fa: 'مدیریت آسان'
   },
+  view: {
+    en: 'View',
+    fa: 'مشاهده'
+  },
   description: {
     en: 'Your entire Virtual IDentity in the Blockchain',
     fa: 'هویت مجازی شما در بلاک‌چین با یک لینک ساده'
@@ -155,6 +159,10 @@ const terms: Terms = {
     en: `Minting Fee`,
     fa: ' هزینه مینت '
   },
+  reserveFee: {
+    en: `Reserve Fee`,
+    fa: ' فی رزرو '
+  },
   availability: {
     en: `Checking Availability`,
     fa: ' در حال بررسی دسترسی '
@@ -170,7 +178,47 @@ const terms: Terms = {
   calculating: {
     en: 'Calculating',
     fa: 'در حال محاسبه فی'
-  }
+  },
+  venomWalletConnect: {
+    en: 'Please Connect Your Venom Wallet To Continue',
+    fa: 'لطفا برای ادامه کیف پول ونوم خود را وصل کنید'
+  },
+  connectWallet: {
+    en: 'Wallet Connection',
+    fa: 'اتصال کیف پول'
+  },
+  invalidName: {
+    en:'Invalid Name Character',
+    fa:'نام غیرقابل قبول'
+  },
+  invalidNameMsg: {
+    en:'Name can only contain URL-friendly characters. (letters, numbers and underscore _ )',
+    fa:'نام فقط می‌تواند شامل حروف، اعداد و زیر خط باشد (فقط انگلیسی)'
+  },
+  contractConnection: {
+    en:'Error connecting to smart contract',
+    fa:'اشکال در اتصال به قرارداد هوشمند'
+  },
+  contractConnectionMsg: {
+    en:'Something goes wrong when trying to get data from the smart contract. Please reload the page and try again',
+    fa:'مشکلی در هنگام دریافت داده ها از قرارداد هوشمند رخ داده است. لطفاً صفحه را دوباره بارگذاری کرده و دوباره تلاش کنید'
+  },
+  error: {
+    en:'Error',
+    fa:'اشکال'
+  },
+  commonErrorMsg: {
+    en:'Something went wrong, Please try again',
+    fa:'مشکلی به وجود آمده است. لطفا دوباره تلاش کنید'
+  },
+  mintSuccess: {
+    en:'Mint Successful',
+    fa:'مینت موفق'
+  },
+  mintSuccessMsg: {
+    en:'Venom ID Claimed Successfully, You can now manage, customize and share your Venom link',
+    fa:'ونوم آی دی با موفقیت مینت شد. حالا میتوانید لینک ونوم خود را سفارشی سازی و مدیریت کنید و آن را به اشتراک بگذارید'
+  },
 };
 
 export default terms;

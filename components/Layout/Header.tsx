@@ -105,7 +105,7 @@ export default function Header() {
             {notMobile && home &&(
               <Menu>
                 <MenuButton as={Button}>{locale.toUpperCase()}</MenuButton>
-                <MenuList width={100}>
+                <MenuList py={0} width={100} border={1} borderColor={'grey'} bg={colorMode === 'light' ? 'var(--lightGrey)': 'var(--darkGradient)'}>
                   <MenuItem onClick={() => setLocale(Locale.En)}>EN</MenuItem>
                   <MenuItem onClick={() => setLocale(Locale.Fa)}>فا</MenuItem>
                 </MenuList>

@@ -5,7 +5,7 @@ import { EverscaleStandaloneClient } from 'everscale-standalone-client';
 export const initVenomConnect = async () => {
   return new VenomConnect({
     theme: 'dark',
-    checkNetworkId: 1002,
+    checkNetworkId: 1000,
     providersOptions: {
       venomwallet: {
         walletWaysToConnect: [
@@ -20,11 +20,11 @@ export const initVenomConnect = async () => {
               fallback: () =>
                 EverscaleStandaloneClient.create({
                   connection: {
-                    id: 1002,
-                    group: 'venom_devnet',
+                    id: 1000,
+                    group: 'venom_testnet',
                     type: 'jrpc',
                     data: {
-                      endpoint: 'https://jrpc-devnet.venom.foundation/rpc',
+                      endpoint: 'https://jrpc-testnet.venom.foundation/rpc',
                     },
                   },
                 }),

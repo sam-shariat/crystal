@@ -1,4 +1,4 @@
-import { useMediaQuery,useColorMode, Button, Container, Heading, Text, SimpleGrid, Box, Center } from '@chakra-ui/react';
+import { useMediaQuery,useColorMode, Button, Container, Heading, Text, SimpleGrid, Box, Center, Link } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
 import NextLink from 'next/link';
@@ -26,12 +26,12 @@ export default function ManageSection() {
               <Text fontWeight="bold" fontSize={notMobile ? '3xl' : '2xl'} my={10}>
                 {t('manageDescription')}
               </Text>
-              <NextLink href={SITE_MANAGE_URL} passHref><Button color="white" backgroundColor="var(--purple1)" size="lg" minWidth="100%">
+              <Link href={SITE_MANAGE_URL} minWidth="300px !important" target='_blank'><Button color="white" backgroundColor="var(--purple1)" size="lg" minWidth="100%">
                 {t('manageWebsiteButton')}
-              </Button></NextLink>
-              <NextLink href={'/manage'} passHref><Button size="lg" minWidth="100%" mt={2}>
+              </Button></Link>
+              <Link href={'/manage'} minWidth="300px !important" target='_blank'><Button size="lg" minWidth="100%" mt={2}>
                 {t('manageDemoWebsiteButton')}
-              </Button></NextLink>
+              </Button></Link>
             </Center>
             <Center display="flex" flexDirection="column">
               <Venom srcUrl="/screens/manageScreen.jpg" />

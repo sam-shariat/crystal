@@ -4,9 +4,11 @@ import { initialAuthState } from './initialState';
 import { VenomConnect } from 'venom-connect';
 import { ProviderRpcClient } from 'everscale-inpage-provider';
 import { CONTRACT_ADDRESS } from 'core/utils/constants';
+import { PrimaryName } from 'types';
 
 const walletAtom = atom<VenomConnect | undefined>(undefined);
 const venomProviderAtom = atom<any>(undefined);
+const primaryNameAtom = atom<PrimaryName>({name:''});
 const jsonAtom = atom<any>(undefined);
 const nameAtom = atom("");
 const btcAtom = atom("");
@@ -67,4 +69,5 @@ export {
   localeAtom,
   authAtom,
   hydratedAtom,
+  primaryNameAtom
 };

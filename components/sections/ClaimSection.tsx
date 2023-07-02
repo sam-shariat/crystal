@@ -32,9 +32,10 @@ import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
 import TextCard from 'components/Layout/TextCard';
 import { useMediaQuery, useColorMode } from '@chakra-ui/react';
-import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL } from 'core/utils/constants';
+import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL, NFT_IMAGE_URL } from 'core/utils/constants';
 import { Address, Transaction } from 'everscale-inpage-provider';
 import { RiFingerprint2Line, RiSettings3Line, RiProfileLine} from 'react-icons/ri';
+import { isValidUsername } from 'core/utils';
 interface Message {
   type: any;
   title: string;
@@ -65,18 +66,17 @@ export default function ClaimSection() {
   const minFee = 660000000;
   const [name, setName] = useAtom(nameAtom);
 
-  const image = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
   const json = {
     type: 'Basic NFT',
     name: name + '.VID',
     description: name + '.VID, a Venom ID',
     preview: {
-      source: image,
+      source: NFT_IMAGE_URL,
       mimetype: 'image/svg',
     },
     files: [
       {
-        source: image,
+        source: NFT_IMAGE_URL,
         mimetype: 'image/svg',
       },
     ],
@@ -89,8 +89,8 @@ export default function ClaimSection() {
     if (!isConnected) {
       setMessage({
         type: 'info',
-        title: 'connect wallet',
-        msg: 'please connect your venom wallet',
+        title: t('connectWallet'),
+        msg: t('venomWalletConnect'),
       });
       return;
     } else if (message.type !== 'error') {
@@ -101,13 +101,24 @@ export default function ClaimSection() {
       });
     }
 
-    if (_name.length > 2 && venomContract && venomContract?.methods !== undefined) {
+    if(_name.length === 0) return
+    if(_name.length > 2 && !isValidUsername(_name) && _name.length < 30){
+      setMessage({
+        type: 'warning',
+        title: t('invalidName'),
+        msg: t('invalidNameMsg'),
+      });
+      return;
+    }
+
+    if (venomContract && venomContract?.methods !== undefined && message.msg === '') {
       try {
         setFeeIsLoading(true);
         // @ts-ignore: Unreachable code error
         const { value0: _fee } = await venomContract.methods
           .calculateMintingFee({ name: String(_name) })
           .call();
+          console.log('fee',_fee)
         // @ts-ignore: Unreachable code error
         const { value0: _nameExists } = await venomContract?.methods
           .nameExists({ name: String(_name) })
@@ -122,8 +133,8 @@ export default function ClaimSection() {
     } else if (venomContract?.methods === undefined) {
       setMessage({
         type: 'warning',
-        title: 'Error connecting to smart contract',
-        msg: 'Something goes wrong when trying to get data from the smart contract',
+        title: t('contractConnection'),
+        msg: t('contractConnectionMsg'),
       });
       return;
     }
@@ -133,8 +144,8 @@ export default function ClaimSection() {
     if (!isConnected) {
       setMessage({
         type: 'info',
-        title: 'connect wallet',
-        msg: 'please connect your venom wallet',
+        title: t('connectWallet'),
+        msg: t('venomWalletConnect'),
       });
       return;
     }
@@ -190,21 +201,22 @@ export default function ClaimSection() {
         if (events.length !== 1 || events[0].event !== 'NftCreated') {
           setMessage({
             type: 'error',
-            title: 'Error',
-            msg: 'Something went wrong, Please try again',
+            title: t('error'),
+            msg: t('commonErrorMsg'),
           });
         } else {
           // @ts-ignore: Unreachable code error
           const nftAddress = String(events[0].data?.nft && events[0].data?.nft?._address);
           setMessage({
             type: 'success',
-            title: 'Mint Successful',
-            msg: 'Venom ID Claimed Successfuly, You can now manage and share your venom profile',
-            link: VENOMSCAN_NFT + nftAddress,
+            title: t('mintSuccess'),
+            msg: t('mintSuccessMsg'),
+            link: nftAddress,
           });
         }
         setIsMinting(false);
         setIsConfirming(false);
+        setName('');
         console.log(events);
       }
       console.log('mint finished');
@@ -257,17 +269,17 @@ export default function ClaimSection() {
               </Box>
               {message.link && (
                 <Box>
-                  <Link href={message.link} target="_blank" id={`venom-id-nft-link`}>
-                    <Button m={1} minWidth={120}>
-                      View NFT
+                  <Link href={VENOMSCAN_NFT + message.link} target="_blank" id={`venom-id-nft-link`}>
+                    <Button color={'white'} m={1} minWidth={120} bgColor={'var(--venom1)'}>
+                      {t('view')}
                     </Button>
                   </Link>
                   <Link
-                    href={SITE_MANAGE_URL + claimedName}
+                    href={SITE_MANAGE_URL + 'manage/' + message.link}
                     target="_blank"
                     id={`venom-id-manage-nft-link`}>
-                    <Button m={1} minWidth={120} bgColor={'var(--purple0)'}>
-                      Manage VID
+                    <Button color={'white'} m={1} minWidth={120} bgColor={'var(--purple1)'}>
+                      {t('manage')}
                     </Button>
                   </Link>
                 </Box>
@@ -282,6 +294,7 @@ export default function ClaimSection() {
                 value={name}
                 onChange={(e) => inputChange(e.target.value)}
                 bg={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
+                disabled={isMinting || isConfirming}
               />
             </InputGroup>
             <Button
@@ -289,32 +302,35 @@ export default function ClaimSection() {
               color="white"
               size="lg"
               minWidth="300px"
-              disabled={name.length < 3 || nameExists}
+              disabled={name.length < 3 || nameExists || isMinting || isConfirming}
               isLoading={feeIsLoading || isMinting}
               loadingText={isMinting && !isConfirming ? 'Claiming ...' : isMinting && isConfirming ? 'Confirming ...' : ''}
               onClick={(e) => claimVid(e.currentTarget.value)}>
               {t('claimButton')}
             </Button>
           </Stack>
-          {name.length > 2 && fee !== -1 && venomContract?.methods && (
+          {name.length > 2 && fee !== -1 && venomContract?.methods && message.msg === '' && (
             <Flex
               width={'100%'}
               borderColor={'whiteAlpha.100'}
               borderWidth={1}
               borderRadius={10}
               justifyContent={'space-between'}
+              alignItems={'center'}
               mb={4}
               p={5}
               bgColor={'blackAlpha.200'}>
-              <Text fontWeight={'bold'}>
-                {t('mintingFee')} : {fee && !feeIsLoading ? `0.00000000${fee}` : t('calculating')}
-              </Text>
+              <Box>
+                <Text fontWeight={'bold'} fontSize={'sm'}>{t('mintingFee')} : {fee && !feeIsLoading ? (Math.round(fee/1e3)/1e6) : t('calculating')}</Text>
+                <Text fontWeight={'light'} fontSize={'sm'}>{t('reserveFee')} : {`${Math.round(minFee/1e3)/1e6}`}</Text>
+              </Box>
+              
               {!feeIsLoading ? (
-                <Text fontWeight={colorMode ==='light' ? 'bold' : 'light'} color={nameExists ? 'var(--red1)' : 'var(--venom2)'}>
+                <Text fontSize={'lg'} textAlign={'right'} fontWeight={colorMode ==='light' ? 'bold' : 'light'} color={nameExists ? 'var(--red1)' : 'var(--venom2)'}>
                   {nameExists ? name + '.VID '+ t('taken') : name + '.VID ' + t('available')}
                 </Text>
               ) : (
-                <Text fontWeight={colorMode ==='light' ? 'bold' : 'light'}> {t('availability')}</Text>
+                <Text  fontSize={'lg'} textAlign={'right'} fontWeight={colorMode ==='light' ? 'bold' : 'light'}> {t('availability')}</Text>
               )}
             </Flex>
           )}
