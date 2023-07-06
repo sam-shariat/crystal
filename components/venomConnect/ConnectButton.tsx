@@ -33,7 +33,6 @@ import VenomAbi from 'abi/Collection.abi.json';
 import { Address, ProviderRpcClient } from 'everscale-inpage-provider';
 import React, { useEffect } from 'react';
 import { FaSignOutAlt, FaRegCopy } from 'react-icons/fa';
-import { RiScan2Line } from 'react-icons/ri';
 import LogoIcon from '../Layout/LogoIcon';
 
 export default function ConnectButton() {
@@ -192,6 +191,7 @@ export default function ConnectButton() {
             <MenuList
               width={100}
               py={0}
+              zIndex={199}
               border={1}
               borderColor={'grey'}
               bg={colorMode === 'light' ? 'var(--lightGrey)' : 'var(--darkGradient)'}>
