@@ -227,6 +227,14 @@ const terms: Terms = {
     en:'VenomID is now live on Venom Testnet !',
     fa:'ونوم آی دی در شبکه تست نت ونوم در حال اجرا است'
   },
+  zealyCommunity: {
+    en:'Join Zealy Community',
+    fa:'به انجمن زیلی بپیوندید'
+  },
+  airdropParticipate: {
+    en:'To Participate in the Launch Airdrop',
+    fa:'تا در ایردراپ شرکت کنید'
+  },
 };
 
 export default terms;

@@ -381,10 +381,10 @@ export default function ClaimSection() {
               <ZealyLogo />{' '}
               <Stack spacing={0}>
                 <Text textDecoration="none" fontSize={'2xl'} mb={1}>
-                  Join Zealy Campaign
+                  {t('zealyCommunity')}
                 </Text>
                 <Text fontSize={'sm'} mt={0}>
-                  To Participate in the Launch Airdrop
+                  {t('airdropParticipate')}
                 </Text>
               </Stack>
             </Button>
