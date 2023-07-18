@@ -14,18 +14,18 @@ export default function RoadmapSection() {
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="75vh">
+        minH="75vh" py={10}>
         <>
           <Box gap={4} my={10}>
             <Box display="flex" flexDirection="column" justifyContent="center">
-              <Heading fontWeight="bold" fontSize="5xl" textAlign={notMobile ? 'center' : 'left'}>
+              <Heading fontWeight="bold" fontSize="5xl" textAlign={'center'}>
                 {t('roadmap')}
               </Heading>
               <Text
                 fontWeight="bold"
                 fontSize={notMobile ? '3xl' : '2xl'}
                 my={6}
-                textAlign={notMobile ? 'center' : 'left'}>
+                textAlign={'center'}>
                 {t('roadmapDescription')}
               </Text>
               <Center display="flex" flexDirection="column">
@@ -35,13 +35,13 @@ export default function RoadmapSection() {
                 fontWeight="bold"
                 fontSize={notMobile ? '3xl' : '2xl'}
                 my={6}
-                textAlign={notMobile ? 'center' : 'left'}>
+                textAlign={'center'}>
                 {t('roadmapPhase1')}
               </Text>
               <Checkbox fontWeight="bold" size="lg" defaultChecked color={'var(--venom1)'} colorScheme={'green'}>
               {t('roadmapPhase11')}
               </Checkbox>
-              <Checkbox mt={1} size="lg">
+              <Checkbox mt={1} size="lg" defaultChecked>
               {t('roadmapPhase12')}
               </Checkbox>
               <Checkbox mt={1} size="lg">
@@ -60,7 +60,7 @@ export default function RoadmapSection() {
                 fontWeight="bold"
                 fontSize={notMobile ? '3xl' : '2xl'}
                 my={6}
-                textAlign={notMobile ? 'center' : 'left'}>
+                textAlign={'center'}>
                 {t('roadmapPhase2')}
               </Text>
               <Checkbox mt={1} size="lg">

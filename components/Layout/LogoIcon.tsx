@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { Box, useColorMode } from '@chakra-ui/react';
-function LogoIcon() {
+
+interface Props {
+  size?: string;
+}
+function LogoIcon({size}:Props) {
   const { colorMode } = useColorMode();
   return (
-    <Box width={'22px'} height={'22px'} ml={-1}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 674 674" width={'22px'} height={'22px'}>
+    <Box width={size ? size : '22px'} height={size ? size : '22px'} ml={-1}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 674 674" width={size ? size : '22px'} height={size ? size : '22px'}>
         <defs>
           <image
             width={641}

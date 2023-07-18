@@ -16,7 +16,7 @@ export default function ProfileSection() {
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="75vh">
+        minH="75vh" py={10}>
         <>
           <Box gap={4} my={10}>
             <Box display="flex" flexDirection="column" justifyContent="center">

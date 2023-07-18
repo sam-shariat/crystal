@@ -1,7 +1,16 @@
-import { useMediaQuery, Button, Container, Heading, Text, SimpleGrid, Box, Center } from '@chakra-ui/react';
+import {
+  useMediaQuery,
+  Button,
+  Container,
+  Heading,
+  Text,
+  Stack,
+  Box,
+  Center,
+} from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import NextLink from 'next/link';
 import { SITE_PROFILE_URL } from 'core/utils/constants';
+import SocialIcons from 'components/Layout/SocialIcons';
 import Venom from 'components/Venom';
 
 export default function AboutSection() {
@@ -15,22 +24,26 @@ export default function AboutSection() {
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="75vh">
+        minH="75vh"
+        py={10}>
         <>
           <Center display="flex" flexDirection="column" my={8}>
-              <Heading fontWeight="bold" fontSize="5xl">
-                {t('about')}
-              </Heading>
-              <Center display="flex" flexDirection="column" my={4}>
-                <Venom srcUrl="/logos/vid.svg" size={notMobile ? 'xs' : 'xs'} />
-              </Center>
-              <Text fontWeight="light" fontSize={notMobile ? '2xl' : 'xl'} mb={8}>
-                {t('aboutDescription')}
-              </Text>
-              <NextLink href={SITE_PROFILE_URL} passHref><Button color="white" backgroundColor="var(--venom1)" size="lg" minWidth="100%">
-                {t('aboutButton')}
-              </Button></NextLink>
+            <Heading fontWeight="bold" fontSize="5xl">
+              {t('about')}
+            </Heading>
+            <Center display="flex" flexDirection="column" my={4}>
+              <Venom srcUrl="/logos/vid.svg" size={notMobile ? 'xs' : 'xs'} />
             </Center>
+            <Text fontWeight="light" fontSize={notMobile ? '2xl' : 'xl'} mb={8}>
+              {t('aboutDescription')}
+            </Text>
+            <Center display="flex" flexDirection="column" p={notMobile ? 10 : 4} borderRadius={10} borderWidth={1} borderColor='gray'>
+              <Text fontSize="2xl">
+              {t('onlyLinks')}
+              </Text>
+              <SocialIcons />
+            </Center>
+          </Center>
         </>
       </Container>
     </Box>

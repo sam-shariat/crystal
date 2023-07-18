@@ -1,4 +1,15 @@
-import { useMediaQuery,useColorMode, Button, Container, Heading, Text, SimpleGrid, Box, Center, Link } from '@chakra-ui/react';
+import {
+  useMediaQuery,
+  useColorMode,
+  Button,
+  Container,
+  Heading,
+  Text,
+  SimpleGrid,
+  Box,
+  Center,
+  Link,
+} from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
 import NextLink from 'next/link';
@@ -16,7 +27,8 @@ export default function ManageSection() {
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="75vh">
+        minH="75vh"
+        py={10}>
         <>
           <SimpleGrid columns={[1, 2]} spacing="32px" my={10}>
             <Center display="flex" flexDirection="column">
@@ -26,12 +38,16 @@ export default function ManageSection() {
               <Text fontWeight="bold" fontSize={notMobile ? '3xl' : '2xl'} my={10}>
                 {t('manageDescription')}
               </Text>
-              <Link href={SITE_MANAGE_URL} minWidth="300px !important" target='_blank'><Button color="white" backgroundColor="var(--purple1)" size="lg" minWidth="100%">
-                {t('manageWebsiteButton')}
-              </Button></Link>
-              <Link href={'/manage'} minWidth="300px !important" target='_blank'><Button size="lg" minWidth="100%" mt={2}>
-                {t('manageDemoWebsiteButton')}
-              </Button></Link>
+              <Link href={SITE_MANAGE_URL} minWidth="300px !important" target="_blank">
+                <Button color="white" backgroundColor="var(--purple1)" size="lg" minWidth="100%">
+                  {t('manageWebsiteButton')}
+                </Button>
+              </Link>
+              <Link href={'/manage'} minWidth="300px !important" target="_blank">
+                <Button size="lg" minWidth="100%" mt={2}>
+                  {t('manageDemoWebsiteButton')}
+                </Button>
+              </Link>
             </Center>
             <Center display="flex" flexDirection="column">
               <Venom srcUrl="/screens/manageScreen.jpg" />

@@ -10,7 +10,7 @@ interface Props {
 const Avatar = ({url,alt} : Props) => {
   return (
     <ImageMotion
-      initial={{ scale: 0.96 }}
+      initial={{ scale: 0.97 }}
       animate={{ scale: 1 }}
       transition={{
         duration: 2,

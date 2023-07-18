@@ -10,7 +10,7 @@ interface Props {
 const Venom = ({ srcUrl, size }: Props) => {
   return (
     <ImageMotion
-      initial={{ scale: (srcUrl === '/logos/venomid.png' ? 0.9 : 0.96) }}
+      initial={{ scale: (srcUrl === '/logos/venomid.png' ? 0.9 : 0.985) }}
       animate={{ scale: 1 }}
       transition={{
         duration: 2,

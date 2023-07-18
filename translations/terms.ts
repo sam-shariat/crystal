@@ -108,16 +108,16 @@ const terms: Terms = {
     fa: 'تست پلتفرم'
   },
   roadmapPhase13: {
-    en: `Creating social media profiles (twitter, discord, medium, ...)`,
-    fa: 'بهبودی در رابط و تجربه کاربری'
+    en: `Venom ID JS SKD and API`,
+    fa: 'Venom ID JS SKD and API'
   },
   roadmapPhase14: {
-    en: `Launching zealy and galxe campaigns`,
-    fa: 'لانچ کمپین های مشارکتی در شبکه های اجتماعی بلاکچینی'
+    en: `Accelerator/Investor Event Program`,
+    fa: 'برگذاری ایونت شتابدهی و سرمایه گذاری'
   },
   roadmapPhase15: {
-    en: `Improving DApp UI and UX`,
-    fa: 'بهبودی در رابط و تجربه کاربری'
+    en: `Discord Community`,
+    fa: 'راه اندازی انجمن در دیسکورد'
   },
   roadmapPhase16: {
     en: `Publishing Whitepaper`,
@@ -132,16 +132,16 @@ const terms: Terms = {
     fa: 'اضافه کردن قابلیت وریفای کردن شبکه های اجتماعی و بلاکچین'
   },
   roadmapPhase22: {
-    en: `Introducing Venom Passport NFT`,
-    fa: 'معرفی ان اف تی ونوم پاسپورت'
+    en: `Introducing Venom Passport NFT (Community Only)`,
+    fa: 'معرفی ان اف تی ونوم پاسپورت (فقط برای اعضا)'
   },
   roadmapPhase23: {
-    en: `Launching Venomid.site - Dapp Platform to build responsive websites fast and simple`,
+    en: `Venomid.site - Dapp Platform to build responsive websites fast and simple`,
     fa: 'لانچ ونوم آی دی دات سایت. پلتفرم غیر متمرکز برای ساخت وب سایت های سریع و ساده'
   },
   roadmapPhase24: {
-    en: `More news about staking, airdrop and more`,
-    fa: 'اخبار بیشتر در رابطه با استیکیگ و ایردراپ و موارد بیشتر'
+    en: `VenomID DAO, Launch airdrop and more`,
+    fa: 'سازمان غیر متمرکز اتوماتیک یا DAO, ایردراپ و موارد بیشتر'
   },
   about: {
     en: `About`,
@@ -218,6 +218,10 @@ const terms: Terms = {
   mintSuccessMsg: {
     en:'Venom ID Claimed Successfully, You can now manage, customize and share your Venom link',
     fa:'ونوم آی دی با موفقیت مینت شد. حالا میتوانید لینک ونوم خود را سفارشی سازی و مدیریت کنید و آن را به اشتراک بگذارید'
+  },
+  onlyLinks: {
+    en:'Our Only Official Links',
+    fa:'تنها لینک های رسمی ما'
   },
 };
 

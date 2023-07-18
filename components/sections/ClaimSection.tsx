@@ -26,16 +26,23 @@ import {
   venomContractAddressAtom,
   isConnectedAtom,
 } from 'core/atoms';
-import VenomAbi from 'abi/Collection.abi.json';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
 import TextCard from 'components/Layout/TextCard';
 import { useMediaQuery, useColorMode } from '@chakra-ui/react';
-import { VENOMSCAN_NFT, SITE_PROFILE_URL, SITE_MANAGE_URL, NFT_IMAGE_URL } from 'core/utils/constants';
+import {
+  VENOMSCAN_NFT,
+  SITE_PROFILE_URL,
+  SITE_MANAGE_URL,
+  NFT_IMAGE_URL,
+  ZEALY_URL,
+} from 'core/utils/constants';
 import { Address, Transaction } from 'everscale-inpage-provider';
-import { RiFingerprint2Line, RiSettings3Line, RiProfileLine} from 'react-icons/ri';
+import { RiFingerprint2Line, RiSettings3Line, RiProfileLine } from 'react-icons/ri';
 import { isValidUsername } from 'core/utils';
+import { ZealyLogo } from 'components/logos';
+
 interface Message {
   type: any;
   title: string;
@@ -101,8 +108,8 @@ export default function ClaimSection() {
       });
     }
 
-    if(_name.length === 0) return
-    if(_name.length > 2 && !isValidUsername(_name) && _name.length < 30){
+    if (_name.length === 0) return;
+    if (_name.length > 2 && !isValidUsername(_name) && _name.length < 30) {
       setMessage({
         type: 'warning',
         title: t('invalidName'),
@@ -118,7 +125,7 @@ export default function ClaimSection() {
         const { value0: _fee } = await venomContract.methods
           .calculateMintingFee({ name: String(_name) })
           .call();
-          console.log('fee',_fee)
+        console.log('fee', _fee);
         // @ts-ignore: Unreachable code error
         const { value0: _nameExists } = await venomContract?.methods
           .nameExists({ name: String(_name) })
@@ -128,7 +135,7 @@ export default function ClaimSection() {
         setFeeIsLoading(false);
       } catch (er) {
         console.log(er);
-        return
+        return;
       }
     } else if (venomContract?.methods === undefined) {
       setMessage({
@@ -177,7 +184,7 @@ export default function ClaimSection() {
       if (mintTx) {
         setClaimedName(name);
         console.log('mint tx : ', mintTx);
-        setIsConfirming(true)
+        setIsConfirming(true);
         let receiptTx: Transaction | undefined;
         const subscriber = provider && new provider.Subscriber();
         if (subscriber)
@@ -226,7 +233,7 @@ export default function ClaimSection() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   useEffect(() => {
     if (provider?.isInitialized && venomContract !== undefined && isConnected) {
-      console.log("venom contract ",venomContract)
+      console.log('venom contract ', venomContract);
     }
   }, [provider]);
 
@@ -238,7 +245,7 @@ export default function ClaimSection() {
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="75vh">
+        minH="75vh" py={6}>
         <>
           <SimpleGrid columns={[1, 2]} spacing="32px" py={notMobile ? 10 : 4}>
             <Center display="flex" flexDirection="column" pt={4}>
@@ -269,7 +276,10 @@ export default function ClaimSection() {
               </Box>
               {message.link && (
                 <Box>
-                  <Link href={VENOMSCAN_NFT + message.link} target="_blank" id={`venom-id-nft-link`}>
+                  <Link
+                    href={VENOMSCAN_NFT + message.link}
+                    target="_blank"
+                    id={`venom-id-nft-link`}>
                     <Button color={'white'} m={1} minWidth={120} bgColor={'var(--venom1)'}>
                       {t('view')}
                     </Button>
@@ -304,7 +314,13 @@ export default function ClaimSection() {
               minWidth="300px"
               disabled={name.length < 3 || nameExists || isMinting || isConfirming}
               isLoading={feeIsLoading || isMinting}
-              loadingText={isMinting && !isConfirming ? 'Claiming ...' : isMinting && isConfirming ? 'Confirming ...' : ''}
+              loadingText={
+                isMinting && !isConfirming
+                  ? 'Claiming ...'
+                  : isMinting && isConfirming
+                  ? 'Confirming ...'
+                  : ''
+              }
               onClick={(e) => claimVid(e.currentTarget.value)}>
               {t('claimButton')}
             </Button>
@@ -321,26 +337,77 @@ export default function ClaimSection() {
               p={5}
               bgColor={'blackAlpha.200'}>
               <Box>
-                <Text fontWeight={'bold'} fontSize={'sm'}>{t('mintingFee')} : {fee && !feeIsLoading ? (Math.round(fee/1e3)/1e6) : t('calculating')}</Text>
-                <Text fontWeight={'light'} fontSize={'sm'}>{t('reserveFee')} : {`${Math.round(minFee/1e3)/1e6}`}</Text>
+                <Text fontWeight={'bold'} fontSize={'sm'}>
+                  {t('mintingFee')} :{' '}
+                  {fee && !feeIsLoading ? Math.round(fee / 1e3) / 1e6 : t('calculating')}
+                </Text>
+                <Text fontWeight={'light'} fontSize={'sm'}>
+                  {t('reserveFee')} : {`${Math.round(minFee / 1e3) / 1e6}`}
+                </Text>
               </Box>
-              
+
               {!feeIsLoading ? (
-                <Text fontSize={'lg'} textAlign={'right'} fontWeight={colorMode ==='light' ? 'bold' : 'light'} color={nameExists ? 'var(--red1)' : 'var(--venom2)'}>
-                  {nameExists ? name + '.VID '+ t('taken') : name + '.VID ' + t('available')}
+                <Text
+                  fontSize={'lg'}
+                  textAlign={'right'}
+                  fontWeight={colorMode === 'light' ? 'bold' : 'light'}
+                  color={nameExists ? 'var(--red1)' : 'var(--venom2)'}>
+                  {nameExists ? name + '.VID ' + t('taken') : name + '.VID ' + t('available')}
                 </Text>
               ) : (
-                <Text  fontSize={'lg'} textAlign={'right'} fontWeight={colorMode ==='light' ? 'bold' : 'light'}> {t('availability')}</Text>
+                <Text
+                  fontSize={'lg'}
+                  textAlign={'right'}
+                  fontWeight={colorMode === 'light' ? 'bold' : 'light'}>
+                  {' '}
+                  {t('availability')}
+                </Text>
               )}
             </Flex>
           )}
           <Text fontWeight="light" fontSize={'xl'} my={4}>
             {t('claimDescription')}
           </Text>
-          <SimpleGrid columns={[1,1,3]} gap={4} my={10} width={'100%'}>
-            <TextCard icon={<RiFingerprint2Line size='46px'/>} header="venomid" domain=".network" text={t('venomidnetwork')} />
-            <TextCard icon={<RiSettings3Line size='46px'/>} header="venomid" domain=".tools" text={t('venomidtools')} />
-            <TextCard icon={<RiProfileLine size='46px'/>} header="venomid" domain=".link" text={t('venomidlink')} />
+          <Link my={8} href={ZEALY_URL} width={'100%'} target="_blank" _hover={{ textDecoration: 'none' }}>
+            <Button
+              _hover={{ color: colorMode === 'light' ? 'white' : 'black' }}
+              color={colorMode === 'light' ? 'white' : 'black'}
+              height={100}
+              p={10}
+              width={'100%'}
+              display="flex"
+              gap={4}
+              bg={colorMode === 'dark' ? 'var(--lightGradient)' : 'var(--darkGradient)'}>
+              <ZealyLogo />{' '}
+              <Stack spacing={0}>
+                <Text textDecoration="none" fontSize={'2xl'} mb={1}>
+                  Join Zealy Campaign
+                </Text>
+                <Text fontSize={'sm'} mt={0}>
+                  To Participate in the Launch Airdrop
+                </Text>
+              </Stack>
+            </Button>
+          </Link>
+          <SimpleGrid columns={[1, 1, 3]} gap={4} my={10} width={'100%'}>
+            <TextCard
+              icon={<RiFingerprint2Line size="46px" />}
+              header="venomid"
+              domain=".network"
+              text={t('venomidnetwork')}
+            />
+            <TextCard
+              icon={<RiSettings3Line size="46px" />}
+              header="venomid"
+              domain=".tools"
+              text={t('venomidtools')}
+            />
+            <TextCard
+              icon={<RiProfileLine size="46px" />}
+              header="venomid"
+              domain=".link"
+              text={t('venomidlink')}
+            />
           </SimpleGrid>
         </>
       </Container>
