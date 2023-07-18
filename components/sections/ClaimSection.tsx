@@ -389,7 +389,9 @@ export default function ClaimSection() {
               </Stack>
             </Button>
           </Link>
-          <SimpleGrid columns={[1, 1, 3]} gap={4} my={10} width={'100%'}>
+          <Box my={6} width={'100%'}>
+          <Text fontSize='xl' fontWeight="bold" textAlign='center'>{t('ourDomains')}</Text>
+          <SimpleGrid columns={[1, 1, 3]} gap={4} my={6} width={'100%'}>
             <TextCard
               icon={<RiFingerprint2Line size="46px" />}
               header="venomid"
@@ -409,6 +411,7 @@ export default function ClaimSection() {
               text={t('venomidlink')}
             />
           </SimpleGrid>
+          </Box>
         </>
       </Container>
     </Box>
