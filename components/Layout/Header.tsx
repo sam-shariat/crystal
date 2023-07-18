@@ -57,7 +57,7 @@ export default function Header() {
       backgroundColor={useColorModeValue('blackAlpha.100', 'blackAlpha.500')}
       borderBottomColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}>
       <Center px={4} py={2} bgColor="var(--venom2)">
-        VenomID is now live on Venom Testnet !
+        {t('testnetNotice')}
       </Center>
       <Container maxW="container.lg" py={2}>
         <Flex justifyContent="space-between">

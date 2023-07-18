@@ -223,6 +223,10 @@ const terms: Terms = {
     en:'Our Only Official Links',
     fa:'تنها لینک های رسمی ما'
   },
+  testnetNotice: {
+    en:'VenomID is now live on Venom Testnet !',
+    fa:'ونوم آی دی در شبکه تست نت ونوم در حال اجرا است'
+  },
 };
 
 export default terms;
