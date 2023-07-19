@@ -70,17 +70,16 @@ export default function Header() {
             <NextLink href="/" passHref>
               <Button
                 id="venomidlogo"
-                color="var(--venom1)"
                 fontWeight="bold"
                 variant="ghost"
                 px={2}>
                 <Logo />
-                <Text pl={1}>VenomID</Text>
+                <Text pl={1} color='var(--venom1)'>VenomID</Text>
               </Button>
             </NextLink>
             {notMobile && home && (
               <NextLink href="#manage" passHref>
-                <Button variant="ghost">{t('manage')}</Button>
+                <Button variant="ghost" color='default'>{t('manage')}</Button>
               </NextLink>
             )}
             {notMobile && home && (
