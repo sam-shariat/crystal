@@ -13,11 +13,15 @@ export function Seo() {
       canonical={origin}
       themeColor={'#101212'}
       defaultOpenGraphImageWidth={1200}
-      defaultOpenGraphImageHeight={550}
+      defaultOpenGraphImageHeight={600}
       openGraph={{
         type: 'website',
         siteName: SITE_TITLE,
         url: origin,
+        description: SITE_FULL_DESCRIPTION,
+        defaultImageHeight:600,
+        defaultImageWidth:1200,
+        title:SITE_TITLE,
         images: [
           {
             url: `/vidog.png`,
