@@ -20,7 +20,7 @@ export function Seo() {
         url: origin,
         images: [
           {
-            url: `${origin}/vidorigin.png`,
+            url: `/vidog.png`,
             alt: `${SITE_TITLE} Open Graph Image`,
           },
         ],

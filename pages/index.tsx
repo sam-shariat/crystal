@@ -20,7 +20,7 @@ const Home: NextPage = () => {
         <meta name="description" content={SITE_FULL_DESCRIPTION} />
         <meta name="twitter:title" content={SITE_TITLE + ' | ' + SITE_DESCRIPTION} />
         <meta name="twitter:description" content={SITE_FULL_DESCRIPTION} />
-        <meta name="twitter:image" content="/vidorigin.png" />
+        <meta name="twitter:image" content="/vidog.png" />
         <link rel="icon" type="image/svg+xml" href="/logos/vidicon.svg" />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
