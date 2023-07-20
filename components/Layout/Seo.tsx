@@ -9,14 +9,14 @@ export function Seo() {
       defaultTitle={SITE_TITLE}
       titleTemplate={`%s | ${SITE_DESCRIPTION}`}
       description={SITE_FULL_DESCRIPTION}
-      canonical={SITE_URL}
+      canonical={SITE_URL.slice(0,-1)}
       themeColor={'#101212'}
       defaultOpenGraphImageWidth={1200}
       defaultOpenGraphImageHeight={600}
       openGraph={{
         type: 'website',
         siteName: SITE_TITLE,
-        url: origin,
+        url: SITE_URL,
         description: SITE_FULL_DESCRIPTION,
         defaultImageHeight:600,
         defaultImageWidth:1200,
