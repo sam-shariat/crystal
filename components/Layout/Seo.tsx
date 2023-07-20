@@ -3,14 +3,13 @@ import { SITE_DESCRIPTION, SITE_FULL_DESCRIPTION, SITE_TITLE, SITE_URL, SOCIAL_T
 import { DefaultSeo } from 'next-seo'
 
 export function Seo() {
-  const origin = SITE_URL;
   return (
     <DefaultSeo
       title={SITE_TITLE}
       defaultTitle={SITE_TITLE}
       titleTemplate={`%s | ${SITE_DESCRIPTION}`}
       description={SITE_FULL_DESCRIPTION}
-      canonical={origin}
+      canonical={SITE_URL}
       themeColor={'#101212'}
       defaultOpenGraphImageWidth={1200}
       defaultOpenGraphImageHeight={600}
@@ -24,7 +23,7 @@ export function Seo() {
         title:SITE_TITLE,
         images: [
           {
-            url: `/vidog.png`,
+            url: `${SITE_URL}/vidog.png`,
             alt: `${SITE_TITLE} Open Graph Image`,
           },
         ],
