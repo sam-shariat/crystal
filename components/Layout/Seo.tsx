@@ -23,7 +23,7 @@ export function Seo() {
         title:SITE_TITLE,
         images: [
           {
-            url: `${SITE_URL}/vidog.png`,
+            url: `${SITE_URL}vidog.png`,
             alt: `${SITE_TITLE} Open Graph Image`,
           },
         ],
