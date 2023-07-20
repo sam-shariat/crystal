@@ -5,7 +5,12 @@ import ManageSection from 'components/sections/ManageSection';
 import ProfileSection from 'components/sections/ProfileSection';
 import RoadmapSection from 'components/sections/RoadmapSection';
 import AboutSection from 'components/sections/AboutSection';
-import { SITE_DESCRIPTION, SITE_URL, SITE_FULL_DESCRIPTION, SITE_TITLE } from 'core/utils/constants';
+import {
+  SITE_DESCRIPTION,
+  SITE_URL,
+  SITE_FULL_DESCRIPTION,
+  SITE_TITLE,
+} from 'core/utils/constants';
 import { Seo } from 'components/Layout/Seo';
 import { NextSeo } from 'next-seo';
 
@@ -14,7 +19,7 @@ const Home: NextPage = () => {
     <>
       <Seo />
       <Head>
-      <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={SITE_TITLE} />
         <meta name="twitter:description" content={SITE_DESCRIPTION} />
         <link rel="icon" type="image/svg+xml" href="/logos/vidicon.svg" />
