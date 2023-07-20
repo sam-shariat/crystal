@@ -14,13 +14,9 @@ const Home: NextPage = () => {
     <>
       <Seo />
       <Head>
-        <title>
-          {SITE_TITLE} | {SITE_DESCRIPTION}
-        </title>
-        <meta name="description" content={SITE_FULL_DESCRIPTION} />
-        <meta name="twitter:title" content={SITE_TITLE + ' | ' + SITE_DESCRIPTION} />
-        <meta name="twitter:description" content={SITE_FULL_DESCRIPTION} />
-        <meta name="twitter:image" content={`${SITE_URL}vidog.png`} />
+      <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content={SITE_TITLE} />
+        <meta name="twitter:description" content={SITE_DESCRIPTION} />
         <link rel="icon" type="image/svg+xml" href="/logos/vidicon.svg" />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>

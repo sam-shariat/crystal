@@ -16,7 +16,7 @@ export function Seo() {
       openGraph={{
         type: 'website',
         siteName: SITE_TITLE,
-        url: SITE_URL,
+        url: SITE_URL.slice(0,-1),
         description: SITE_FULL_DESCRIPTION,
         defaultImageHeight:600,
         defaultImageWidth:1200,
