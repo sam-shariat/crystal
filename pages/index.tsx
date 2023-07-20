@@ -8,13 +8,12 @@ import AboutSection from 'components/sections/AboutSection';
 import {
   SITE_DESCRIPTION,
   SITE_URL,
-  SITE_FULL_DESCRIPTION,
   SITE_TITLE,
 } from 'core/utils/constants';
 import { Seo } from 'components/Layout/Seo';
-import { NextSeo } from 'next-seo';
 
 const Home: NextPage = () => {
+  const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
   return (
     <>
       <Seo />
@@ -22,7 +21,7 @@ const Home: NextPage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={SITE_TITLE} />
         <meta name="twitter:description" content={SITE_DESCRIPTION} />
-        <meta name="twitter:image" content={`${SITE_URL}vidog.png`} />
+        <meta name="twitter:image" content={`${origin}/vidog.png`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
