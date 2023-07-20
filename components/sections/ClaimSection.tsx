@@ -91,7 +91,7 @@ export default function ClaimSection() {
   };
 
   async function inputChange(e: string) {
-    const _name = e;
+    const _name = e.toLowerCase();
     setName(_name);
     if (!isConnected) {
       setMessage({
@@ -123,12 +123,12 @@ export default function ClaimSection() {
         setFeeIsLoading(true);
         // @ts-ignore: Unreachable code error
         const { value0: _fee } = await venomContract.methods
-          .calculateMintingFee({ name: String(_name) })
+          .calculateMintingFee({ name: String(_name).toLowerCase() })
           .call();
         console.log('fee', _fee);
         // @ts-ignore: Unreachable code error
         const { value0: _nameExists } = await venomContract?.methods
-          .nameExists({ name: String(_name) })
+          .nameExists({ name: String(_name).toLowerCase() })
           .call();
         setNameExists(_nameExists);
         setFee(_fee);
@@ -163,7 +163,7 @@ export default function ClaimSection() {
       setIsMinting(true);
       // @ts-ignore: Unreachable code error
       const mintTx = await venomContract?.methods
-        .mintNft({ json: JSON.stringify(json), name: name })
+        .mintNft({ json: JSON.stringify(json), name: name.toLowerCase() })
         .send({
           amount: String(minFee + Number(fee)),
           bounce: true,
