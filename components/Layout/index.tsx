@@ -4,7 +4,6 @@ import { useAtom } from 'jotai';
 import { walletAtom } from 'core/atoms';
 import { initVenomConnect } from '../venomConnect/configure';
 import React, { useEffect } from 'react';
-import { Seo } from './Seo';
 
 type Props = {
   children: React.ReactNode;
@@ -22,7 +21,6 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <Header/>
-      <Seo />
       {children}
       <Footer />
     </>

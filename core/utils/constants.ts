@@ -1,7 +1,7 @@
 export const SITE_URL = "https://venomid.network/"
 export const SITE_TITLE = "Venom ID"
 export const SITE_DESCRIPTION = "Your entire virtual identity in the blockchain in one simple link"
-export const SITE_FULL_DESCRIPTION = "With VenomID, you can easily assign human-readable names to your blockchain and non-blockchain resources, such as Venom and Ethereum addresses, Social Media handles, website URLs, and more. VID enables these resources to be effectively managed and accessed via one, simple name."
+export const SITE_FULL_DESCRIPTION = "With VenomID, you can assign human-readable names to your blockchain and non-blockchain resources like Venom, BTC and ETH addresses, Links and more"
 export const SITE_MANAGE_URL = "https://venomid.tools/"
 export const SITE_PROFILE_URL = "https://venomid.link/"
 export const VENOMSCAN_NFT = "https://testnet.venomscan.com/accounts/"
