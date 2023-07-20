@@ -4,7 +4,7 @@ import { fetcher } from 'core/utils';
 import ThemeProvider from 'components/Provider/ThemeProvider';
 import Layout from 'components/Layout';
 import { useDirectionSetter } from 'core/lib/hooks/use-directionSetter';
-
+import { Analytics } from '@vercel/analytics/react';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -25,6 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       >
         <Layout>
           <Component {...pageProps} />
+          <Analytics />
         </Layout>
       </SWRConfig>
     </ThemeProvider>
