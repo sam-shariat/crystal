@@ -22,6 +22,7 @@ const Home: NextPage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={SITE_TITLE} />
         <meta name="twitter:description" content={SITE_DESCRIPTION} />
+        <meta name="twitter:image" content={`${SITE_URL}vidog.png`} />
         <link rel="icon" type="image/svg+xml" href="/logos/vidicon.svg" />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
