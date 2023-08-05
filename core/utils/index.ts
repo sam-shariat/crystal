@@ -1,5 +1,3 @@
-import http from './http';
-import fetcher from './swrFetcher';
 import {truncAddress,isValidUsername} from './stringUtils'
 const sleep = async (ms: number) => new Promise((r) => setTimeout(r, ms));
 const capFirstLetter = (str: string) => {
@@ -16,4 +14,4 @@ const arrayRemove = (arr: any, index: number) => {
   return arr.filter((item: any, ind: number) => index !== ind && item);
 };
 
-export { http, fetcher, truncAddress, isValidUsername, sleep, capFirstLetter, arrayRemove };
+export { truncAddress, isValidUsername, sleep, capFirstLetter, arrayRemove };
