@@ -56,7 +56,7 @@ export default function Header() {
       borderBottom="1px"
       backgroundColor={useColorModeValue('blackAlpha.100', 'blackAlpha.500')}
       borderBottomColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}>
-      <Center px={4} py={2} bgColor="var(--venom2)">
+      <Center px={4} py={2} bgColor="var(--venom2)" color={'white'}>
         {t('testnetNotice')}
       </Center>
       <Container maxW="container.lg" py={2}>

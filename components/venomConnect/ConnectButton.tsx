@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import {
   Button,
   Box,
@@ -6,160 +7,68 @@ import {
   Center,
   Stack,
   useColorMode,
+  IconButton,
+  Flex,
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
+  Tooltip,
   LinkBox,
   LinkOverlay,
   useClipboard,
 } from '@chakra-ui/react';
 import { VenomFoundation, VenomScanIcon } from 'components/logos';
-import { truncAddress } from 'core/utils';
-import { useAtom, useAtomValue } from 'jotai';
-import {
-  walletAtom,
-  addressAtom,
-  balanceAtom,
-  venomProviderAtom,
-  venomSProviderAtom,
-  venomContractAtom,
-  venomContractAddressAtom,
-  isConnectedAtom,
-  primaryNameAtom,
-} from 'core/atoms';
 import { SITE_PROFILE_URL, VENOMSCAN_NFT } from 'core/utils/constants';
+import { sleep, truncAddress, capFirstLetter } from 'core/utils';
+import { useConnect, useVenomProvider } from 'venom-react-hooks';
+import { useAtom, useAtomValue } from 'jotai';
+import { Address } from 'everscale-inpage-provider';
 import VenomAbi from 'abi/Collection.abi.json';
-import { Address, ProviderRpcClient } from 'everscale-inpage-provider';
-import React, { useEffect } from 'react';
-import { FaSignOutAlt, FaRegCopy } from 'react-icons/fa';
+import { RiLogoutBoxRLine, RiFileCopyLine, RiCheckDoubleFill } from 'react-icons/ri';
 import LogoIcon from '../Layout/LogoIcon';
+import { primaryNameAtom, venomContractAddressAtom, venomContractAtom } from 'core/atoms';
 
 export default function ConnectButton() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-  const VenomContractAddress = useAtomValue(venomContractAddressAtom);
-  const venomConnect = useAtomValue(walletAtom);
-  const [isConnected, setIsConnected] = useAtom(isConnectedAtom);
-  const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
+  const { login, disconnect, isConnected, account } = useConnect();
+  const { provider } = useVenomProvider();
   const { colorMode } = useColorMode();
-  const [venomProvider, setVenomProvider] = useAtom(venomProviderAtom);
-  const [venomSProvider, setVenomSProvider] = useAtom(venomSProviderAtom);
+  const address = account?.address.toString();
+  const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
+  const venomContractAddress = useAtomValue(venomContractAddressAtom);
   const [venomContract, setVenomContract] = useAtom(venomContractAtom);
-  const [address, setAddress] = useAtom(addressAtom);
-  const [balance, setBalance] = useAtom(balanceAtom);
-  const { onCopy } = useClipboard(address);
+  const { onCopy, hasCopied } = useClipboard(String(address));
 
-  const login = async () => {
-    if (!venomConnect) return;
-    console.log('connecting ...', venomConnect.getStandalone());
-    console.log('current :', venomConnect.currentProvider);
-    await venomConnect.connect();
-  };
-
-  // This method allows us to gen a wallet address from inpage provider
-  const getAddress = async (provider: any) => {
-    const providerState = await provider?.getProviderState?.();
-    return providerState?.permissions.accountInteraction?.address.toString();
-  };
-
-  // This function will call walletOf function of TokenRoot contract, to obtain TokenWallet of connecte4d user.
-
-  // Same idea for token balance fetching. Usage of standalone client and balance method of TIP-3 TokenWallet
-  // We already knows user's TokenWallet address
-  const getBalance = async (wallet: string) => {
-    try {
-      if (!venomConnect) return;
-      const standalone: ProviderRpcClient | undefined = await venomConnect?.getStandalone(
-        'venomwallet'
-      );
-      if (standalone) {
-        console.log('standalone set', standalone);
-        setVenomSProvider(standalone);
-        const nativeBalance = await standalone.getBalance(new Address(address));
-        setBalance(nativeBalance);
-        console.log('balance is', nativeBalance);
-      } else {
-        alert('Standalone is not available now');
-      }
-    } catch (e) {
-      console.log('error balance', e);
+  async function getPrimary() {
+    if (!provider) return;
+    const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
+    setVenomContract(_venomContract);
+    // @ts-ignore: Unreachable code error
+    const { value0 } = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) }).call();
+    console.log(value0);
+    if (value0) {
+      setPrimaryName(value0);
     }
-  };
-
-  // Any interaction with venom-wallet (address fetching is included) needs to be authentificated
-  const checkAuth = async (_venomConnect: any) => {
-    try {
-      const auth = await _venomConnect?.checkAuth();
-      console.log('auth : ', auth);
-      if (auth) await getAddress(_venomConnect);
-    } catch (e) {
-      console.log('auth error ', e);
-    }
-  };
-
-  // This handler will be called after venomConnect.login() action
-  // connect method returns provider to interact with wallet, so we just store it in state
-  const onConnect = async (provider: any) => {
-    try {
-      console.log('provider ', provider);
-      if (!provider) return;
-      setIsConnected(true);
-      console.log('connected');
-      setVenomProvider(provider);
-      console.log('provider set');
-      const venomWalletAddress = provider ? await getAddress(provider) : undefined;
-      setAddress(venomWalletAddress);
-
-      console.log('address set');
-      const _venomContract = new provider.Contract(VenomAbi, new Address(VenomContractAddress));
-      setVenomContract(_venomContract);
-      const { value0: primaryName } = await _venomContract.methods
-        .getPrimaryName({ _owner: new Address(venomWalletAddress) })
-        .call();
-      if (primaryName.name !== '') {
-        setPrimaryName(primaryName);
-      }
-      console.log('venomid contract set', _venomContract);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  // This handler will be called after venomConnect.disconnect() action
-  // By click logout. We need to reset address and balance.
-  const onDisconnect = async () => {
-    venomProvider?.disconnect();
-    setAddress('');
-    setIsConnected(false);
-    setBalance('');
-  };
-
-  // When our provider is ready, we need to get address and balance from.
+  }
 
   useEffect(() => {
-    // connect event handler
-    //const off = venomConnect?.on('connect', onConnect);
-    function auth() {
-      //venomConnect?.on('extension-auth', onConnect);
-      venomConnect?.on('connect', onConnect);
-      if (venomConnect) {
-        checkAuth(venomConnect);
+    async function checkPrimary() {
+      if (account && isConnected && provider) {
+        if (!provider?.isInitialized) {
+          console.log('provider not ready');
+          await sleep(1000);
+          checkPrimary();
+          return;
+        }
       }
+      getPrimary();
     }
-    if (venomConnect && !isConnected) {
-      auth();
-    }
-  }, [venomConnect]);
-
-  // Hook for balance setup
-  useEffect(() => {
-    if (address) getBalance(address);
-  }, [address]);
-
+    checkPrimary();
+  }, [account]);
   return (
     <>
       <Box>
-        {!address ? (
+        {!isConnected ? (
           <Button variant="solid" onClick={login}>
             <Center>
               <VenomFoundation />
@@ -168,62 +77,102 @@ export default function ConnectButton() {
           </Button>
         ) : (
           <Menu>
-            <MenuButton as={Button} minH={'46px'}>
+            <MenuButton
+              as={Button}
+              minH={'58px'}
+              borderRadius={12}
+              bgColor={colorMode === 'light' ? 'whiteAlpha.900' : 'var(--dark)'}
+              variant={colorMode === 'light' ? 'solid' : 'outline'}>
               <Center>
                 <VenomFoundation />
-                <Stack gap={0} mx={1}>
+                <Stack gap={0.5} mx={1}>
                   <Text
-                    fontWeight={colorMode === 'light' ? 'semibold' : 'light'}
-                    textAlign={'left'}
-                    my={'0 !important'}>
-                    {primaryName.name !== '' ? primaryName.name : truncAddress(address)}
-                  </Text>
-                  <Text
-                    fontWeight={colorMode === 'light' ? 'semibold' : 'light'}
+                    fontWeight={'semibold'}
                     textAlign={'left'}
                     my={'0 !important'}
-                    color="var(--venom1)">
-                    {Math.round(Number(balance) / 10e5) / 10e2} {notMobile ? 'VENOM' : ''}
+                    fontSize="14px">
+                    {Math.round(Number(account?.balance) / 10e5) / 10e2} {notMobile ? 'VENOM' : ''}
+                  </Text>
+                  <Text
+                    fontWeight={'semibold'}
+                    textAlign={'left'}
+                    fontSize="14px"
+                    color={primaryName?.name !== '' ? 'var(--venom2)' : 'gray.500'}
+                    my={'0 !important'}>
+                    {primaryName?.name !== ''
+                      ? capFirstLetter(String(primaryName.name))
+                      : truncAddress(String(address))}
                   </Text>
                 </Stack>
               </Center>
             </MenuButton>
             <MenuList
-              width={100}
+              width={320}
               py={0}
+              borderWidth={1}
               zIndex={199}
-              border={1}
-              borderColor={'grey'}
-              bg={colorMode === 'light' ? 'var(--lightGrey)' : 'var(--darkGradient)'}>
+              borderColor={'gray.800'}
+              bg={colorMode === 'light' ? 'var(--white)' : 'var(--dark)'}>
+              <Flex p={5} alignItems="center" gap={1}>
+                <VenomFoundation />
+                <Stack gap={0.5} mx={1} flexGrow={1}>
+                  <Text
+                    fontWeight={'semibold'}
+                    textAlign={'left'}
+                    fontSize="14px"
+                    my={'0 !important'}>
+                    {primaryName?.name !== ''
+                      ? capFirstLetter(String(primaryName.name))
+                      : truncAddress(String(address))}
+                  </Text>
+                  <Text
+                    fontWeight={'semibold'}
+                    textAlign={'left'}
+                    my={'0 !important'}
+                    fontSize="14px"
+                    color="gray.500">
+                    {Math.round(Number(account?.balance) / 10e5) / 10e2} {notMobile ? 'VENOM' : ''}
+                  </Text>
+                </Stack>
+                <Tooltip
+                  borderRadius={4}
+                  label={<Text p={2}>Copy Address</Text>}
+                  color="white"
+                  bgColor={'black'}
+                  hasArrow>
+                  <IconButton onClick={onCopy} variant="ghost" aria-label="copy-venom-address">
+                    {hasCopied ? <RiCheckDoubleFill size={22} /> : <RiFileCopyLine size={22} />}
+                  </IconButton>
+                </Tooltip>
+                <Tooltip
+                  borderRadius={4}
+                  label={<Text p={2}>Disconnect Wallet</Text>}
+                  hasArrow
+                  color="white"
+                  bgColor={'black'}>
+                  <IconButton onClick={disconnect} variant="ghost" aria-label="disconnect-wallet">
+                    <RiLogoutBoxRLine size={22} />
+                  </IconButton>
+                </Tooltip>
+              </Flex>
               {primaryName.name !== '' && (
-                <LinkBox as={MenuItem}>
-                  <LinkOverlay
-                    display="flex"
-                    gap={2}
-                    href={SITE_PROFILE_URL + primaryName.name}
-                    target="_blank">
-                    <LogoIcon />
-                    View VenomID
+                <LinkBox px={5}>
+                  <LinkOverlay href={SITE_PROFILE_URL + primaryName.name} target="_blank">
+                    <Button borderColor={'gray.800'} gap={2} variant="outline" width={'100%'} size="lg">
+                      <LogoIcon />
+                      View at VenomID.link
+                    </Button>
                   </LinkOverlay>
                 </LinkBox>
               )}
-              <LinkBox as={MenuItem}>
-                <LinkOverlay
-                  display="flex"
-                  gap={2}
-                  href={VENOMSCAN_NFT + address}
-                  target="_blank">
-                  <VenomScanIcon />
-                  View on VenomScan
+              <LinkBox p={5} pt={4}>
+                <LinkOverlay href={VENOMSCAN_NFT + address} target="_blank">
+                  <Button borderColor={'gray.800'} gap={2} variant="outline" width={'100%'} size="lg">
+                    <VenomScanIcon />
+                    View on VenomScan
+                  </Button>
                 </LinkOverlay>
               </LinkBox>
-              <MenuItem display="flex" gap={2} onClick={onCopy}>
-                <FaRegCopy />
-                Copy {truncAddress(address)}
-              </MenuItem>
-              <MenuItem onClick={onDisconnect} display="flex" gap={2}>
-                <FaSignOutAlt /> Logout
-              </MenuItem>
             </MenuList>
           </Menu>
         )}

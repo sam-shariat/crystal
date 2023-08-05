@@ -36,7 +36,7 @@ const terms: Terms = {
     fa: 'مشاهده'
   },
   description: {
-    en: 'Your entire Virtual IDentity in the Blockchain',
+    en: 'Your Entire Virtual IDentity On The Blockchain In A Link',
     fa: 'هویت مجازی شما در بلاک‌چین با یک لینک ساده'
   },
   claimDescription: {
@@ -56,12 +56,12 @@ const terms: Terms = {
     fa: 'یک پلتفرم امن و بدون واسطه'
   },
   manageWebsiteButton: {
-    en: 'Management Platform',
+    en: 'Manage Your Venom ID',
     fa: 'بخش مدیریت'
   },
-  manageDemoWebsiteButton: {
-    en: 'Management Demo',
-    fa: 'دمو بخش مدیریت'
+  apiLinkButton: {
+    en: 'Venom ID API Documents',
+    fa: 'مستندات API'
   },
   profileLink: {
     en: 'Venomid.link',
@@ -108,18 +108,18 @@ const terms: Terms = {
     fa: 'تست پلتفرم'
   },
   roadmapPhase13: {
-    en: `Venom ID JS SKD and API`,
-    fa: 'Venom ID JS SKD and API'
+    en: `Venom ID API/SDK(s)`,
+    fa: 'Venom ID API/SDK(s)'
   },
-  roadmapPhase14: {
-    en: `Accelerator/Investor Event Program`,
-    fa: 'برگذاری ایونت شتابدهی و سرمایه گذاری'
+  roadmapPhase16: {
+    en: `Investor Event Program`,
+    fa: 'برگذاری ایونت سرمایه گذاری'
   },
   roadmapPhase15: {
     en: `Discord Community`,
     fa: 'راه اندازی انجمن در دیسکورد'
   },
-  roadmapPhase16: {
+  roadmapPhase14: {
     en: `Publishing Whitepaper`,
     fa: 'انتشار وایت پیپر'
   },
@@ -128,20 +128,28 @@ const terms: Terms = {
     fa: 'فاز دوم - ربع چهارم سال ۲۰۲۳'
   },
   roadmapPhase21: {
-    en: `Adding social media and web3 verifications`,
-    fa: 'اضافه کردن قابلیت وریفای کردن شبکه های اجتماعی و بلاکچین'
+    en: `Resource Verification`,
+    fa: 'قابلیت اعتبارسنجی منابع'
   },
   roadmapPhase22: {
-    en: `Introducing Venom Passport NFT (Community Only)`,
-    fa: 'معرفی ان اف تی ونوم پاسپورت (فقط برای اعضا)'
+    en: `Venom Passport NFT`,
+    fa: 'ان اف تی ونوم پاسپورت'
   },
   roadmapPhase23: {
-    en: `Venomid.site - Dapp Platform to build responsive websites fast and simple`,
-    fa: 'لانچ ونوم آی دی دات سایت. پلتفرم غیر متمرکز برای ساخت وب سایت های سریع و ساده'
+    en: `Venomid.Site (HOT)`,
+    fa: 'لانچ ونوم آی دی دات سایت'
   },
   roadmapPhase24: {
-    en: `VenomID DAO, Launch airdrop and more`,
-    fa: 'سازمان غیر متمرکز اتوماتیک یا DAO, ایردراپ و موارد بیشتر'
+    en: `VenomID DAO`,
+    fa: 'سازمان غیر متمرکز اتوماتیک یا DAO'
+  },
+  roadmapPhase25: {
+    en: `VenomID on Arbitrum`,
+    fa: 'ونوم آی دی در آربیتروم'
+  },
+  roadmapPhase26: {
+    en: `More In Progress ...`,
+    fa: 'به زودی ...'
   },
   about: {
     en: `About`,
@@ -223,12 +231,16 @@ const terms: Terms = {
     en:'Our Only Official Links',
     fa:'تنها لینک های رسمی ما'
   },
+  joinTheCommunity: {
+    en:'Stay Active in the Community',
+    fa:'در انجمن فعال بمانید'
+  },
   ourDomains: {
     en:'Our Domains',
     fa:'دامنه های ما'
   },
   testnetNotice: {
-    en:'VenomID is now live on Venom Testnet !',
+    en:'Venom ID is now live on Venom Testnet !',
     fa:'ونوم آی دی در شبکه تست نت ونوم در حال اجرا است'
   },
   zealyCommunity: {
@@ -236,7 +248,7 @@ const terms: Terms = {
     fa:'به انجمن زیلی بپیوندید'
   },
   airdropParticipate: {
-    en:'To Participate in the Launch Airdrop',
+    en:'Participate in the Launch Airdrop',
     fa:'تا در ایردراپ شرکت کنید'
   },
 };

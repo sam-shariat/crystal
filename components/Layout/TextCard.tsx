@@ -4,7 +4,9 @@ import {
   useColorMode,
   Center,
   Flex,
-  Button
+  Button,
+  LinkBox,
+  LinkOverlay
 } from '@chakra-ui/react';
 
 interface Props {
@@ -12,10 +14,13 @@ interface Props {
   domain: string;
   text: string;
   icon: JSX.Element;
+  url: string;
 }
-export default function TextCard({ header, domain, text, icon }: Props) {
+export default function TextCard({ header, domain, text, icon, url }: Props) {
     const {colorMode} = useColorMode();
   return (
+    <LinkBox>
+      <LinkOverlay href={url}>
     <Center as={Button} key={header} bg={colorMode === 'dark' ? 'var(--darkGradient)' : 'var(--lightGradient)'}  flexDirection="column" borderRadius={12} borderWidth={1} borderColor="grey" p={4} width={'100%'} minH={200}>
         <Box my={4}>{icon}</Box>
       <Flex fontSize={'xl'} fontWeight="bold" my={1} style={{direction:'ltr'}}>
@@ -25,5 +30,7 @@ export default function TextCard({ header, domain, text, icon }: Props) {
         {text}
       </Text>
     </Center>
+    </LinkOverlay>
+    </LinkBox>
   );
 }
