@@ -3,6 +3,7 @@ import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
 import { SITE_PROFILE_URL } from 'core/utils/constants';
 import { RiExternalLinkLine, RiProfileLine } from 'react-icons/ri';
+import Logo from 'components/Layout/Logo';
 import LogoIcon from 'components/Layout/LogoIcon';
 
 export default function ProfileSection() {
@@ -35,15 +36,15 @@ export default function ProfileSection() {
                 <Button
                   height={'76px'}
                   flexDirection={'column'}
-                  colorScheme={'blue'}
                   borderColor={'gray'}
+                  variant={'outline'}
                   size="lg"
                   minWidth="100%">
-                  <Flex gap={4} width={'100%'} justifyContent={'center'}>
-                    <LogoIcon size="45px" reverse/>
+                  <Flex gap={4} width={'100%'} justifyContent={'center'} alignItems={'center'}>
+                    <LogoIcon size='44px' />
                     <Stack gap={1}>
                       <Text>{t('linkWebsiteButton')}</Text>
-                      <Text display={'flex'} fontSize={'sm'} color={colorMode === 'dark' ? 'gray.600' : 'gray.300'} gap={1}>
+                      <Text display={'flex'} fontSize={'sm'} color={colorMode === 'dark' ? 'gray.300' : 'gray.600'} gap={1}>
                         venomid.link <RiExternalLinkLine size='18px'/>
                       </Text>
                     </Stack>

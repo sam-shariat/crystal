@@ -34,7 +34,7 @@ import {
   ZEALY_URL,
 } from 'core/utils/constants';
 import { Transaction } from 'everscale-inpage-provider';
-import { RiFingerprint2Line, RiSettings3Line, RiProfileLine, RiExternalLinkLine } from 'react-icons/ri';
+import { RiFingerprint2Line, RiSettings3Line, RiProfileLine, RiExternalLinkLine, RiTwitterFill } from 'react-icons/ri';
 import { isValidUsername } from 'core/utils';
 import { ZealyLogo } from 'components/logos';
 
@@ -224,7 +224,7 @@ const ClaimSection = () => {
     }
   }
 
-  const [notMobile] = useMediaQuery('(min-width: 800px)');
+  const [notMobile] = useMediaQuery('(min-width: 768px)');
 
   return (
     <Box backgroundColor={colorMode === 'dark' ? 'blackAlpha.200' : 'auto'} id="claim">
@@ -385,16 +385,18 @@ const ClaimSection = () => {
           <Text fontWeight="light" fontSize={'xl'} my={4}>
             {t('claimDescription')}
           </Text>
+          {/* <Flex gap={2} alignItems={'center'} flexDirection={notMobile ? 'row':'column'}>
+            <Button height={100} colorScheme='twitter' variant={'outline'}>
+              <RiTwitterFill size={'60px'} />
+            </Button> */}
           <Button
             as={Link}
+            flexGrow={1}
             href={ZEALY_URL}
             target="_blank"
             _hover={{ textDecoration: 'none', color: colorMode === 'light' ? 'white' : 'black' }}
             color={colorMode === 'light' ? 'white' : 'black'}
             height={100}
-            p={10}
-            mt={10}
-            minWidth={notMobile ? 'md' : '100%'}
             display="flex"
             gap={4}
             bg={colorMode === 'dark' ? 'var(--lightGradient)' : 'var(--darkGradient)'}>
@@ -408,6 +410,7 @@ const ClaimSection = () => {
               </Text>
             </Stack>
           </Button>
+          {/* </Flex> */}
           <Box my={6} mt={10} minWidth={notMobile ? 'md' : 'xs'}>
             <Text fontSize="xl" fontWeight="bold" textAlign="center">
               {t('ourDomains')}

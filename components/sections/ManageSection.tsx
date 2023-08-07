@@ -20,7 +20,7 @@ import { RiSettings3Line, RiExternalLinkLine, RiCodeSSlashLine } from 'react-ico
 export default function ManageSection() {
   const { colorMode } = useColorMode();
   const { t } = useTranslate();
-  const [notMobile] = useMediaQuery('(min-width: 800px)');
+  const [notMobile] = useMediaQuery('(min-width: 768px)');
   return (
     <Box backgroundColor={colorMode === 'dark' ? 'whiteAlpha.50' : 'blackAlpha.50'} id="manage">
       <Container
@@ -32,7 +32,7 @@ export default function ManageSection() {
         minH="75vh"
         py={10}>
         <Box gap={4} width={notMobile ? '100%' : 'xs'}>
-          <SimpleGrid columns={[1, 2]} spacing="32px" my={10}>
+          <SimpleGrid columns={[1,1, 2]} spacing="32px" my={10}>
             <Center display="flex" flexDirection="column" gap={3}>
               <Heading fontWeight="bold" fontSize="5xl">
                 {t('easyManagement')}
