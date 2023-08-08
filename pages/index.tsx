@@ -18,10 +18,10 @@ const Home: NextPage = () => {
     <>
       <Seo />
       <Head>
-        {/* <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={SITE_TITLE} />
         <meta name="twitter:description" content={SITE_DESCRIPTION} />
-        <meta name="twitter:image" content={SITE_URL+'vidog.png'} /> */}
+        <meta name="twitter:image" content={SITE_URL+'logos/vid.png'} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 

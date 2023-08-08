@@ -34,7 +34,7 @@ export function Seo() {
             alt: `${SITE_TITLE} Open Graph Image`,
             width: 512,
             height: 512,
-            secureUrl: SITE_URL + '/logos/vid.png',
+            secureUrl: SITE_URL + 'logos/vid.png',
           },
           {
             url: `${SITE_URL}vidog.png`,
