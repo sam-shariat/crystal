@@ -44,7 +44,7 @@ export default function ConnectButton() {
     const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
     setVenomContract(_venomContract);
     // @ts-ignore: Unreachable code error
-    const { value0 } = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) })
+    const { value0 }:any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) })
       .call();
 
     if (value0?.name !== '' && !primaryName?.nftAddress) {
