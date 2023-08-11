@@ -1,10 +1,12 @@
 import * as React from "react"
 import { useColorMode, Box } from '@chakra-ui/react';
-
-function VenomScanIcon() {
+interface Props {
+  size?:string;
+}
+function VenomScanIcon({size}:Props) {
     const { colorMode } = useColorMode();
   return (
-    <Box width={'22px'} height={'22px'} ml={-1}>
+    <Box width={size ? size : '22px'} height={size ? size : '22px'} >
     <svg
       style={{
         flex: 1

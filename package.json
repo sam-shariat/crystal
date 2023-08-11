@@ -19,6 +19,8 @@
     "@chakra-ui/react": "^2.3.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@fontsource/lato": "^5.0.8",
+    "@fontsource/poppins": "^5.0.8",
     "@vercel/analytics": "^1.0.1",
     "array-move": "^4.0.0",
     "axios": "^1.4.0",

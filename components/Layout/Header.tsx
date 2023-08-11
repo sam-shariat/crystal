@@ -44,7 +44,6 @@ export default function Header() {
   const home = pathname === '/' ? true : false;
 
   useEffect(() => {
-    console.log(colorMode + ' is ' + colorM);
     if (colorMode !== colorM) {
       toggleColorMode();
     }

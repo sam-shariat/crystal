@@ -20,9 +20,9 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { nameAtom, venomContractAtom, venomContractAddressAtom } from 'core/atoms';
+import { nameAtom, venomContractAtom, venomContractAddressAtom, primaryNameAtom } from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
-import { useConnect, useVenomProvider } from 'venom-react-hooks';
+import { addAsset, useConnect, useVenomProvider } from 'venom-react-hooks';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import Venom from 'components/Venom';
 import TextCard from 'components/Layout/TextCard';
@@ -32,11 +32,16 @@ import {
   SITE_MANAGE_URL,
   NFT_IMAGE_URL,
   ZEALY_URL,
+  CONTRACT_ADDRESS,
 } from 'core/utils/constants';
 import { Transaction } from 'everscale-inpage-provider';
-import { RiFingerprint2Line, RiSettings3Line, RiProfileLine, RiExternalLinkLine, RiTwitterFill } from 'react-icons/ri';
+import {
+  RiFingerprint2Line,
+  RiSettings3Line,
+  RiProfileLine
+} from 'react-icons/ri';
 import { isValidUsername } from 'core/utils';
-import { ZealyLogo } from 'components/logos';
+import { VenomFoundation, VenomScanIcon, ZealyLogo } from 'components/logos';
 
 interface Message {
   type: any;
@@ -62,10 +67,12 @@ const ClaimSection = () => {
   const [message, setMessage] = useState<Message>({ type: '', title: '', msg: '', link: '' });
   const [nameExists, setNameExists] = useState(false);
   const [claimedName, setClaimedName] = useState('');
+  const { add } = addAsset(String(account?.address), CONTRACT_ADDRESS);
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   //const [venomContract, setVenomContract] = useState<any>(undefined);
   const minFee = 660000000;
   const [name, setName] = useAtom(nameAtom);
+  const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
 
   const json = {
     type: 'Basic NFT',
@@ -102,7 +109,7 @@ const ClaimSection = () => {
       });
     }
 
-    if (_name.length === 0) return;
+    if (_name.length < 3) return;
     if (_name.length > 2 && !isValidUsername(_name) && _name.length < 30) {
       setMessage({
         type: 'warning',
@@ -119,7 +126,7 @@ const ClaimSection = () => {
         const { value0: _fee } = await venomContract.methods
           .calculateMintingFee({ name: String(_name).toLowerCase() })
           .call();
-        console.log('fee', _fee);
+
         // @ts-ignore: Unreachable code error
         const { value0: _nameExists } = await venomContract?.methods
           .nameExists({ name: String(_name).toLowerCase() })
@@ -150,10 +157,17 @@ const ClaimSection = () => {
       });
       return;
     }
+    if (name.length < 3 || name.length > 29) {
+      setMessage({
+        type: 'info',
+        title: t('invalidName'),
+        msg: t('nameLengthMsg'),
+      });
+      return;
+    }
     setMessage({ type: '', title: '', msg: '' });
-    console.log('before minting');
+
     if (name.length >= 3 && !nameExists && venomContract?.methods) {
-      console.log('minting');
       setIsMinting(true);
       // @ts-ignore: Unreachable code error
       const mintTx = await venomContract?.methods
@@ -177,7 +191,7 @@ const ClaimSection = () => {
 
       if (mintTx) {
         setClaimedName(name);
-        console.log('mint tx : ', mintTx);
+        //console.log('mint tx : ', mintTx);
         setIsConfirming(true);
         let receiptTx: Transaction | undefined;
         const subscriber = provider && new provider.Subscriber();
@@ -185,7 +199,7 @@ const ClaimSection = () => {
           await subscriber
             .trace(mintTx)
             .tap((tx_in_tree: any) => {
-              console.log('tx_in_tree : ', tx_in_tree);
+              //console.log('tx_in_tree : ', tx_in_tree);
               if (tx_in_tree.account.equals(VenomContractAddress)) {
                 receiptTx = tx_in_tree;
               }
@@ -198,7 +212,7 @@ const ClaimSection = () => {
         let events = await venomContract.decodeTransactionEvents({
           transaction: receiptTx as Transaction,
         });
-        console.log(events);
+
         if (events.length !== 1 || events[0].event !== 'NftCreated') {
           setMessage({
             type: 'error',
@@ -214,13 +228,14 @@ const ClaimSection = () => {
             msg: t('mintSuccessMsg'),
             link: nftAddress,
           });
+          if (primaryName?.name === '') {
+            setPrimaryName({ name: claimedName });
+          }
         }
         setIsMinting(false);
         setIsConfirming(false);
         setName('');
-        console.log(events);
       }
-      console.log('mint finished');
     }
   }
 
@@ -264,52 +279,58 @@ const ClaimSection = () => {
               gap={2}
               borderRadius={10}>
               <AlertIcon />
-              <Box width={'100%'}>
+              <Box width={'100%'} flexGrow={1}>
                 <AlertTitle>{message.title.toUpperCase()}</AlertTitle>
                 <AlertDescription>{message.msg}</AlertDescription>
               </Box>
               {message.link && (
-                <Box>
+                <Stack justifyContent={'right'}>
                   <Link
                     href={VENOMSCAN_NFT + message.link}
                     target="_blank"
                     id={`venom-id-nft-link`}>
-                    <Button m={1} minWidth={200} height={'54px'} colorScheme='green'>
-                    <Flex gap={2} width={'100%'}>
-                        
+                    <Button
+                      variant={'outline'}
+                      minWidth={250}
+                      height={'54px'}
+                      colorScheme="green">
+                      <Flex gap={2} width={'100%'} alignItems={'center'} justifyContent={'space-between'}>
                         <Stack gap={1} p={1}>
                           <Text textAlign={'left'}>{`${t('view')} ${claimedName}.VID`}</Text>
                           <Text
                             display={'flex'}
                             fontSize={'sm'}
                             gap={1}
-                            color={colorMode === 'dark' ? 'gray.600' : 'gray.300'}>
-                            venomscan.com <RiExternalLinkLine size="18px" />
+                            color={colorMode === 'dark' ? 'gray.300' : 'gray.600'}>
+                            venomscan.com 
                           </Text>
                         </Stack>
+                        <VenomScanIcon size='30px' />
                       </Flex>
                     </Button>
                   </Link>
+                  
                   <Link
                     href={SITE_MANAGE_URL + 'manage/' + message.link}
                     target="_blank"
                     id={`venom-id-manage-nft-link`}>
-                    <Button m={1} minWidth={200} height={'54px'} colorScheme='purple'>
-                      <Flex gap={2} width={'100%'}>
+                    <Button minWidth={250} height={'54px'} colorScheme="purple" variant={'outline'}>
+                      <Flex gap={2} width={'100%'}  alignItems={'center'} justifyContent={'space-between'}>
                         <Stack gap={1} p={1}>
                           <Text textAlign={'left'}>{`${t('manage')} ${claimedName}.VID`}</Text>
                           <Text
                             display={'flex'}
                             fontSize={'sm'}
                             gap={1}
-                            color={colorMode === 'dark' ? 'gray.600' : 'gray.300'}>
-                            venomid.tools <RiExternalLinkLine size="18px" />
+                            color={colorMode === 'dark' ? 'gray.300' : 'gray.600'}>
+                            venomid.tools 
                           </Text>
                         </Stack>
+                        <RiSettings3Line size={'30px'} />
                       </Flex>
                     </Button>
                   </Link>
-                </Box>
+                </Stack>
               )}
             </Alert>
           )}
@@ -382,7 +403,7 @@ const ClaimSection = () => {
               )}
             </Flex>
           )}
-          <Text fontWeight="light" fontSize={'xl'} my={4}>
+          <Text fontWeight="light" fontSize={'xl'} py={6}>
             {t('claimDescription')}
           </Text>
           {/* <Flex gap={2} alignItems={'center'} flexDirection={notMobile ? 'row':'column'}>

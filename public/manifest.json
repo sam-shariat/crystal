@@ -21,7 +21,7 @@
     ],
     "theme_color": "#43bb7f",
     "background_color": "#101212",
-    "start_url": "/",
+    "start_url": "https://venomid.network",
     "display": "standalone",
     "orientation": "portrait"
   }

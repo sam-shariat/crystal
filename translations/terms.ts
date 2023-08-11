@@ -16,15 +16,15 @@ const terms: Terms = {
     fa: 'پروفایل'
   },
   venomidnetwork: {
-    en: 'Venom ID Network',
+    en: 'VID Network',
     fa: 'شبکه ونوم آی دی'
   },
   venomidtools: {
-    en: 'Venom ID Management',
+    en: 'VID Management',
     fa: 'مدیریت ونوم آی دی'
   },
   venomidlink: {
-    en: 'Venom ID Profile Link',
+    en: 'VID Profile Link',
     fa: 'لینک پروفایل ونوم آی دی'
   },
   easyManagement: {
@@ -36,7 +36,7 @@ const terms: Terms = {
     fa: 'مشاهده'
   },
   description: {
-    en: 'Your Entire Virtual IDentity On The Blockchain In A Link',
+    en: 'Your Entire Virtual IDentity on The Blockchain In a Link',
     fa: 'هویت مجازی شما در بلاک‌چین با یک لینک ساده'
   },
   claimDescription: {
@@ -56,16 +56,16 @@ const terms: Terms = {
     fa: 'یک پلتفرم امن و بدون واسطه'
   },
   manageWebsiteButton: {
-    en: 'Manage Your Venom ID',
+    en: 'Venom ID Management',
     fa: 'بخش مدیریت'
   },
   apiLinkButton: {
-    en: 'Venom ID API Documents',
+    en: 'Venom ID API Docs',
     fa: 'مستندات API'
   },
   profileLink: {
-    en: 'Venomid.link',
-    fa: 'Venomid.link'
+    en: 'venomid.link',
+    fa: 'venomid.link'
   },
   profileDescription: {
     en: 'Your Customizable Profile on the Venom Blockchain',
@@ -202,6 +202,10 @@ const terms: Terms = {
   invalidNameMsg: {
     en:'Name can only contain URL-friendly characters. (letters, numbers and underscore _ )',
     fa:'نام فقط می‌تواند شامل حروف، اعداد و زیر خط باشد (فقط انگلیسی)'
+  },
+  nameLengthMsg: {
+    en:'Name length should be between Minimum 3 and Maximum 30 Letter ',
+    fa:'نام انتخابی باید بین ۳ تا ۳۰ حرف داشته باشند'
   },
   contractConnection: {
     en:'Error connecting to smart contract',

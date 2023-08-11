@@ -13,13 +13,14 @@ export function Seo() {
     typeof window !== 'undefined' && window.location.href ? window.location.href : SITE_URL;
   return (
     <DefaultSeo
+      title={SITE_TITLE}
       defaultTitle={SITE_TITLE}
       titleTemplate={`%s | ${SITE_DESCRIPTION}`}
       description={SITE_FULL_DESCRIPTION}
       canonical={origin}
       themeColor={'#101212'}
-      defaultOpenGraphImageWidth={1200}
-      defaultOpenGraphImageHeight={600}
+      defaultOpenGraphImageWidth={512}
+      defaultOpenGraphImageHeight={512}
       openGraph={{
         type: 'website',
         siteName: SITE_TITLE,

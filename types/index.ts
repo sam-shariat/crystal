@@ -1,5 +1,3 @@
-import { Address } from "next-seo/lib/types"
-
 export interface State<T> {
   loading: boolean
   data?: T
@@ -7,6 +5,6 @@ export interface State<T> {
 }
 
 export interface PrimaryName {
-  nftAddress?: Address;
+  nftAddress?: string;
   name?: string;
 }

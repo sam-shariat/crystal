@@ -24,7 +24,7 @@ import { useConnect, useVenomProvider } from 'venom-react-hooks';
 import { useAtom, useAtomValue } from 'jotai';
 import { Address } from 'everscale-inpage-provider';
 import VenomAbi from 'abi/Collection.abi.json';
-import { RiLogoutBoxRLine, RiFileCopyLine, RiCheckDoubleFill } from 'react-icons/ri';
+import { RiLogoutBoxRLine, RiFileCopyLine, RiCheckDoubleFill, RiShuffleLine } from 'react-icons/ri';
 import LogoIcon from '../Layout/LogoIcon';
 import { primaryNameAtom, venomContractAddressAtom, venomContractAtom } from 'core/atoms';
 
@@ -44,27 +44,37 @@ export default function ConnectButton() {
     const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
     setVenomContract(_venomContract);
     // @ts-ignore: Unreachable code error
-    const { value0 } = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) }).call();
-    console.log(value0);
-    if (value0) {
+    const { value0 } = await _venomContract?.methods
+      .getPrimaryName({ _owner: new Address(String(address)) })
+      .call();
+
+    if (value0?.name !== '' && !primaryName?.nftAddress) {
       setPrimaryName(value0);
     }
   }
+
+  const switchAccount = async () => {
+    await disconnect();
+    setPrimaryName({name:'',nftAddress:''})
+    login();
+  };
 
   useEffect(() => {
     async function checkPrimary() {
       if (account && isConnected && provider) {
         if (!provider?.isInitialized) {
-          console.log('provider not ready');
+          console.log('provider not ready yet');
           await sleep(1000);
           checkPrimary();
           return;
         }
       }
+
       getPrimary();
     }
+
     checkPrimary();
-  }, [account]);
+  }, [account, primaryName]);
   return (
     <>
       <Box>
@@ -155,24 +165,48 @@ export default function ConnectButton() {
                   </IconButton>
                 </Tooltip>
               </Flex>
-              {primaryName.name !== '' && (
+              <Stack gap={2} my={4}>
+                <Box px={5}>
+                  <Button
+                    onClick={switchAccount}
+                    borderColor={'gray.800'}
+                    gap={2}
+                    variant="outline"
+                    width={'100%'}
+                    size="lg">
+                    <RiShuffleLine />
+                    Switch Account
+                  </Button>
+                </Box>
+                {primaryName.name !== '' && (
+                  <LinkBox px={5}>
+                    <LinkOverlay href={SITE_PROFILE_URL + primaryName.name} target="_blank">
+                      <Button
+                        borderColor={'gray.800'}
+                        gap={2}
+                        variant="outline"
+                        width={'100%'}
+                        size="lg">
+                        <LogoIcon />
+                        {`Venomid.link/${primaryName.name}`}
+                      </Button>
+                    </LinkOverlay>
+                  </LinkBox>
+                )}
                 <LinkBox px={5}>
-                  <LinkOverlay href={SITE_PROFILE_URL + primaryName.name} target="_blank">
-                    <Button borderColor={'gray.800'} gap={2} variant="outline" width={'100%'} size="lg">
-                      <LogoIcon />
-                      View at VenomID.link
+                  <LinkOverlay href={VENOMSCAN_NFT + address} target="_blank">
+                    <Button
+                      borderColor={'gray.800'}
+                      gap={2}
+                      variant="outline"
+                      width={'100%'}
+                      size="lg">
+                      <VenomScanIcon />
+                      View on VenomScan
                     </Button>
                   </LinkOverlay>
                 </LinkBox>
-              )}
-              <LinkBox p={5} pt={4}>
-                <LinkOverlay href={VENOMSCAN_NFT + address} target="_blank">
-                  <Button borderColor={'gray.800'} gap={2} variant="outline" width={'100%'} size="lg">
-                    <VenomScanIcon />
-                    View on VenomScan
-                  </Button>
-                </LinkOverlay>
-              </LinkBox>
+              </Stack>
             </MenuList>
           </Menu>
         )}
