@@ -27,6 +27,7 @@ import {
   buttonBgColorAtom,
   fontAtom,
   lightModeAtom,
+  openModalAtom,
   roundAtom,
   variantAtom,
 } from 'core/atoms';
@@ -69,6 +70,8 @@ export default function IntroSection() {
   const [links, setLinks] = useState(LINK_VARIATIONS[0]);
   const [socials, setSocials] = useState(SOCIALS_VARIATIONS[0]);
   const [wallets, setWallets] = useState(WALLETS_VARIATIONS[0]);
+  const [_open, _setOpen] = useAtom(openModalAtom);
+
   const win = useRef(null);
 
   const change = async () => {
@@ -104,19 +107,19 @@ export default function IntroSection() {
       setTimer(0);
       clearInterval(progressTimer); // clear the interval when timer is 8000
     } else {
-      if (window.scrollY > 700 && window.scrollY < 2000) {
+      if (window.scrollY > 700 && window.scrollY < 2000 && !_open) {
         setTimer(timer + 80);
       }
       window.addEventListener('scroll', () => setTop(top + 1));
     }
   };
-  
+
   useEffect(() => {
     progressTimer = setInterval(changeProgress, 80); // use setInterval instead of setTimeout
     return () => {
       clearInterval(progressTimer); // clear the interval when the component unmounts
     };
-  }, [timer, top]);
+  }, [timer, top, _open]);
 
   return (
     <Box backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'} id="w&w">
@@ -212,12 +215,18 @@ export default function IntroSection() {
                 transition={'all .5s ease'}
                 p={4}>
                 <motion.div
-                  style={{display:'flex',flexDirection:'column',alignItems:'center'}}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                   key={`venomid-templates-${current}`}
-                  transition={{duration: 0.5, ease: 'linear'}}
-                  initial={{ y: 20, scale: 0.9 , opacity: .5, filter: "blur(20px)" }}
-                  animate={{ y: 0, scale: 1 , opacity: 1, filter: "blur(0px)" }}
-                  exit={{ y: -20, scale: 0.9 , opacity: .5, filter: "blur(20px)", transition: { ease: 'backOut', duration: 0.2} }}>
+                  transition={{ duration: 0.5, ease: 'linear' }}
+                  initial={{ y: 20, scale: 0.9, opacity: 0.5, filter: 'blur(20px)' }}
+                  animate={{ y: 0, scale: 1, opacity: 1, filter: 'blur(0px)' }}
+                  exit={{
+                    y: -20,
+                    scale: 0.9,
+                    opacity: 0.5,
+                    filter: 'blur(20px)',
+                    transition: { ease: 'backOut', duration: 0.2 },
+                  }}>
                   <HStack gap={4}>
                     <Box maxW={notMobile ? '160px' : '100px'}>
                       <Avatar
@@ -258,7 +267,7 @@ export default function IntroSection() {
                     json={{
                       lightMode: lightMode,
                       socials: socials,
-                      lineIcons: lightMode
+                      lineIcons: lightMode,
                     }}
                   />
                   <Wallets

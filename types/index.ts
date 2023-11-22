@@ -30,6 +30,7 @@ export interface Styles {
   radius?: string;
   size?: 'sm' | 'md' | 'lg';
   nolink?: boolean;
+  scanLink?: boolean;
   icon?: string;
   color?: string;
   network?: string;

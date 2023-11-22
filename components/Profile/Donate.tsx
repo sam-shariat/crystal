@@ -34,6 +34,7 @@ import {
   isConnectedAtom,
   lightModeAtom,
   networkAtom,
+  openModalAtom,
   roundAtom,
   variantAtom,
 } from 'core/atoms';
@@ -76,6 +77,11 @@ export default function Donate({ title, content, style }: Props) {
   const [autoEth, setAutoEth] = useState(false);
   const [isDonating, setIsDonating] = useState(false);
   const [donateSuccessful, setDonateSuccessful] = useState(false);
+  const [_open, _setOpen] = useAtom(openModalAtom);
+
+  useEffect(() => {
+    _setOpen(isOpen)
+  }, [isOpen]);
 
   const ethAddressFromWallet = useAddress();
   const connectWithThirdweb = useThirdWebConnect();
@@ -155,9 +161,9 @@ export default function Donate({ title, content, style }: Props) {
           <ModalBody>
             <Tabs variant={'soft-rounded'} colorScheme={'gray'}>
               <TabList justifyContent={'center'} >
-                {venom && <Tab onClick={() => setValue('1 VENOM')}><Text color={'white'} >Venom</Text></Tab>}
-                {eth && <Tab onClick={() => setValue('0.001 ETH')}><Text color={'white'} >Ethereum</Text></Tab>}
-                {btc && <Tab onClick={() => setValue('0.0001 BTC')}><Text color={'white'} >Bitcoin</Text></Tab>}
+                {venom && <Tab onClick={() => setValue('1 VENOM')}><Text color={'gray.400'} >Venom</Text></Tab>}
+                {eth && <Tab onClick={() => setValue('0.001 ETH')}><Text color={'gray.400'} >Ethereum</Text></Tab>}
+                {btc && <Tab onClick={() => setValue('0.0001 BTC')}><Text color={'gray.400'} >Bitcoin</Text></Tab>}
               </TabList>
 
               <TabPanels>

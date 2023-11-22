@@ -9,7 +9,7 @@ const Litepaper: NextPage = () => {
   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
   return (
     <>
-    <Seo />
+    <Seo title='Venom ID Litepaper' description='Everything about the Venom ID Project' />
     <Head>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={SITE_TITLE} />

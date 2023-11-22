@@ -54,7 +54,7 @@ export default function AboutSection() {
             <Button
               as={Link}
               href="\litepaper"
-              style={{ textDecoration: 'none', _hover: { textDecoration: 'none' } }}
+              style={{ textDecoration: 'none'}}
               width={'100%'}
               gap={2}
               size={'lg'}
@@ -66,7 +66,7 @@ export default function AboutSection() {
               as={Link}
               href={YLIDE_URL}
               target="_blank"
-              style={{ textDecoration: 'none', _hover: { textDecoration: 'none' } }}
+              style={{ textDecoration: 'none' }}
               width={'100%'}
               gap={2}
               size={'lg'}
@@ -78,7 +78,7 @@ export default function AboutSection() {
               as={Link}
               href={ZEALY_URL}
               target="_blank"
-              style={{ textDecoration: 'none', _hover: { textDecoration: 'none' } }}
+              style={{ textDecoration: 'none'}}
               width={'100%'}
               gap={2}
               size={'lg'}
@@ -91,7 +91,7 @@ export default function AboutSection() {
               as={Link}
               href={TELEGRAM_URL}
               target="_blank"
-              style={{ textDecoration: 'none', _hover: { textDecoration: 'none' } }}
+              style={{ textDecoration: 'none' }}
               width={'100%'}
               gap={2}
               size={'lg'}

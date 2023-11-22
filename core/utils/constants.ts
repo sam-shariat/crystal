@@ -242,6 +242,16 @@ export const LINK_VARIATIONS = [
   ],
   [
     {
+      type: 'pay button',
+      title: 'Make A Payment',
+      content: 'Thank you very much for your Payment',
+      styles: {
+        venom: '0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765',
+        eth: '0xBFd210db795A9Ac48D0C3be2a74232BE44144E84',
+        btc: 'tb1qshvfpzfa0p46gztp00jwccf0c4kdfac72lmuz7',
+      },
+    },
+    {
       type: 'soundcloud',
       title: 'music',
       styles: {
@@ -286,6 +296,7 @@ export const LINK_VARIATIONS = [
         '{"address":"0x3C29F6B19bcbeB85d26460bB2f7Bd4cd065cE28E/0","metadata":{"image":"ipfs://QmTNi5umYXWV2THy65WDUMszTdHvuQRsZ9RuUmR7GEJyFx/bear-market-builder.png","external_url":"","animation_url":"ipfs://QmTNi5umYXWV2THy65WDUMszTdHvuQRsZ9RuUmR7GEJyFx/bear-market-builder.mp4","background_color":"","name":"Bear Market Builder NFT","description":"","attributes":[{"value":"common","trait_type":"rarity"}],"supply":"98477"}}',
       styles: {
         size: 'sm',
+        scanLink: false,
         network: 'polygon',
         type: 'complex',
       },
@@ -299,6 +310,7 @@ export const LINK_VARIATIONS = [
       image: 'https://ipfs.ventory.gg:443/ventory/upload-quest/111gif1691486132060.gif',
       content: '0:6cf1db7a90e005a8f582a75c95ea2fac36fbe695c210bff42d5e884ded91b428',
       styles: {
+        scanLink: false,
         size: 'sm',
         network: 'venom testnet',
         type: 'normal',

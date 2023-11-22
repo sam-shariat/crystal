@@ -31,6 +31,7 @@ import {
   buttonBgColorAtom,
   isConnectedAtom,
   lightModeAtom,
+  openModalAtom,
   roundAtom,
   variantAtom,
 } from 'core/atoms';
@@ -75,6 +76,11 @@ export default function Pay({ title, content, style }: Props) {
 
   const ethAddressFromWallet = useAddress();
   const connectWithThirdweb = useThirdWebConnect();
+  const [_open, _setOpen] = useAtom(openModalAtom);
+
+  useEffect(() => {
+    _setOpen(isOpen)
+  }, [isOpen]);
 
   useEffect(() => {
     if (autoEth && ethAddressFromWallet) {
@@ -144,9 +150,9 @@ export default function Pay({ title, content, style }: Props) {
           <ModalBody>
             <Tabs variant={'soft-rounded'} colorScheme="gray">
               <TabList justifyContent={'center'}>
-                <Tab onClick={() => setValue(1)}>Venom</Tab>
-                {eth && <Tab onClick={() => setValue(0.001)}>Ethereum</Tab>}
-                {btc && <Tab onClick={() => setValue(0.0001)}>Bitcoin</Tab>}
+                <Tab onClick={() => setValue(1)}><Text color={'gray.400'} >Venom</Text></Tab>
+                {eth && <Tab onClick={() => setValue(0.001)}><Text color={'gray.400'} >Ethereum</Text></Tab>}
+                {btc && <Tab onClick={() => setValue(0.0001)}><Text color={'gray.400'} >Bitcoin</Text></Tab>}
               </TabList>
 
               <TabPanels>
