@@ -14,13 +14,12 @@ import {
   Progress,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import Venom from 'components/Venom';
 import Image from 'next/image';
 
 export default function RoadmapSection() {
   const { t } = useTranslate();
   const { colorMode } = useColorMode();
-  const [notMobile] = useMediaQuery('(min-width: 800px)');
+  const [notMobile] = useMediaQuery('(min-width: 769px)');
   return (
     <Box backgroundColor={colorMode === 'dark' ? 'whiteAlpha.50' : 'blackAlpha.50'} id="roadmap">
       <Container
@@ -58,11 +57,9 @@ export default function RoadmapSection() {
                 gap={10}>
                 <Flex
                   flexDirection={'column'}
-                  width={'xs'}
-                  bg={colorMode === 'dark' ? 'var(--darkGradient)' : 'var(--lightGradient)'}
+                  width={['xs','sm','xs','md']}
+                  bg={colorMode === 'dark' ? 'blackAlpha.500' : 'var(--light)'}
                   borderRadius={12}
-                  borderWidth={1}
-                  borderColor="grey"
                   p={8}
                   pt={4}>
                   <Text
@@ -72,7 +69,7 @@ export default function RoadmapSection() {
                     textAlign={'center'}>
                     {t('roadmapPhase1')}
                   </Text>
-                  <Progress boxShadow={'base'} height={'2px'} value={35} colorScheme={'green'} mx={-8} mb={8} />
+                  <Progress boxShadow={'base'} height={'2px'} value={45} colorScheme={'green'} mx={-8} mb={8} />
                   <Checkbox
                     fontWeight="bold"
                     size="lg"
@@ -81,29 +78,27 @@ export default function RoadmapSection() {
                     colorScheme={'green'}>
                     {t('roadmapPhase11')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg" defaultChecked>
+                  <Checkbox fontWeight="bold" mt={1} size="lg" defaultChecked>
                     {t('roadmapPhase12')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" defaultChecked>
                     {t('roadmapPhase13')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" defaultChecked>
                     {t('roadmapPhase14')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg">
                     {t('roadmapPhase15')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg">
                     {t('roadmapPhase16')}
                   </Checkbox>
                 </Flex>
                 <Flex
                   flexDirection={'column'}
-                  width={'xs'}
-                  bg={colorMode === 'dark' ? 'var(--darkGradient)' : 'var(--lightGradient)'}
+                  width={['xs','sm','xs','md']}
+                  bg={colorMode === 'dark' ? 'blackAlpha.500' : 'var(--light)'}
                   borderRadius={12}
-                  borderWidth={1}
-                  borderColor="grey"
                   p={8}
                   pt={4}>
                   <Text
@@ -114,22 +109,22 @@ export default function RoadmapSection() {
                     {t('roadmapPhase2')}
                   </Text>
                   <Progress boxShadow={'base'} height={'2px'} value={0} colorScheme={'green'} mx={-8} mb={8} />
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg">
                     {t('roadmapPhase21')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg">
                     {t('roadmapPhase22')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg">
                     {t('roadmapPhase23')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg">
                     {t('roadmapPhase24')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg">
                     {t('roadmapPhase25')}
                   </Checkbox>
-                  <Checkbox mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg">
                     {t('roadmapPhase26')}
                   </Checkbox>
                 </Flex>

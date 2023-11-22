@@ -11,6 +11,10 @@ import {
   SITE_TITLE,
 } from 'core/utils/constants';
 import { Seo } from 'components/Layout/Seo';
+import ParticipationSection from 'components/sections/ParticipationSection';
+import IntroSection from 'components/sections/IntroSection';
+import FeaturesSection from 'components/sections/FeaturesSection';
+import NSSection from 'components/sections/NSSection';
 
 const Home: NextPage = () => {
   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
@@ -28,8 +32,12 @@ const Home: NextPage = () => {
 
       </Head>
       <ClaimSection />
+      <IntroSection />
+      <FeaturesSection />
+      {/* <ParticipationSection />
       <ManageSection />
-      <ProfileSection />
+      <ProfileSection /> */}
+      <NSSection />
       <RoadmapSection />
       <AboutSection />
     </>

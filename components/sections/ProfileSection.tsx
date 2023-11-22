@@ -1,14 +1,14 @@
 import { Button, Container, Heading, Text, useMediaQuery, Box, Center, useColorMode, Link, Flex, Stack } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import Venom from 'components/Venom';
 import { SITE_PROFILE_URL } from 'core/utils/constants';
 import { RiExternalLinkLine, RiProfileLine } from 'react-icons/ri';
 import Logo from 'components/Layout/Logo';
 import LogoIcon from 'components/Layout/LogoIcon';
+import ImageBox from 'components/Layout/ImageBox';
 
 export default function ProfileSection() {
   const { t } = useTranslate();
-  const [notMobile] = useMediaQuery('(min-width: 800px)');
+  const [notMobile] = useMediaQuery('(min-width: 769px)');
   const { colorMode } = useColorMode();
 
   return (
@@ -30,7 +30,7 @@ export default function ProfileSection() {
                 {t('profileDescription')}
               </Text>
               <Center display="flex" flexDirection="column">
-                <Venom srcUrl="/screens/profileScreen.png" size={notMobile ? 'lg' : 'xs'} />
+                <ImageBox srcUrl="/screens/profileScreen.png" size={notMobile ? 'lg' : 'xs'} />
               </Center>
               <Link href={SITE_PROFILE_URL} width={'100%'} target="_blank">
                 <Button

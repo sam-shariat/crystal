@@ -15,6 +15,10 @@
 # production
 /build
 
+#dev
+package-lock.json
+yarn.lock
+
 # misc
 .DS_Store
 *.pem
@@ -26,10 +30,14 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env*.local
+.env 
+.local
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
+
+#custom
+venomid.rar

@@ -39,6 +39,7 @@ export const initVenomConnect = async () => {
           'mobile',
           'ios',
           'android',
+          'qr'
         ],
       },
     },

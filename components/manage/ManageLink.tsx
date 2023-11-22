@@ -23,7 +23,7 @@ interface Props {
 }
 export default function ManageLink({ title, icon, url, setUrl }: Props) {
   const { colorMode } = useColorMode();
-  const [ notMobile ] = useMediaQuery('(min-width: 800px)');
+  const [ notMobile ] = useMediaQuery('(min-width: 769px)');
 
   return (
       <Accordion allowToggle allowMultiple={false} borderRadius={10} minWidth={notMobile ? 'md' : 'xs'} size="lg" backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'} display={'flex'} flexGrow={1}>

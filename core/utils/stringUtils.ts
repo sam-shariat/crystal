@@ -3,7 +3,7 @@ function truncAddress(address: string) {
 }
 
 function isValidUsername(name: string) {
-  const nameRegex = /^[a-zA-Z0-9_]{1,32}$/;
+  const nameRegex = /^[a-zA-Z0-9]{2,32}$/;
   return nameRegex.test(name);
 }
 

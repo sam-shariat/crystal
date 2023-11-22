@@ -8,14 +8,19 @@ import {
 } from 'core/utils/constants';
 import { DefaultSeo } from 'next-seo';
 
-export function Seo() {
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+export function Seo({title = SITE_TITLE,description = SITE_DESCRIPTION}: Props) {
   const origin =
     typeof window !== 'undefined' && window.location.href ? window.location.href : SITE_URL;
   return (
     <DefaultSeo
-      title={SITE_TITLE}
-      defaultTitle={SITE_TITLE}
-      titleTemplate={`%s | ${SITE_DESCRIPTION}`}
+      title={title}
+      defaultTitle={title}
+      titleTemplate={`%s | ${description}`}
       description={SITE_FULL_DESCRIPTION}
       canonical={origin}
       themeColor={'#101212'}
