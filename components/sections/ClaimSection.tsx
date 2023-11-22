@@ -408,6 +408,7 @@ const ClaimSection = () => {
                     rounded={'xl'}
                     my={2}
                     flexGrow={1}
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
                     bg={useColorModeValue('var(--venom1)','var(--venom)')}
                     justify={['space-evenly', 'space-evenly', 'center']}
                     gap={8}

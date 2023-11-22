@@ -161,9 +161,9 @@ export default function Donate({ title, content, style }: Props) {
           <ModalBody>
             <Tabs variant={'soft-rounded'} colorScheme={'gray'}>
               <TabList justifyContent={'center'} >
-                {venom && <Tab onClick={() => setValue('1 VENOM')}><Text color={'gray.400'} >Venom</Text></Tab>}
-                {eth && <Tab onClick={() => setValue('0.001 ETH')}><Text color={'gray.400'} >Ethereum</Text></Tab>}
-                {btc && <Tab onClick={() => setValue('0.0001 BTC')}><Text color={'gray.400'} >Bitcoin</Text></Tab>}
+                {venom && <Tab onClick={() => setValue('1 VENOM')}><Text color={'gray.400'} key={'venom-tab'}>Venom</Text></Tab>}
+                {eth && <Tab onClick={() => setValue('0.001 ETH')}><Text color={'gray.400'} key={'eth-tab'}>Ethereum</Text></Tab>}
+                {btc && <Tab onClick={() => setValue('0.0001 BTC')}><Text color={'gray.400'} key={'btc-tab'}>Bitcoin</Text></Tab>}
               </TabList>
 
               <TabPanels>
@@ -178,6 +178,7 @@ export default function Donate({ title, content, style }: Props) {
                             onClick={() => setValue(val)}
                             isActive={val === value}
                             size={'lg'}
+                            key={'donate-value-venom-'+val}
                             rounded={round}
                             variant={variant}
                             colorScheme={buttonBg}
@@ -216,6 +217,7 @@ export default function Donate({ title, content, style }: Props) {
                             isActive={val === value}
                             size="lg"
                             rounded={round}
+                            key={'donate-value-eth-'+val}
                             variant={variant}
                             colorScheme={buttonBg}
                             color={getColor(variant, buttonBg, lightMode)}>
@@ -253,6 +255,7 @@ export default function Donate({ title, content, style }: Props) {
                             onClick={() => setValue(val)}
                             isActive={val === value}
                             size={'lg'}
+                            key={'donate-value-btc-'+val}
                             rounded={round}
                             variant={variant}
                             colorScheme={buttonBg}

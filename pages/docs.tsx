@@ -73,7 +73,7 @@ function Docs({ spec }: InferGetStaticPropsType<typeof getStaticProps>) {
               <Text>Currently, the simplest way to do this is through our rest APIs</Text>
               <Box rounded={'lg'} py={4} gap={2}>
                 Example In Javascript :
-                <Highlight language="javascript">
+                <Highlight className="javascript">
                   {`
 import axios from 'axios';
 
@@ -119,7 +119,7 @@ await resolveAddress('sam').then((res)=> {
                 able to display an associated VID name by using the following request. 
                 <Box rounded={'lg'} py={4} gap={2}>
                 Example In Javascript :
-                <Highlight language="javascript">
+                <Highlight className="javascript">
                   {`
 import axios from 'axios';
 

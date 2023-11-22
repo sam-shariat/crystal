@@ -220,12 +220,12 @@ export default function NSSection() {
               />
               {name.length > 3 && (
                 <InputRightAddon
-                  bg={useColorModeValue('var(--venom)', 'whiteAlpha.300')}
+                  bg={colorMode === 'light' ? 'var(--venom)': 'whiteAlpha.300'}
                   w={name.length * 15}
                   py={7}
                   justifyContent={'center'}>
                   <Text
-                    color={useColorModeValue('white', 'var(--venom0)')}
+                    color={colorMode === 'light' ? 'white': 'var(--venom0)'}
                     textAlign={'center'}
                     fontSize={'xl'}
                     fontWeight={'bold'}>

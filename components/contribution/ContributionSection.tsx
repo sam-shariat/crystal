@@ -275,7 +275,7 @@ export default function ContributionSection() {
                         Ethereum Wallet Address (optional)
                       </Text>
                       <Input
-                        _focus={{ borderColor: useColorModeValue('var(--dark1)', 'var(--white)') }}
+                        _focus={{ borderColor: colorMode === 'light' ? 'var(--dark1)' : 'var(--white)'}}
                         value={wallet}
                         size={'lg'}
                         placeholder="0xBFd210db795A9Ac48D0C3be2a74232BE44144E84"
