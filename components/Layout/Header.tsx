@@ -189,7 +189,7 @@ export default function Header() {
                       {t('naming')}
                     </Button>
                   </Link>
-                  <Link href={home ? "#roadmap" : '/#roadmap'}>
+                  <Link href={'/litepaper'}>
                     <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
                       {t('roadmap')}
                     </Button>

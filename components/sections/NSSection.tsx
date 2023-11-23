@@ -53,6 +53,7 @@ export default function NSSection() {
   const [name, setName] = useState('');
   const [isLoading, setIsLoadig] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [sent, setSent] = useState(false);
   const { provider } = useVenomProvider();
   const { account } = useConnect();
   const venomContractAddress = useAtomValue(venomContractAddressAtom);
@@ -69,10 +70,15 @@ export default function NSSection() {
     } else if (status.isError) {
       setIsLoadig(false);
     }
+
+    if(status.isSuccess){
+      setSent(true);
+    }
   }, [status]);
 
   const again = ()=> {
     setLoaded(false);
+    setSent(false);
     setName('');
     setAddress('');
   }
@@ -259,7 +265,7 @@ export default function NSSection() {
                 </>
               )}
             </Button>
-            {status.isSuccess && loaded && 
+            {sent && 
             <Center flexDirection={'column'} minH={'345px'} gap={12} width={['xs','sm','xs','md']} position={'absolute'} p={8} borderRadius={15} backdropFilter="auto" backdropBlur={'6px'}
             backgroundColor={colorMode === 'light' ? 'whiteAlpha.700' : 'blackAlpha.700'}
             borderBottomColor={colorMode === 'light' ? 'blackAlpha.100' : 'whiteAlpha.100'}>
