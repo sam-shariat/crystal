@@ -154,9 +154,10 @@ export default function IntroSection() {
             </Stack>
           </GridItem>
           <GridItem colSpan={3} display={'flex'} justifyContent={'center'}>
-            <Flex maxW={['container.sm', 'container.md']} flexDir={'column'}>
+            <Flex w={['100%', '100%', 'container.md']} flexDir={'column'}>
               <Center
                 rounded={'2xl'}
+                w={'100%'}
                 borderBottomRadius={0}
                 px={4}
                 py={2}
@@ -215,7 +216,7 @@ export default function IntroSection() {
                 transition={'all .5s ease'}
                 p={4}>
                 <motion.div
-                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width:'100%' }}
                   key={`venomid-templates-${current}`}
                   transition={{ duration: 0.5, ease: 'linear' }}
                   initial={{ y: 20, scale: 0.9, opacity: 0.5, filter: 'blur(20px)' }}

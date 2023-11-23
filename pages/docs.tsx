@@ -9,6 +9,7 @@ import {
   Text,
   useColorModeValue,
   Heading,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import 'swagger-ui-react/swagger-ui.css';
@@ -21,6 +22,7 @@ const SwaggerUI = dynamic<{ spec: any }>(import('swagger-ui-react'), { ssr: fals
 
 function Docs({ spec }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { colorMode } = useColorMode();
+  const [notMobile] = useMediaQuery('(min-width: 770px)');
 
   return (
     <Box bgColor={useColorModeValue('whiteAlpha.100', 'var(--dark0)')}>
@@ -77,21 +79,23 @@ function Docs({ spec }: InferGetStaticPropsType<typeof getStaticProps>) {
                   {`
 import axios from 'axios';
 
-const resolveAddress = async (name:string) => {
+const resolveAddress = async (name${notMobile ? `:string` : ``}) => 
+{ 
   return axios({
     method: 'get',
-    url: 'https://venomid.network/api/name/ownerAddress',
+    url: '${notMobile ? `https://venomid.network`: ``}/api/name/ownerAddress',
     data: {
       name: name;
     }
   });
 };
 
-await resolveAddress('sam').then((res)=> {
+await resolveAddress('sam')
+.then((res)=> {
   console.log(res.data);
 }))
 
-// Output => 0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765
+// Output : ${notMobile ? `0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765` : `0:4b...venom address`}
 
 `}
                 </Highlight>
@@ -123,19 +127,23 @@ await resolveAddress('sam').then((res)=> {
                   {`
 import axios from 'axios';
 
-const resolveName = async (address:string) => {
+const resolveName = async (address${notMobile ? `:string` : ``}) =>
+{ 
   return axios({
     method: 'get',
-    url: 'https://venomid.network/api/owner/name',
+    url: '${notMobile ? `https://venomid.network` : ``}/api/owner/name',
     data: {
       ownerAddress: address;
     }
   });
 };
 
-await resolveName('0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765').then((res)=> {
+${notMobile ? `await resolveName('0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765').then((res)=> {
   console.log(res.data);
-}))
+}))` : `await resolveName('0:4b...venom address')
+.then((res)=> {
+  console.log(res.data);
+}))`}
 
 // Output => sam
 

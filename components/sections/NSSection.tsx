@@ -16,6 +16,7 @@ import {
   InputRightAddon,
   useColorModeValue,
   Flex,
+  Center,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { MINT_OPEN, SITE_MANAGE_URL, SITE_PROFILE_URL, ZEALY_URL, ZERO_ADDRESS } from 'core/utils/constants';
@@ -28,6 +29,8 @@ import {
   RiExternalLinkLine,
   RiFingerprint2Line,
   RiProfileLine,
+  RiRestartFill,
+  RiRestartLine,
   RiSendPlane2Line,
   RiSettings3Line,
 } from 'react-icons/ri';
@@ -57,19 +60,22 @@ export default function NSSection() {
   const { run, status } = useSendMessage({
     from: new Address(String(account?.address)),
     to: String(address),
-    amount: String(Number(0.1) * 1e9),
+    amount: String(Number(0.01) * 1e9),
   });
 
   useEffect(() => {
     if (status.isSent) {
       setIsLoadig(false);
-      setLoaded(false);
-      setName('');
-      setAddress('');
     } else if (status.isError) {
       setIsLoadig(false);
     }
   }, [status]);
+
+  const again = ()=> {
+    setLoaded(false);
+    setName('');
+    setAddress('');
+  }
 
   const getName = async () => {
     setIsLoadig(true);
@@ -201,7 +207,7 @@ export default function NSSection() {
                 </Button>
               </Link>
           </Flex>
-          <Flex p={4} py={8} borderRadius={15} flexDir={'column'} align={'center'} justify={'center'} gap={4} bg={useColorModeValue('white','blackAlpha.500')} width={['xs','sm','xs','md']} border={'1px dashed gray'}>
+          <Flex p={4} py={8} flexDir={'column'} align={'center'} justify={'center'} gap={4} bg={useColorModeValue('white','blackAlpha.500')} width={['xs','sm','xs','md']} borderRadius={15} border={'1px dashed gray'}>
             <Text fontSize={['3xl']} position={'relative'} top={0}>use case</Text>
             <Text fontSize={['md', 'lg', 'xl', 'xl']}>Enter your .vid name or a venom address than owns a venom id e.g. sam.vid</Text>
             <InputGroup>
@@ -246,13 +252,31 @@ export default function NSSection() {
                 setIsLoadig(true);
                 run();
               }}>
-              Send 0.1 TEST VENOM
+              Send 0.01 TEST VENOM
               {name.length > 3 && (
                 <>
                   <RiSendPlane2Line size={28} />
                 </>
               )}
             </Button>
+            {status.isSuccess && loaded && 
+            <Center flexDirection={'column'} minH={'345px'} gap={12} width={['xs','sm','xs','md']} position={'absolute'} p={8} borderRadius={15} backdropFilter="auto" backdropBlur={'6px'}
+            backgroundColor={colorMode === 'light' ? 'whiteAlpha.700' : 'blackAlpha.700'}
+            borderBottomColor={colorMode === 'light' ? 'blackAlpha.100' : 'whiteAlpha.100'}>
+              <Text fontSize={['xl','xl','2xl']} lineHeight={'40px'}>
+                Awesome. You have transferred 0.01 TEST VENOM to <strong>{name}</strong> at <strong>{new Date().toLocaleString()}</strong>
+              </Text>
+              <Button
+              maxW={'100%'}
+              w={'100%'}
+              onClick={again}
+              gap={2}
+              leftIcon={<RiRestartLine size={26} />}
+              size={'lg'}
+              colorScheme="green">
+                Again
+              </Button>
+            </Center>}
           </Flex>
           </SimpleGrid>
         </Box>

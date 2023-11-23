@@ -129,12 +129,19 @@ hue-6:   #d19a66
 hue-6-2: #e6c07b
 
 */
+@media only screen and (max-width: 900px) {
+  .hljs {
+    font-size: small;
+    padding: 8px;
+  }
+}
 
 .hljs {
   display: block;
+  width: 100%;
   border-radius: 12px;
-  overflow-x: auto;
-  padding: 16px;
+  overflow: auto;
+  padding: 0px 24px;
   color: #abb2bf;
   background: #282c34;
 }
