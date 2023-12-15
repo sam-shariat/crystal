@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { SITE_DESCRIPTION, SITE_URL, SITE_TITLE } from 'core/utils/constants';
 import { Seo } from 'components/Layout/Seo';
-import ContributionSection from 'components/contribution/ContributionSection';
 import LitepaperSection from 'components/sections/LitepaperSection';
 
 const Litepaper: NextPage = () => {

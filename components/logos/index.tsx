@@ -39,8 +39,6 @@ import {
   RiText,
   RiImageFill,
   RiImageLine,
-  RiArticleFill,
-  RiArticleLine,
   RiVideoFill,
   RiVideoLine,
   RiHeading,
@@ -48,8 +46,6 @@ import {
   RiFilePdfLine,
   RiFileGifFill,
   RiFileGifLine,
-  RiHandCoinLine,
-  RiHandCoinFill,
   RiServiceLine,
   RiServiceFill,
   RiP2PLine,
@@ -74,7 +70,17 @@ import {
   RiPatreonFill,
   RiSlackLine,
   RiSlackFill,
+  RiAmazonLine,
+  RiAmazonFill,
+  RiAppStoreLine,
+  RiAppStoreFill,
+  RiGooglePlayLine,
+  RiMusic2Fill,
+  RiMusic2Line,
+  RiGooglePlayFill,
 } from 'react-icons/ri';
+import { PiHandWaving, PiHandWavingFill } from 'react-icons/pi';
+import { SiEtsy, SiSubstack } from 'react-icons/si';
 import { NftFill, NftLine } from './NFT';
 import Polygon from './Polygon';
 import Arbitrum from './Arbitrum';
@@ -82,141 +88,187 @@ import Optimism from './Optimism';
 import Logo from './Logo';
 import LogoIcon from './LogoIcon';
 import { FaBitcoin, FaEthereum } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import Binance from './Binance';
 import Avalanche from './Avalanche';
 import Solana from './Solana';
 import Tron from './Tron';
 import Ylide from './Ylide';
+import * as Icons from 'react-icons/ri';
 
 interface LinkIconProps {
   type: string;
   line?: boolean;
   color?: string;
+  size?: string;
 }
 
-const LinkIcon = ({ type, line, color }: LinkIconProps) => {
+const LinkIcon = ({ type, line, color, size='28px' }: LinkIconProps) => {
   switch (type) {
+    case 'x':
     case 'twitter':
     case 'tweet':
       return line ? (
-        <RiTwitterLine size="28" color={color ? color : undefined} />
+        <FaXTwitter size={size} color={color ? color : undefined} />
       ) : (
-        <RiTwitterFill size="28" color={color ? color : undefined} />
+        <FaXTwitter size={size} color={color ? color : undefined} />
       );
     case 'linkedin':
       return line ? (
-        <RiLinkedinLine size="28" color={color ? color : undefined} />
+        <RiLinkedinLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiLinkedinFill size="28" color={color ? color : undefined} />
+        <RiLinkedinFill size={size} color={color ? color : undefined} />
       );
     case 'medium':
       return line ? (
-        <RiMediumLine size="28" color={color ? color : undefined} />
+        <RiMediumLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiMediumFill size="28" color={color ? color : undefined} />
+        <RiMediumFill size={size} color={color ? color : undefined} />
       );
     case 'telegram':
       return line ? (
-        <RiTelegramLine size="28" color={color ? color : undefined} />
+        <RiTelegramLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiTelegramFill size="28" color={color ? color : undefined} />
+        <RiTelegramFill size={size} color={color ? color : undefined} />
       );
     case 'facebook':
       return line ? (
-        <RiFacebookLine size="28" color={color ? color : undefined} />
+        <RiFacebookLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiFacebookFill size="28" color={color ? color : undefined} />
+        <RiFacebookFill size={size} color={color ? color : undefined} />
       );
     case 'discord':
       return line ? (
-        <RiDiscordLine size="28" color={color ? color : undefined} />
+        <RiDiscordLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiDiscordFill size="28" color={color ? color : undefined} />
+        <RiDiscordFill size={size} color={color ? color : undefined} />
       );
     case 'youtube':
       return line ? (
-        <RiYoutubeLine size="28" color={color ? color : undefined} />
+        <RiYoutubeLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiYoutubeFill size="28" color={color ? color : undefined} />
+        <RiYoutubeFill size={size} color={color ? color : undefined} />
       );
     case 'github':
       return line ? (
-        <RiGithubLine size="28" color={color ? color : undefined} />
+        <RiGithubLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiGithubFill size="28" color={color ? color : undefined} />
+        <RiGithubFill size={size} color={color ? color : undefined} />
       );
     case 'pinterest':
       return line ? (
-        <RiPinterestLine size="28" color={color ? color : undefined} />
+        <RiPinterestLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiPinterestFill size="28" color={color ? color : undefined} />
+        <RiPinterestFill size={size} color={color ? color : undefined} />
+      );
+    case 'amazon':
+      return line ? (
+        <RiAmazonLine size={size} color={color ? color : undefined} />
+      ) : (
+        <RiAmazonFill size={size} color={color ? color : undefined} />
+      );
+    case 'clubhouse':
+      return line ? (
+        <PiHandWaving size={size} color={color ? color : undefined} />
+      ) : (
+        <PiHandWavingFill size={size} color={color ? color : undefined} />
+      );
+    case 'app store':
+      return line ? (
+        <RiAppStoreLine size={size} color={color ? color : undefined} />
+      ) : (
+        <RiAppStoreFill size={size} color={color ? color : undefined} />
+      );
+    case 'apple music':
+      return line ? (
+        <RiMusic2Line size={size} color={color ? color : undefined} />
+      ) : (
+        <RiMusic2Fill size={size} color={color ? color : undefined} />
+      );
+    case 'play store':
+      return line ? (
+        <RiGooglePlayLine size={size} color={color ? color : undefined} />
+      ) : (
+        <RiGooglePlayFill size={size} color={color ? color : undefined} />
+      );
+    case 'substack':
+      return line ? (
+        <SiSubstack size={size} color={color ? color : undefined} />
+      ) : (
+        <SiSubstack size={size} color={color ? color : undefined} />
+      );
+    case 'etsy':
+      return line ? (
+        <SiEtsy size={size} color={color ? color : undefined} />
+      ) : (
+        <SiEtsy size={size} color={color ? color : undefined} />
       );
     case 'instagram':
       return line ? (
-        <RiInstagramLine size="28" color={color ? color : undefined} />
+        <RiInstagramLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiInstagramFill size="28" color={color ? color : undefined} />
+        <RiInstagramFill size={size} color={color ? color : undefined} />
       );
     case 'snapchat':
       return line ? (
-        <RiSnapchatLine size="28" color={color ? color : undefined} />
+        <RiSnapchatLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiSnapchatFill size="28" color={color ? color : undefined} />
+        <RiSnapchatFill size={size} color={color ? color : undefined} />
       );
     case 'dribbble':
       return line ? (
-        <RiDribbbleLine size="28" color={color ? color : undefined} />
+        <RiDribbbleLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiDribbbleFill size="28" color={color ? color : undefined} />
+        <RiDribbbleFill size={size} color={color ? color : undefined} />
       );
     case 'tiktok':
       return line ? (
-        <RiTiktokLine size="28" color={color ? color : undefined} />
+        <RiTiktokLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiTiktokFill size="28" color={color ? color : undefined} />
+        <RiTiktokFill size={size} color={color ? color : undefined} />
       );
     case 'twitch':
       return line ? (
-        <RiTwitchLine size="28" color={color ? color : undefined} />
+        <RiTwitchLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiTwitchFill size="28" color={color ? color : undefined} />
+        <RiTwitchFill size={size} color={color ? color : undefined} />
       );
     case 'skype':
       return line ? (
-        <RiSkypeLine size="28" color={color ? color : undefined} />
+        <RiSkypeLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiSkypeFill size="28" color={color ? color : undefined} />
+        <RiSkypeFill size={size} color={color ? color : undefined} />
       );
     case 'soundcloud':
-    case 'soundcloud song':
+    case 'soundcloud track':
       return line ? (
-        <RiSoundcloudLine size="28" color={color ? color : undefined} />
+        <RiSoundcloudLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiSoundcloudFill size="28" color={color ? color : undefined} />
+        <RiSoundcloudFill size={size} color={color ? color : undefined} />
       );
     case 'spotify':
       return line ? (
-        <RiSpotifyLine size="28" color={color ? color : undefined} />
+        <RiSpotifyLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiSpotifyFill size="28" color={color ? color : undefined} />
+        <RiSpotifyFill size={size} color={color ? color : undefined} />
       );
     case 'patreon':
       return line ? (
-        <RiPatreonLine size="28" color={color ? color : undefined} />
+        <RiPatreonLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiPatreonFill size="28" color={color ? color : undefined} />
+        <RiPatreonFill size={size} color={color ? color : undefined} />
       );
     case 'slack':
       return line ? (
-        <RiSlackLine size="28" color={color ? color : undefined} />
+        <RiSlackLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiSlackFill size="28" color={color ? color : undefined} />
+        <RiSlackFill size={size} color={color ? color : undefined} />
       );
     case 'opensea':
       return line ? (
-        <RiSailboatLine size="28" color={color ? color : undefined} />
+        <RiSailboatLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiSailboatFill size="28" color={color ? color : undefined} />
+        <RiSailboatFill size={size} color={color ? color : undefined} />
       );
     case 'zealy':
       return line ? (
@@ -232,73 +284,77 @@ const LinkIcon = ({ type, line, color }: LinkIconProps) => {
       );
     case 'email':
       return line ? (
-        <RiMailLine size="28" color={color ? color : undefined} />
+        <RiMailLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiMailFill size="28" color={color ? color : undefined} />
+        <RiMailFill size={size} color={color ? color : undefined} />
       );
     case 'phone':
       return line ? (
-        <RiPhoneLine size="28" color={color ? color : undefined} />
+        <RiPhoneLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiPhoneFill size="28" color={color ? color : undefined} />
+        <RiPhoneFill size={size} color={color ? color : undefined} />
       );
     case 'whatsapp':
       return line ? (
-        <RiWhatsappLine size="28" color={color ? color : undefined} />
+        <RiWhatsappLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiWhatsappFill size="28" color={color ? color : undefined} />
+        <RiWhatsappFill size={size} color={color ? color : undefined} />
       );
     case 'soundcloud song':
       return line ? (
-        <RiSoundcloudLine size="28" color={color ? color : undefined} />
+        <RiSoundcloudLine size={size} color={color ? color : undefined} />
       ) : (
-        <RiSoundcloudFill size="28" color={color ? color : undefined} />
+        <RiSoundcloudFill size={size} color={color ? color : undefined} />
       );
     case 'nft link':
       return line ? <NftLine /> : <NftFill />;
     case 'simple link':
-      return line ? <RiLinksLine size="28" /> : <RiLinksFill size="28" />;
+      return line ? <RiLinksLine size={size} /> : <RiLinksFill size={size} />;
     case 'image link':
     case 'image/png':
     case 'image/svg':
     case 'image/svg+xml':
     case 'image/jpeg':
-      return line ? <RiImage2Line size="28" /> : <RiImage2Fill size="28" />;
+      return line ? <RiImage2Line size={size} /> : <RiImage2Fill size={size} />;
     case 'youtube video':
-      return line ? <RiYoutubeLine size="28" /> : <RiYoutubeFill size="28" />;
+      return line ? <RiYoutubeLine size={size} /> : <RiYoutubeFill size={size} />;
     case 'text':
+    case 'text paragraph':
     case 'simple text':
-      return line ? <RiText size="28" /> : <RiText size="28" />;
+      return line ? <RiText size={size} /> : <RiText size={size} />;
     case 'heading':
-      return line ? <RiHeading size="28" /> : <RiHeading size="28" />;
+      return line ? <RiHeading size={size} /> : <RiHeading size={size} />;
     case 'ipfs video':
     case 'video/mp4':
     case 'mp4':
-      return line ? <RiVideoLine size="28" /> : <RiVideoFill size="28" />;
+      return line ? <RiVideoLine size={size} /> : <RiVideoFill size={size} />;
     case 'ipfs image':
-      return line ? <RiImageLine size="28" /> : <RiImageFill size="28" />;
+      return line ? <RiImageLine size={size} /> : <RiImageFill size={size} />;
+    case 'pdf document':
     case 'pdf doc':
+    case 'pdf':
     case 'application/pdf':
-      return line ? <RiFilePdfLine size="28" /> : <RiFilePdfFill size="28" />;
+      return line ? <RiFilePdfLine size={size} /> : <RiFilePdfFill size={size} />;
     case 'venom testnet':
     case 'venom':
     case 'venomtestnet':
       return <VenomFoundation color={color ? color : undefined} />;
     case 'donate':
     case 'donate button':
-      return line ? <RiServiceLine size="28" /> : <RiServiceFill size="28" />;
+      return line ? <RiServiceLine size={size} /> : <RiServiceFill size={size} />;
     case 'pay':
-    case 'payment':
     case 'pay button':
-      return line ? <RiP2PLine size="28" /> : <RiP2PFill size="28" />;
+    case 'payment':
+    case 'payment button':
+      return line ? <RiP2PLine size={size} /> : <RiP2PFill size={size} />;
     case 'more':
-      return line ? <RiMoreLine size="28" /> : <RiMoreFill size="28" />;
+      return line ? <RiMoreLine size={size} /> : <RiMoreFill size={size} />;
     case 'ethereum':
     case 'eth':
-      return <FaEthereum size={'28'} color={color ? color : undefined} />;
+      return <FaEthereum size={size} color={color ? color : undefined} />;
     case 'bitcoin':
     case 'btc':
-      return <FaBitcoin size={'28'} color={color ? color : undefined} />;
+      return <FaBitcoin size={size} color={color ? color : undefined} />;
     case 'arbitrum':
     case 'arb':
       return <Arbitrum color={color ? color : undefined} />;
@@ -324,9 +380,17 @@ const LinkIcon = ({ type, line, color }: LinkIconProps) => {
       return <Tron color={color ? color : undefined} />;
     case 'image/gif':
     case 'gif':
-      return line ? <RiFileGifLine size="28" /> : <RiFileGifFill size="28" />;
+      return line ? <RiFileGifLine size={size} /> : <RiFileGifFill size={size} />;
     default:
-      return <></>;
+      //// console.log('here : ', type);
+      if (type.indexOf('Ri') === 0) {
+
+        const SelectedIcon = Icons[type as keyof typeof Icons];
+
+        return <SelectedIcon size={size} />;
+      } else {
+        return <></>
+      }
   }
 };
 export { Logo, LogoIcon, VenomFoundation, VenomScanIcon, LinkIcon, Zealy, Metamask };

@@ -25,6 +25,7 @@ import {
   signHashAtom,
   signDateAtom,
   signRequestAtom,
+  venomContractAtomV1,
 } from 'core/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { addAsset, useConnect, useVenomProvider } from 'venom-react-hooks';
@@ -38,10 +39,13 @@ import {
   MINT_MESSAGE,
 } from 'core/utils/constants';
 import { Transaction } from 'everscale-inpage-provider';
-import { isValidSignHash, isValidUsername, sleep } from 'core/utils';
+import { base64ToBlob, isValidSignHash, isValidUsername, sleep } from 'core/utils';
 import ClaimModal from 'components/claiming/ClaimModal';
-import ImageBox from 'components/Layout/ImageBox';
-import TextCard from 'components/Layout/TextCard';
+import TextCard from 'components/claiming/TextCard';
+import ImageBox from 'components/claiming/ImageBox';
+import { useStorageUpload } from '@thirdweb-dev/react';
+import VIDImage from 'components/claiming/VIDImage';
+import { renderToStaticMarkup } from 'react-dom/server'
 
 interface Message {
   type: any;
@@ -65,9 +69,11 @@ const ClaimSection = () => {
   const { colorMode } = useColorMode();
   const locale = useAtomValue(localeAtom);
   const venomContract = useAtomValue(venomContractAtom);
+  const venomContractV1 = useAtomValue(venomContractAtomV1);
   const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
+  const { mutateAsync: upload } = useStorageUpload();
   const [fee, setFee] = useState<number | null>();
   const [d, setD] = useState<number | null>();
   const [m, setM] = useState<number | null>();
@@ -82,25 +88,31 @@ const ClaimSection = () => {
   //const [venomContract, setVenomContract] = useState<any>(undefined);
   const minFee = 660000000;
   const [name, setName] = useAtom(nameAtom);
+  //const [vidUrl, setVidUrl] = useState('');
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
   const toast = useToast();
 
-  const json = {
-    type: 'Basic NFT',
-    name: name + '.VID',
-    description: name + '.VID, a Venom ID',
-    preview: {
-      source: NFT_IMAGE_URL,
-      mimetype: 'image/svg',
-    },
-    files: [
-      {
-        source: NFT_IMAGE_URL,
+
+  const getJson = (vidUrl:string) =>{
+    return {
+      type: 'Basic NFT',
+      name: name + '.VID',
+      description: name + '.VID, a Venom ID',
+      preview: {
+        source: vidUrl,
         mimetype: 'image/svg',
       },
-    ],
-    external_url: SITE_PROFILE_URL + name,
-  };
+      files: [
+        {
+          source: vidUrl,
+          mimetype: 'image/svg',
+        },
+      ],
+      external_url: SITE_PROFILE_URL + name,
+    };
+
+  }
+  
 
   const updateTimer = () => {
     let future = Date.parse(MINT_DATE);
@@ -119,8 +131,10 @@ const ClaimSection = () => {
   };
 
   async function inputChange() {
+    if(name ==='') return
     window.clearTimeout(timer);
     clearTimeout(timer);
+
     if (venomContract && venomContract.methods !== undefined) {
       try {
         setFeeIsLoading(true);
@@ -132,10 +146,13 @@ const ClaimSection = () => {
           .call();
 
         // @ts-ignore: Unreachable code error
-        const { value0: _nameExists } = await venomContract?.methods
-          .nameExists({ name: String(name).toLowerCase() })
+        const { value0: _nameExists } = await venomContract?.methods.nameExists({ name: String(name).toLowerCase() })
           .call();
-        setNameExists(_nameExists);
+
+        const { value0: _nameExistsV1 } = await venomContractV1?.methods.nameExists({ name: String(name).toLowerCase() })
+          .call();
+
+        setNameExists((_nameExists || _nameExistsV1));
         setFee(_fee);
         setFeeIsLoading(false);
       } catch (er) {
@@ -181,12 +198,20 @@ const ClaimSection = () => {
       setTyping(true);
       timer = window.setTimeout(inputChange, 2000);
     }
+    
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
   }, [name]);
 
   useEffect(() => {
+    setName('')
     if (!MINT_OPEN) {
       setInterval(updateTimer, 1000);
     }
+
   }, []);
 
   async function claimVid(e: string) {
@@ -212,7 +237,7 @@ const ClaimSection = () => {
 
     if (!isValidSignHash(signHash, signDate)) {
       setSignRequest(true);
-      console.log('need to sign');
+      // console.log('need to sign');
       return;
     }
 
@@ -222,13 +247,41 @@ const ClaimSection = () => {
       setIsMinting(true);
       toast({
         status: 'loading',
+        title: t('preparing'),
+        description: t('preparingMint'),
+        duration: null,
+      });
+
+      const vidimage = renderToStaticMarkup(<VIDImage name={name} key={name}/>);
+      const vidbase64 = btoa(vidimage);
+      const vidblob = base64ToBlob(vidbase64,'image/svg+xml');
+
+      const uris = await upload({ data: [vidblob] });
+      let vidImageUrl = '';
+      if(uris[0].length > 30 && uris[0].includes('ipfs://')){
+        vidImageUrl = ('https://ipfs.io/ipfs/' + uris[0].slice(7));
+        // console.log(vidImageUrl)
+      } else {
+        toast.closeAll();
+        toast({
+          status: 'warning',
+          title: t('uploading problem'),
+          description: t('there is a problem with uploading the nft image to ipfs'),
+          duration: null,
+        });
+        return
+      }
+
+      toast.closeAll();
+      toast({
+        status: 'loading',
         title: t('minting'),
         description: t('confirmInWallet'),
         duration: null,
       });
       // @ts-ignore: Unreachable code error
       const mintTx = await venomContract?.methods
-        .mintNft({ json: JSON.stringify(json), name: name.toLowerCase() })
+        .mintNft({ json: JSON.stringify(getJson(vidImageUrl)), name: name.toLowerCase() })
         .send({
           amount: String(minFee + Number(fee)),
           bounce: true,
@@ -242,7 +295,7 @@ const ClaimSection = () => {
             return Promise.resolve(null);
           } else {
             setIsMinting(false);
-            console.log(e);
+            // console.log(e);
             toast.closeAll();
             return Promise.reject(e);
           }
@@ -256,7 +309,7 @@ const ClaimSection = () => {
           description: t('confirmingTx'),
           duration: null,
         });
-        //console.log('mint tx : ', mintTx);
+        //// console.log('mint tx : ', mintTx);
         setIsConfirming(true);
         let receiptTx: Transaction | undefined;
         const subscriber = provider && new provider.Subscriber();
@@ -264,7 +317,7 @@ const ClaimSection = () => {
           await subscriber
             .trace(mintTx)
             .tap((tx_in_tree: any) => {
-              //console.log('tx_in_tree : ', tx_in_tree);
+              //// console.log('tx_in_tree : ', tx_in_tree);
               if (tx_in_tree.account.equals(VenomContractAddress)) {
                 receiptTx = tx_in_tree;
               }
@@ -319,7 +372,7 @@ const ClaimSection = () => {
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="85vh"
+        minH="90vh"
         py={6}>
         <Box gap={4} width={'100%'}>
           <SimpleGrid

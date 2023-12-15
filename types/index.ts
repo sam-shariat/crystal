@@ -27,6 +27,7 @@ export interface Message {
 export interface Styles {
   height?: string;
   shadow?: string;
+  popup?: boolean;
   radius?: string;
   size?: 'sm' | 'md' | 'lg';
   nolink?: boolean;

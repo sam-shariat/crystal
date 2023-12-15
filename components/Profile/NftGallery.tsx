@@ -76,7 +76,7 @@ export default function NftGallery() {
   const loadNFTs = async () => {
     try {
       // Take a salted code
-      console.log('loading all nfts', account?.address);
+      // console.log('loading all nfts', account?.address);
 
       if (!provider?.isInitialized) return;
       setNftJsons([]);
@@ -101,7 +101,7 @@ export default function NftGallery() {
           const _nftJson = await getNftByIndex(provider, indexAddress);
           setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
         } catch (e: any) {
-          console.log('error getting nft ', indexAddress);
+          // console.log('error getting nft ', indexAddress);
         }
       });
 
@@ -115,7 +115,7 @@ export default function NftGallery() {
         )
           .then((response) => response.json())
           .then((response) => {
-            console.log(response);
+            // console.log(response);
             response?.ownedNfts.map((nft: any) => {
               let thumbnailUrl = nft.image.thumbnailUrl
                 ? nft.image.thumbnailUrl
@@ -151,7 +151,7 @@ export default function NftGallery() {
         )
           .then((response) => response.json())
           .then((response) => {
-            console.log(response);
+            // console.log(response);
             response?.ownedNfts.map((nft: any) => {
               let thumbnailUrl = nft.image.thumbnailUrl
                 ? nft.image.thumbnailUrl
@@ -266,7 +266,7 @@ export default function NftGallery() {
     async function getNfts() {
       if (account && isConnected && provider) {
         if (!provider?.isInitialized) {
-          console.log('provider not ready');
+          // console.log('provider not ready');
           await sleep(1000);
           getNfts();
           return;

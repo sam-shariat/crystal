@@ -33,6 +33,7 @@ import sendEmail from 'core/utils/sendEmail';
 import ShareButtons from 'components/Profile/ShareButtons';
 import { SITE_URL } from 'core/utils/constants';
 import WaitlistMail from 'components/mail/Waitlist';
+import ImageBox from 'components/claiming/ImageBox';
 
 export default function ContributionSection() {
   const { colorMode } = useColorMode();
@@ -84,7 +85,13 @@ export default function ContributionSection() {
       return;
     }
     setSending(true);
-    await sendEmail(role === 'Investment NFT' ? 'Congrats! You have been added to the waitlist of the Investment NFT at Venom ID' : `Application Received for ${role} at Venom ID`, email, role === 'Investment NFT' ? waitlistEmailHtml : contributionEmailHtml)
+    await sendEmail(
+      role === 'Investment NFT'
+        ? 'Congrats! You have been added to the waitlist of the Investment NFT at Venom ID'
+        : `Application Received for ${role} at Venom ID`,
+      email,
+      role === 'Investment NFT' ? waitlistEmailHtml : contributionEmailHtml
+    )
       .then((res) => {
         if (res.status === 200) {
           setSent(true);
@@ -138,17 +145,17 @@ export default function ContributionSection() {
     if (e) {
       try {
         const formData = [e];
-        console.log('uploading file to ipfs');
+        //// console.log('uploading file to ipfs');
         setUploading(true);
         const uris = await upload({ data: formData });
         //const ImgHash = resFile.data.IpfsHash;
-        //console.log(ImgHash);
+        //// console.log(ImgHash);
         setFile('https://ipfs.io/ipfs/' + uris[0].slice(7));
         setUploading(false);
       } catch (error) {
         alert('Error sending File to IPFS, Please check your network and Try Again');
         setUploading(false);
-        console.log(error);
+        //// console.log(error);
       }
     }
   };
@@ -166,19 +173,18 @@ export default function ContributionSection() {
           minH={'84vh'}
           flexGrow={1}>
           <Box py={6} gap={2} width={'100%'}>
-            <Flex align={'center'} gap={2} justify={'space-between'} my={4}>
-              <Text fontSize={'4xl'} fontWeight={'bold'}>
+            <Flex align={'center'} justify={'center'} gap={2} my={12} flexDir={['column','column','column','row']}>
+              <Text fontSize={['4xl','5xl','6xl']} fontWeight={'bold'} textAlign={['center','center','center','left']}>
                 {t('contributer')}
               </Text>
-              <ShareButtons
-                text={`🌐 Contribution Opportunity%0a%0a🚀Join Venom ID as a ${role} Contributor!%0a%0aBe part of the team shaping the future of identity management.%0a%0aJoin us now! @venomid_network%0a%0a`}
-                hashtags={`${role.replaceAll(' ', '').replace('/', '')},role`}
-                url={SITE_URL + 'contribute'}
-              />
+              <ImageBox srcUrl="/screens/contribute.png" animation />
             </Flex>
             <Flex>
-              <Box display={'flex'} flexDir={'column'} gap={4} w={'100%'} fontSize={'xl'} my={10}>
+              <Box display={'flex'} flexDir={'column'} gap={10} w={'100%'} fontSize={['lg','lg','lg','xl']} my={10}>
                 <Text>There are several ways to become a major contributor in venom id</Text>
+                  
+                
+
                 <Flex gap={2} align={'center'}>
                   <Select
                     _focus={{ borderColor: useColorModeValue('var(--dark1)', 'var(--white)') }}
@@ -224,11 +230,11 @@ export default function ContributionSection() {
                 <Flex
                   rounded={'lg'}
                   flexDir={'column'}
-                  gap={2}
+                  gap={4}
                   p={4}
                   py={6}
                   bgColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}>
-                  <Text fontWeight={'bold'}>Email address</Text>
+                  <Text fontWeight={['normal','normal','bold']}>Email address</Text>
                   <Input
                     _focus={{ borderColor: useColorModeValue('var(--dark1)', 'var(--white)') }}
                     value={email}
@@ -240,7 +246,7 @@ export default function ContributionSection() {
                     }}
                   />
 
-                  <Text fontWeight={'bold'} mt={4}>
+                  <Text fontWeight={['normal','normal','bold']} mt={4}>
                     Telegram username (optional)
                   </Text>
                   <Input
@@ -255,8 +261,8 @@ export default function ContributionSection() {
                   />
                   {role !== 'Investment NFT' && (
                     <>
-                      <Text fontWeight={'bold'} mt={4}>
-                        Upload your resume pdf (optional)
+                      <Text fontWeight={['normal','normal','bold']} mt={4}>
+                        Resume (optional)
                       </Text>
                       <Button
                         size="lg"
@@ -271,11 +277,13 @@ export default function ContributionSection() {
                   )}
                   {role === 'Investment NFT' && (
                     <>
-                      <Text fontWeight={'bold'} mt={4}>
+                      <Text fontWeight={['normal','normal','bold']} mt={4}>
                         Ethereum Wallet Address (optional)
                       </Text>
                       <Input
-                        _focus={{ borderColor: colorMode === 'light' ? 'var(--dark1)' : 'var(--white)'}}
+                        _focus={{
+                          borderColor: colorMode === 'light' ? 'var(--dark1)' : 'var(--white)',
+                        }}
                         value={wallet}
                         size={'lg'}
                         placeholder="0xBFd210db795A9Ac48D0C3be2a74232BE44144E84"
@@ -286,8 +294,9 @@ export default function ContributionSection() {
                       />
                     </>
                   )}
-                  <Text fontWeight={'bold'} mt={4}>
-                    Anything that you would like us to know (optional)
+                  <Text fontWeight={['normal','normal','bold']} mt={4}>
+                  Anything you wanna share (optional)
+
                   </Text>
                   <Input
                     _focus={{ borderColor: useColorModeValue('var(--dark1)', 'var(--white)') }}
@@ -302,7 +311,7 @@ export default function ContributionSection() {
                 </Flex>
               </Box>
             </Flex>
-            <Flex align={'center'} my={6}>
+            <Flex align={'center'} my={6} flexDir={'column'} gap={4}>
               {sent ? (
                 <Text fontSize={'2xl'}>
                   Thank you for your application. we will get in touch with you soon
@@ -326,6 +335,11 @@ export default function ContributionSection() {
                   )}
                 </Button>
               )}
+              <ShareButtons
+                    text={`🌐 Contribution Opportunity%0a%0a🚀Join Venom ID as a ${role} Contributor!%0a%0aBe part of the team shaping the future of identity management.%0a%0aJoin us now! @venomid_network%0a%0a`}
+                    hashtags={`${role.replaceAll(' ', '').replace('/', '')},role`}
+                    url={SITE_URL + 'contribute'}
+                  />
             </Flex>
           </Box>
         </Container>

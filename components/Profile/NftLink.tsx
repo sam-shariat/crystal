@@ -22,7 +22,7 @@ import {
   VENTORY_NFT,
 } from 'core/utils/constants';
 import { RiExternalLinkLine } from 'react-icons/ri';
-import { ThirdwebNftMedia } from '@thirdweb-dev/react';
+import { ThirdwebNftMedia, ThirdwebNftMediaProps } from '@thirdweb-dev/react';
 import { Styles } from 'types';
 import { buttonBgColorAtom, lightModeAtom, roundAtom, variantAtom } from 'core/atoms';
 import { useAtomValue } from 'jotai';
@@ -48,12 +48,14 @@ const NftLink = ({ url, title, link, address, styles, alt, loading, color }: Pro
   const variant = useAtomValue(variantAtom);
   const buttonBg = useAtomValue(buttonBgColorAtom);
 
-  //console.log(url,title, link, address, alt)
+  //// console.log(url,title, link, address, alt)
   let _nftAddress = '';
+  let metadata: ThirdwebNftMediaProps['metadata'] | undefined;
   if (network?.includes('venom')) {
     _nftAddress = address;
   } else {
-    _nftAddress = JSON.parse(address).address;
+    _nftAddress = address !== 'undefined' ? JSON.parse(address).address : '';
+    metadata = address !== 'undefined' ? JSON.parse(address).metadata : {};
   }
 
   const nftAddress = _nftAddress;
@@ -66,13 +68,14 @@ const NftLink = ({ url, title, link, address, styles, alt, loading, color }: Pro
           flexDirection={
             size !== 'lg' ? (size === 'sm' ? 'row' : notMobile ? 'row' : 'column') : 'column'
           }
+          align={'center'}
+          justify={'center'}     
+          width={'100%'}
           bgColor={'blackAlpha.300'}>
           <>
             {type === 'normal' ? (
               <Image
-                borderRadius={
-                  size !== 'lg' ? 0 : round === 'none' ? 0 : round === 'md' ? 8 : 16
-                }
+                borderRadius={size !== 'lg' ? 0 : round === 'none' ? 0 : round === 'md' ? 8 : 16}
                 borderLeftRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16}
                 objectFit={'cover'}
                 src={url}
@@ -82,13 +85,25 @@ const NftLink = ({ url, title, link, address, styles, alt, loading, color }: Pro
                 alt={alt ? alt : title + ' NFT'}
                 textAlign={'center'}
               />
-            ) : (
+            ) : metadata ? (
               <ThirdwebNftMedia
-                metadata={JSON.parse(address).metadata}
+                metadata={metadata}
                 width={size !== 'lg' ? (size === 'md' ? '200px' : '100px') : '100%'}
                 height={size !== 'lg' ? (size === 'md' ? '200px' : '100px') : '320px'}
                 controls={false}
                 style={{ borderRadius: round === 'none' ? 0 : round === 'md' ? 8 : 16 }}
+              />
+            ) : (
+              <Image
+                borderRadius={size !== 'lg' ? 0 : round === 'none' ? 0 : round === 'md' ? 8 : 16}
+                borderLeftRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16}
+                objectFit={'cover'}
+                src={url}
+                width={size !== 'lg' ? (size === 'md' ? '50%' : '100px') : '100%'}
+                height={size !== 'lg' ? (size === 'md' ? '200' : '100px') : 'auto'}
+                boxShadow="0 0 10px #00000030"
+                alt={alt ? alt : title + ' NFT'}
+                textAlign={'center'}
               />
             )}
             <Stack p={4} justifyContent="center" width={'100%'}>
@@ -112,7 +127,7 @@ const NftLink = ({ url, title, link, address, styles, alt, loading, color }: Pro
                     width={'100%'}
                     variant={variant}
                     colorScheme={buttonBg}
-                    color={getColor(variant,buttonBg,lightMode)}
+                    color={getColor(variant, buttonBg, lightMode)}
                     rounded={round}
                     size={size}
                     rightIcon={<RiExternalLinkLine />}>

@@ -92,7 +92,7 @@ const resolveAddress = async (name${notMobile ? `:string` : ``}) =>
 
 await resolveAddress('sam')
 .then((res)=> {
-  console.log(res.data);
+  // console.log(res.data);
 }))
 
 // Output : ${notMobile ? `0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765` : `0:4b...venom address`}
@@ -139,10 +139,10 @@ const resolveName = async (address${notMobile ? `:string` : ``}) =>
 };
 
 ${notMobile ? `await resolveName('0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765').then((res)=> {
-  console.log(res.data);
+  // console.log(res.data);
 }))` : `await resolveName('0:4b...venom address')
 .then((res)=> {
-  console.log(res.data);
+  // console.log(res.data);
 }))`}
 
 // Output => sam

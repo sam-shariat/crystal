@@ -25,7 +25,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { capFirstLetter, truncAddress } from 'core/utils';
-import { SITE_MANAGE_URL, VENOMSCAN_NFT } from 'core/utils/constants';
+import { SITE_MANAGE_URL, SITE_URL, VENOMSCAN_NFT } from 'core/utils/constants';
 import { VenomScanIcon } from 'components/logos';
 import {
   RiCheckDoubleFill,
@@ -35,6 +35,9 @@ import {
 } from 'react-icons/ri';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { Avatar } from 'components/Profile';
+import VIDImage from './VIDImage';
+import { renderToStaticMarkup } from 'react-dom/server';
+import ImageBox from './ImageBox';
 
 interface Props {
   message: any;
@@ -46,6 +49,8 @@ export default function ClaimModal({ message, claimedName }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { t } = useTranslate();
   const { onCopy, hasCopied } = useClipboard(String(message.link));
+  const vidimage = renderToStaticMarkup(<VIDImage name={claimedName} key={claimedName}/>);
+  const vidbase64 = "data:image/svg+xml;base64," + btoa(vidimage);
 
   useEffect(() => {
     if (message.msg.length > 0 && message.type == 'success') {
@@ -55,8 +60,8 @@ export default function ClaimModal({ message, claimedName }: Props) {
 
   return (
     <>
-      {message.type == 'success' && (
-        <Modal isOpen={isOpen} onClose={onClose} isCentered size={'2xl'}>
+      {message.type === 'success' && (
+        <Modal isOpen={isOpen} onClose={onClose} isCentered size={'sm'}>
           <ModalOverlay bg="blackAlpha.700" backdropFilter="auto" backdropBlur={'6px'} />
           <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'}>
             <ModalHeader textAlign={'center'}>{message.title}</ModalHeader>
@@ -67,7 +72,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
               </Flex>
               <Flex flexDir={'column'} justify={'center'} p={2} align={'center'}>
                 <Box maxW={'xs'}>
-                  <Text
+                  {/* <Text
                     position={'absolute'}
                     w={'xs'}
                     mt={6}
@@ -76,11 +81,11 @@ export default function ClaimModal({ message, claimedName }: Props) {
                     textAlign={'center'}>
                     {claimedName}.VID{' '}
                   </Text>
-                  <Avatar my={1} noanimate nodrag url={''} alt={claimedName} radius={12} />
+                  <Avatar my={1} noanimate nodrag url={''} alt={claimedName} radius={12} /> */}
+                  <ImageBox srcUrl={vidbase64} key={claimedName} size={'xs'} rounded='lg' shadow='none'/>
                 </Box>
               </Flex>
-
-              <Flex gap={2} flexDirection={'column'} justify={'center'} align={'center'}>
+              <Flex gap={4} flexDirection={'column'} justify={'center'} align={'center'}>
               <Flex gap={2} align={'center'} w={'xs'} justify={'space-between'}>
                   <Text fontSize={'lg'} fontWeight={'normal'}>
                     {' '}
@@ -120,7 +125,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
                 </Link>
 
                 <Link
-                  href={SITE_MANAGE_URL + 'manage/' + message.link}
+                  href={'manage/' + message.link}
                   target="_blank"
                   id={`venom-id-manage-nft-link`}>
                   <Button width={'xs'} height={'54px'} colorScheme="green" variant={'solid'}>
@@ -136,7 +141,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
                           fontSize={'sm'}
                           gap={1}
                           color={colorMode === 'dark' ? 'gray.800' : 'gray.200'}>
-                          venomid.tools
+                          customize your link
                         </Text>
                       </Stack>
                       <RiSettings3Line size={'30px'} />

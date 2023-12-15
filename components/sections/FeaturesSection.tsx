@@ -14,14 +14,12 @@ import {
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { SITE_PROFILE_URL, ZEALY_URL } from 'core/utils/constants';
-import SocialIcons from 'components/Layout/SocialIcons';
-import TextCard from 'components/Layout/TextCard';
 import { RiArrowUpDoubleLine, RiExchangeLine, RiFingerprint2Line, RiProfileLine, RiSettings3Line, RiUserVoiceLine } from 'react-icons/ri';
 import { Zealy } from 'components/logos';
 import { GiCubeforce } from 'react-icons/gi';
 import { CgIfDesign } from 'react-icons/cg';
 import { MdOutlineSecurity, MdOutlineVisibility } from 'react-icons/md';
-import TextIcon from 'components/Layout/TextIcon';
+import TextIcon from 'components/features/TextIcon';
 
 export default function FeaturesSection() {
   const { t } = useTranslate();

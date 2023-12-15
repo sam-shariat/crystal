@@ -18,7 +18,16 @@ import {
   useClipboard,
 } from '@chakra-ui/react';
 import { VenomFoundation, VenomScanIcon } from 'components/logos';
-import { FAUCET_URL, MINT_OPEN, SIGN_MESSAGE, SITE_PROFILE_URL, VENOMSCAN_NFT } from 'core/utils/constants';
+import {
+  CONTRACT_ADDRESS,
+  CONTRACT_ADDRESS_V1,
+  FAUCET_URL,
+  MINT_OPEN,
+  SIGN_MESSAGE,
+  SITE_PROFILE_URL,
+  SITE_URL,
+  VENOMSCAN_NFT,
+} from 'core/utils/constants';
 import { sleep, truncAddress, capFirstLetter, isValidSignHash } from 'core/utils';
 import { useConnect, useSignMessage, useVenomProvider } from 'venom-react-hooks';
 import { useAtom, useAtomValue } from 'jotai';
@@ -41,6 +50,7 @@ import {
   signRequestAtom,
   venomContractAddressAtom,
   venomContractAtom,
+  venomContractAtomV1,
 } from 'core/atoms';
 import { ConnectWallet } from '@thirdweb-dev/react';
 import getVid from 'core/utils/getVid';
@@ -52,7 +62,7 @@ export default function ConnectButton() {
     publicKey: String(account?.publicKey),
     data: SIGN_MESSAGE,
     onComplete: (result) => {
-      console.log('Message signed successfully:', result);
+      // console.log('Message signed successfully:', result);
       setIsSigning(false);
       setSignHash(result.signature);
       setSignDate(Date.now());
@@ -68,7 +78,7 @@ export default function ConnectButton() {
 
   const { provider } = useVenomProvider();
   const { colorMode } = useColorMode();
-  const address = account?.address.toString();
+  const address = account?.address !== undefined ? account?.address.toString() : '';
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
   const [connected, setIsConnected] = useAtom(isConnectedAtom);
   const [primaryLoaded, setPrimaryLoaded] = useState(false);
@@ -79,37 +89,48 @@ export default function ConnectButton() {
   const [connectedAccount, setConnectedAccount] = useAtom(connectedAccountAtom);
   const venomContractAddress = useAtomValue(venomContractAddressAtom);
   const [venomContract, setVenomContract] = useAtom(venomContractAtom);
+  const [venomContractV1, setVenomContractV1] = useAtom(venomContractAtomV1);
   const { onCopy, hasCopied } = useClipboard(String(address));
+  const balance =
+    account?.balance !== undefined ? Math.round(Number(account?.balance) / 10e5) / 10e2 : 'Loading';
 
   async function getPrimary() {
     if (!provider || !account?.address) return;
-    const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
-    setVenomContract(_venomContract);
     setIsConnected(true);
     setConnectedAccount(account?.address.toString() ?? '');
-    if(MINT_OPEN){
-    // @ts-ignore: Unreachable code error
+    try {
+      const _venomContract = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS));
+      setVenomContract(_venomContract);
+
+      const _venomContractV1 = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS_V1));
+      setVenomContractV1(_venomContractV1);
+
+      // @ts-ignore: Unreachable code error
       const { value0 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) }).call();
 
       if (value0?.name !== '' && !primaryName?.nftAddress) {
         setPrimaryName(value0);
       } else {
-        setPrimaryName({ name: '', nftAddress: undefined });
+        await getVid(String(address))
+          .then((res) => {
+            if (res.status === 200) {
+              setPrimaryName({ name: res.data, nftAddress: res.data });
+            } else {
+              setPrimaryName({ name: '', nftAddress: undefined });
+            }
+          })
+          .catch((e) => {
+            setPrimaryName({ name: '', nftAddress: undefined });
+            // console.log('no primary', e);
+          });
       }
-    } else {
-      await getVid(String(address)).then((res)=> {
-        if(res.status === 200){
-          setPrimaryName({name:res.data,nftAddress:res.data});
-        } else {
-          setPrimaryName({ name: '', nftAddress: undefined });
-        }
-      }).catch((e)=> {
-        setPrimaryName({ name: '', nftAddress: undefined });
-        console.log('no primary', e)
-      })
+    } catch {
+      (e: any) => {
+        console.log('error in primary', e);
+      };
     }
 
-    setPrimaryLoaded(true)
+    setPrimaryLoaded(true);
 
     if (!isValidSignHash(signHash, signDate)) {
       try {
@@ -126,7 +147,7 @@ export default function ConnectButton() {
     setIsConnected(false);
     setConnectedAccount('');
     setPrimaryName({ name: '', nftAddress: '' });
-    setPrimaryLoaded(false)
+    setPrimaryLoaded(false);
     login();
   };
 
@@ -140,21 +161,27 @@ export default function ConnectButton() {
 
   useEffect(() => {
     async function checkPrimary() {
-      if (account && isConnected && provider) {
-        if (!provider?.isInitialized) {
-          console.log('provider not ready yet');
-          await sleep(1000);
-          checkPrimary();
-          return;
+      try {
+        if (account && isConnected && provider) {
+          if (!provider?.isInitialized) {
+            // console.log('provider not ready yet');
+            await sleep(7000);
+            checkPrimary();
+            return;
+          }
         }
-      }
-      if(!primaryLoaded){
-        getPrimary();
+        if (!primaryLoaded) {
+          getPrimary();
+        }
+      } catch {
+        (e: any) => {
+          // console.log('error getting primary');
+        };
       }
     }
 
     checkPrimary();
-  }, [account, primaryName]);
+  }, [primaryName, account]);
 
   return (
     <>
@@ -182,7 +209,7 @@ export default function ConnectButton() {
                     textAlign={'left'}
                     my={'0 !important'}
                     fontSize="14px">
-                    {Math.round(Number(account?.balance) / 10e5) / 10e2} {notMobile ? 'VENOM' : ''}
+                    {balance} {notMobile ? (account?.balance !== undefined ? 'VENOM' : '') : ''}
                   </Text>
                   <Text
                     fontWeight={'semibold'}
@@ -201,7 +228,8 @@ export default function ConnectButton() {
               width={320}
               py={0}
               borderWidth={1}
-              zIndex={199}
+              position={'relative'}
+              zIndex={1500}
               borderColor={'gray.800'}
               bg={colorMode === 'light' ? 'var(--white)' : 'var(--dark)'}>
               <Flex p={5} alignItems="center" gap={2}>
@@ -224,7 +252,10 @@ export default function ConnectButton() {
                     my={'0 !important'}
                     fontSize="14px"
                     color="gray.500">
-                    {Math.round(Number(account?.balance) / 10e5) / 10e2} {notMobile ? 'VENOM' : ''}
+                    {account?.balance
+                      ? Math.round(Number(account?.balance) / 10e5) / 10e2
+                      : 'Loading'}{' '}
+                    {notMobile ? 'VENOM' : ''}
                   </Text>
                 </Stack>
                 <Tooltip
@@ -258,7 +289,8 @@ export default function ConnectButton() {
               </Flex>
               <ConnectWallet
                 theme={colorMode}
-                btnTitle="Ether Wallet"
+                btnTitle="EVM Wallet"
+                auth={{ loginOptional: false }}
                 style={{
                   backgroundColor: colorMode === 'light' ? 'var(--white)' : 'var(--dark)',
                   color: colorMode === 'dark' ? 'white' : 'black',
@@ -269,6 +301,15 @@ export default function ConnectButton() {
                   minWidth: '280px',
                   position: 'relative',
                 }}
+                welcomeScreen={{
+                  img: {
+                    src: `${SITE_URL}/logos/vidicon.png`,
+                    width: 150,
+                    height: 150,
+                  },
+                  title: 'One Link To Showcase All Your Assets',
+                }}
+                modalSize={notMobile ? 'wide' : 'compact'}
               />
               <Stack gap={2} my={4} justify={'center'}>
                 <Box px={5}>

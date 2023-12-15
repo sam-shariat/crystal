@@ -8,7 +8,7 @@ const Manage: NextPage = () => {
   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
   return (
     <>
-    <Seo title="Venom ID Management" description="Manage all your virtual assets" />
+    <Seo title="Dashboard" description="Venom ID Management" />
     <Head>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={SITE_TITLE} />

@@ -34,15 +34,15 @@ export default function Links({ json, color }: Props) {
 
   return (
     <>
-      {linksArray.length > 0 && <Stack gap={3} width={['100%', 'md']}>
+      {linksArray.length > 0 && <Stack gap={3} w={'100%'} align={'center'}>
         {linksArray.map((item, index) => (
           <Link
             key={`item-${item.type}-${item.title}`}
             title={capFirstLetter(item.title)}
-            url={item.type.includes('pdf') ? String(item.image) : String(item.url)}
+            url={String(item.url)}
             type={item.type}
             color={color ? color : 'default'}
-            icon={<LinkIcon type={item.type} line color={color ? color : 'default'}/>}
+            icon={<LinkIcon key={item.type === 'simple link' ? item.title + '-' +String(item?.styles?.icon) : item.title + '-' +item.type} type={item.type === 'simple link' ? String(item?.styles?.icon) : item.type} line color={color ? color : 'default'} size={item.styles?.size === 'sm' ? '24' : item.styles?.size === 'md' ? '28' : '36'} />}
             image={item.image}
             content={item.content}
             styles={item.styles}

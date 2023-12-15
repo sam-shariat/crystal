@@ -41,9 +41,6 @@ import {
 import { getIconColor, getRandomNumber, sleep } from 'core/utils';
 import { RiArrowRightCircleFill, RiLinksLine } from 'react-icons/ri';
 import { FaCircle } from 'react-icons/fa';
-import { GiCubeforce } from 'react-icons/gi';
-import { CgIfDesign } from 'react-icons/cg';
-import TextIcon from 'components/Layout/TextIcon';
 import { motion } from 'framer-motion';
 
 export default function IntroSection() {
@@ -63,7 +60,7 @@ export default function IntroSection() {
   const [timer, setTimer] = useState(0);
   const [top, setTop] = useState(0);
   const [avatar, setAvatar] = useState(VARIATIONS[0].avatar);
-  const [avatarIsNft, setAvatarIsNft] = useState(VARIATIONS[0].nftAvatar);
+  const [avatarShape, setAvatarShape] = useState(VARIATIONS[0].avatarShape);
   const [title, setTitle] = useState(VARIATIONS[0].title);
   const [subtitle, setSubtitle] = useState(VARIATIONS[0].subtitle);
   const [vid, setVid] = useState(VARIATIONS[0].vid);
@@ -93,7 +90,7 @@ export default function IntroSection() {
     setTitle(VARIATIONS[cur].title);
     setSubtitle(VARIATIONS[cur].subtitle);
     setVid(VARIATIONS[cur].vid);
-    setAvatarIsNft(VARIATIONS[cur].nftAvatar);
+    setAvatarShape(VARIATIONS[cur].avatarShape);
     setLinks(LINK_VARIATIONS[cur]);
     setSocials(SOCIALS_VARIATIONS[cur]);
     setWallets(WALLETS_VARIATIONS[cur]);
@@ -216,7 +213,7 @@ export default function IntroSection() {
                 transition={'all .5s ease'}
                 p={4}>
                 <motion.div
-                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width:'100%' }}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width:'100%', gap: 4 }}
                   key={`venomid-templates-${current}`}
                   transition={{ duration: 0.5, ease: 'linear' }}
                   initial={{ y: 20, scale: 0.9, opacity: 0.5, filter: 'blur(20px)' }}
@@ -233,7 +230,7 @@ export default function IntroSection() {
                       <Avatar
                         url={avatar}
                         alt={'venom id avatar image'}
-                        isNft={avatarIsNft}
+                        shape={avatarShape}
                         shadow="none"
                       />
                     </Box>
@@ -243,21 +240,21 @@ export default function IntroSection() {
                         fontFamily={font}
                         fontWeight="bold"
                         fontSize="2xl"
-                        color={getIconColor(buttonBg, lightMode)}>
+                        color={getIconColor(lightMode)}>
                         {title}
                       </Text>
                       <Text
                         fontWeight="normal"
                         fontSize="lg"
                         fontFamily={font}
-                        color={getIconColor(buttonBg, lightMode)}>
+                        color={getIconColor(lightMode)}>
                         {subtitle}
                       </Text>
                       <Text
                         fontFamily={font}
                         fontWeight="bold"
                         fontSize="xl"
-                        color={getIconColor(buttonBg, lightMode)}>
+                        color={getIconColor(lightMode)}>
                         {vid}
                       </Text>
                     </Stack>

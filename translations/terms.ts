@@ -145,19 +145,19 @@ const terms: Terms = {
   },
   GraphicDesigner: {
     en: 'You will be responsible for creating visually captivating and on-brand designs for our decentralized platform. Your role will involve designing various marketing materials such as branding assets, social media graphics, website visuals, and promotional materials. You will collaborate closely with the marketing team to translate marketing concepts into compelling visual representations. Your keen eye for detail and creativity will contribute to enhancing the overall visual identity and user experience of Venom ID.',
-    fa: 'You will be responsible for creating visually captivating and on-brand designs for our decentralized platform. Your role will involve designing various marketing materials such as branding assets, social media graphics, website visuals, and promotional materials. You will collaborate closely with the marketing team to translate marketing concepts into compelling visual representations. Your keen eye for detail and creativity will contribute to enhancing the overall visual identity and user experience of Venom ID.',
+    fa: 'شما مسئول طراحی های جذاب و متناسب با برند برای پلتفرم غیرمتمرکز ما خواهید بود. نقش شما شامل طراحی انواع مواد تبلیغاتی مانند عناصر برندینگ، گرافیک های شبکه های اجتماعی، تصاویر وبسایت و مواد تبلیغاتی است. شما به صورت نزدیک با تیم بازاریابی همکاری خواهید کرد تا مفاهیم بازاریابی را به تصاویری جذاب تبدیل کنید. چشم بینا و خلاقیت شما به بهبود هویت بصری و تجربه کاربری کلی Venom ID کمک خواهد کرد.'
   },
   InvestmentNFT: {
     en: 'You will have the opportunity to support our vision and contribute to the development and growth of the platform. You will be given the opportunity to purchase and HOLD an Investment NFT, which entitles you to a significant portion of the VID token distribution. A total of 900 NFTs will be available, and the minting fee for each NFT is set at 0.1 ETH (approximately $200 USD).',
-    fa: 'You will have the opportunity to support our vision and contribute to the development and growth of the platform. You will be given the opportunity to purchase and HOLD an Investment NFT, which entitles you to a significant portion of the VID token distribution. A total of 900 NFTs will be available, and the minting fee for each NFT is set at 0.1 ETH (approximately $200 USD).',
+    fa: 'شما فرصتی خواهید داشت تا به ارتقای چشم انداز ما کمک کنید و در توسعه و رشد پلتفرم سهام دار شوید. شما فرصت خواهید داشت تا یک NFT سرمایه گذاری را خریداری و نگه دارید که شما را به یک بخش قابل توجه از توزیع توکن VID واجد شرایط می کند. کلیه 900 NFT در دسترس خواهند بود و هزینه برای هر NFT را می تواند 0.1 ETH (حدود 200 دلار آمریکا) تنظیم شود.'
   },
   UIUXDesigner: {
     en: 'You will be responsible for creating visually appealing and user-friendly designs for our decentralized platform. Your role will involve designing intuitive user interfaces, crafting engaging user experiences, and collaborating with the development team to ensure seamless integration of design elements.',
-    fa: 'You will be responsible for creating visually appealing and user-friendly designs for our decentralized platform. Your role will involve designing intuitive user interfaces, crafting engaging user experiences, and collaborating with the development team to ensure seamless integration of design elements.',
+    fa: 'شما مسئول طراحی های جذاب و کاربر پسند برای پلتفرم غیرمتمرکز ما خواهید بود. نقش شما شامل طراحی رابط های کاربری بصری، ایجاد تجربه های جذاب کاربری و همکاری با تیم توسعه برای اطمینان از یکپارچگی بی درز عناصر طراحی است.'
   },
   FrontEndDeveloper: {
     en: 'You will play a crucial role in building the user-facing components of our decentralized platform. Your responsibilities will include implementing responsive designs, developing interactive features, and optimizing the platform for performance and scalability. You will work closely with the UI/UX designers and backend developers to deliver a seamless and intuitive user experience.',
-    fa: 'You will play a crucial role in building the user-facing components of our decentralized platform. Your responsibilities will include implementing responsive designs, developing interactive features, and optimizing the platform for performance and scalability. You will work closely with the UI/UX designers and backend developers to deliver a seamless and intuitive user experience.',
+    fa: 'شما نقش حیاتی در ساخت اجزای قابل مشاهده توسط کاربران برای پلتفرم غیرمتمرکز ما خواهید داشت. مسئولیت های شما شامل پیاده سازی طرح های پاسخگو، توسعه ویژگی های تعاملی و بهینه سازی پلتفرم برای عملکرد و قابلیت مقیاس پذیری است. شما به صورت نزدیک با طراحان رابط کاربری / تجربه کاربری و توسعه دهندگان بک اند همکاری خواهید کرد تا تجربه کاربری بی درز و بینایی را ارائه دهید.'
   },
   FrontEndDeveloperStack: {
     en: 'Stack: Typescript, Nextjs',
@@ -165,31 +165,31 @@ const terms: Terms = {
   },
   SolidityDeveloper: {
     en: "You will contribute to the development of smart contracts and blockchain-related functionalities on our platform. Your expertise in Solidity programming language will be essential in designing, implementing, and testing secure and efficient smart contracts. You will work closely with the development team to ensure the integrity and reliability of the platform's blockchain infrastructure.",
-    fa: "You will contribute to the development of smart contracts and blockchain-related functionalities on our platform. Your expertise in Solidity programming language will be essential in designing, implementing, and testing secure and efficient smart contracts. You will work closely with the development team to ensure the integrity and reliability of the platform's blockchain infrastructure.",
+    fa: "شما به توسعه قراردادهایهوشمند از زبان Solidity برای پلتفرم غیرمتمرکز ما می‌پردازید. مسئولیت‌های شما شامل طراحی، پیاده‌سازی و تست قراردادهای هوشمند، امنیت و بهینه‌سازی آنها برای اطمینان از عملکرد صحیح و قابلیت مقیاس‌پذیری است. همچنین، همکاری با تیم توسعه دیگر برای ارتقاء و بهبود پلتفرم و اجزای مرتبط با آن نیز در وظایف شما قرار می‌گیرد."
   },
   Partnership: {
     en: "Join Venom ID as a Partnership Contributor and help us forge valuable connections. Leverage your network to identify strategic partnerships, facilitate collaborations, and expand our ecosystem. Contribute to the growth of Venom ID by fostering meaningful relationships with like-minded projects and individuals.",
-    fa: "Join Venom ID as a Partnership Contributor and help us forge valuable connections. Leverage your network to identify strategic partnerships, facilitate collaborations, and expand our ecosystem. Contribute to the growth of Venom ID by fostering meaningful relationships with like-minded projects and individuals.",
+    fa: 'به عنوان یک مشارکت‌کننده شراکتی به Venom ID بپیوندید و به ما در ایجاد ارتباطات ارزشمند کمک کنید. از شبکه خود بهره ببرید تا شراکت‌های استراتژیک را شناسایی کرده، همکاری‌ها را تسهیل کنید و اکوسیستم ما را گسترش دهید. با پروژه‌ها و افرادی که از همان اندیشه‌ها و اهداف ما پیروی می‌کنند، روابط معنی‌داری برقرار کرده و به رشد Venom ID کمک کنید.'
   },
   ContentCreator: {
     en: 'You will be responsible for producing engaging and informative content to promote our decentralized platform. Your role will involve creating compelling blog articles, social media posts, video content, and other forms of digital media. You will collaborate with the marketing team to develop content strategies that effectively communicate the value and benefits of Venom ID to our target audience.',
-    fa: 'You will be responsible for producing engaging and informative content to promote our decentralized platform. Your role will involve creating compelling blog articles, social media posts, video content, and other forms of digital media. You will collaborate with the marketing team to develop content strategies that effectively communicate the value and benefits of Venom ID to our target audience.',
+    fa: 'شما مسئول تولید محتوای جذاب و آموزنده برای ترویج پلتفرم غیرمتمرکز ما خواهید بود. نقش شما شامل ایجاد مقالات بلاگ جذاب، ارسال‌های رسانه‌های اجتماعی، محتوای ویدیویی و سایر اشکال رسانه‌های دیجیتال است. شما با تیم بازاریابی همکاری خواهید کرد تا استراتژی‌های محتوا را توسعه داده و به طور موثر ارزش و مزایای Venom ID را به مخاطبان هدف ما انتقال دهید.'
   },
   MarketingManager: {
     en: 'You will be responsible for developing and executing marketing strategies to promote our decentralized platform. Your role will involve conducting market research, identifying target audiences, creating and managing marketing campaigns, and analyzing campaign performance. You will collaborate with cross-functional teams to ensure consistent brand messaging and drive user acquisition and engagement. Your creativity and strategic thinking will play a vital role in expanding the reach and impact of Venom ID in the market.',
-    fa: 'You will be responsible for developing and executing marketing strategies to promote our decentralized platform. Your role will involve conducting market research, identifying target audiences, creating and managing marketing campaigns, and analyzing campaign performance. You will collaborate with cross-functional teams to ensure consistent brand messaging and drive user acquisition and engagement. Your creativity and strategic thinking will play a vital role in expanding the reach and impact of Venom ID in the market.',
+    fa: 'شما مسئول برندینگ و استراتژی بازاریابی برای پلتفرم غیرمتمرکز ما خواهید بود. وظایف شما شامل توسعه استراتژی های بازاریابی، تحلیل بازار، تحقیق و بررسی رقابت، مدیریت رویدادها و کمپین های تبلیغاتی و برندینگ کلی پروژه است. شما به صورت نزدیک با تیم طراحی و توسعه همکاری خواهید کرد تا استراتژی های بازاریابی را به عملیات واقعی تبدیل کنید.'
   },
   CommunityManager: {
     en: "You will be the primary point of contact for our platform's community members. Your role will involve engaging with users, addressing their questions and concerns, fostering discussions, and cultivating a positive and supportive community environment. You will play a vital role in building and maintaining strong relationships with our users and promoting user loyalty.",
-    fa: "You will be the primary point of contact for our platform's community members. Your role will involve engaging with users, addressing their questions and concerns, fostering discussions, and cultivating a positive and supportive community environment. You will play a vital role in building and maintaining strong relationships with our users and promoting user loyalty.",
+    fa: 'شما نقش کلیدی در ایجاد و مدیریت جامعه فعال کاربران پلتفرم غیرمتمرکز ما دارید. وظایف شما شامل پاسخ به سوالات و نیازهای کاربران، مدیریت کانال‌های ارتباطی، ایجاد و رشد جامعه در شبکه‌های اجتماعی و حفظ رضایت کاربران است. شما همچنین در تحلیل فعالیت‌های جامعه و ارائه گزارشات به تیم مدیریت نقش دارید.'
   },
   roleClarify: {
-    en: "To clarify, this opportunity does not involve monetary compensation. Instead, you will be granted a contributor role, and based on your level of contribution, you will receive contribution NFTs. The owners of these NFTs will collectively receive 25% of all tokens during distribution.",
-    fa: "To clarify, this opportunity does not involve monetary compensation. Instead, you will be granted a contributor role, and based on your level of contribution, you will receive contribution NFTs. The owners of these NFTs will collectively receive 25% of all tokens during distribution.",
+    en: "To clarify, this is not a paid position. Instead, you will be granted a contributor role, and based on your level of contribution, you will receive contribution NFTs. The owners of these NFTs will collectively receive 25% of all tokens during distribution.",
+    fa: 'برای روشن شدن، این یک موقعیت پرداختی نیست. به جای آن، شما به عنوان یک نقش مشارکت‌کننده تعیین خواهید شد و بر اساس سطح مشارکت شما، NFTهای مشارکت دریافت خواهید کرد. صاحبان این NFTها به طور کلی 25٪ از تمام توکن ها را در طول توزیع دریافت خواهند کرد.'
   },
   roleClarify2: {
-    en: "Additionally, there will be an investor event aimed at raising 90 ETH. A portion equivalent to 25% of this investment will be allocated to support the contributors and the project. As for the remaining funds, 35% will be dedicated to the airdrop initiative, while 40% will be allocated to the treasury.",
-    fa: "Additionally, there will be an investor event aimed at raising 90 ETH. A portion equivalent to 25% of this investment will be allocated to support the contributors and the project. As for the remaining funds, 35% will be dedicated to the airdrop initiative, while 40% will be allocated to the treasury.",
+    en: "You can find more information about our tokenomics in our litepaper",
+    fa: 'شما می‌توانید اطلاعات بیشتری در این باره را در لایت‌پیپر ما پیدا کنید.'
   },
   venomidnetwork: {
     en: 'VID Network',
@@ -422,6 +422,14 @@ const terms: Terms = {
   error: {
     en: 'Error',
     fa: 'اشکال',
+  },
+  preparing: {
+    en: 'Preparing',
+    fa: 'در حال آماده سازی',
+  },
+  preparingMint: {
+    en: 'Preparing the transaction for mint',
+    fa: 'در حال آماده سازی تراکنش مینت',
   },
   commonErrorMsg: {
     en: 'Something went wrong, Please try again',
@@ -711,6 +719,54 @@ const terms: Terms = {
     en: "Last Words",
     fa: "Last Words",
   },
+  guideStep0:{
+    en: "Enter Title",
+    fa: "Enter Title"
+  },
+  guideStep1:{
+    en: "Enter Subtitle",
+    fa: "Enter Subtitle"
+  },
+  guideStep2:{
+    en: "Select Avatar Image",
+    fa: "Select Avatar Image"
+  },
+  guideStep3:{
+    en: "Add Bio (Min 15 chars)",
+    fa: "Add Bio (Min 15 chars)"
+  },
+  guideStep4:{
+    en: "Add Wallet Address",
+    fa: "Add Wallet Address"
+  },
+  guideStep5:{
+    en: "Add Resources/Links",
+    fa: "Add Resources/Links"
+  },
+  guideStep6:{
+    en: "Add Social Media Links",
+    fa: "Add Social Media Links"
+  },
+  guideStep7:{
+    en: "Enter Subtitle",
+    fa: "Enter Subtitle"
+  },
+  guideStep8:{
+    en: "Design Your Venom ID",
+    fa: "Design Your Venom ID"
+  },
+  guideStep9:{
+    en: "Save Your Venom ID",
+    fa: "Save Your Venom ID"
+  },
+  guideStep10:{
+    en: "Share Your Venom ID",
+    fa: "Share Your Venom ID"
+  },
+  guideStepComplete:{
+    en: "All Set 👍",
+    fa: "All Set 👍"
+  }
 };
 
 export default terms;

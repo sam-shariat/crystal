@@ -33,13 +33,14 @@
   --light: #f5f5f5;
   --whiteAlpha: #f3f3f340;
   --dark: #161618;
-  --darkAlpha: #16161840;
+  --darkAlpha: #16161850;
   --dark0: #111111;
   --dark1:rgb(32, 32, 33);
   --dark2:rgb(50, 52, 54);
   --gray: #9c9a95;
   --lightGrey: #d5d5d5;
   --red1: #c84949;
+  --venom00: #99f0c4;
   --venom0: #4acf8d;
   --venom: #30875b;
   --venom1: #43bb7f;
@@ -108,6 +109,14 @@ body::-webkit-scrollbar-thumb , div::-webkit-scrollbar-thumb {
   background-color: var(--white);
   border-radius: 12px;
   font-family: 'Poppins',sans-serif !important /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */;
+}
+
+
+.tour , .introjs-tooltipReferenceLayer *{
+  color: #161618;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 500;
+  font-size: large;
 }
 
 /*

@@ -1,4 +1,4 @@
-import { CONTRACT_ADDRESS } from 'core/utils/constants';
+import { CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1 } from 'core/utils/constants';
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
@@ -21,7 +21,7 @@ async function getClient() {
 
 export default async function handler(req, res) {
   try {
-    console.log(req.query)
+    // console.log(req.query)
     if(!req.query.ownerAddress){
       res.status(202).json({status:'error',message:'ownerAddress param is required'});
       process.exit(1);
@@ -36,11 +36,22 @@ export default async function handler(req, res) {
       address: CONTRACT_ADDRESS,
     });
 
+    const collectionv1 = new Account(CollectionContract, {
+      signer: signerKeys(keys),
+      client,
+      address: CONTRACT_ADDRESS_V1
+    });
+
     let response = await collection.runLocal('getPrimaryName', { _owner: String(req.query.ownerAddress) });
     if(response.decoded.output.value0?.name){
         res.status(200).json(response.decoded.output.value0?.name);
     } else {
-        res.status(202).json({status:'error',message:'owner does not own a venom id'});
+        let responsev1 = await collectionv1.runLocal('getPrimaryName', { _owner: String(req.query.ownerAddress) });
+        if(responsev1.decoded.output.value0?.name){
+          res.status(200).json(responsev1.decoded.output.value0?.name);
+        } else {
+          res.status(202).json({status:'error',message:'owner does not own a venom id'});
+        }
     }
     
   } catch (err) {

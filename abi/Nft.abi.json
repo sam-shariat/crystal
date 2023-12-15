@@ -264,8 +264,6 @@
 		{"name":"_codeIndex","type":"cell"},
 		{"name":"_metadataAccess","type":"bool"},
 		{"name":"_gameManager","type":"address"},
-		{"name":"_btcAddress","type":"string"},
-		{"name":"_ethAddress","type":"string"},
 		{"name":"_name","type":"string"},
 		{"name":"_data","type":"string"},
 		{"name":"_length","type":"uint256"}

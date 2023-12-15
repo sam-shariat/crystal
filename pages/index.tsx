@@ -1,8 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import ClaimSection from 'components/sections/ClaimSection';
-import ManageSection from 'components/sections/ManageSection';
-import ProfileSection from 'components/sections/ProfileSection';
 import RoadmapSection from 'components/sections/RoadmapSection';
 import AboutSection from 'components/sections/AboutSection';
 import {
@@ -11,7 +9,6 @@ import {
   SITE_TITLE,
 } from 'core/utils/constants';
 import { Seo } from 'components/Layout/Seo';
-import ParticipationSection from 'components/sections/ParticipationSection';
 import IntroSection from 'components/sections/IntroSection';
 import FeaturesSection from 'components/sections/FeaturesSection';
 import NSSection from 'components/sections/NSSection';

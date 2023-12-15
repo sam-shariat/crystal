@@ -25,7 +25,7 @@ async function getClient() {
 
 export default async function handler(req, res) {
   try {
-    console.log(req.query);
+    // console.log(req.query);
     if (!req.query.name) {
       res.status(202).json({ status: 'error', message: 'name param is required' });
       process.exit(1);
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
       const imageBuffer = await axios.get(String(result.data.avatar), {
         responseType: 'arraybuffer',
       });
-      //console.log(result);
+      //// console.log(result);
       //res.status(200).json({json:json,jsonUrl:jsonUrl, avatar:result.data.avatar});
       res.status(200).setHeader('Content-Type', 'image/jpg').setHeader('Cache-Control','public, immutable, no-transform, max-age=31536000').send(imageBuffer.data);
     } else {

@@ -44,7 +44,7 @@ const borderVariant = defineStyle((props) => {
     transition: 'none',
     border: '3px solid black',
     position: 'relative',
-    boxShadow: '1px 1px 0px 0px black, 2px 2px 0px 0px black, 3px 3px 0px 0px black, 4px 4px 0px 0px black',
+    boxShadow: '1px 1px 0px 0px black, 2px 2px 0px 0px black, 3px 3px 0px 0px black',
     _dark: {
       bg: `${c}.200`,
       color: c === 'dark' ? 'white' : 'gray.800',

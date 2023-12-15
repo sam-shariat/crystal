@@ -26,15 +26,15 @@ export default function Wallets({ json, color, onlyIcons }: Props) {
     }
 
     if (_wallets.length !== walletsArray.length) {
-      console.log(_wallets);
+      // console.log(_wallets);
       setWalletsArray(_wallets);
     }
-    console.log(_wallets);
+    // console.log(_wallets);
   }, []);
 
   return (
     <>
-      <Flex my={2} width={['100%', 'md']} flexDirection={_onlyIcons ? 'row' : 'column'} gap={2}>
+      <Flex my={2} flexDirection={_onlyIcons ? 'row' : 'column'} gap={2} w={'100%'}>
         {walletsArray.map(
           (item) =>
             item.key && (

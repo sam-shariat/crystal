@@ -40,6 +40,12 @@ const nextConfig = {
         port: '',
         pathname: '*',
       },
+      {
+        protocol: 'https',
+        hostname: 'nft-cdn.alchemy.com',
+        port: '',
+        pathname: '*',
+      },
     ],
   },
   transpilePackages: ['@eversdk/lib-web'],

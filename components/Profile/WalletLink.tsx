@@ -78,7 +78,7 @@ export default function WalletLink({ title, url, onlyIcon, color }: Props) {
           onMouseEnter={() => setHover(true)}
           onMouseMove={() => setHover(true)}
           onMouseOut={() => setHover(false)}
-          minWidth={['100%']}>
+          w={'100%'}>
           <Text
             onMouseEnter={() => setHover(true)}
             color={
@@ -93,6 +93,7 @@ export default function WalletLink({ title, url, onlyIcon, color }: Props) {
               borderRadius={4}
               label={<Text p={2}>View on Explorer</Text>}
               color="white"
+              fontFamily={font}
               bgColor={'black'}
               hasArrow>
               <IconButton
@@ -127,6 +128,7 @@ export default function WalletLink({ title, url, onlyIcon, color }: Props) {
               label={<Text p={2}>Copy {title} Address</Text>}
               color="white"
               bgColor={'black'}
+              fontFamily={font}
               hasArrow>
               <IconButton
                 onClick={onCopy}

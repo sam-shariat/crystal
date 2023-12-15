@@ -17,7 +17,7 @@ const ImageLink = ({ url, alt, loading }: Props) => {
         <Image
           borderRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16}
           src={url}
-          width={notMobile ? 'md' : '100%'}
+          width={'100%'}
           my={2}
           alt={alt ? alt : 'Venom ID Image Link'}
           textAlign={'center'}

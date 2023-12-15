@@ -19,22 +19,13 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import { MINT_OPEN, SITE_MANAGE_URL, SITE_PROFILE_URL, ZEALY_URL, ZERO_ADDRESS } from 'core/utils/constants';
-import SocialIcons from 'components/Layout/SocialIcons';
-import TextCard from 'components/Layout/TextCard';
+import { MINT_OPEN, ZERO_ADDRESS } from 'core/utils/constants';
 import {
-  RiArrowDownLine,
-  RiArrowRightLine,
   RiCodeSSlashLine,
   RiExternalLinkLine,
-  RiFingerprint2Line,
-  RiProfileLine,
-  RiRestartFill,
   RiRestartLine,
   RiSendPlane2Line,
-  RiSettings3Line,
 } from 'react-icons/ri';
-import { Zealy } from 'components/logos';
 import { useEffect, useState } from 'react';
 import { isValidVenomAddress } from 'core/utils';
 import { useAtomValue } from 'jotai';
@@ -85,7 +76,7 @@ export default function NSSection() {
 
   const getName = async () => {
     setIsLoadig(true);
-    if(MINT_OPEN){
+    //if(MINT_OPEN){
       if (!provider) return;
       const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
       // @ts-ignore: Unreachable code error
@@ -96,10 +87,6 @@ export default function NSSection() {
         setLoaded(true);
         setName(value0.name + '.vid');
       } else {
-        setName('');
-        setLoaded(false);
-      }
-    } else {
       await getVid(String(address)).then((res)=> {
         if(res.status === 200){
           setLoaded(true);
@@ -118,7 +105,7 @@ export default function NSSection() {
 
   const getAddress = async () => {
     setIsLoadig(true);
-    if(MINT_OPEN){
+    
       if (!provider) return;
       const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
       // @ts-ignore: Unreachable code error
@@ -129,10 +116,6 @@ export default function NSSection() {
         setName(address);
         setAddress(String(value0.owner));
       } else {
-        setName('');
-        setLoaded(false);
-      }
-    } else {
       await resolveAddress(String(address.slice(0, -4))).then((res)=> {
         if(res.data !== ZERO_ADDRESS){
           setLoaded(true);
@@ -174,7 +157,7 @@ export default function NSSection() {
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="80vh"
+        minH="90vh"
         pb={10}>
         <Box
           display={'flex'}
@@ -188,12 +171,12 @@ export default function NSSection() {
             {t('ns')}
           </Heading>
           
-          <SimpleGrid columns={[1,1,2]} gap={8}>
-          <Flex py={2}flexDir={'column'} align={'center'} justify={'center'} gap={4} width={['xs','sm','xs','md']}>
+          <SimpleGrid columns={[1,1,2]} gap={10}>
+          <Flex flexDir={'column'} align={'center'} justify={'center'} gap={6} width={['xs','sm','xs','md']}>
           <Text py={2} fontSize={['xl', 'xl', 'xl', '2xl']} fontWeight="normal">
               {t('nsDescription')}
             </Text>
-          <Text>{t('apiDescription')}</Text>
+          <Text fontSize={'lg'}>{t('apiDescription')}</Text>
           <Link href={'/docs'} width={'100%'}>
                 <Button
                   height={'76px'}
@@ -215,11 +198,11 @@ export default function NSSection() {
           </Flex>
           <Flex p={4} py={8} flexDir={'column'} align={'center'} justify={'center'} gap={4} bg={useColorModeValue('white','blackAlpha.500')} width={['xs','sm','xs','md']} borderRadius={15} border={'1px dashed gray'}>
             <Text fontSize={['3xl']} position={'relative'} top={0}>use case</Text>
-            <Text fontSize={['md', 'lg', 'xl', 'xl']}>Enter your .vid name or a venom address than owns a venom id e.g. sam.vid</Text>
+            <Text fontSize={['md', 'lg', 'xl', 'xl']} color={'gray'}>Enter your .vid name or a venom address than owns a venom id e.g. sam.vid</Text>
             <InputGroup>
               <Input
                 height={'58px'}
-                placeholder="sam.vid"
+                placeholder="sam.vid or 0:4bc6 XXXX 3765"
                 value={address}
                 _focus={{
                   borderColor: 'white',

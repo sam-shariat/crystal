@@ -1,5 +1,5 @@
-import { atom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
+import { atom, useAtom } from 'jotai';
+import { atomFamily, atomWithStorage } from 'jotai/utils';
 import { initialAuthState } from './initialState';
 import { VenomConnect } from 'venom-connect';
 import { ProviderRpcClient } from 'everscale-inpage-provider';
@@ -7,6 +7,7 @@ import {
   CONTRACT_ADDRESS,
   IPFS_URLS,
   LINK_VALIDATION_REGEX,
+  SOCIALS,
   SOUNDCLOUD_LINK_REGEX,
   TWITTER_STATUS_REGEX,
   YOUTUBE_LINK_VALIDATION_REGEX,
@@ -33,7 +34,10 @@ export const btcAtom = atom('');
 export const ethAtom = atom('');
 export const bioAtom = atom('');
 export const avatarAtom = atom('');
+export const editingAvatarAtom = atom('');
+export const editedAvatarAtom = atom(false);
 export const avatarNftAtom = atom('');
+export const avatarShapeAtom = atom('circle');
 export const networkAtom = atom('venom testnet');
 export const addressAtom = atom('');
 export const jsonHashAtom = atom('');
@@ -45,12 +49,14 @@ export const roundAtom = atom('md');
 export const variantAtom = atom('solid');
 export const fontAtom = atom('Poppins');
 export const bgImageAtom = atom('gray');
+export const socialsAtom = atom(SOCIALS);
 export const socialsArrayAtom = atom<ObjectItem[]>([]);
 export const walletsArrayAtom = atom<ObjectItem[]>([]);
 export const linksArrayAtom = atom<CustomLink[]>([]);
 export const venomContractAddressAtom = atom(CONTRACT_ADDRESS);
 export const venomSProviderAtom = atom<ProviderRpcClient | undefined>(undefined);
 export const venomContractAtom = atom<any>(undefined);
+export const venomContractAtomV1 = atom<any>(undefined);
 export const nftContractAtom = atom<any>(undefined);
 export const isConnectedAtom = atom(false);
 export const connectedAccountAtom = atom('');
@@ -73,8 +79,9 @@ export const addLinkImageAtom = atom<string>('');
 export const addLinkContentAtom = atom<string>('');
 export const addLinkStylesAtom = atom<Styles>({});
 export const openAddSocialAtom = atom<boolean>(false);
-export const signRequestAtom = atom<boolean>(false);
+export const openAddAtom = atom<boolean>(false);
 export const openModalAtom = atom<boolean>(false);
+export const openEmbedModalAtom = atom<boolean>(false);
 export const openAddWalletAtom = atom<boolean>(false);
 export const ipfsGatewayAtom = atomWithStorage<string>('ipfsGateway', IPFS_URLS[0]);
 export const manageListViewAtom = atomWithStorage<boolean>('manageListView', true);
@@ -84,5 +91,6 @@ export const localeAtom = atomWithStorage<string>('locale', 'en');
 export const colorModeAtom = atomWithStorage<string>('colorM', 'dark');
 export const tourStepAtom = atomWithStorage<number>('tourStep',0);
 export const tourOpenAtom = atomWithStorage<boolean>('tourOpen',false);
+export const signRequestAtom = atom<boolean>(false);
 export const signHashAtom = atomWithStorage<string>('sighHash','');
 export const signDateAtom = atomWithStorage<number>('signDate',0);

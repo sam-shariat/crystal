@@ -46,10 +46,12 @@ export const getNftImage = async (provider: ProviderRpcClient, nftAddress: Addre
 };
 
 export const getNft = async (provider: ProviderRpcClient, nftAddress: Address): Promise<BaseNftJson> => {
-  console.log('getting nft',nftAddress)
     const nftContract = new provider.Contract(nftAbi, nftAddress);
+  console.log('getting nft',nftContract)
+
     // calling getJson function of NFT contract
     const getJsonAnswer = (await nftContract.methods.getJson({ answerId: 0 } as never).call()) as { json: string };
+    console.log(getJsonAnswer);
     const getInfoAnswer = (await nftContract.methods.getInfo({ answerId: 0 } as never).call()) as any;
     const json = JSON.parse(getJsonAnswer.json ?? '{}') as BaseNftJson;
     json.address = nftAddress.toString();
@@ -81,7 +83,7 @@ export const getCollectionItems = async (provider: ProviderRpcClient, nftAddress
 export const getNftImagesByIndexes = async (provider: ProviderRpcClient, indexAddresses: Address[]): Promise<string[]> => {
   const nftAddresses = await Promise.all(
     indexAddresses.map(async (indexAddress) => {
-      console.log(indexAddress)
+      // console.log(indexAddress)
       const indexContract = new provider.Contract(indexAbi, indexAddress);
       const indexInfo = (await indexContract.methods.getInfo({ answerId: 0 } as never).call()) as IndexInfo;
       return indexInfo.nft;
@@ -93,7 +95,7 @@ export const getNftImagesByIndexes = async (provider: ProviderRpcClient, indexAd
 export const getNftsByIndexes = async (provider: ProviderRpcClient, indexAddresses: Address[]): Promise<BaseNftJson[]> => {
     const nftAddresses = await Promise.all(
       indexAddresses.map(async (indexAddress) => {
-        console.log(indexAddress)
+        // console.log(indexAddress)
         const indexContract = new provider.Contract(indexAbi, indexAddress);
         const indexInfo = (await indexContract.methods.getInfo({ answerId: 0 } as never).call()) as IndexInfo;
         return indexInfo.nft;
@@ -104,7 +106,7 @@ export const getNftsByIndexes = async (provider: ProviderRpcClient, indexAddress
 
   export const getNftByIndex = async (provider: ProviderRpcClient, indexAddress: Address): Promise<BaseNftJson> => {
     
-      console.log(indexAddress)
+      // console.log(indexAddress)
       const indexContract = new provider.Contract(indexAbi, indexAddress);
       const indexInfo = (await indexContract.methods.getInfo({ answerId: 0 } as never).call()) as IndexInfo;
       const imgInfo = (await getNft(provider, indexInfo.nft)) as BaseNftJson;

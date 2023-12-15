@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 import { LinkIcon } from 'components/logos';
 import { SITE_URL } from 'core/utils/constants';
-import { RiShareFill } from 'react-icons/ri';
 
 interface Props {
   text: string;
@@ -27,16 +26,9 @@ export default function ShareButtons({ text, image, url, hashtags }: Props) {
   };
 
   return (
-    <Menu>
-      <IconButton as={MenuButton} aria-label="share-buttons" variant={'ghost'} p={2}>
-        <RiShareFill size={24} />
-      </IconButton>
-      <MenuList p={0}>
-        <Button as={MenuItem} onClick={()=> shareProfile()} leftIcon={<LinkIcon type="twitter" />}>
-          {' '}
-          Share on twitter
-        </Button>
-      </MenuList>
-    </Menu>
+    <Button size={'lg'} w={'100%'} gap={2} display={'flex'} flexDirection={'row'} onClick={shareProfile}>
+      <LinkIcon type="x" />
+      Contribute By Posting
+    </Button>
   );
 }

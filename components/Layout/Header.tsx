@@ -27,18 +27,18 @@ import NextLink from 'next/link';
 import { localeAtom, colorModeAtom } from 'core/atoms';
 import { ConnectButton } from 'components/venomConnect';
 import { useAtom } from 'jotai';
-import Logo from './Logo';
 import { RiMoonFill, RiSunFill, RiMenu2Fill, RiCloseFill } from 'react-icons/ri';
 import { Locale } from 'translations';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
+import { Logo } from 'components/logos';
 
 export default function Header() {
   const [colorM, setColorM] = useAtom(colorModeAtom);
   const { colorMode, toggleColorMode } = useColorMode();
   const [locale, setLocale] = useAtom(localeAtom);
-  const [notMobile] = useMediaQuery('(min-width: 900px)');
+  const [notMobile] = useMediaQuery('(min-width: 992px)');
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { pathname } = useRouter();
   const { t } = useTranslate();
@@ -48,24 +48,28 @@ export default function Header() {
     if (colorMode !== colorM) {
       toggleColorMode();
     }
-  }, [colorMode]);
+  }, [colorM]);
 
   return (
     <>
-      <Center px={4} py={2} bgColor="var(--venom3)" color={'white'}>
-        {t('testnetNotice')}
-      </Center>
+      {pathname === ('/') && (
+        <Center px={4} py={2} bgColor="var(--venom3)" color={'white'}>
+          {t('testnetNotice')}
+        </Center>
+      )}
 
       <Box
         as="nav"
         borderBottom="1px"
-        position={'sticky'} top={0}
-        zIndex={500}
-        backdropFilter="auto" backdropBlur={'6px'}
+        position={!pathname.includes('manage/') ? 'sticky' : 'relative'}
+        top={0}
+        zIndex={1000}
+        backdropFilter="auto"
+        backdropBlur={'6px'}
         backgroundColor={useColorModeValue('whiteAlpha.700', 'blackAlpha.700')}
         borderBottomColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}>
         <Container maxW="container.lg" py={2}>
-          <Flex justifyContent="space-between" >
+          <Flex justifyContent="space-between">
             <HStack>
               {!notMobile && (
                 <IconButton aria-label="venomid-mobile-menu" variant="ghost" onClick={onOpen}>
@@ -73,47 +77,49 @@ export default function Header() {
                 </IconButton>
               )}
               <NextLink href="/" passHref>
-                <Button id="venomidlogo" fontWeight="bold" variant="ghost" px={2}>
+                <Button id="venomidlogo" fontWeight="bold" variant="ghost" p={3}>
                   <Logo />
-                  <Text pl={1} color={useColorModeValue("var(--venom3)","var(--venom0)")}>
+                  <Text pl={1} color={useColorModeValue('var(--venom3)', 'var(--venom0)')}>
                     Venom ID
                   </Text>
                 </Button>
               </NextLink>
               {notMobile && (
-                <NextLink href={home ? "#w&w" : '/#w&w'} passHref>
+                <NextLink href={home ? '#w&w' : '/#w&w'} passHref>
                   <Button variant="ghost" color="default">
                     {t('w&w')}
                   </Button>
                 </NextLink>
               )}
-              
+
               {notMobile && (
-                <NextLink href={home ? "#ns" : '/#ns'} passHref>
+                <NextLink href={home ? '#ns' : '/#ns'} passHref>
                   <Button variant="ghost">{t('naming')}</Button>
                 </NextLink>
               )}
-              {notMobile  && (
+              {notMobile && (
                 <NextLink href={'/litepaper'} passHref>
                   <Button variant="ghost">{t('litepaper')}</Button>
                 </NextLink>
               )}
-              {notMobile && (
-                <NextLink href="/manage" passHref>
-                  <Button variant="ghost" color="default">
-                    {t('manage')}
-                  </Button>
-                </NextLink>
-              )}
+
               {notMobile && (
                 <NextLink href="/contribute" passHref>
                   <Button variant="ghost">{t('contribute')}</Button>
                 </NextLink>
               )}
+
+              {notMobile && (
+                <NextLink href="/manage" passHref>
+                  <Button variant="ghost" color="default">
+                    {t('dashboard')}
+                  </Button>
+                </NextLink>
+              )}
             </HStack>
             <HStack dir="ltr">
               <ConnectButton />
-              {notMobile && (
+              {/* {notMobile && (
                 <Menu>
                   <MenuButton as={Button}>{locale.toUpperCase()}</MenuButton>
                   <MenuList
@@ -126,7 +132,7 @@ export default function Header() {
                     <MenuItem onClick={() => setLocale(Locale.Fa)}>فا</MenuItem>
                   </MenuList>
                 </Menu>
-              )}
+              )} */}
               {notMobile && (
                 <IconButton
                   aria-label="theme"
@@ -176,56 +182,53 @@ export default function Header() {
               </HStack>
             </DrawerHeader>
             <DrawerBody>
-              
-                <Stack py={4}>
-                  
-                  <Link href={home ? "#w&w" : '/#w&w'}>
-                    <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
-                      {t('w&w')}
-                    </Button>
-                  </Link>
-                  <Link href={home ? "#ns" : '/#ns'}>
-                    <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
-                      {t('naming')}
-                    </Button>
-                  </Link>
-                  <Link href={'/litepaper'}>
-                    <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
-                      {t('roadmap')}
-                    </Button>
-                  </Link>
-                  <Link href="/manage">
-                    <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
-                      {t('manage')}
-                    </Button>
-                  </Link>
-                  <Link href="/contribute">
-                    <Button variant="ghost" width="100%" justifyContent="left" onClick={onClose}>
-                      {t('contribute')}
-                    </Button>
-                  </Link>
-                </Stack>
-              
-              
-                <Stack borderTopWidth="1px" width="100%" py={4}>
-                  <Button
-                    onClick={() => setLocale(Locale.En)}
-                    fontWeight="bold"
-                    variant="ghost"
-                    width="100%"
-                    justifyContent="left">
-                    English
+              <Stack py={4}>
+                <Link href={home ? '#w&w' : '/#w&w'}>
+                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
+                    {t('w&w')}
                   </Button>
-                  <Button
-                    onClick={() => setLocale(Locale.Fa)}
-                    fontWeight="bold"
-                    variant="ghost"
-                    width="100%"
-                    justifyContent="left">
-                    فارسی
+                </Link>
+                <Link href={home ? '#ns' : '/#ns'}>
+                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
+                    {t('naming')}
                   </Button>
-                </Stack>
-              
+                </Link>
+                <Link href={'/litepaper'}>
+                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
+                    {t('litepaper')}
+                  </Button>
+                </Link>
+
+                <Link href="/contribute">
+                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onClose}>
+                    {t('contribute')}
+                  </Button>
+                </Link>
+                <Link href="/manage">
+                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
+                    {t('dashboard')}
+                  </Button>
+                </Link>
+              </Stack>
+
+              {/* <Stack borderTopWidth="1px" width="100%" py={4}>
+                <Button
+                  onClick={() => setLocale(Locale.En)}
+                  fontWeight="bold"
+                  variant="ghost"
+                  width="100%"
+                  justifyContent="left">
+                  English
+                </Button>
+                <Button
+                  onClick={() => setLocale(Locale.Fa)}
+                  fontWeight="bold"
+                  variant="ghost"
+                  width="100%"
+                  justifyContent="left">
+                  فارسی
+                </Button>
+              </Stack> */}
             </DrawerBody>
           </DrawerContent>
         </Drawer>

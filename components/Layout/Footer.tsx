@@ -19,7 +19,7 @@ export default function Footer() {
           key={`socials-footer-vid-${useColorModeValue(true, false)}`}
           title={`foot`}
           onlyIcons
-          color={getIconColor('', useColorModeValue(true, false))}
+          color={getIconColor(useColorModeValue(true, false))}
           json={{
             lightMode: useColorModeValue(true, false),
             socials: {

@@ -1,8 +1,11 @@
+import axios from 'axios';
+import { BaseNftJson } from './nft';
 import { truncAddress } from './stringUtils';
 //import crypto from 'crypto';
 
 const sleep = async (ms: number) => new Promise((r) => setTimeout(r, ms));
 const capFirstLetter = (str: string) => {
+  if (str === '') return '';
   const words = str.split(' ');
   const final = words
     .map((word) => {
@@ -22,11 +25,11 @@ const withHttps = (url: string) =>
   );
 
 function isValidUsername(name: string) {
-  const nameRegex = /^[a-zA-Z0-9_]{1,32}$/;
+  const nameRegex = /^[a-z0-9_]{1,32}$/;
   return nameRegex.test(name);
 }
 
-const isValidEmail = (email:string) => {
+const isValidEmail = (email: string) => {
   return String(email)
     .toLowerCase()
     .match(
@@ -38,31 +41,71 @@ function isValidVenomAddress(address: string) {
   if (!address.startsWith('0:') || address.length !== 66) {
     return false;
   }
-  
+
   const hexChars = '0123456789abcdef';
   for (let i = 2; i < address.length; i++) {
     if (!hexChars.includes(address[i])) {
       return false;
     }
   }
-  
+
   return true;
 }
 
-function isValidSignHash(signature:string, date:number) {
+function isValidSignHash(signature: string, date: number) {
   // const verifier = crypto.createVerify('sha256');
-  // console.log(signature,publicKey,data)
+  // // console.log(signature,publicKey,data)
   // verifier.update(data);
   // const isValid = verifier.verify(publicKey, signature, 'base64');
-  if(signature.length !== 88){
-    return false
+  if (signature.length !== 88) {
+    return false;
   }
-  //console.log(Date.now() - date)
-  if(Date.now() - date < 86400000){
-    return true
+  //// console.log(Date.now() - date)
+  if (Date.now() - date < 172800000) {
+    return true;
   } else {
-    return false
+    return false;
   }
+}
+
+const getAvatarUrl = async (nft: BaseNftJson) => {
+  const ipfsData = nft.attributes?.find((att) => att.trait_type === 'DATA')?.value;
+  if (ipfsData === '') {
+    return String(nft.preview?.source);
+  } else {
+    await axios.get('https://ipfs.io/ipfs/' + ipfsData).then((res) => {
+      return res.data.avatar
+        ? String(res.data.avatar)
+        : nft.files
+        ? String(nft?.files[0]?.source)
+        : nft.preview?.source;
+    });
+  }
+};
+
+function base64ToBlob(b64Data: string, contentType: string, sliceSize?: number) {
+  contentType = contentType || '';
+  sliceSize = sliceSize || 512;
+
+  var byteCharacters = atob(b64Data);
+  var byteArrays = [];
+
+  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    var byteNumbers = new Array(slice.length);
+    for (var i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    var byteArray = new Uint8Array(byteNumbers);
+
+    byteArrays.push(byteArray);
+  }
+
+  // console.log(byteArrays);
+
+  return new File(byteArrays, 'vid', { type: contentType });
 }
 
 const getColor = (variant: string, buttonBg: string, lightMode: boolean) => {
@@ -180,9 +223,9 @@ const getColor = (variant: string, buttonBg: string, lightMode: boolean) => {
   }
 };
 
-const getIconColor = (buttonBg: string, lightMode: boolean) => {
+const getIconColor = (lightMode: boolean) => {
   if (lightMode) {
-    return 'gray.800';
+    return 'var(--chakra-colors-gray-800)';
   } else {
     return 'white';
   }
@@ -190,17 +233,33 @@ const getIconColor = (buttonBg: string, lightMode: boolean) => {
 
 const getIconInButtonColor = (variant: string, buttonBg: string, lightMode: boolean) => {
   let color = getColor(variant, buttonBg, lightMode);
-  //console.log(color);
+  //// console.log(color);
   if (color === undefined) return undefined;
   let colorString = 'var(--chakra-colors-' + color.replace('.', '-') + ')';
-  //console.log(colorString);
+  //// console.log(colorString);
   return colorString;
 };
 
-const getRandomNumber = (min:number, max:number) => {
+const getRandomNumber = (min: number, max: number) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-export { withHttps, truncAddress, sleep, isValidEmail, capFirstLetter, arrayRemove, isValidUsername, getColor, getIconColor, getIconInButtonColor, getRandomNumber, isValidVenomAddress, isValidSignHash };
+export {
+  withHttps,
+  base64ToBlob,
+  truncAddress,
+  sleep,
+  isValidEmail,
+  capFirstLetter,
+  arrayRemove,
+  isValidUsername,
+  getColor,
+  getIconColor,
+  getIconInButtonColor,
+  getAvatarUrl,
+  getRandomNumber,
+  isValidVenomAddress,
+  isValidSignHash,
+};

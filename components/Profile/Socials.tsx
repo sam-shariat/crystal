@@ -25,10 +25,10 @@ export default function Socials({ json, color, onlyIcons, title }: Props) {
     }
 
     if (_socials.length !== socialsArray.length) {
-      console.log(_socials);
+      // console.log(_socials);
       setSocialsArray(_socials);
     }
-    console.log(_socials);
+    // console.log(_socials);
   }, []);
 
   return (
@@ -39,13 +39,6 @@ export default function Socials({ json, color, onlyIcons, title }: Props) {
             item.key && (
               <SocialLink
                 key={`item-${item.key}-${title}`}
-                icon={
-                  <LinkIcon
-                    line={json.lineIcons ?? false}
-                    type={item.key}
-                    color={color ? color : getIconColor('', json.lightMode)}
-                  />
-                }
                 title={capFirstLetter(item.key)}
                 onlyIcon={_onlyIcons}
                 color={color ? color : undefined}

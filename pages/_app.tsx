@@ -4,18 +4,46 @@ import Layout from 'components/Layout';
 import { useDirectionSetter } from 'core/lib/hooks/use-directionSetter';
 import { VenomConfig } from 'venom-react-hooks';
 import { initVenomConnect } from 'components/venomConnect/configure';
-import { ThirdwebProvider, metamaskWallet, walletConnect, zerionWallet } from '@thirdweb-dev/react';
+import {
+  ThirdwebProvider,
+  metamaskWallet,
+  coinbaseWallet,
+  walletConnect,
+  embeddedWallet,
+  trustWallet,
+  zerionWallet,
+  rainbowWallet,
+} from '@thirdweb-dev/react';
 import { Analytics } from '@vercel/analytics/react';
 import '../styles/globals.css';
+import 'intro.js/introjs.css';
+import { Ethereum, Polygon, Arbitrum, Binance, Goerli, ZksyncEra } from '@thirdweb-dev/chains';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useDirectionSetter();
 
   return (
     <ThemeProvider>
-      <VenomConfig initVenomConnect={initVenomConnect}>
+      <VenomConfig initVenomConnect={initVenomConnect as any}>
         <ThirdwebProvider
-          supportedWallets={[metamaskWallet(), walletConnect(), zerionWallet()]}
+          supportedChains={[Ethereum, Polygon, Arbitrum, Binance, Goerli, ZksyncEra]}
+          supportedWallets={[
+            embeddedWallet({
+              auth: {
+                options: ['email', 'google', 'apple', 'facebook'],
+              },
+            }),
+            metamaskWallet({ recommended: true }),
+            trustWallet(),
+            rainbowWallet(),
+            walletConnect(),
+            zerionWallet(),
+            coinbaseWallet(),
+          ]}
+          authConfig={{
+            authUrl: '/api/auth',
+            domain: process.env.NEXT_PUBLIC_SITE_URL || "localhost:3000",
+          }}
           clientId={process.env.NEXT_PUBLIC_THIRDWEB_ID}>
           <Layout>
             <Component {...pageProps} />

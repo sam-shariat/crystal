@@ -15,19 +15,6 @@ import {
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import {
-  GITHUB_URL,
-  MEDIUM_URL,
-  SITE_PROFILE_URL,
-  SOCIAL_TWITTER,
-  TELEGRAM_URL,
-  TWITTER_URL,
-  YLIDE_URL,
-  YOUTUBE_URL,
-  ZEALY_URL,
-} from 'core/utils/constants';
-import ImageBox from 'components/Layout/ImageBox';
-import { RiArrowUpFill, RiFileList3Line, RiShakeHandsLine, RiTelegramFill } from 'react-icons/ri';
 import BackToUp from '@uiw/react-back-to-top';
 import { useEffect, useState } from 'react';
 
