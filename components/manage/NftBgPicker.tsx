@@ -43,7 +43,7 @@ export default function NftBgPicker() {
           <PopoverArrow />
           <PopoverBody>
             <SimpleGrid columns={[3]} gap={2}>
-              <IconButton
+              {/* <IconButton
                 height={'180px'}
                 aria-label="bg-image-picker-item"
                 bg={`url('${avatar}')`}
@@ -62,7 +62,7 @@ export default function NftBgPicker() {
                     color={'var(--dark1)'}
                   />
                 )}
-              </IconButton>
+              </IconButton> */}
               {BG_IMAGES.map((bg) => (
                 <IconButton
                   height={'180px'}

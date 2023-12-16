@@ -43,7 +43,7 @@ import {
               <SimpleGrid columns={[2]} gap={2}>
                 {FONTS.map((_font) => (
                   <Button
-                    key={`button-font-${font}-${lightMode}`}
+                    key={`button-font-${_font}-${lightMode}`}
                     aria-label="button-font-picker"
                     onClick={() => {
                       setFont(_font);
