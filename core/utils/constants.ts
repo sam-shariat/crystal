@@ -1,7 +1,7 @@
 import { BgColorItem, LinkType, BgImageItem } from 'types';
 
 export const MINT_OPEN = false;
-export const MINT_DATE = 'Dec 17, 2023 18:00:00 UTC';
+export const MINT_DATE = 'Dec 18, 2023 18:00:00 UTC';
 export const MINT_MESSAGE = 'Minting will reopen at';
 export const SITE_URL = 'https://venomid.network/';
 export const SITE_TITLE = 'Venom ID';

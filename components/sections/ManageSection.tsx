@@ -39,7 +39,7 @@ import {
 } from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
 import { Address, Transaction } from 'everscale-inpage-provider';
-import { AVATAR_API_URL, CONTRACT_ADDRESS, ZERO_ADDRESS } from 'core/utils/constants';
+import { AVATAR_API_URL, CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1, ZERO_ADDRESS } from 'core/utils/constants';
 import {
   RiExternalLinkLine,
   RiLayoutGridLine,
@@ -75,15 +75,9 @@ function ManageSection() {
     // console.log(nftjsons);
   }
 
-  const loadNFTs = async () => {
-    try {
-      // Take a salted code
-      // console.log('loading all nfts', account?.address);
-      if (!provider?.isInitialized) return;
-      setNftJsons([]);
-      setIsLoading(true);
-      setListIsEmpty(false);
-      const saltedCode = await saltCode(provider, String(account?.address), CONTRACT_ADDRESS);
+  const loadByContract = async (_contractAddress:string) => {
+      if(!provider) return;
+      const saltedCode = await saltCode(provider, String(account?.address), _contractAddress);
       // Hash it
       const codeHash = await provider.getBocHash(String(saltedCode));
       if (!codeHash) {
@@ -119,6 +113,18 @@ function ManageSection() {
           // console.log('error getting venomid nft ', indexAddress);
         }
       });
+  }
+
+  const loadNFTs = async () => {
+    try {
+      // Take a salted code
+      // console.log('loading all nfts', account?.address);
+      if (!provider?.isInitialized) return;
+      setNftJsons([]);
+      setIsLoading(true);
+      setListIsEmpty(false);
+      await loadByContract(CONTRACT_ADDRESS);
+      await loadByContract(CONTRACT_ADDRESS_V1);
 
       setLoaded(true);
       setIsLoading(false);
@@ -329,12 +335,14 @@ function ManageSection() {
                         color="white"
                         bgColor={'black'}>
                         <NextLink href={'/manage/' + nft.address} passHref>
-                          <IconButton
+                          <Button
                             aria-label="customize-venom-id"
+                            gap={2}
                             variant={'outline'}
                             colorScheme="purple">
+                              Customize
                             <RiSettings4Line />
-                          </IconButton>
+                          </Button>
                         </NextLink>
                       </Tooltip>
                       <Link href={nft.external_url} target="_blank">
