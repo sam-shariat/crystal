@@ -492,7 +492,7 @@ const ClaimSection = () => {
                     </Stack>
                   </Flex>
                   <TextCard
-                    domain="+4500 minted names"
+                    domain="+7500 minted names"
                     text="minting phase one is completed"
                     header=""
                   />

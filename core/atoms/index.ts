@@ -57,6 +57,7 @@ export const venomContractAddressAtom = atom(CONTRACT_ADDRESS);
 export const venomSProviderAtom = atom<ProviderRpcClient | undefined>(undefined);
 export const venomContractAtom = atom<any>(undefined);
 export const venomContractAtomV1 = atom<any>(undefined);
+export const venomContractAtomV2 = atom<any>(undefined);
 export const nftContractAtom = atom<any>(undefined);
 export const isConnectedAtom = atom(false);
 export const connectedAccountAtom = atom('');

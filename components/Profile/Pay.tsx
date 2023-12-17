@@ -212,7 +212,7 @@ export default function Pay({ title, content, style }: Props) {
                         colorScheme="green"
                         size={'lg'}
                         isLoading={isPaying}>
-                        {sdk?.wallet.isConnected() ? title : `Connect Wallet`}
+                        {sdk?.wallet.isConnected() ? 'Pay' : `Connect Wallet`}
                       </Button>
                       {paySuccessful && !isPaying && <Text color="green">{success}</Text>}
                       <Text>or Scan the QR Code below</Text>
