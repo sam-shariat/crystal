@@ -15,6 +15,7 @@ import {
   rainbowWallet,
 } from '@thirdweb-dev/react';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import '../styles/globals.css';
 import 'intro.js/introjs.css';
 import { Ethereum, Polygon, Arbitrum, Binance, Goerli, ZksyncEra } from '@thirdweb-dev/chains';
@@ -48,6 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Layout>
             <Component {...pageProps} />
             <Analytics />
+            <SpeedInsights />
           </Layout>
         </ThirdwebProvider>
       </VenomConfig>
