@@ -7,6 +7,7 @@ import {
   CONTRACT_ADDRESS,
   IPFS_URLS,
   LINK_VALIDATION_REGEX,
+  MINT_OPEN,
   SOCIALS,
   SOUNDCLOUD_LINK_REGEX,
   TWITTER_STATUS_REGEX,
@@ -36,6 +37,7 @@ export const bioAtom = atom('');
 export const avatarAtom = atom('');
 export const editingAvatarAtom = atom('');
 export const editedAvatarAtom = atom(false);
+export const mintOpenAtom = atom(MINT_OPEN);
 export const avatarNftAtom = atom('');
 export const avatarShapeAtom = atom('circle');
 export const networkAtom = atom('venom testnet');
@@ -44,7 +46,7 @@ export const jsonHashAtom = atom('');
 export const lightModeAtom = atom<boolean>(false);
 export const balanceAtom = atom('0');
 export const bgColorAtom = atom('var(--darkGradient)');
-export const buttonBgColorAtom = atom('gray');
+export const buttonBgColorAtom = atom('dark');
 export const roundAtom = atom('md');
 export const variantAtom = atom('solid');
 export const fontAtom = atom('Poppins');

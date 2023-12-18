@@ -149,7 +149,7 @@ const Preview = ({ json, onSave }: Props) => {
             <>
               <Container
                 as="main"
-                width={mobileView ? '100%' : ['100%','100%','md','lg','xl','2xl']}
+                width={mobileView ? '100%' : ['100%','100%','md','lg','xl']}
                 display="flex"
                 flexDir={'column'}
                 gap={4}

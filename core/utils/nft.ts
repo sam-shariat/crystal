@@ -47,11 +47,11 @@ export const getNftImage = async (provider: ProviderRpcClient, nftAddress: Addre
 
 export const getNft = async (provider: ProviderRpcClient, nftAddress: Address): Promise<BaseNftJson> => {
     const nftContract = new provider.Contract(nftAbi, nftAddress);
-  console.log('getting nft',nftContract)
+  ///console.log('getting nft',nftContract)
 
     // calling getJson function of NFT contract
     const getJsonAnswer = (await nftContract.methods.getJson({ answerId: 0 } as never).call()) as { json: string };
-    console.log(getJsonAnswer);
+    //console.log(getJsonAnswer);
     const getInfoAnswer = (await nftContract.methods.getInfo({ answerId: 0 } as never).call()) as any;
     const json = JSON.parse(getJsonAnswer.json ?? '{}') as BaseNftJson;
     json.address = nftAddress.toString();

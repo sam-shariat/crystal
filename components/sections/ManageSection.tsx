@@ -39,7 +39,7 @@ import {
 } from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
 import { Address, Transaction } from 'everscale-inpage-provider';
-import { AVATAR_API_URL, CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1, ZERO_ADDRESS } from 'core/utils/constants';
+import { AVATAR_API_URL, CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1, CONTRACT_ADDRESS_V2, ZERO_ADDRESS } from 'core/utils/constants';
 import {
   RiExternalLinkLine,
   RiLayoutGridLine,
@@ -125,6 +125,7 @@ function ManageSection() {
       setListIsEmpty(false);
       await loadByContract(CONTRACT_ADDRESS);
       await loadByContract(CONTRACT_ADDRESS_V1);
+      await loadByContract(CONTRACT_ADDRESS_V2);
 
       setLoaded(true);
       setIsLoading(false);

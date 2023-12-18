@@ -206,7 +206,7 @@ export default function IntroSection() {
                 width={'100%'}
                 rounded={'2xl'}
                 borderTopRadius={0}
-                height={'610px'}
+                height={'620px'}
                 bgSize={'cover'}
                 bgRepeat={'no-repeat'}
                 bgPosition={'center'}

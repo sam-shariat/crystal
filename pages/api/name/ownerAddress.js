@@ -1,4 +1,9 @@
-import { CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1, ZERO_ADDRESS } from 'core/utils/constants';
+import {
+  CONTRACT_ADDRESS,
+  CONTRACT_ADDRESS_V1,
+  CONTRACT_ADDRESS_V2,
+  ZERO_ADDRESS,
+} from 'core/utils/constants';
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
@@ -51,17 +56,28 @@ export default async function handler(req, res) {
       address: CONTRACT_ADDRESS_V1,
     });
 
+    const collectionv2 = new Account(CollectionContract, {
+      signer: signerKeys(keys),
+      client,
+      address: CONTRACT_ADDRESS_V2,
+    });
+
     let response = await collection.runLocal('getInfoByName', { name: String(name) });
     if (response.decoded.output.value0?.owner) {
       // res.setHeader('Content-Type','text/plain');
-      if(response.decoded.output.value0?.owner !== ZERO_ADDRESS){
+      if (response.decoded.output.value0?.owner !== ZERO_ADDRESS) {
         res.status(200).send(response.decoded.output.value0?.owner);
       } else {
         let responsev1 = await collectionv1.runLocal('getInfoByName', { name: String(name) });
-        if (responsev1.decoded.output.value0?.owner) {
+        if (responsev1.decoded.output.value0?.owner !== ZERO_ADDRESS) {
           res.status(200).send(responsev1.decoded.output.value0?.owner);
         } else {
-          res.status(202).json({ status: 'error', message: 'name does not exist' });
+          let responsev2 = await collectionv2.runLocal('getInfoByName', { name: String(name) });
+          if (responsev2.decoded.output.value0?.owner !== ZERO_ADDRESS) {
+            res.status(200).send(responsev2.decoded.output.value0?.owner);
+          } else {
+            res.status(202).json({ status: 'error', message: 'name does not exist' });
+          }
         }
       }
     }

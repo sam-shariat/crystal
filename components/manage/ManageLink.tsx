@@ -214,7 +214,7 @@ export default function ManageLink({
                             </Text>
                           </Box>
                         )}
-                        {type.includes('soundcloud') && RegExp(reg, 'i').test(_url) && (
+                        {(type.includes('soundcloud') || type.includes('youtube')) && RegExp(reg, 'i').test(_url) && (
                           <SelectSizeButton
                             options={['sm', 'md', 'lg']}
                             value={String(_styles?.size)}

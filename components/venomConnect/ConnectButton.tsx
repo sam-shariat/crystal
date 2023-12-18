@@ -21,6 +21,7 @@ import { VenomFoundation, VenomScanIcon } from 'components/logos';
 import {
   CONTRACT_ADDRESS,
   CONTRACT_ADDRESS_V1,
+  CONTRACT_ADDRESS_V2,
   FAUCET_URL,
   MINT_OPEN,
   SIGN_MESSAGE,
@@ -51,6 +52,7 @@ import {
   venomContractAddressAtom,
   venomContractAtom,
   venomContractAtomV1,
+  venomContractAtomV2,
 } from 'core/atoms';
 import { ConnectWallet } from '@thirdweb-dev/react';
 import getVid from 'core/utils/getVid';
@@ -90,6 +92,7 @@ export default function ConnectButton() {
   const venomContractAddress = useAtomValue(venomContractAddressAtom);
   const [venomContract, setVenomContract] = useAtom(venomContractAtom);
   const [venomContractV1, setVenomContractV1] = useAtom(venomContractAtomV1);
+  const [venomContractV2, setVenomContractV2] = useAtom(venomContractAtomV2);
   const { onCopy, hasCopied } = useClipboard(String(address));
   const balance =
     account?.balance !== undefined ? Math.round(Number(account?.balance) / 10e5) / 10e2 : 'Loading';
@@ -104,6 +107,9 @@ export default function ConnectButton() {
 
       const _venomContractV1 = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS_V1));
       setVenomContractV1(_venomContractV1);
+
+      const _venomContractV2 = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS_V2));
+      setVenomContractV2(_venomContractV2);
 
       // @ts-ignore: Unreachable code error
       const { value0 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) }).call();

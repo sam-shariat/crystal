@@ -19,8 +19,10 @@ export const VENOMART_NFT = 'https://testnet.venomart.io/nft/';
 export const BTCSCAN_ADDRESS = 'https://blockchair.com/bitcoin/';
 export const ETHERSCAN_ADDRESS = 'https://etherscan.io/address/';
 export const CONTRACT_ADDRESS =
-  '0:0f158efd58c06ff2f84726425de63d3deb4037d2c621ccd552cec61d6b6ee5bd';
+  '0:5ecadfe4afcf90452bc448b5dabffeca63939bfce866f248d9493f57e748aff3';
 export const CONTRACT_ADDRESS_V1 =
+  '0:0f158efd58c06ff2f84726425de63d3deb4037d2c621ccd552cec61d6b6ee5bd';
+export const CONTRACT_ADDRESS_V2 =
   '0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
 //'0:7f70fd1850b1949b84528ed43593f63f45118006fdb73bd88d69f29122993b7b'
 //'0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
@@ -297,15 +299,15 @@ export const VARIATIONS = [
   {
     avatar: 'https://ipfs.io/ipfs/QmeTz133js4XjdXbbPRAW5CYTMankbhLt6FGGogaiBhQBx',
     avatarShape: 'circle',
-    bg: BG_IMAGES[1].bg,
-    lightMode: BG_IMAGES[1].lightMode,
+    bg: BG_COLORS[9].color,
+    lightMode: BG_COLORS[9].lightMode,
     buttonBg: BUTTON_BG_COLORS[1],
     variant: BUTTON_VARIANTS[4],
     round: BUTTON_ROUNDS[2],
     font: FONTS[0],
-    title: 'Venom ID',
+    title: 'Venom ID Passport',
     subtitle: 'NFT Collection',
-    vid: 'venomid.VID',
+    vid: 'passport.VID',
   },
   {
     avatar: 'https://nft-cdn.alchemy.com/arb-mainnet/af6fbf53fb1a6f0e582a3948ddc47d65',
@@ -353,6 +355,7 @@ export const LINK_VARIATIONS = [
       url: 'https://t.me/venomid_network',
       styles: {
         icon: 'RiTelegramFill',
+        size: 'md'
       },
     },
   ],
@@ -391,7 +394,16 @@ export const LINK_VARIATIONS = [
       image: '',
       content: '',
       styles: {
-        size: 'md',
+        size: 'sm',
+      },
+    },
+    {
+      type: 'simple link',
+      title: 'Youtube Channel',
+      url: 'https://www.youtube.com/@Venomid_network',
+      styles: {
+        icon: 'RiYoutubeFill',
+        size: 'md'
       },
     },
   ],
@@ -402,6 +414,9 @@ export const LINK_VARIATIONS = [
       url: '',
       image: 'https://ipfs.io/ipfs/QmUeSvTQtZiBoa344JvfA8ekeKFH8pRMk8sY3tBjDEG3d9/CV.pdf',
       content: '',
+      styles: {
+        size: 'md'
+      },
     },
     {
       type: 'nft link',

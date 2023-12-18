@@ -26,6 +26,8 @@ import {
   signDateAtom,
   signRequestAtom,
   venomContractAtomV1,
+  venomContractAtomV2,
+  mintOpenAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { addAsset, useConnect, useVenomProvider } from 'venom-react-hooks';
@@ -45,7 +47,7 @@ import TextCard from 'components/claiming/TextCard';
 import ImageBox from 'components/claiming/ImageBox';
 import { useStorageUpload } from '@thirdweb-dev/react';
 import VIDImage from 'components/claiming/VIDImage';
-import { renderToStaticMarkup } from 'react-dom/server'
+import { renderToStaticMarkup } from 'react-dom/server';
 
 interface Message {
   type: any;
@@ -70,6 +72,7 @@ const ClaimSection = () => {
   const locale = useAtomValue(localeAtom);
   const venomContract = useAtomValue(venomContractAtom);
   const venomContractV1 = useAtomValue(venomContractAtomV1);
+  const venomContractV2 = useAtomValue(venomContractAtomV2);
   const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
@@ -85,6 +88,7 @@ const ClaimSection = () => {
   const [claimedName, setClaimedName] = useState('');
   const { add } = addAsset(String(account?.address), CONTRACT_ADDRESS);
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
+  const [mintOpen, setMintOpen] = useAtom(mintOpenAtom);
   //const [venomContract, setVenomContract] = useState<any>(undefined);
   const minFee = 660000000;
   const [name, setName] = useAtom(nameAtom);
@@ -92,8 +96,7 @@ const ClaimSection = () => {
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
   const toast = useToast();
 
-
-  const getJson = (vidUrl:string) =>{
+  const getJson = (vidUrl: string) => {
     return {
       type: 'Basic NFT',
       name: name + '.VID',
@@ -110,28 +113,32 @@ const ClaimSection = () => {
       ],
       external_url: SITE_PROFILE_URL + name,
     };
-
-  }
-  
+  };
 
   const updateTimer = () => {
-    let future = Date.parse(MINT_DATE);
-    let now = Date.now();
-    let diff = future - now;
+    if(!mintOpen){
+      let future = Date.parse(MINT_DATE);
+      let now = Date.now();
+      let diff = future - now;
 
-    let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    let hours = Math.floor(diff / (1000 * 60 * 60));
-    let mins = Math.floor(diff / (1000 * 60));
-    let secs = Math.floor(diff / 1000);
+      let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      let hours = Math.floor(diff / (1000 * 60 * 60));
+      let mins = Math.floor(diff / (1000 * 60));
+      let secs = Math.floor(diff / 1000);
 
-    setD(days);
-    setH(hours - days * 24);
-    setM(mins - hours * 60);
-    setS(secs - mins * 60);
+      setD(days);
+      setH(hours - days * 24);
+      setM(mins - hours * 60);
+      setS(secs - mins * 60);
+
+      if (diff <= 0) {
+        setMintOpen(true);
+      }
+    }
   };
 
   async function inputChange() {
-    if(name ==='') return
+    if (name === '') return;
     window.clearTimeout(timer);
     clearTimeout(timer);
 
@@ -146,13 +153,19 @@ const ClaimSection = () => {
           .call();
 
         // @ts-ignore: Unreachable code error
-        const { value0: _nameExists } = await venomContract?.methods.nameExists({ name: String(name).toLowerCase() })
+        const { value0: _nameExists } = await venomContract?.methods
+          .nameExists({ name: String(name).toLowerCase() })
           .call();
 
-        const { value0: _nameExistsV1 } = await venomContractV1?.methods.nameExists({ name: String(name).toLowerCase() })
+        const { value0: _nameExistsV1 } = await venomContractV1?.methods
+          .nameExists({ name: String(name).toLowerCase() })
           .call();
 
-        setNameExists((_nameExists || _nameExistsV1));
+        const { value0: _nameExistsV2 } = await venomContractV2?.methods
+          .nameExists({ name: String(name).toLowerCase() })
+          .call();
+
+        setNameExists(_nameExists || _nameExistsV1 || _nameExistsV2);
         setFee(_fee);
         setFeeIsLoading(false);
       } catch (er) {
@@ -198,7 +211,7 @@ const ClaimSection = () => {
       setTyping(true);
       timer = window.setTimeout(inputChange, 2000);
     }
-    
+
     return () => {
       if (timer) {
         clearTimeout(timer);
@@ -207,12 +220,19 @@ const ClaimSection = () => {
   }, [name]);
 
   useEffect(() => {
-    setName('')
-    if (!MINT_OPEN) {
-      setInterval(updateTimer, 1000);
+    setName('');
+    let intervalId: NodeJS.Timeout | undefined = undefined;
+
+    if (!mintOpen) {
+      intervalId = setInterval(updateTimer, 1000);
+    } else {
+      clearInterval(intervalId);
     }
 
-  }, []);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [mintOpen]);
 
   async function claimVid(e: string) {
     if (!isConnected && name.length > 0) {
@@ -252,14 +272,14 @@ const ClaimSection = () => {
         duration: null,
       });
 
-      const vidimage = renderToStaticMarkup(<VIDImage name={name} key={name}/>);
+      const vidimage = renderToStaticMarkup(<VIDImage name={name} key={name} />);
       const vidbase64 = btoa(vidimage);
-      const vidblob = base64ToBlob(vidbase64,'image/svg+xml');
+      const vidblob = base64ToBlob(vidbase64, 'image/svg+xml');
 
       const uris = await upload({ data: [vidblob] });
       let vidImageUrl = '';
-      if(uris[0].length > 30 && uris[0].includes('ipfs://')){
-        vidImageUrl = ('https://ipfs.io/ipfs/' + uris[0].slice(7));
+      if (uris[0].length > 30 && uris[0].includes('ipfs://')) {
+        vidImageUrl = 'https://ipfs.io/ipfs/' + uris[0].slice(7);
         // console.log(vidImageUrl)
       } else {
         toast.closeAll();
@@ -269,7 +289,7 @@ const ClaimSection = () => {
           description: t('there is a problem with uploading the nft image to ipfs'),
           duration: null,
         });
-        return
+        return;
       }
 
       toast.closeAll();
@@ -404,7 +424,7 @@ const ClaimSection = () => {
           </SimpleGrid>
           <ClaimModal claimedName={claimedName} message={message} />
           <Stack py={10} w={'100%'} align={'center'}>
-            {MINT_OPEN ? (
+            {mintOpen ? (
               <Stack direction={['column', 'column', 'row']} w={'100%'} align={'center'}>
                 <InputGroup size="lg">
                   <InputLeftAddon
@@ -462,7 +482,7 @@ const ClaimSection = () => {
                     my={2}
                     flexGrow={1}
                     // eslint-disable-next-line react-hooks/rules-of-hooks
-                    bg={useColorModeValue('var(--venom1)','var(--venom)')}
+                    bg={useColorModeValue('var(--venom1)', 'var(--venom)')}
                     justify={['space-evenly', 'space-evenly', 'center']}
                     gap={8}
                     py={4}>
