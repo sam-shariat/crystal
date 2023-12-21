@@ -23,7 +23,8 @@ import {
   Styles,
 } from 'types';
 
-export const walletAtom = atom<VenomConnect | undefined>(undefined);
+export const venomConnectAtom = atom<VenomConnect | undefined>(undefined);
+export const accountAtom = atom<any>({});
 export const primaryNameAtom = atom<PrimaryName>({ name: '' });
 export const venomProviderAtom = atom<any>(undefined);
 export const jsonAtom = atom<any>(undefined);

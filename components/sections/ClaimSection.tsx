@@ -14,6 +14,8 @@ import {
   Flex,
   useToast,
   useColorModeValue,
+  Center,
+  Spinner,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import {
@@ -39,6 +41,7 @@ import {
   MINT_OPEN,
   MINT_DATE,
   MINT_MESSAGE,
+  MINT_TOTAL_SUPPLY,
 } from 'core/utils/constants';
 import { Transaction } from 'everscale-inpage-provider';
 import { base64ToBlob, isValidSignHash, isValidUsername, sleep } from 'core/utils';
@@ -82,6 +85,7 @@ const ClaimSection = () => {
   const [m, setM] = useState<number | null>();
   const [h, setH] = useState<number | null>();
   const [s, setS] = useState<number | null>();
+  //const [totalSupply, setTotalSupply] = useState<number | null>(0);
   const [typing, setTyping] = useState<boolean>(false);
   const [message, setMessage] = useState<Message>({ type: '', title: '', msg: '', link: '' });
   const [nameExists, setNameExists] = useState(false);
@@ -116,10 +120,13 @@ const ClaimSection = () => {
   };
 
   const updateTimer = () => {
-    if(!mintOpen){
+    if (!mintOpen) {
       let future = Date.parse(MINT_DATE);
       let now = Date.now();
       let diff = future - now;
+      if (future.toString() === 'NaN') {
+        diff = 0;
+      }
 
       let days = Math.floor(diff / (1000 * 60 * 60 * 24));
       let hours = Math.floor(diff / (1000 * 60 * 60));
@@ -233,6 +240,53 @@ const ClaimSection = () => {
       clearInterval(intervalId);
     };
   }, [mintOpen]);
+
+  // const getTotalSupply = async () => {
+  //   //if (totalSupply === 0) {
+  //   if (venomContract && venomContract.methods !== undefined) {
+  //     // @ts-ignore: Unreachable code error
+  //     const { count: _totalSupply0 } = await venomContract?.methods
+  //       .totalSupply({ answerId: 0 })
+  //       .call();
+
+  //     // @ts-ignore: Unreachable code error
+  //     const { count: _totalSupply1 } = await venomContractV1?.methods
+  //       .totalSupply({ answerId: 0 })
+  //       .call();
+
+  //     // @ts-ignore: Unreachable code error
+  //     const { count: _totalSupply2 } = await venomContractV2?.methods
+  //       .totalSupply({ answerId: 0 })
+  //       .call();
+
+  //     const _totalSupply = Number(_totalSupply0) + Number(_totalSupply1) + Number(_totalSupply2);
+  //     setTotalSupply(_totalSupply);
+
+  //     if (_totalSupply >= MINT_TOTAL_SUPPLY) {
+  //       setMintOpen(false);
+  //     } else {
+  //       setMintOpen(true);
+  //     }
+  //   }
+  //   //}
+  // };
+
+  // useEffect(() => {
+  //   let intervalId: NodeJS.Timeout | undefined = undefined;
+
+  //   if (mintOpen || totalSupply === 0) {
+  //     getTotalSupply();
+  //     intervalId = setInterval(getTotalSupply, 30000);
+  //   } else {
+  //     if (totalSupply && totalSupply >= MINT_TOTAL_SUPPLY) {
+  //       clearInterval(intervalId);
+  //     }
+  //   }
+
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [venomContract, mintOpen]);
 
   async function claimVid(e: string) {
     if (!isConnected && name.length > 0) {
@@ -423,103 +477,118 @@ const ClaimSection = () => {
             </Box>
           </SimpleGrid>
           <ClaimModal claimedName={claimedName} message={message} />
-          <Stack py={10} w={'100%'} align={'center'}>
-            {mintOpen ? (
-              <Stack direction={['column', 'column', 'row']} w={'100%'} align={'center'}>
-                <InputGroup size="lg">
-                  <InputLeftAddon
-                    border={'1px solid gray'}
-                    bg={'whiteAlpha.200'}
+          {/* {totalSupply ? ( */}
+            <Stack py={10} w={'100%'} align={'center'} gap={8}>
+              <SimpleGrid columns={[1]} gap={8} w={'100%'}>
+                <TextCard
+                  domain={`10K unique names`}
+                  text={"3.5k owners & 12k txs on Beta"}
+                  header={''}
+                />
+              </SimpleGrid>
+              {mintOpen ? (
+                <Stack direction={['column', 'column', 'row']} w={'100%'} align={'center'}>
+                  <InputGroup size="lg">
+                    <InputLeftAddon
+                      border={'1px solid gray'}
+                      bg={'whiteAlpha.200'}
+                      height={'58px'}
+                      fontSize={['xl']}>
+                      venomid.link/
+                    </InputLeftAddon>
+                    <Input
+                      height={'58px'}
+                      placeholder="samy"
+                      value={name}
+                      _focus={{
+                        borderColor: 'white',
+                      }}
+                      fontSize={['xl']}
+                      border={'1px solid gray'}
+                      onChange={(e) => setName(e.target.value.toLowerCase())}
+                      bg={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
+                      disabled={isMinting || isConfirming}
+                    />
+                  </InputGroup>
+                  <Button
+                    minWidth={['100%', '100%', 'fit-content']}
+                    colorScheme="green"
+                    size="lg"
+                    fontSize={'xl'}
                     height={'58px'}
-                    fontSize={['xl']}>
-                    venomid.link/
-                  </InputLeftAddon>
-                  <Input
-                    height={'58px'}
-                    placeholder="samy"
-                    value={name}
-                    _focus={{
-                      borderColor: 'white',
-                    }}
-                    fontSize={['xl']}
-                    border={'1px solid gray'}
-                    onChange={(e) => setName(e.target.value.toLowerCase())}
-                    bg={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
-                    disabled={isMinting || isConfirming}
-                  />
-                </InputGroup>
-                <Button
-                  minWidth={['100%', '100%', 'fit-content']}
-                  colorScheme="green"
-                  size="lg"
-                  fontSize={'xl'}
-                  height={'58px'}
-                  disabled={name.length < 3 || nameExists || isMinting || isConfirming}
-                  isLoading={feeIsLoading || isMinting}
-                  loadingText={
-                    isMinting && !isConfirming
-                      ? 'Claiming ...'
-                      : isMinting && isConfirming
-                      ? t('confirming')
-                      : ''
-                  }
-                  onClick={(e) => claimVid(e.currentTarget.value)}>
-                  {t('claimButton')}
-                </Button>
-              </Stack>
-            ) : (
-              <>
-                <Text my={2} w={'100%'} textAlign={'center'} fontSize={['lg', 'lg', 'xl', '2xl']}>
-                  {MINT_MESSAGE} <strong>{MINT_DATE}</strong>
-                </Text>
-                <Flex
-                  direction={'column'}
-                  gap={4}
-                  w={['100%', '100%', '100%', 'container.md', 'container.lg']}>
+                    disabled={name.length < 3 || nameExists || isMinting || isConfirming}
+                    isLoading={feeIsLoading || isMinting}
+                    loadingText={
+                      isMinting && !isConfirming
+                        ? 'Claiming ...'
+                        : isMinting && isConfirming
+                        ? t('confirming')
+                        : ''
+                    }
+                    onClick={(e) => claimVid(e.currentTarget.value)}>
+                    {t('claimButton')}
+                  </Button>
+                </Stack>
+              ) : (
+                <>
                   <Flex
-                    w={'100%'}
-                    rounded={'xl'}
-                    my={2}
-                    flexGrow={1}
-                    // eslint-disable-next-line react-hooks/rules-of-hooks
-                    bg={useColorModeValue('var(--venom1)', 'var(--venom)')}
-                    justify={['space-evenly', 'space-evenly', 'center']}
-                    gap={8}
-                    py={4}>
-                    <Stack justify={'center'} align={'center'}>
-                      <Text fontWeight={'bold'} fontSize={'4xl'}>
-                        {d}
-                      </Text>
-                      <Text>Days</Text>
-                    </Stack>
-                    <Stack justify={'center'} align={'center'}>
-                      <Text fontWeight={'bold'} fontSize={'4xl'}>
-                        {h}
-                      </Text>
-                      <Text>Hours</Text>
-                    </Stack>
-                    <Stack justify={'center'} align={'center'}>
-                      <Text fontWeight={'bold'} fontSize={'4xl'}>
-                        {m}
-                      </Text>
-                      <Text>Mins</Text>
-                    </Stack>
-                    <Stack justify={'center'} align={'center'}>
-                      <Text fontWeight={'bold'} fontSize={'4xl'}>
-                        {s}
-                      </Text>
-                      <Text>Secs</Text>
-                    </Stack>
+                    direction={'column'}
+                    gap={4}
+                    w={'100%'}>
+                    <Text
+                          my={2}
+                          w={'100%'}
+                          textAlign={'center'}
+                          fontSize={['lg', 'lg', 'xl', '2xl']}>
+                          {MINT_MESSAGE} <strong>{MINT_DATE}</strong>
+                        </Text>
+                      <Flex
+                        w={'100%'}
+                        rounded={'xl'}
+                        my={2}
+                        flexGrow={1}
+                        // eslint-disable-next-line react-hooks/rules-of-hooks
+                        bg={useColorModeValue('var(--venom1)', 'var(--venom)')}
+                        justify={['space-evenly', 'space-evenly', 'center']}
+                        gap={8}
+                        py={4}>
+                        <Stack justify={'center'} align={'center'}>
+                          <Text fontWeight={'bold'} fontSize={'4xl'}>
+                            {d}
+                          </Text>
+                          <Text>Days</Text>
+                        </Stack>
+                        <Stack justify={'center'} align={'center'}>
+                          <Text fontWeight={'bold'} fontSize={'4xl'}>
+                            {h}
+                          </Text>
+                          <Text>Hours</Text>
+                        </Stack>
+                        <Stack justify={'center'} align={'center'}>
+                          <Text fontWeight={'bold'} fontSize={'4xl'}>
+                            {m}
+                          </Text>
+                          <Text>Mins</Text>
+                        </Stack>
+                        <Stack justify={'center'} align={'center'}>
+                          <Text fontWeight={'bold'} fontSize={'4xl'}>
+                            {s}
+                          </Text>
+                          <Text>Secs</Text>
+                        </Stack>
+                      </Flex>
                   </Flex>
-                  <TextCard
-                    domain="+7500 minted names"
-                    text="minting phase one is completed"
-                    header=""
-                  />
-                </Flex>
-              </>
-            )}
-          </Stack>
+                </>
+              )}
+            </Stack>
+          {/* ) : (
+            <Center width={'100%'} gap={8} height={160} bg={colorMode === 'light' ? 'var(--venom1)':'var(--venom)'} rounded={'xl'}>
+              
+              {isConnected ? <><Spinner size="lg" />
+              <Text fontSize={'xl'}>Loading Contracts Data</Text></> : <Text fontSize={'xl'}>{t('venomWalletConnect')}</Text>}
+
+            </Center>
+          )} */}
           {name.length > 2 && !typing && fee !== -1 && venomContract?.methods && (
             <Flex
               minWidth={notMobile ? 'md' : 'xs'}

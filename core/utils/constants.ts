@@ -1,8 +1,9 @@
 import { BgColorItem, LinkType, BgImageItem } from 'types';
 
 export const MINT_OPEN = false;
-export const MINT_DATE = 'Dec 18, 2023 18:00:00 UTC';
-export const MINT_MESSAGE = 'Minting will reopen at';
+export const MINT_TOTAL_SUPPLY:number = 10000;
+export const MINT_DATE = 'Feb 01, 2024 18:00:00 UTC';
+export const MINT_MESSAGE = 'Final Phase of venom testnet minting will start on';
 export const SITE_URL = 'https://venomid.network/';
 export const SITE_TITLE = 'Venom ID';
 export const SITE_DESCRIPTION = 'Your entire virtual identity in the blockchain in one simple link';
@@ -47,8 +48,14 @@ export const MARKETPLACE_URLS: any = {
 
 export const ETHERSCAN_URLS: any = {
   venomtestnet: 'https://testnet.venomscan.com/accounts/',
+  venom: 'https://testnet.venomscan.com/accounts/',
+  bitcoin: 'https://blockchair.com/bitcoin/address/',
+  tron: 'https://tronscan.org/#/address/',
+  avalanche: 'https://snowtrace.io/address/',
   ethereum: 'https://etherscan.io/address/',
   polygon: 'https://polygonscan.com/address/',
+  binance: 'https://bscscan.com/address/',
+  solana: 'https://solscan.io/account/',
   arbitrum: 'https://arbiscan.io/address/',
   optimism: 'https://optimistic.etherscan.io/address/',
 };
