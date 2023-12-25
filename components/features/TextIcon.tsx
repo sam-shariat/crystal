@@ -1,4 +1,4 @@
-import { Text, Box, useColorMode, Center, Flex, Button, Collapse } from '@chakra-ui/react';
+import { Text, Box, useColorMode, Center, Flex, Button, Collapse, Icon } from '@chakra-ui/react';
 
 import { useState } from 'react';
 

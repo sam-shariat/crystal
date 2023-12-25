@@ -169,7 +169,7 @@ export default function IntroSection() {
               </Center>
               <Progress
                 sx={{
-                  '& > div:first-child': {
+                  '& > div:first-of-type': {
                     transitionProperty: 'width',
                     background: 'linear-gradient(to right, #2bb673 10%, #10a9b6 90%)'
                   },
@@ -270,7 +270,7 @@ export default function IntroSection() {
             </Flex>
           </GridItem>
           <GridItem colSpan={[3, 3, 2, 3]}>
-            <Stack px={[4, 4, 6, 10]} gap={6}>
+            <Stack px={[4, 4, 6, 10]} gap={12}>
               <Heading
                 as={'h3'}
                 fontWeight="bold"

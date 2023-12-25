@@ -64,6 +64,7 @@ import {
 import { MdOutlinePreview, MdOutlineVisibility } from 'react-icons/md';
 import axios from 'axios';
 import VIDImage from 'components/claiming/VIDImage';
+import getNftsByAddress from 'core/utils/getNftsByAddress';
 
 function ManageSection() {
   const { provider } = useVenomProvider();
@@ -131,11 +132,11 @@ function ManageSection() {
     if (!provider) return;
     setIsLoading(true);
     console.log('loading db')
-    const { rows } = await sql`SELECT * FROM vids WHERE owner = ${String(account?.address)};`;
-    console.log(rows);
+    const result = (await getNftsByAddress(String(account?.address))).data;
+    console.log(result);
     //console.log(rows[0]);
-    if (rows.length > 0) {
-      rows.map(async (nft:any) => {
+    if (result.nfts.length > 0) {
+      result.nfts.map(async (nft:any) => {
         try {
           let _nftJson = await getNft(provider, nft.address);
           const ipfsData = _nftJson.attributes?.find(
@@ -172,7 +173,7 @@ function ManageSection() {
       setListIsEmpty(false);
       await loadByContract(CONTRACT_ADDRESS);
       await loadByContract(CONTRACT_ADDRESS_V1);
-      await loadByContract(CONTRACT_ADDRESS_V2);
+      //await loadByContract(CONTRACT_ADDRESS_V2);
       await loadByDb();
 
       setLoaded(true);
@@ -292,7 +293,7 @@ function ManageSection() {
         flexDir={'column'}
         minH={'84vh'}
         flexGrow={1}>
-        <Box py={6} gap={2} width={'100%'}>
+        <Box py={6} gap={2} width={'100%'} pb={12}>
           {isConnected && (
             <Stack gap={10} width={'100%'}>
               <HStack minWidth={['350px', '420px', '580px', '800px']}>
@@ -312,7 +313,7 @@ function ManageSection() {
                 </Button>
               </HStack>
               {isLoading && (
-                <Center width={'100%'} height={250}>
+                <Center width={'100%'} height={200}>
                   <Spinner size="lg" />
                 </Center>
               )}
@@ -342,6 +343,7 @@ function ManageSection() {
                         my={'0px'}
                         noanimate
                         nodrag
+                        alt={nft.name}
                         shadow="none"
                         url={String(nft.avatar)}
                         shape="circle"
@@ -362,10 +364,10 @@ function ManageSection() {
                           primaryName.name !== nft?.name.slice(0, -4) &&
                           setAsPrimary(String(nft?.address), String(nft?.name))
                         }
-                        isDisabled={
-                          isSaving ||
-                          isConfirming ||
-                          (nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4))
+                        isDisabled={true
+                          // isSaving ||
+                          // isConfirming ||
+                          // (nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4))
                         }
                         variant={
                           nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4)
@@ -429,10 +431,10 @@ function ManageSection() {
                             primaryName.name !== nft?.name.slice(0, -4) &&
                             setAsPrimary(String(nft?.address), String(nft?.name))
                           }
-                          isDisabled={
-                            isSaving ||
-                            isConfirming ||
-                            (nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4))
+                          isDisabled={true
+                            // isSaving ||
+                            // isConfirming ||
+                            // (nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4))
                           }
                           variant={
                             nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4)
@@ -498,7 +500,7 @@ function ManageSection() {
                     justifyContent={'center'}
                     my={2}>
                     <Box width={100}>
-                      <Avatar noanimate nodrag my={2} url={String(nft.avatar)} shape="circle" />
+                      <Avatar noanimate nodrag my={2} url={String(nft.avatar)} shape="circle" alt={nft.name}/>
                     </Box>
                     <Text fontWeight={'bold'} fontSize={'3xl'}>
                       {String(nft.name).slice(0, -4).toLowerCase()}

@@ -221,7 +221,8 @@ export default function ConnectButton() {
                     fontWeight={'semibold'}
                     textAlign={'left'}
                     fontSize="14px"
-                    color={primaryName?.name !== '' ? 'var(--venom2)' : 'gray.500'}
+                    bgGradient={colorMode === 'light' ? 'linear(to-r, var(--venom2), var(--bluevenom2))':'linear(to-r, var(--venom0), var(--bluevenom0))'} 
+                    bgClip='text'
                     my={'0 !important'}>
                     {primaryName?.name !== ''
                       ? capFirstLetter(String(primaryName.name))

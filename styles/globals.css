@@ -25,8 +25,8 @@
 
   --venomGradient: radial-gradient(
     circle farthest-corner at 40% 30%,
-    #2f8359 50%,
-    #1e6441 85%
+    #2f8359 0%,
+    #1e6441 100%
   );
 
   --vidGradient: linear-gradient(to right, #2bb673 10%, #10a9b6 90%);
@@ -60,7 +60,7 @@
   --purple3: #393087;
   --purpleGradient: radial-gradient(circle farthest-corner at 40% 30%, #666fea 0%, #544ba2 100%);
   --orange: #e9924b;
-  --orangeGradient: radial-gradient(circle farthest-corner at 40% 30%, #ff9035  0%, #ff6f2c 100%);
+  --orangeGradient: radial-gradient(circle farthest-corner at 40% 30%, #ff9946  0%, #ff5a0d 100%);
   --yellow: #e9df4b;
   --yellowGradient: radial-gradient(circle farthest-corner at 40% 30%, #f5ec6a  0%, #c9be2d 100%);
   --red: #e94b4b;

@@ -74,7 +74,7 @@ export default function RoadmapSection() {
                     height={'2px'}
                     value={45}
                     sx={{
-                      '& > div:first-child': {
+                      '& > div:first-of-type': {
                         transitionProperty: 'width',
                         background: 'linear-gradient(to right, #2bb673 10%, #10a9b6 90%)',
                       },

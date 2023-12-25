@@ -3,6 +3,7 @@ const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
 const { CollectionContract } = require('abi/CollectionContract');
+import { sql } from '@vercel/postgres';
 
 let client = null;
 
@@ -27,6 +28,8 @@ export default async function handler(req, res) {
       process.exit(1);
     }
 
+    const _owner = String(req.query.ownerAddress).toLowerCase();
+
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
 
@@ -42,29 +45,27 @@ export default async function handler(req, res) {
       address: CONTRACT_ADDRESS_V1,
     });
 
-    const collectionv2 = new Account(CollectionContract, {
-      signer: signerKeys(keys),
-      client,
-      address: CONTRACT_ADDRESS_V2,
-    });
+    // const collectionv2 = new Account(CollectionContract, {
+    //   signer: signerKeys(keys),
+    //   client,
+    //   address: CONTRACT_ADDRESS_V2,
+    // });
 
     let response = await collection.runLocal('getPrimaryName', {
-      _owner: String(req.query.ownerAddress),
+      _owner: _owner,
     });
     if (response.decoded.output.value0?.name) {
-      res.status(200).json(response.decoded.output.value0?.name);
+      res.status(200).send(response.decoded.output.value0?.name);
     } else {
       let responsev1 = await collectionv1.runLocal('getPrimaryName', {
-        _owner: String(req.query.ownerAddress),
+        _owner: _owner,
       });
       if (responsev1.decoded.output.value0?.name) {
-        res.status(200).json(responsev1.decoded.output.value0?.name);
+        res.status(200).send(responsev1.decoded.output.value0?.name);
       } else {
-        let responsev2 = await collectionv2.runLocal('getPrimaryName', {
-          _owner: String(req.query.ownerAddress),
-        });
-        if (responsev2.decoded.output.value0?.name) {
-          res.status(200).json(responsev2.decoded.output.value0?.name);
+        const { rows } = await sql`SELECT * FROM vids WHERE owner = ${_owner} LIMIT 1;`;
+        if(rows.length > 0){
+          res.status(200).send(String(rows[0].name).slice(0,-4));
         } else {
           res.status(202).json({ status: 'error', message: 'owner does not own a venom id' });
         }

@@ -143,7 +143,8 @@ export default function NSSection() {
         setName('');
       }
     }
-    if (!address.includes('.vid') && !isValidVenomAddress(address)) {
+
+    if (!String(address).includes('.vid') && !isValidVenomAddress(String(address))) {
       setName('');
       setLoaded(false);
     }
@@ -181,8 +182,8 @@ export default function NSSection() {
                 <Button
                   height={'76px'}
                   flexDirection={'column'}
-                  borderColor={'gray'}
                   size="lg"
+                  bgColor={colorMode === 'light' ? 'white' : 'default'}
                   width="100%">
                   <Flex gap={4} width={'100%'}>
                     <RiCodeSSlashLine size="46px"  />

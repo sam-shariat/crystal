@@ -5,6 +5,7 @@ import {
   ZERO_ADDRESS,
 } from 'core/utils/constants';
 const { TonClient, signerKeys } = require('@eversdk/core');
+import { sql } from '@vercel/postgres';
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
 const { CollectionContract } = require('abi/CollectionContract');
@@ -40,6 +41,7 @@ export default async function handler(req, res) {
       _name = String(req.query.name).toLowerCase();
     }
     const name = _name;
+    const name_ = _name + '.VID';
 
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
@@ -56,29 +58,26 @@ export default async function handler(req, res) {
       address: CONTRACT_ADDRESS_V1,
     });
 
-    const collectionv2 = new Account(CollectionContract, {
-      signer: signerKeys(keys),
-      client,
-      address: CONTRACT_ADDRESS_V2,
-    });
-
-    let response = await collection.runLocal('getInfoByName', { name: String(name) });
-    if (response.decoded.output.value0?.owner) {
-      // res.setHeader('Content-Type','text/plain');
-      if (response.decoded.output.value0?.owner !== ZERO_ADDRESS) {
-        res.status(200).send(response.decoded.output.value0?.owner);
+    // const collectionv2 = new Account(CollectionContract, {
+    //   signer: signerKeys(keys),
+    //   client,
+    //   address: CONTRACT_ADDRESS_V2,
+    // });
+    const { rows } = await sql`SELECT * FROM vids WHERE name = ${name_};`;
+    console.log(rows);
+    if (rows.length > 0) {
+      res.status(200).send(rows[0].owner);
+    } else {
+      let response = await collection.runLocal('getInfoByName', {
+        name: String(_name),
+      });
+      if (response.decoded.output.value0.name !== 'notfound') {
+        res.status(200).send(response.decoded.output.value0.owner);
       } else {
-        let responsev1 = await collectionv1.runLocal('getInfoByName', { name: String(name) });
-        if (responsev1.decoded.output.value0?.owner !== ZERO_ADDRESS) {
-          res.status(200).send(responsev1.decoded.output.value0?.owner);
-        } else {
-          let responsev2 = await collectionv2.runLocal('getInfoByName', { name: String(name) });
-          if (responsev2.decoded.output.value0?.owner !== ZERO_ADDRESS) {
-            res.status(200).send(responsev2.decoded.output.value0?.owner);
-          } else {
-            res.status(202).json({ status: 'error', message: 'name does not exist' });
-          }
-        }
+        let responsev1 = await collectionv1.runLocal('getInfoByName', {
+          name: String(_name),
+        });
+        res.status(200).send(responsev1.decoded.output.value0.owner);
       }
     }
   } catch (err) {
