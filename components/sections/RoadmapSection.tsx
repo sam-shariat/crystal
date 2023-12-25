@@ -57,7 +57,7 @@ export default function RoadmapSection() {
                 gap={10}>
                 <Flex
                   flexDirection={'column'}
-                  width={['xs','sm','xs','md']}
+                  width={['xs', 'sm', 'xs', 'md']}
                   bg={colorMode === 'dark' ? 'blackAlpha.500' : 'var(--light)'}
                   borderRadius={12}
                   p={8}
@@ -69,7 +69,19 @@ export default function RoadmapSection() {
                     textAlign={'center'}>
                     {t('roadmapPhase1')}
                   </Text>
-                  <Progress boxShadow={'base'} height={'2px'} value={45} colorScheme={'green'} mx={-8} mb={8} />
+                  <Progress
+                    boxShadow={'base'}
+                    height={'2px'}
+                    value={45}
+                    sx={{
+                      '& > div:first-child': {
+                        transitionProperty: 'width',
+                        background: 'linear-gradient(to right, #2bb673 10%, #10a9b6 90%)',
+                      },
+                    }}
+                    mx={-8}
+                    mb={8}
+                  />
                   <Checkbox
                     fontWeight="bold"
                     size="lg"
@@ -96,7 +108,7 @@ export default function RoadmapSection() {
                 </Flex>
                 <Flex
                   flexDirection={'column'}
-                  width={['xs','sm','xs','md']}
+                  width={['xs', 'sm', 'xs', 'md']}
                   bg={colorMode === 'dark' ? 'blackAlpha.500' : 'var(--light)'}
                   borderRadius={12}
                   p={8}
@@ -108,7 +120,14 @@ export default function RoadmapSection() {
                     textAlign={'center'}>
                     {t('roadmapPhase2')}
                   </Text>
-                  <Progress boxShadow={'base'} height={'2px'} value={0} colorScheme={'green'} mx={-8} mb={8} />
+                  <Progress
+                    boxShadow={'base'}
+                    height={'2px'}
+                    value={0}
+                    colorScheme={'green'}
+                    mx={-8}
+                    mb={8}
+                  />
                   <Checkbox fontWeight="bold" mt={1} size="lg">
                     {t('roadmapPhase21')}
                   </Checkbox>

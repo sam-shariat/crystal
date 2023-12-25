@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { BaseNftJson, getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
+import {
+  BaseNftJson,
+  getAddressesFromIndex,
+  getNft,
+  getNftByIndex,
+  saltCode,
+} from 'core/utils/nft';
 import NextLink from 'next/link';
 import { Avatar } from 'components/Profile';
 import {
@@ -28,6 +34,7 @@ import {
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import Logo from 'components/logos/Logo';
 import { sleep } from 'core/utils';
+import { sql } from '@vercel/postgres';
 import { ConnectButton } from 'components/venomConnect';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
 import {
@@ -39,7 +46,13 @@ import {
 } from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
 import { Address, Transaction } from 'everscale-inpage-provider';
-import { AVATAR_API_URL, CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1, CONTRACT_ADDRESS_V2, ZERO_ADDRESS } from 'core/utils/constants';
+import {
+  AVATAR_API_URL,
+  CONTRACT_ADDRESS,
+  CONTRACT_ADDRESS_V1,
+  CONTRACT_ADDRESS_V2,
+  ZERO_ADDRESS,
+} from 'core/utils/constants';
 import {
   RiExternalLinkLine,
   RiLayoutGridLine,
@@ -75,45 +88,79 @@ function ManageSection() {
     // console.log(nftjsons);
   }
 
-  const loadByContract = async (_contractAddress:string) => {
-      if(!provider) return;
-      const saltedCode = await saltCode(provider, String(account?.address), _contractAddress);
-      // Hash it
-      const codeHash = await provider.getBocHash(String(saltedCode));
-      if (!codeHash) {
-        setIsLoading(false);
-        return;
+  const loadByContract = async (_contractAddress: string) => {
+    if (!provider) return;
+    setIsLoading(true);
+    const saltedCode = await saltCode(provider, String(account?.address), _contractAddress);
+    // Hash it
+    const codeHash = await provider.getBocHash(String(saltedCode));
+    if (!codeHash) {
+      setIsLoading(false);
+      return;
+    }
+    // Fetch all Indexes by hash
+    const indexesAddresses = await getAddressesFromIndex(codeHash, provider);
+    if (!indexesAddresses || !indexesAddresses.length) {
+      if (indexesAddresses && !indexesAddresses.length) setListIsEmpty(true);
+      setIsLoading(false);
+      return;
+    }
+    // Fetch all nfts
+    indexesAddresses.map(async (indexAddress) => {
+      try {
+        let _nftJson = await getNftByIndex(provider, indexAddress);
+        const ipfsData = _nftJson.attributes?.find((att: any) => att.trait_type === 'DATA')?.value;
+        if (ipfsData !== '') {
+          const res = await axios.get(ipfsGateway + ipfsData);
+          if (res) {
+            _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
+          } else {
+            _nftJson.avatar = ''; //_nftJson.preview?.source;
+          }
+        } else {
+          _nftJson.avatar = ''; //_nftJson.preview?.source;
+        }
+        setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
+      } catch (e: any) {
+        // console.log('error getting venomid nft ', indexAddress);
       }
-      // Fetch all Indexes by hash
-      const indexesAddresses = await getAddressesFromIndex(codeHash, provider);
-      if (!indexesAddresses || !indexesAddresses.length) {
-        if (indexesAddresses && !indexesAddresses.length) setListIsEmpty(true);
-        setIsLoading(false);
-        return;
-      }
-      // Fetch all nfts
-      indexesAddresses.map(async (indexAddress) => {
+    });
+  };
+
+  const loadByDb = async () => {
+    if (!provider) return;
+    setIsLoading(true);
+    console.log('loading db')
+    const { rows } = await sql`SELECT * FROM vids WHERE owner = ${String(account?.address)};`;
+    console.log(rows);
+    //console.log(rows[0]);
+    if (rows.length > 0) {
+      rows.map(async (nft:any) => {
         try {
-          let _nftJson = await getNftByIndex(provider, indexAddress);
+          let _nftJson = await getNft(provider, nft.address);
           const ipfsData = _nftJson.attributes?.find(
             (att: any) => att.trait_type === 'DATA'
           )?.value;
           if (ipfsData !== '') {
             const res = await axios.get(ipfsGateway + ipfsData);
-            if(res){
-               _nftJson.avatar = res.data.avatar ?? ''//_nftJson.preview?.source; 
+            if (res) {
+              _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
             } else {
-              _nftJson.avatar = ''//_nftJson.preview?.source;
-            } 
+              _nftJson.avatar = ''; //_nftJson.preview?.source;
+            }
           } else {
-            _nftJson.avatar = ''//_nftJson.preview?.source;
+            _nftJson.avatar = ''; //_nftJson.preview?.source;
           }
           setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
         } catch (e: any) {
           // console.log('error getting venomid nft ', indexAddress);
         }
       });
-  }
+    } else {
+      console.log('nothing in db');
+
+    }
+  };
 
   const loadNFTs = async () => {
     try {
@@ -126,6 +173,7 @@ function ManageSection() {
       await loadByContract(CONTRACT_ADDRESS);
       await loadByContract(CONTRACT_ADDRESS_V1);
       await loadByContract(CONTRACT_ADDRESS_V2);
+      await loadByDb();
 
       setLoaded(true);
       setIsLoading(false);
@@ -341,7 +389,7 @@ function ManageSection() {
                             gap={2}
                             variant={'outline'}
                             colorScheme="purple">
-                              Customize
+                            Customize
                             <RiSettings4Line />
                           </Button>
                         </NextLink>

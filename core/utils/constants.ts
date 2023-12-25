@@ -504,8 +504,8 @@ export const SOCIALS_VARIATIONS = [
 export const WALLETS_VARIATIONS = [
   {
     venom: '0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765',
-    eth: '0xBFd210db795A9Ac48D0C3be2a74232BE44144E84',
-    btc: 'tb1qshvfpzfa0p46gztp00jwccf0c4kdfac72lmuz7',
+    ethereum: '0xBFd210db795A9Ac48D0C3be2a74232BE44144E84',
+    bitcoin: 'tb1qshvfpzfa0p46gztp00jwccf0c4kdfac72lmuz7',
   },
   {
     venom: '0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765',
@@ -518,7 +518,7 @@ export const WALLETS_VARIATIONS = [
   },
   {
     solana: 'BfiZDeHXzuz8pz5EGM6eUv1B1hLsGJQPRoxqYsBRKW3i',
-    eth: '0xBFd210db795A9Ac48D0C3be2a74232BE44144E84',
+    ethereum: '0xBFd210db795A9Ac48D0C3be2a74232BE44144E84',
   },
   {
     venom: '0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765',

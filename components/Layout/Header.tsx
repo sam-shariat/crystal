@@ -53,7 +53,7 @@ export default function Header() {
   return (
     <>
       {pathname === ('/') && (
-        <Center px={4} py={2} bgColor="var(--venom3)" color={'white'}>
+        <Center px={[4,4,0]} py={2} bgColor="var(--venom3)" color={'white'}>
           {t('testnetNotice')}
         </Center>
       )}
@@ -64,11 +64,13 @@ export default function Header() {
         position={!pathname.includes('manage/') ? 'sticky' : 'relative'}
         top={0}
         zIndex={1000}
+        px={0}
+        m={0}
         backdropFilter="auto"
-        backdropBlur={'6px'}
+        backdropBlur={'8px'}
         backgroundColor={useColorModeValue('whiteAlpha.700', 'blackAlpha.700')}
         borderBottomColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}>
-        <Container maxW="container.lg" py={2}>
+        <Container maxW="container.lg" py={2} px={[4,4,4,4,0]}>
           <Flex justifyContent="space-between">
             <HStack>
               {!notMobile && (
@@ -77,9 +79,9 @@ export default function Header() {
                 </IconButton>
               )}
               <NextLink href="/" passHref>
-                <Button id="venomidlogo" fontWeight="bold" variant="ghost" p={3}>
+                <Button id="venomidlogo" fontWeight="bold" variant="ghost" p={3} gap={2}>
                   <Logo />
-                  <Text pl={1} color={useColorModeValue('var(--venom3)', 'var(--venom0)')}>
+                  <Text bgGradient={useColorModeValue('linear(to-r, var(--venom2), var(--bluevenom2))','linear(to-r, var(--venom0), var(--bluevenom0))')} bgClip='text'>
                     Venom ID
                   </Text>
                 </Button>

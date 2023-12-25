@@ -22,20 +22,21 @@ export default function TextCard({ header, domain, text, icon, url }: Props) {
   return (
     <Flex
       key={header}
-      bg={useColorModeValue('var(--lightGradient)', 'var(--dark)')}
+      bg={useColorModeValue('blackAlpha.50', 'blackAlpha.200')}
       flexDirection="column"
       rounded={'xl'}
       justify={'center'}
       align={'center'}
       borderWidth={1}
       borderColor="grayAlpha.500"
+      boxShadow={'inset 0 0 8px var(--venom1)'}
       p={[4,6,8]}
       gap={2}
       width={'100%'}>
       {icon && <Box my={4}>{icon}</Box>}
       <Flex fontSize={['2xl','3xl','4xl']} fontWeight="bold">
         {header}
-        <Text color={useColorModeValue('var(--venom)', 'var(--venom0)')}>{domain}</Text>
+        <Text bgGradient={useColorModeValue('linear(to-r, var(--venom2), var(--bluevenom2))','linear(to-r, var(--venom0), var(--bluevenom0))')} bgClip='text'>{domain}</Text>
       </Flex>
       <Text fontSize={'2xl'} textAlign={'center'}>
         {text}

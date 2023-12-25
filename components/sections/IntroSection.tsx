@@ -133,23 +133,6 @@ export default function IntroSection() {
           gap={[10, 10, 10, 4]}
           my={10}
           alignItems={'center'}>
-          <GridItem colSpan={[3, 3, 2, 3]}>
-            <Stack px={[4, 4, 6, 10]} gap={6}>
-              <Heading
-                as={'h3'}
-                fontWeight="bold"
-                fontSize={['4xl', '4xl', '5xl', '5xl', '6xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                {t('wat')}
-              </Heading>
-              <Text
-                fontWeight="normal"
-                fontSize={['xl', '2xl', '3xl', '3xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                {t('watis')}
-              </Text>
-            </Stack>
-          </GridItem>
           <GridItem colSpan={3} display={'flex'} justifyContent={'center'}>
             <Flex w={['100%', '100%', 'container.md']} flexDir={'column'}>
               <Center
@@ -188,13 +171,15 @@ export default function IntroSection() {
                 sx={{
                   '& > div:first-child': {
                     transitionProperty: 'width',
+                    background: 'linear-gradient(to right, #2bb673 10%, #10a9b6 90%)'
                   },
                 }}
                 size={'xs'}
                 min={0}
                 max={8000}
                 width={'100%'}
-                colorScheme="green"
+                
+                
                 value={timer}
                 isAnimated
               />
@@ -283,6 +268,23 @@ export default function IntroSection() {
                 </motion.div>
               </Center>
             </Flex>
+          </GridItem>
+          <GridItem colSpan={[3, 3, 2, 3]}>
+            <Stack px={[4, 4, 6, 10]} gap={6}>
+              <Heading
+                as={'h3'}
+                fontWeight="bold"
+                fontSize={['4xl', '4xl', '5xl', '5xl', '6xl']}
+                textAlign={['center', 'center', 'center', 'left']}>
+                {t('wat')}
+              </Heading>
+              <Text
+                fontWeight="normal"
+                fontSize={['xl', '2xl', '3xl', '3xl']}
+                textAlign={['center', 'center', 'center', 'left']}>
+                {t('watis')}
+              </Text>
+            </Stack>
           </GridItem>
         </Grid>
       </Container>

@@ -25,9 +25,11 @@
 
   --venomGradient: radial-gradient(
     circle farthest-corner at 40% 30%,
-    #2f8359 30%,
-    #1e6441 65%
+    #2f8359 50%,
+    #1e6441 85%
   );
+
+  --vidGradient: linear-gradient(to right, #2bb673 10%, #10a9b6 90%);
 
   --white: #f3f3f3;
   --light: #f5f5f5;
@@ -41,11 +43,16 @@
   --lightGrey: #d5d5d5;
   --red1: #c84949;
   --venom00: #99f0c4;
-  --venom0: #4acf8d;
-  --venom: #30875b;
-  --venom1: #43bb7f;
-  --venom2: #3aa16e;
-  --venom3: #30875b;
+  --venom0: #2bb673;
+  --venom: #1d7c4e;
+  --venom1: #27aa6b;
+  --venom2: #239960;
+  --venom3: #228a58;
+  --bluevenom00: #4ff0ff;
+  --bluevenom0: #12c9da;
+  --bluevenom1: #10a9b6;
+  --bluevenom2: #0e94a0;
+  --bluevenom3: #0d828d;
   --purple0: #7951e9;
   --purple1: #6343bb;
   --purple2: #503aa1;

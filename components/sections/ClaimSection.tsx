@@ -451,14 +451,12 @@ const ClaimSection = () => {
         <Box gap={4} width={'100%'}>
           <SimpleGrid
             columns={[1, 1, 2]}
-            spacing={['0px', '16px', '32px']}
+            spacing={['64px', '64px', '32px']}
+            gap={8}
             py={4}
             alignItems={'center'}
             minWidth={['100%', '100%', '100%', 'container.md', 'container.lg']}>
-            <Box display="flex" flexDirection="column" alignItems={'center'}>
-              <ImageBox srcUrl="/logos/venomid.png" />
-            </Box>
-            <Box display="flex" flexDirection="column" py={notMobile ? 10 : 4}>
+            <Box display="flex" flexDirection="column" px={4}>
               <Heading
                 textAlign={['center', 'center', locale === 'fa' ? 'right' : 'left']}
                 fontWeight="bold"
@@ -468,12 +466,16 @@ const ClaimSection = () => {
               <Heading
                 h={'3'}
                 py={0}
+                pb={[4,4,12]}
                 textAlign={['center', 'center', locale === 'fa' ? 'right' : 'left']}
                 fontWeight="bold"
                 fontSize={['2xl', '2xl', '3xl', '4xl', '4xl']}
                 my={notMobile ? 10 : 4}>
                 {t('description')}
               </Heading>
+            </Box>
+            <Box display="flex" flexDirection="column" alignItems={'center'} pt={8}>
+              <ImageBox srcUrl="/logos/venomid.png" />
             </Box>
           </SimpleGrid>
           <ClaimModal claimedName={claimedName} message={message} />
@@ -548,7 +550,7 @@ const ClaimSection = () => {
                         my={2}
                         flexGrow={1}
                         // eslint-disable-next-line react-hooks/rules-of-hooks
-                        bg={useColorModeValue('var(--venom1)', 'var(--venom)')}
+                        bg={useColorModeValue('var(--vidGradient)', 'var(--vidGradient)')}
                         justify={['space-evenly', 'space-evenly', 'center']}
                         gap={8}
                         py={4}>

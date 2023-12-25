@@ -37,8 +37,7 @@ const ImageBox = ({ srcUrl, size, animation, draggable, rounded, shadow }: Props
       }
       zIndex={99}
       rounded={rounded ?? 'none'}
-      mb={5}
-      alt="netspot"
+      alt="venomid"
     />
   );
 };
