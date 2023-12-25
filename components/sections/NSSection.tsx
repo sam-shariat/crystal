@@ -237,6 +237,7 @@ export default function NSSection() {
               gap={2}
               size={'lg'}
               colorScheme="green"
+              bgGradient={useColorModeValue('linear(to-r, var(--venom2), var(--bluevenom2))','linear(to-r, var(--venom0), var(--bluevenom0))')}
               onClick={() => {
                 setIsLoadig(true);
                 run();
