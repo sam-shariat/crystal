@@ -192,6 +192,7 @@ const ClaimSection = () => {
 
   useEffect(() => {
     if (!isConnected && name.length > 0) {
+      toast.closeAll();
       toast({
         status: 'info',
         title: t('connectWallet'),
@@ -203,6 +204,7 @@ const ClaimSection = () => {
     }
 
     if (name.length > 2 && !isValidUsername(name) && name.length < 30) {
+      toast.closeAll();
       toast({
         status: 'warning',
         title: t('invalidName'),
@@ -290,6 +292,7 @@ const ClaimSection = () => {
 
   async function claimVid(e: string) {
     if (!isConnected && name.length > 0) {
+      toast.closeAll();
       toast({
         status: 'info',
         title: t('connectWallet'),
@@ -300,6 +303,7 @@ const ClaimSection = () => {
     }
 
     if (name.length > 2 && !isValidUsername(name) && name.length < 30) {
+      toast.closeAll();
       toast({
         status: 'warning',
         title: t('invalidName'),
@@ -310,6 +314,13 @@ const ClaimSection = () => {
     }
 
     if (!isValidSignHash(signHash, signDate)) {
+      toast.closeAll();
+      toast({
+        status: 'warning',
+        title: t('signWarning'),
+        description: t('signWarningMsg'),
+        isClosable: true,
+      });
       setSignRequest(true);
       // console.log('need to sign');
       return;

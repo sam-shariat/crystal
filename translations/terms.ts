@@ -407,6 +407,14 @@ const terms: Terms = {
     en: 'Name can only contain URL-friendly characters. (letters and numbers )',
     fa: 'نام فقط می‌تواند شامل حروف و اعداد باشد (فقط انگلیسی)',
   },
+  signWarning: {
+    en: 'Wallet Not Signed',
+    fa: 'امضا کیف  پول',
+  },
+  signWarningMsg: {
+    en: 'Please sign in with your wallet address',
+    fa: 'لطفا با کیف پول خود وارد شوید',
+  },
   nameLengthMsg: {
     en: 'Name length should be between Minimum 3 and Maximum 30 Letter ',
     fa: 'نام انتخابی باید بین ۳ تا ۳۰ حرف داشته باشند',
