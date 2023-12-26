@@ -27,13 +27,9 @@ import React, { useEffect, useState } from 'react';
 import { RiCheckLine, RiShuffleLine } from 'react-icons/ri';
 import { useAtom, useAtomValue } from 'jotai';
 import {
-  addressAtom,
-  btcAtom,
   buttonBgColorAtom,
-  ethAtom,
   isConnectedAtom,
   lightModeAtom,
-  networkAtom,
   openModalAtom,
   roundAtom,
   variantAtom,

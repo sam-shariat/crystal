@@ -7,6 +7,7 @@ import {
   InputRightElement,
   Text,
   Tooltip,
+  useColorMode,
   useMediaQuery,
 } from '@chakra-ui/react';
 import { Metamask } from 'components/logos';
@@ -14,80 +15,52 @@ import { ethAtom } from 'core/atoms';
 import { useAtom } from 'jotai';
 import { RiFileCopy2Line } from 'react-icons/ri';
 import React, { useEffect, useState } from 'react';
-import {
-    useAddress,
-    useConnect as useThirdWebConnect,
-    metamaskWallet,
-  } from '@thirdweb-dev/react';
+import { ConnectWallet, useAddress, useConnectionStatus } from '@thirdweb-dev/react';
 import { FaEthereum } from 'react-icons/fa';
-
-const metamaskConfig = metamaskWallet();
+import { SITE_URL } from 'core/utils/constants';
 
 export default function EthAddressInput() {
   const [eth, setEth] = useAtom(ethAtom);
   const [notMobile] = useMediaQuery('(min-width: 768px)');
-  const [autoEth, setAutoEth] = useState(false);
-  
+  const { colorMode } = useColorMode();
+  const [getAddress,setGetAddress] = useState(false)
+
   const ethAddressFromWallet = useAddress();
-  const connectWithThirdweb = useThirdWebConnect();
 
   useEffect(() => {
-    if (autoEth && ethAddressFromWallet) {
       setEth(String(ethAddressFromWallet));
-      setAutoEth(false);
-    }
-  }, [autoEth, ethAddressFromWallet]);
+  }, [getAddress]);
+
+  const login = (t:string) => {
+    //console.log('token : ',t);
+    setGetAddress(true);
+    setEth(String(ethAddressFromWallet));
+  }
+
   return (
-    <InputGroup size="lg" minWidth="xs" borderColor="gray">
-      <InputLeftAddon>
-        <Flex gap={2}>
-          <FaEthereum size={'28'}/>
-          ETH
-        </Flex>
-      </InputLeftAddon>
-      <Input
-        placeholder={'Paste Your ETH Address'}
-        value={eth}
-        onChange={(e) => setEth(e.currentTarget.value)}
-        pr={'92px'}
-      />
-      <InputRightElement gap={1} width={'92px'}>
-        <Tooltip
-          borderRadius={4}
-          label={
-            <Text p={2}>
-              {ethAddressFromWallet ? 'Use Connected ETH Address' : 'Connect ETH Wallet'}
-            </Text>
-          }
-          hasArrow
-          color="white"
-          bgColor={'black'}>
-          <IconButton
-            aria-label="connect eth wallet"
-            onClick={async () => {
-              if (ethAddressFromWallet) {
-                setEth(ethAddressFromWallet);
-              } else {
-                await connectWithThirdweb(metamaskConfig);
-                setAutoEth(true);
-              }
-            }}>
-            <Metamask />
-          </IconButton>
-        </Tooltip>
-        <Tooltip
-          borderRadius={4}
-          label={<Text p={2}>Paste</Text>}
-          hasArrow
-          color="white"
-          bgColor={'black'}>
-          <IconButton
-            aria-label="paste eth address"
-            onClick={() => navigator.clipboard.readText().then((text) => setEth(text))}>
-            <RiFileCopy2Line />
-          </IconButton>
-        </Tooltip>
-      </InputRightElement>
-    </InputGroup>
+    <ConnectWallet
+      theme={colorMode}
+      btnTitle="Connect EVM Wallet"
+      auth={{ loginOptional: false, onLogin: (t:string)=> login(t) }}
+      style={{
+        backgroundColor: colorMode === 'light' ? 'var(--white)' : 'var(--dark)',
+        color: colorMode === 'dark' ? 'white' : 'black',
+        border: '1px solid #77777750',
+        borderRadius: 8,
+        display: 'flex',
+        height:'68px',
+        minWidth: '100%',
+        position: 'relative',
+      }}
+      welcomeScreen={{
+        img: {
+          src: `${SITE_URL}/logos/vidicon.png`,
+          width: 150,
+          height: 150,
+        },
+        title: 'One Link To Showcase All Your Assets',
+      }}
+      modalSize={notMobile ? 'wide' : 'compact'}
+    />
   );
 }

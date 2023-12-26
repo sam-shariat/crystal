@@ -9,10 +9,10 @@ import {
   PopoverArrow,
   PopoverBody,
 } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { bgColorAtom, ethAtom, lightModeAtom, networkAtom } from 'core/atoms';
-import { RiCheckDoubleLine, RiCheckLine } from 'react-icons/ri';
+import { bgColorAtom, lightModeAtom } from 'core/atoms';
+import { RiCheckLine } from 'react-icons/ri';
 import { BG_COLORS } from 'core/utils/constants';
 
 export default function BgPicker() {

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Box } from '@chakra-ui/react';
 function Logo() {
   return (
-    <Box width={'40px'} height={'32px'}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1348 1088" width={40} height={32}>
+    <Box width={'38px'} height={'30px'}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1348 1088" width={38} height={30}>
         <defs>
           <linearGradient
             id="a"

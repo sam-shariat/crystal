@@ -33,7 +33,7 @@ import {
   avatarShapeAtom,
   editingAvatarAtom,
   ethAtom,
-  networkAtom,
+  nftsNetworkAtom,
   nftSmallerViewAtom,
   nftTypeAtom,
   openAddLinkAtom,
@@ -93,7 +93,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
   const [listView, setListView] = useAtom(nftSmallerViewAtom);
   const [isLoading, setIsLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [network, setNetwork] = useAtom(networkAtom);
+  const [network, setNetwork] = useAtom(nftsNetworkAtom);
   const [currentNetwork, setCurrentNetwork] = useState(network);
   const [nftjsons, setNftJsons] = useState<BaseNftJson[] | undefined>(undefined);
   const [editingAvatar, setEditingAvatar] = useAtom(editingAvatarAtom);
@@ -546,24 +546,18 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
               ))}
             </SimpleGrid>
             {isLoading && (
-              <Center width={'100%'} height={150}>
+              <Center width={'100%'} height={200}>
                 <Spinner size="lg" />
               </Center>
             )}
 
             {listIsEmpty && !isLoading && (
-              <Center display="flex" flexDirection="column" gap={4}>
+              <Center display="flex" flexDirection="column" gap={4} minH={200}>
                 <Text fontSize="xl">
                   Looks like You don't own any NFTs on {capFirstLetter(network)}
                 </Text>
-                <Tooltip
-                  borderRadius={4}
-                  label={<Text p={2}>{eth}</Text>}
-                  hasArrow
-                  color="white"
-                  bgColor={'black'}>
-                  <Text color={'gray'}>{`ETH Address : ${truncAddress(eth)}`}</Text>
-                </Tooltip>
+                
+                
               </Center>
             )}
           </DrawerBody>

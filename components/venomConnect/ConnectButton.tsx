@@ -45,6 +45,7 @@ import LogoIcon from '../logos/LogoIcon';
 import {
   connectedAccountAtom,
   isConnectedAtom,
+  networkAtom,
   primaryNameAtom,
   signDateAtom,
   signHashAtom,
@@ -85,6 +86,7 @@ export default function ConnectButton() {
   const [connected, setIsConnected] = useAtom(isConnectedAtom);
   const [primaryLoaded, setPrimaryLoaded] = useState(false);
   const [isSigning, setIsSigning] = useState(false);
+  const [network, setNetwork] = useState(networkAtom);
   const [signRequest, setSignRequest] = useAtom(signRequestAtom);
   const [signHash, setSignHash] = useAtom(signHashAtom);
   const [signDate, setSignDate] = useAtom(signDateAtom);
@@ -112,7 +114,9 @@ export default function ConnectButton() {
       setVenomContractV2(_venomContractV2);
 
       // @ts-ignore: Unreachable code error
-      const { value0 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) }).call();
+      const { value0 }: any = await _venomContract?.methods
+        .getPrimaryName({ _owner: new Address(String(address)) })
+        .call();
 
       if (value0?.name !== '' && !primaryName?.nftAddress) {
         setPrimaryName(value0);
@@ -192,6 +196,116 @@ export default function ConnectButton() {
   return (
     <>
       <Box>
+        <Menu>
+          <MenuButton
+            as={Button}
+            minH={'58px'}
+            borderRadius={12}
+            bgColor={colorMode === 'light' ? 'whiteAlpha.900' : 'var(--dark)'}
+            variant={colorMode === 'light' ? 'solid' : 'outline'}>
+            {!connected ? (
+              <Button variant="solid" onClick={login}>
+                <Center gap={2}>
+                  <VenomFoundation />
+                  Connect
+                </Center>
+              </Button>
+            ) : (
+              <Center gap={2}>
+                <VenomFoundation />
+                <Stack gap={0.5} mx={1}>
+                  <Text
+                    fontWeight={'semibold'}
+                    textAlign={'left'}
+                    my={'0 !important'}
+                    fontSize="14px">
+                    {balance} {notMobile ? (account?.balance !== undefined ? 'VENOM' : '') : ''}
+                  </Text>
+                  <Text
+                    fontWeight={'semibold'}
+                    textAlign={'left'}
+                    fontSize="14px"
+                    bgGradient={
+                      colorMode === 'light'
+                        ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                        : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                    }
+                    bgClip="text"
+                    my={'0 !important'}>
+                    {primaryName?.name !== ''
+                      ? capFirstLetter(String(primaryName.name))
+                      : truncAddress(String(address))}
+                  </Text>
+                </Stack>
+              </Center>
+            )}
+          </MenuButton>
+          <MenuList
+            width={320}
+            py={0}
+            borderWidth={1}
+            position={'relative'}
+            zIndex={1500}
+            borderColor={'gray.800'}
+            bg={colorMode === 'light' ? 'var(--white)' : 'var(--dark)'}>
+            {/* <Flex p={5} alignItems="center" gap={2}>
+                <VenomFoundation />
+                <Stack gap={0.5} mx={1} flexGrow={1}>
+                  <Text
+                    fontWeight={'semibold'}
+                    textAlign={'left'}
+                    fontFamily={'Poppins'}
+                    fontSize="14px"
+                    my={'0 !important'}>
+                    {primaryName?.name !== ''
+                      ? capFirstLetter(String(primaryName.name))
+                      : truncAddress(String(address))}
+                  </Text>
+                  <Text
+                    fontWeight={'semibold'}
+                    textAlign={'left'}
+                    fontFamily={'Poppins'}
+                    my={'0 !important'}
+                    fontSize="14px"
+                    color="gray.500">
+                    {account?.balance
+                      ? Math.round(Number(account?.balance) / 10e5) / 10e2
+                      : 'Loading'}{' '}
+                    {notMobile ? 'VENOM' : ''}
+                  </Text>
+                </Stack>
+                <Tooltip
+                  borderRadius={4}
+                  label={<Text p={2}>Copy Address</Text>}
+                  color="white"
+                  bgColor={'black'}
+                  hasArrow>
+                  <IconButton onClick={onCopy} variant="ghost" aria-label="copy-venom-address">
+                    {hasCopied ? <RiCheckDoubleFill size={22} /> : <RiFileCopyLine size={22} />}
+                  </IconButton>
+                </Tooltip>
+                <Tooltip
+                  borderRadius={4}
+                  label={<Text p={2}>Disconnect Wallet</Text>}
+                  hasArrow
+                  color="white"
+                  bgColor={'black'}>
+                  <IconButton
+                    onClick={() => {
+                      disconnect();
+                      setIsConnected(false);
+                      setConnectedAccount('');
+                      setPrimaryName({ name: '', nftAddress: '' });
+                    }}
+                    variant="ghost"
+                    aria-label="disconnect-wallet">
+                    <RiLogoutBoxRLine size={22} />
+                  </IconButton>
+                </Tooltip>
+              </Flex> */}
+            <Stack gap={2} my={4} justify={'center'}></Stack>
+          </MenuList>
+        </Menu>
         {!connected ? (
           <Button variant="solid" onClick={login}>
             <Center gap={2}>
@@ -221,8 +335,12 @@ export default function ConnectButton() {
                     fontWeight={'semibold'}
                     textAlign={'left'}
                     fontSize="14px"
-                    bgGradient={colorMode === 'light' ? 'linear(to-r, var(--venom2), var(--bluevenom2))':'linear(to-r, var(--venom0), var(--bluevenom0))'} 
-                    bgClip='text'
+                    bgGradient={
+                      colorMode === 'light'
+                        ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                        : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                    }
+                    bgClip="text"
                     my={'0 !important'}>
                     {primaryName?.name !== ''
                       ? capFirstLetter(String(primaryName.name))
@@ -294,30 +412,6 @@ export default function ConnectButton() {
                   </IconButton>
                 </Tooltip>
               </Flex>
-              <ConnectWallet
-                theme={colorMode}
-                btnTitle="EVM Wallet"
-                auth={{ loginOptional: false }}
-                style={{
-                  backgroundColor: colorMode === 'light' ? 'var(--white)' : 'var(--dark)',
-                  color: colorMode === 'dark' ? 'white' : 'black',
-                  border: '1px solid #77777750',
-                  borderRadius: 8,
-                  margin: '0px 16px',
-                  display: 'flex',
-                  minWidth: '280px',
-                  position: 'relative',
-                }}
-                welcomeScreen={{
-                  img: {
-                    src: `${SITE_URL}/logos/vidicon.png`,
-                    width: 150,
-                    height: 150,
-                  },
-                  title: 'One Link To Showcase All Your Assets',
-                }}
-                modalSize={notMobile ? 'wide' : 'compact'}
-              />
               <Stack gap={2} my={4} justify={'center'}>
                 <Box px={5}>
                   <Button

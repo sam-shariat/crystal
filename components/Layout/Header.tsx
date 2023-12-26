@@ -70,16 +70,16 @@ export default function Header() {
         backdropBlur={'8px'}
         backgroundColor={useColorModeValue('whiteAlpha.700', 'blackAlpha.700')}
         borderBottomColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}>
-        <Container maxW="container.lg" py={2} px={[4,4,4,4,0]}>
+        <Container maxW="container.lg" py={2} px={[2,4,4,4,0]}>
           <Flex justifyContent="space-between">
-            <HStack>
+            <HStack gap={1}>
               {!notMobile && (
                 <IconButton aria-label="venomid-mobile-menu" variant="ghost" onClick={onOpen}>
                   <RiMenu2Fill />
                 </IconButton>
               )}
               <NextLink href="/" passHref>
-                <Button id="venomidlogo" fontWeight="bold" variant="ghost" p={3} gap={2}>
+                <Button id="venomidlogo" fontWeight="bold" variant="ghost" p={2} gap={2} >
                   <Logo />
                   <Text bgGradient={useColorModeValue('linear(to-r, var(--venom2), var(--bluevenom2))','linear(to-r, var(--venom0), var(--bluevenom0))')} bgClip='text'>
                     Venom ID

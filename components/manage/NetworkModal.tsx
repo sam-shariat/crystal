@@ -16,7 +16,7 @@ import {
 import React, { useEffect } from 'react';
 import { RiCheckLine, RiShuffleLine } from 'react-icons/ri';
 import { useAtom, useAtomValue } from 'jotai';
-import { addressAtom, ethAtom, networkAtom } from 'core/atoms';
+import { addressAtom, ethAtom, nftsNetworkAtom } from 'core/atoms';
 import { capFirstLetter, truncAddress } from 'core/utils';
 import { VenomFoundation } from 'components/logos';
 import EthAddressInput from './EthAddressInput';
@@ -25,7 +25,7 @@ import { FaEthereum } from 'react-icons/fa';
 export default function NetworkModal() {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [network, setNetwork] = useAtom(networkAtom);
+  const [network, setNetwork] = useAtom(nftsNetworkAtom);
   const eth = useAtomValue(ethAtom)
   const venom = useAtomValue(addressAtom)
 

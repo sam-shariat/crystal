@@ -42,6 +42,7 @@ export const mintOpenAtom = atom(MINT_OPEN);
 export const avatarNftAtom = atom('');
 export const avatarShapeAtom = atom('circle');
 export const networkAtom = atom('venom testnet');
+export const nftsNetworkAtom = atom('venom testnet');
 export const addressAtom = atom('');
 export const jsonHashAtom = atom('');
 export const lightModeAtom = atom<boolean>(false);

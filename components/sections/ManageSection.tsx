@@ -102,7 +102,6 @@ function ManageSection() {
     // Fetch all Indexes by hash
     const indexesAddresses = await getAddressesFromIndex(codeHash, provider);
     if (!indexesAddresses || !indexesAddresses.length) {
-      if (indexesAddresses && !indexesAddresses.length) setListIsEmpty(true);
       setIsLoading(false);
       return;
     }
@@ -184,6 +183,14 @@ function ManageSection() {
     }
   };
 
+  useEffect(()=> {
+    if(nftjsons?.length === 0){
+      setListIsEmpty(true)
+    } else {
+      setListIsEmpty(false)
+    }
+  },[nftjsons])
+
   useEffect(() => {
     async function getNfts() {
       if (account && isConnected && provider) {
@@ -197,6 +204,7 @@ function ManageSection() {
       if (!loaded) {
         loadNFTs();
       }
+
       if (!account) setListIsEmpty(false);
     }
     getNfts();
