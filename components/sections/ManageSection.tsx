@@ -43,6 +43,7 @@ import {
   venomContractAddressAtom,
   manageListViewAtom,
   ipfsGatewayAtom,
+  networkAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
 import { Address, Transaction } from 'everscale-inpage-provider';
@@ -51,6 +52,7 @@ import {
   CONTRACT_ADDRESS,
   CONTRACT_ADDRESS_V1,
   CONTRACT_ADDRESS_V2,
+  SITE_PROFILE_URL,
   ZERO_ADDRESS,
 } from 'core/utils/constants';
 import {
@@ -65,15 +67,21 @@ import { MdOutlinePreview, MdOutlineVisibility } from 'react-icons/md';
 import axios from 'axios';
 import VIDImage from 'components/claiming/VIDImage';
 import getNftsByAddress from 'core/utils/getNftsByAddress';
+import { useAddress } from '@thirdweb-dev/react';
+import { createWeb3Name } from '@web3-name-sdk/core';
 
 function ManageSection() {
   const { provider } = useVenomProvider();
   const { isConnected, account } = useConnect();
+  const ethAddress = useAddress();
+  const [_ethAddress, _setEthAddress] = useState(ethAddress);
   const [listIsEmpty, setListIsEmpty] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loaded, setLoaded] = useState(false);
   const [listView, setListView] = useAtom(manageListViewAtom);
   const [nftjsons, setNftJsons] = useState<BaseNftJson[] | undefined>(undefined);
+  const network = useAtomValue(networkAtom);
+  const [_network, _setNetwork] = useState(network);
   const venomContract = useAtomValue(venomContractAtom);
   const venomContractAddress = useAtomValue(venomContractAddressAtom);
   const { t } = useTranslate();
@@ -85,12 +93,13 @@ function ManageSection() {
   const [isConfirming, setIsConfirming] = useState(false);
   const minFee = 660000000;
   const { colorMode } = useColorMode();
+  const web3Name = createWeb3Name();
   if (nftjsons) {
     // console.log(nftjsons);
   }
 
   const loadByContract = async (_contractAddress: string) => {
-    if (!provider) return;
+    if (!provider || !provider.isInitialized) return;
     setIsLoading(true);
     const saltedCode = await saltCode(provider, String(account?.address), _contractAddress);
     // Hash it
@@ -120,6 +129,7 @@ function ManageSection() {
         } else {
           _nftJson.avatar = ''; //_nftJson.preview?.source;
         }
+        _nftJson.network = 'venom';
         setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
       } catch (e: any) {
         // console.log('error getting venomid nft ', indexAddress);
@@ -128,14 +138,14 @@ function ManageSection() {
   };
 
   const loadByDb = async () => {
-    if (!provider) return;
+    if (!provider || !provider.isInitialized) return;
     setIsLoading(true);
-    console.log('loading db')
+    console.log('loading db');
     const result = (await getNftsByAddress(String(account?.address))).data;
     console.log(result);
     //console.log(rows[0]);
     if (result.nfts.length > 0) {
-      result.nfts.map(async (nft:any) => {
+      result.nfts.map(async (nft: any) => {
         try {
           let _nftJson = await getNft(provider, nft.address);
           const ipfsData = _nftJson.attributes?.find(
@@ -151,6 +161,7 @@ function ManageSection() {
           } else {
             _nftJson.avatar = ''; //_nftJson.preview?.source;
           }
+          _nftJson.network = 'venom';
           setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
         } catch (e: any) {
           // console.log('error getting venomid nft ', indexAddress);
@@ -158,11 +169,10 @@ function ManageSection() {
       });
     } else {
       console.log('nothing in db');
-
     }
   };
 
-  const loadNFTs = async () => {
+  const loadVenomNFTs = async () => {
     try {
       // Take a salted code
       // console.log('loading all nfts', account?.address);
@@ -183,13 +193,51 @@ function ManageSection() {
     }
   };
 
-  useEffect(()=> {
-    if(nftjsons?.length === 0){
-      setListIsEmpty(true)
-    } else {
-      setListIsEmpty(false)
+  const loadEthNFTs = async () => {
+    try {
+      // Take a salted code
+      // console.log('loading all nfts', account?.address);
+      if (!ethAddress) return;
+      setNftJsons([]);
+      setIsLoading(true);
+      setListIsEmpty(false);
+
+      const nfts = await web3Name.getDomainNames({ address: ethAddress });
+      console.log(ethAddress, nfts)
+      
+      nfts.map(async (nft: any) => {
+        try {
+          //let r = await web3Name.getDomainRecord({name: nft});
+          let _avatar = await web3Name.getDomainRecord({name: nft, key: 'avatar'});
+          let _name = await web3Name.getDomainRecord({name: nft, key: 'name'});
+          let _nftJson:BaseNftJson = {name : nft, avatar: _avatar ?? '', address: nft};
+          //_nftJson.ipfsData = _venomid;
+          _nftJson.address = nft; //_nftJson.preview?.source;
+          _nftJson.network = nft.slice(nft.indexOf('.')+1); //_nftJson.preview?.source;
+          _nftJson.external_url = SITE_PROFILE_URL + 'sid/'+  _nftJson.name
+          console.log(_nftJson)
+          setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
+        } catch (e: any) {
+          // console.log('error getting venomid nft ', indexAddress);
+        }
+      })
+
+
+      setLoaded(true);
+      setIsLoading(false);
+    } catch (e) {
+      console.error(e);
+      setIsLoading(false);
     }
-  },[nftjsons])
+  };
+
+  useEffect(() => {
+    if (nftjsons?.length === 0 && loaded) {
+      setListIsEmpty(true);
+    } else {
+      setListIsEmpty(false);
+    }
+  }, [nftjsons]);
 
   useEffect(() => {
     async function getNfts() {
@@ -200,15 +248,23 @@ function ManageSection() {
           getNfts();
           return;
         }
-      }
-      if (!loaded) {
-        loadNFTs();
+
+        if (!loaded || network !== _network || ethAddress !== _ethAddress) {
+          console.log(network);
+          if (network === 'venom') {
+            loadVenomNFTs();
+          } else {
+            loadEthNFTs();
+          }
+          _setNetwork(network)
+          _setEthAddress(ethAddress)
+        }
       }
 
-      if (!account) setListIsEmpty(false);
+      if (!isConnected) setNftJsons([]);
     }
     getNfts();
-  }, [isConnected, provider]);
+  }, [isConnected, provider, network, ethAddress]);
 
   async function setAsPrimary(_nftAddress: string, _name: string) {
     if (!isConnected) {
@@ -287,11 +343,12 @@ function ManageSection() {
         setIsSaving(false);
         setIsConfirming(false);
         setPrimaryName({ nftAddress: new Address(_nftAddress), name: _name.slice(0, -4) });
-        loadNFTs();
+        loadVenomNFTs();
       }
       // console.log('save primary finished');
     }
   }
+
   return (
     <Box>
       <Container
@@ -310,13 +367,17 @@ function ManageSection() {
                   fontWeight="bold"
                   fontSize={notMobile ? '4xl' : '2xl'}
                   my={notMobile ? 10 : 4}>
-                  {t('yourVids')}
+                  {network === 'venom' ? t('yourVids') : t('yourSids')}
                 </Text>
                 <Button aria-label="change-view" onClick={() => setListView(!listView)} gap={2}>
                   {notMobile ? (listView ? 'Grid' : 'List') : ''}{' '}
                   {!listView ? <RiListCheck2 size={'24'} /> : <RiLayoutGridLine size={'24'} />}
                 </Button>
-                <Button aria-label="reload-nfts" onClick={loadNFTs} gap={2}>
+                <Button
+                  aria-label="reload-nfts"
+                  key={`reload-${network}-nfts`}
+                  onClick={network === 'venom' ? loadVenomNFTs : loadEthNFTs}
+                  gap={2}>
                   {notMobile ? 'Reload' : ''} <RiRestartLine size={'24'} />
                 </Button>
               </HStack>
@@ -359,41 +420,37 @@ function ManageSection() {
                     </Box>
                   </Flex>
                   <Text flexGrow={1} fontWeight={'bold'} fontSize={['xl', 'xl', '2xl']}>
-                    {String(nft.name).slice(0, -4).toLowerCase()}
+                    {String(nft.name).toLowerCase()}
                   </Text>
 
                   {notMobile ? (
                     <>
-                      <Button
+                      {/* {nft.network === 'venom' && <Button
                         colorScheme="green"
                         isLoading={isSaving || isConfirming}
                         onClick={() =>
                           nft?.name !== undefined &&
-                          primaryName.name !== nft?.name.slice(0, -4) &&
+                          primaryName.name !== nft?.name &&
                           setAsPrimary(String(nft?.address), String(nft?.name))
                         }
-                        isDisabled={true
+                        isDisabled={
+                          true
                           // isSaving ||
                           // isConfirming ||
                           // (nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4))
                         }
                         variant={
-                          nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4)
+                          nft?.name !== undefined && primaryName.name === nft?.name
                             ? 'outline'
                             : 'solid'
                         }>
-                        {nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4)
+                        {nft?.name !== undefined && primaryName.name === nft?.name
                           ? 'Primary VID'
                           : 'Set Primary'}
-                      </Button>
+                      </Button>} */}
 
-                      <Tooltip
-                        borderRadius={4}
-                        label={<Text p={2}>Customize</Text>}
-                        hasArrow
-                        color="white"
-                        bgColor={'black'}>
-                        <NextLink href={'/manage/' + nft.address} passHref>
+                      
+                        {nft.network === 'venom' && <NextLink href={(nft.network === 'venom' ? '/manage/' : '/managesid/') + nft.address} passHref>
                           <Button
                             aria-label="customize-venom-id"
                             gap={2}
@@ -402,12 +459,11 @@ function ManageSection() {
                             Customize
                             <RiSettings4Line />
                           </Button>
-                        </NextLink>
-                      </Tooltip>
+                        </NextLink>}
                       <Link href={nft.external_url} target="_blank">
                         <Tooltip
                           borderRadius={4}
-                          label={<Text p={2}>View VID</Text>}
+                          label={<Text p={2}>View {nft.network === 'venom' ? 'Venom ID Link' : 'Space ID Link'}</Text>}
                           hasArrow
                           color="white"
                           bgColor={'black'}>
@@ -430,43 +486,44 @@ function ManageSection() {
                         <RiMoreFill size={24} />
                       </IconButton>
                       <MenuList p={0}>
-                        <Button
+                      {/* {nft.network === 'venom' && <Button
                           as={MenuItem}
                           colorScheme="green"
                           isLoading={isSaving || isConfirming}
                           onClick={() =>
                             nft?.name !== undefined &&
-                            primaryName.name !== nft?.name.slice(0, -4) &&
+                            primaryName.name !== nft?.name &&
                             setAsPrimary(String(nft?.address), String(nft?.name))
                           }
-                          isDisabled={true
+                          isDisabled={
+                            true
                             // isSaving ||
                             // isConfirming ||
                             // (nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4))
                           }
                           variant={
-                            nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4)
+                            nft?.name !== undefined && primaryName.name === nft?.name
                               ? 'outline'
                               : 'solid'
                           }>
-                          {nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4)
+                          {nft?.name !== undefined && primaryName.name === nft?.name
                             ? 'Primary VID'
                             : 'Set Primary'}
-                        </Button>
-                        <NextLink href={'/manage/' + nft.address} passHref>
+                        </Button>} */}
+                        {nft.network === 'venom' && <NextLink href={(nft.network === 'venom' ? '/manage/' : '/managesid/') + nft.address} passHref>
                           <MenuItem
                             sx={{ textDecoration: 'none', _hover: { textDecoration: 'none' } }}
                             icon={<RiSettings4Line />}>
                             Customize
                           </MenuItem>
-                        </NextLink>
+                        </NextLink>}
                         <MenuItem
                           as={Link}
                           sx={{ textDecoration: 'none', _hover: { textDecoration: 'none' } }}
                           href={nft.external_url}
                           target="_blank"
                           icon={<MdOutlineVisibility />}>
-                          View Venom ID
+                          View {nft.network === 'venom' ? 'Venom ID Link' : 'Space ID Link'}
                         </MenuItem>
                       </MenuList>
                     </Menu>
@@ -508,42 +565,49 @@ function ManageSection() {
                     justifyContent={'center'}
                     my={2}>
                     <Box width={100}>
-                      <Avatar noanimate nodrag my={2} url={String(nft.avatar)} shape="circle" alt={nft.name}/>
+                      <Avatar
+                        noanimate
+                        nodrag
+                        my={2}
+                        url={String(nft.avatar)}
+                        shape="circle"
+                        alt={nft.name}
+                      />
                     </Box>
                     <Text fontWeight={'bold'} fontSize={'3xl'}>
-                      {String(nft.name).slice(0, -4).toLowerCase()}
+                      {String(nft.name).toLowerCase()}
                     </Text>
                   </Flex>
-                  <Button
+                  {/* {nft.network === 'venom' && <Button
                     colorScheme="green"
                     isLoading={isSaving || isConfirming}
                     onClick={() =>
                       nft?.name !== undefined &&
-                      primaryName.name !== nft?.name.slice(0, -4) &&
+                      primaryName.name !== nft?.name &&
                       setAsPrimary(String(nft?.address), String(nft?.name))
                     }
-                    isDisabled={
-                      isSaving ||
-                      isConfirming ||
-                      (nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4))
+                    isDisabled={ true
+                      // isSaving ||
+                      // isConfirming ||
+                      // (nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4))
                     }
                     variant={
-                      nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4)
+                      nft?.name !== undefined && primaryName.name === nft?.name
                         ? 'outline'
                         : 'solid'
                     }
                     width={'100%'}>
-                    {nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4)
-                      ? 'Primary Name'
-                      : 'Set As Primary'}
-                  </Button>
-                  <NextLink href={'/manage/' + nft.address} passHref>
+                    {nft?.name !== undefined && primaryName.name === nft?.name
+                      ? 'Primary VID'
+                      : 'Set Primary'}
+                  </Button>} */}
+                  {nft.network === 'venom' && <NextLink href={(nft.network === 'venom' ? '/manage/' : '/managesid/') + nft.address} passHref>
                     <Button variant={'outline'} colorScheme="purple" width={'100%'}>
                       Customize
                     </Button>
-                  </NextLink>
+                  </NextLink>}
                   <Link href={nft.external_url} target="_blank" width={'100%'}>
-                    <Button width={'100%'}>View VID</Button>
+                    <Button width={'100%'}>View {nft.network === 'venom' ? 'Venom ID Link' : 'Space ID Link'}</Button>
                   </Link>
                 </Center>
               ))}
@@ -565,7 +629,7 @@ function ManageSection() {
             </Center>
           )}
         </Box>
-        {!isConnected && (
+        {!network && (
           <Center my={8} flexDirection="column" minH={'75vh'}>
             <Text my={4}>{t('venomWalletConnect')}</Text>
             <ConnectButton />

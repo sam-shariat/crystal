@@ -46,9 +46,10 @@ export default function Header() {
 
   useEffect(() => {
     if (colorMode !== colorM) {
+
       toggleColorMode();
     }
-  }, [colorM]);
+  }, [colorM,colorMode]);
 
   return (
     <>

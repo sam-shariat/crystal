@@ -130,7 +130,7 @@ export default function IntroSection() {
         py={16}>
         <Grid
           templateColumns={[`repeat(1, 1fr)`, `repeat(1, 1fr)`, `repeat(1, 1fr)`, `repeat(6, 1fr)`]}
-          gap={[10, 10, 10, 4]}
+          gap={10}
           my={10}
           alignItems={'center'}>
           <GridItem colSpan={3} display={'flex'} justifyContent={'center'}>
@@ -198,7 +198,7 @@ export default function IntroSection() {
                 transition={'all .5s ease'}
                 p={4}>
                 <motion.div
-                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width:'100%', gap: 4 }}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width:'100%', gap: 12 }}
                   key={`venomid-templates-${current}`}
                   transition={{ duration: 0.5, ease: 'linear' }}
                   initial={{ y: 20, scale: 0.9, opacity: 0.5, filter: 'blur(20px)' }}

@@ -135,6 +135,10 @@ const terms: Terms = {
     en: 'Your Venom IDs',
     fa: 'ونوم آی دی های شما',
   },
+  yourSids: {
+    en: 'Your Space IDs',
+    fa: 'اسپیس آی دی های شما',
+  },
   contributer: {
     en: 'be a major contributor',
     fa: 'یک مشارکت کننده اصلی باشید',

@@ -78,6 +78,8 @@ import {
   RiMusic2Fill,
   RiMusic2Line,
   RiGooglePlayFill,
+  RiWallet3Line,
+  RiWallet3Fill,
 } from 'react-icons/ri';
 import { PiHandWaving, PiHandWavingFill } from 'react-icons/pi';
 import { SiEtsy, SiSubstack } from 'react-icons/si';
@@ -103,7 +105,7 @@ interface LinkIconProps {
   size?: string;
 }
 
-const LinkIcon = ({ type, line, color, size='28px' }: LinkIconProps) => {
+const LinkIcon = ({ type, line, color, size = '28px' }: LinkIconProps) => {
   switch (type) {
     case 'x':
     case 'twitter':
@@ -356,6 +358,7 @@ const LinkIcon = ({ type, line, color, size='28px' }: LinkIconProps) => {
     case 'btc':
       return <FaBitcoin size={size} color={color ? color : undefined} />;
     case 'arbitrum':
+    case 'arbitrum one':
     case 'arb':
       return <Arbitrum color={color ? color : undefined} />;
     case 'polygon':
@@ -366,6 +369,7 @@ const LinkIcon = ({ type, line, color, size='28px' }: LinkIconProps) => {
       return <Optimism color={color ? color : undefined} />;
     case 'binance':
     case 'bsc':
+    case 'bnb':
       return <Binance color={color ? color : undefined} />;
     case 'avalanche':
     case 'avax':
@@ -375,6 +379,8 @@ const LinkIcon = ({ type, line, color, size='28px' }: LinkIconProps) => {
       return <Solana color={color ? color : undefined} />;
     case 'ylide':
       return <Ylide color={color ? color : undefined} />;
+    case 'wallet':
+      return line ? <RiWallet3Line size={size} /> : <RiWallet3Fill size={size} />;
     case 'tron':
     case 'trx':
       return <Tron color={color ? color : undefined} />;
@@ -384,12 +390,11 @@ const LinkIcon = ({ type, line, color, size='28px' }: LinkIconProps) => {
     default:
       //// console.log('here : ', type);
       if (type.indexOf('Ri') === 0) {
-
         const SelectedIcon = Icons[type as keyof typeof Icons];
 
         return <SelectedIcon size={size} />;
       } else {
-        return <></>
+        return <></>;
       }
   }
 };

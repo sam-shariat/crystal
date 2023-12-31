@@ -27,7 +27,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider>
       <VenomConfig initVenomConnect={initVenomConnect as any}>
         <ThirdwebProvider
-          supportedChains={[Ethereum, Polygon, Arbitrum, Binance, Goerli, ZksyncEra]}
+          supportedChains={[Binance]}
+          activeChain={'binance'}
           supportedWallets={[
             embeddedWallet({
               auth: {

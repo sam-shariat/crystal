@@ -115,7 +115,7 @@ export const EXAMPLE_SOCIAL_URLS: any = {
   galxe: 'https://galxe.com/exampleuser',
   opensea: 'https://opensea.io/exampleuser',
   zealy: 'https://zealy.io/c/exampleuser',
-  ylide: 'https://ylide.com/@exampleuser',
+  ylide: 'https://hub.ylide.io/project/exampleuser',
   amazon: 'https://www.amazon.com/gp/profile/exampleuser',
   playstore: 'https://play.google.com/store/apps/developer?id=Example+User',
   appstore: 'https://apps.apple.com/us/developer/example-user/id123456789',

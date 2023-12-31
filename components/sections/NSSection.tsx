@@ -77,7 +77,7 @@ export default function NSSection() {
   const getName = async () => {
     setIsLoadig(true);
     //if(MINT_OPEN){
-      if (!provider) return;
+      if (!provider || !provider.isInitialized) return;
       const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
       // @ts-ignore: Unreachable code error
       const { value0 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) })
