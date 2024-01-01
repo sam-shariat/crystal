@@ -421,7 +421,7 @@ const ManagePage: NextPage = () => {
           setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
           setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
           setFont(res.data?.styles?.font ?? FONTS[0]);
-          setIsStyled(res.data?.styles?.iStyled ?? false);
+          setIsStyled(res.data?.styles?.isStyled ?? false);
           setIsLoading(false);
         } catch (error: any) {
           // console.log('error fetching nft', error);
