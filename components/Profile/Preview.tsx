@@ -326,7 +326,7 @@ const Preview = ({ json, onSave }: Props) => {
                       </MenuList>
                     </Menu>
 
-                    <Menu>
+                    {/* <Menu>
                       <MenuButton as={Button}>options</MenuButton>
                       <MenuList
                         py={0}
@@ -351,7 +351,7 @@ const Preview = ({ json, onSave }: Props) => {
                           bottom
                         />
                       </MenuList>
-                    </Menu>
+                    </Menu> */}
                   </ButtonGroup>
                   <Flex gap={2}>
                     {notMobile && (
