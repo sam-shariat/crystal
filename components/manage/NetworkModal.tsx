@@ -21,16 +21,17 @@ import { capFirstLetter, truncAddress } from 'core/utils';
 import { VenomFoundation } from 'components/logos';
 import EthAddressInput from './EthAddressInput';
 import { FaEthereum } from 'react-icons/fa';
+import { useAddress } from '@thirdweb-dev/react';
 
 export default function NetworkModal() {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [network, setNetwork] = useAtom(nftsNetworkAtom);
-  const eth = useAtomValue(ethAtom)
-  const venom = useAtomValue(addressAtom)
+  const eth = useAtomValue(ethAtom);
+  const venom = useAtomValue(addressAtom);
 
-  useEffect(() => { 
-    if(eth.length < 30){
+  useEffect(() => {
+    if (!eth) {
       setNetwork('venom testnet');
     }
   }, [eth]);
@@ -44,7 +45,6 @@ export default function NetworkModal() {
         bgColor={'black'}
         hasArrow>
         <Button variant={'solid'} gap={2} onClick={onOpen}>
-         
           Network : {capFirstLetter(network)}
           <RiShuffleLine size={'24px'} />
         </Button>
@@ -64,15 +64,19 @@ export default function NetworkModal() {
                 onClick={() => setNetwork('venom testnet')}
                 rightIcon={network.includes('venom') ? <RiCheckLine /> : undefined}
                 variant={network.includes('venom') ? 'outline' : 'solid'}>
-                <VenomFoundation /><Stack textAlign={'left'} gap={0}>
+                <VenomFoundation />
+                <Stack textAlign={'left'} gap={0}>
                   <Text> Venom Testnet</Text>
                   <Text fontSize={'sm'} color={'gray'}>{`NFTs of ${truncAddress(venom)}`}</Text>
                 </Stack>
               </Button>
-              {eth.length < 30 && <Stack my={2}>
-                <Text>Enter your Ethereum address to pick from NFTs</Text>
-                <EthAddressInput /></Stack>}
-              <Button
+              {!eth && (
+                <Stack my={2}>
+                  <Text>Connect your Ethereum address to pick from NFTs</Text>
+                  <EthAddressInput />
+                </Stack>
+              )}
+              {eth && <Button
                 colorScheme={network.includes('ethereum') ? 'green' : 'gray'}
                 gap={2}
                 height={'80px'}
@@ -81,13 +85,17 @@ export default function NetworkModal() {
                 size={'lg'}
                 rightIcon={network.includes('ethereum') ? <RiCheckLine /> : undefined}
                 variant={network.includes('ethereum') ? 'outline' : 'solid'}>
-                <FaEthereum size={'28'}/>
+                <FaEthereum size={'28'} />
                 <Stack textAlign={'left'} gap={0}>
                   <Text>Ethereum </Text>
-                  <Text fontSize={'xs'} color={'gray'}>Polygon, Arbitrum, Optimism</Text>
-                  <Text fontSize={'sm'} color={'gray'}>{eth.length > 30 ? `NFTs of ${truncAddress(eth)}` : `ETH wallet not connected!`}</Text>
+                  <Text fontSize={'xs'} color={'gray'}>
+                    Polygon, Arbitrum, Optimism
+                  </Text>
+                  <Text fontSize={'sm'} color={'gray'}>
+                    {eth.length > 30 ? `NFTs of ${truncAddress(eth)}` : `ETH wallet not connected!`}
+                  </Text>
                 </Stack>
-              </Button>
+              </Button>}
             </Stack>
           </ModalBody>
           <ModalFooter>Current : {capFirstLetter(network)}</ModalFooter>

@@ -51,6 +51,7 @@ import {
   fontAtom,
   horizontalSocialAtom,
   horizontalWalletsAtom,
+  isStyledAtom,
   lightModeAtom,
   showAllNftsAtom,
   socialButtonsAtom,
@@ -58,7 +59,7 @@ import {
   variantAtom,
   walletButtonsAtom,
 } from 'core/atoms';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import BgPicker from 'components/manage/BgPicker';
 import NftBgPicker from 'components/manage/NftBgPicker';
 import SettingsButton from 'components/manage/SettingButton';
@@ -89,6 +90,7 @@ const Preview = ({ json, onSave }: Props) => {
   const [socialButtons, setSocialButtons] = useAtom(socialButtonsAtom);
   const [walletButtons, setWalletButtons] = useAtom(walletButtonsAtom);
   const bgColor = useAtomValue(bgColorAtom);
+  const setIsStyled = useSetAtom(isStyledAtom);
   const avatarShape = useAtomValue(avatarShapeAtom);
   const font = useAtomValue(fontAtom);
   const [showAllNfts, setShowAllNfts] = useAtom(showAllNftsAtom);
@@ -110,6 +112,7 @@ const Preview = ({ json, onSave }: Props) => {
         toggleColorMode();
         // console.log('toggledColor');
       }
+      setIsStyled(true);
     } else {
       if (colorMode !== colorM) {
         toggleColorMode();

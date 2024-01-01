@@ -29,6 +29,7 @@ import {
   openAddNftAtom,
   openAddAtom,
   jsonHashAtom,
+  isStyledAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
@@ -59,6 +60,7 @@ export default function ProfileCompletion() {
   const socials = useAtomValue(socialsArrayAtom);
   const wallets = useAtomValue(walletsArrayAtom);
   const jsonHash = useAtomValue(jsonHashAtom);
+  const isStyled = useAtomValue(isStyledAtom)
 
   useEffect(() => {
     //// console.log(m1,m2,m3,m4)
@@ -105,7 +107,7 @@ export default function ProfileCompletion() {
     } else {
       step = step === null ? 6 : step;
     }
-    if (socials.length > 1) {
+    if (isStyled) {
       _progress += 1;
     } else {
       step = step === null ? 6 : step;
@@ -272,7 +274,7 @@ export default function ProfileCompletion() {
             <Text>{t(`guideStep${6}`)}</Text>
             {socials.length > 0 ? (
               <RiCheckboxCircleFill
-                color={socials.length > 1 ? 'var(--venom2)' : 'var(--venom00)'}
+                color={'var(--venom2)'}
                 size={26}
               />
             ) : (
@@ -288,7 +290,7 @@ export default function ProfileCompletion() {
             borderRadius={0}
             onClick={() => gotoTour(8)}>
             <Text>{t(`guideStep${8}`)}</Text>
-            {socials.length > 0 ? (
+            {isStyled ? (
               <RiCheckboxCircleFill color="var(--venom2)" size={26} />
             ) : (
               <RiQuestionFill size={26} />

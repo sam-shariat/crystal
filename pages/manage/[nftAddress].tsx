@@ -59,7 +59,9 @@ import {
   fontAtom,
   tourStepAtom,
   nftJsonAtom,
-  avatarShapeAtom
+  avatarShapeAtom,
+  isStyledAtom,
+  networkAtom
 } from 'core/atoms';
 import {
   SITE_DESCRIPTION,
@@ -92,10 +94,12 @@ const ManagePage: NextPage = () => {
   const [name, setName] = useAtom(nameAtom);
   const [bio, setBio] = useAtom(bioAtom);
   const [lightMode, setLightMode] = useAtom(lightModeAtom);
+  const [isStyled, setIsStyled] = useAtom(isStyledAtom);
   const [ipfsGateway, setIpfsGateway] = useAtom(ipfsGatewayAtom);
   const [retries, setRetries] = useState<number>(0);
   const connected = useAtomValue(isConnectedAtom);
   const tourStep = useAtomValue(tourStepAtom);
+  const network = useAtomValue(networkAtom);
   const connectedAccount = useAtomValue(connectedAccountAtom);
   const [venom, setVenom] = useAtom(addressAtom);
   const [btc, setBtc] = useAtom(btcAtom);
@@ -151,7 +155,8 @@ const ManagePage: NextPage = () => {
       buttonBgColor: buttonBgColor,
       round: round,
       variant: variant,
-      font: font
+      font: font,
+      isStyled: isStyled
     };
 
     const data = {
@@ -161,8 +166,8 @@ const ManagePage: NextPage = () => {
       avatar: avatar,
       avatarShape: avatarShape,
       venomAddress: account?.address,
-      btcAddress: btc,
-      ethAddress: eth,
+      // btcAddress: btc,
+      // ethAddress: eth,
       bio: bio,
       links: links,
       wallets: walletsObj,
@@ -311,6 +316,14 @@ const ManagePage: NextPage = () => {
             return;
           }
 
+          if(network !== 'venom'){
+            setError(
+              `Please switch your network to Venom`
+            );
+            setIsLoading(false);
+            return;
+          }
+
           if(json) {
             return
           }
@@ -370,6 +383,18 @@ const ManagePage: NextPage = () => {
             setAvatar('');
             setTitle('');
             setSubtitle('');
+            setAvatarShape('circle');
+            setSocialIcons(true);
+            setSocialButtons(true);
+            setWalletButtons(true);
+            setBgColor(BG_COLORS[0].color);
+            setLineIcons(false);
+            setLightMode(BG_COLORS[0].lightMode);
+            setButtonBgColor(BUTTON_BG_COLORS[2]);
+            setRound(BUTTON_ROUNDS[1]);
+            setVariant(BUTTON_VARIANTS[0]);
+            setFont(FONTS[0]);
+            setIsStyled(false);
             setIsLoading(false);
             return;
           }
@@ -382,8 +407,8 @@ const ManagePage: NextPage = () => {
           setTitle(res.data.title ?? '');
           setSubtitle(res.data.subtitle ?? '');
           setBio(res.data.bio);
-          setBtc(res.data.btcAddress);
-          setEth(res.data.ethAddress);
+          //setBtc(res.data.btcAddress);
+          //setEth(res.data.ethAddress);
           setAvatar(res.data.avatar);
           setAvatarShape(res.data.avatarShape ?? 'circle');
           setSocialIcons(res.data.socialIcons ?? true);
@@ -396,6 +421,7 @@ const ManagePage: NextPage = () => {
           setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
           setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
           setFont(res.data?.styles?.font ?? FONTS[0]);
+          setIsStyled(res.data?.styles?.iStyled ?? false);
           setIsLoading(false);
         } catch (error: any) {
           // console.log('error fetching nft', error);
@@ -439,14 +465,13 @@ const ManagePage: NextPage = () => {
       }
     }
     getProfileJson();
-  }, [connectedAccount,account]);
+  }, [connectedAccount,account,network]);
 
   return (
     <>
       <Head>
         <title>
-          {json && !isLoading ? json.name : SITE_TITLE} |{' '}
-          {json && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION}
+          {`${json && !isLoading ? json.name : SITE_TITLE} | ${json && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION}`}
         </title>
         <meta
           name="description"

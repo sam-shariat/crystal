@@ -30,6 +30,8 @@ import {
   venomContractAtomV1,
   venomContractAtomV2,
   mintOpenAtom,
+  isConnectedAtom,
+  claimingNameAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { addAsset, useConnect, useVenomProvider } from 'venom-react-hooks';
@@ -67,6 +69,7 @@ const ClaimSection = () => {
   let timer: any;
   const { t } = useTranslate();
   const { isConnected, account } = useConnect();
+  const connected = useAtomValue(isConnectedAtom)
   const { provider } = useVenomProvider();
   const signHash = useAtomValue(signHashAtom);
   const signDate = useAtomValue(signDateAtom);
@@ -95,7 +98,7 @@ const ClaimSection = () => {
   const [mintOpen, setMintOpen] = useAtom(mintOpenAtom);
   //const [venomContract, setVenomContract] = useState<any>(undefined);
   const minFee = 660000000;
-  const [name, setName] = useAtom(nameAtom);
+  const [name, setName] = useAtom(claimingNameAtom);
   //const [vidUrl, setVidUrl] = useState('');
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
   const toast = useToast();
@@ -191,7 +194,7 @@ const ClaimSection = () => {
   }
 
   useEffect(() => {
-    if (!isConnected && name.length > 0) {
+    if (!connected && name.length > 2) {
       toast.closeAll();
       toast({
         status: 'info',
