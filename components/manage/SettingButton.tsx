@@ -14,6 +14,8 @@ export default function SettingsButton({ title, value, setValue, top, bottom}: P
       px={4}
       variant="solid"
       size="lg"
+      height={['44px','52px']}
+      minH={['44px','52px']}
       borderRadius={0}
       borderTopRadius={top ? 12 : 0}
       borderBottomRadius={bottom ? 12 : 0}

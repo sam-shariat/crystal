@@ -16,6 +16,7 @@ import ManageWallets from './ManageWallets';
 import ButtonColorPicker from './ButtonColorPicker';
 import ButtonRoundPicker from './ButtonRoundPicker';
 import ButtonVarianticker from './ButtonVariantPicker';
+import PreviewModal from './PreviewModal';
 
 export {
   AddLinkButton,
@@ -35,5 +36,6 @@ export {
   ManageWallets,
   ButtonColorPicker,
   ButtonRoundPicker,
-  ButtonVarianticker
+  ButtonVarianticker,
+  PreviewModal
 };

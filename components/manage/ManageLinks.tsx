@@ -33,9 +33,11 @@ export default function ManageLinks({ json, nftAddress }: Props) {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const { colorMode } = useColorMode();
 
-  const SortableCon = SortableContainer<SortableConProps>(({ children } : { children: ReactNode } ) => {
-    return <ul>{children}</ul>;
-  });
+  const SortableCon = SortableContainer<SortableConProps>(
+    ({ children }: { children: ReactNode }) => {
+      return <ul>{children}</ul>;
+    }
+  );
 
   // @ts-ignore: Unreachable code error
   const setLinks = (index, title, url, image, content, styles) => {
@@ -47,7 +49,7 @@ export default function ManageLinks({ json, nftAddress }: Props) {
             url,
             image,
             content,
-            styles
+            styles,
           }
         : {
             type: item.type,
@@ -55,7 +57,7 @@ export default function ManageLinks({ json, nftAddress }: Props) {
             url: item.url,
             image: item.image,
             content: item.content,
-            styles: item.styles
+            styles: item.styles,
           }
     );
     setLinksArray(_newLinksArray);
@@ -69,9 +71,11 @@ export default function ManageLinks({ json, nftAddress }: Props) {
   };
 
   // @ts-ignore: Unreachable code error
-  const SortableItem = SortableElement<SortableItemProps>(({ children }: { children: ReactNode }) => (
-    <li style={{ listStyleType: 'none', padding: '0px 0px', margin: '12px 0px' }}>{children}</li>
-  ));
+  const SortableItem = SortableElement<SortableItemProps>(
+    ({ children }: { children: ReactNode }) => (
+      <li style={{ listStyleType: 'none', padding: '0px 0px', margin: '12px 0px' }}>{children}</li>
+    )
+  );
 
   useEffect(() => {
     // @ts-ignore: Unreachable code error
@@ -84,7 +88,7 @@ export default function ManageLinks({ json, nftAddress }: Props) {
           url: link.url,
           image: link.image,
           content: link.content,
-          styles: link.styles
+          styles: link.styles,
         });
       });
     }
@@ -103,19 +107,23 @@ export default function ManageLinks({ json, nftAddress }: Props) {
         allowToggle
         allowMultiple={false}
         borderRadius={10}
-        minWidth={notMobile ? 'md' : 'xs'}
+        minWidth={'100%'}
         size="lg"
         backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
         display={'flex'}
-        className='links'
+        className="links"
         flexGrow={1}>
         <AccordionItem border={0} borderRadius={10} width={'100%'}>
-          <AccordionButton minWidth={notMobile ? 'md' : 'xs'} as={Button} size='lg' _expanded={{bgColor: 'blackAlpha.50'}}>
+          <AccordionButton
+            minWidth={'100%'}
+            as={Button}
+            size="lg"
+            _expanded={{ bgColor: 'blackAlpha.50' }}>
             <Flex
               gap={2}
               alignItems={'center'}
               textAlign="left"
-              width={notMobile ? '100%' : '100%'}>
+              width={'100%'}>
               <Text fontWeight={'bold'} display={'flex'} flex={1}>
                 Links & NFTs
               </Text>
@@ -125,30 +133,32 @@ export default function ManageLinks({ json, nftAddress }: Props) {
 
           <AccordionPanel pb={4} minWidth="100%">
             <Stack gap={2}>
-            
+              <AddLinkButton />
+
               <SortableCon onSortEnd={onSortEnd} useDragHandle>
                 <>
-                {linksArray.map((item, index) => (
-                  <SortableItem key={`item-${item.title}-${index}`} index={index}>
-                    <>
-                    <ManageLink
-                      icon={<LinkIcon type={item.type} line={useLineIcons} />}
-                      title={item.title}
-                      image={item.image}
-                      url={item.url}
-                      type={item.type}
-                      content={item.content}
-                      styles={item.styles}
-                      ind={index}
-                      setUrl={setLinks}
-                      removeUrl={removeLink}
-                    />
-                    </>
-                  </SortableItem>
-                ))}
+                  {linksArray.map((item, index) => (
+                    <SortableItem key={`item-${item.title}-${index}`} index={index}>
+                      <>
+                        <ManageLink
+                          icon={
+                            <LinkIcon type={item.styles?.icon ?? item.type} line={useLineIcons} size='md'/>
+                          }
+                          title={item.title}
+                          image={item.image}
+                          url={item.url}
+                          type={item.type}
+                          content={item.content}
+                          styles={item.styles}
+                          ind={index}
+                          setUrl={setLinks}
+                          removeUrl={removeLink}
+                        />
+                      </>
+                    </SortableItem>
+                  ))}
                 </>
               </SortableCon>
-              <AddLinkButton />
             </Stack>
           </AccordionPanel>
         </AccordionItem>

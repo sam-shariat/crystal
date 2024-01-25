@@ -5,7 +5,7 @@ import { motion, MotionProps } from 'framer-motion';
 const ImageMotion = motion<MotionProps | ImageProps>(Image as ComponentType);
 interface Props {
   srcUrl: string;
-  size?: string | string[];
+  size?: string | string[] | number[] | number;
   animation?: boolean;
   rounded?: string;
   shadow?: string;

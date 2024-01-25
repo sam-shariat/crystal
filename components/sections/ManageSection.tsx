@@ -356,7 +356,7 @@ function ManageSection() {
         maxW="container.lg"
         display="grid"
         flexDir={'column'}
-        minH={'84vh'}
+        minH={'100vh'}
         flexGrow={1}>
         <Box py={6} gap={2} width={'100%'} pb={12}>
           {isConnected && (

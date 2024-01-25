@@ -216,7 +216,7 @@ const terms: Terms = {
     fa: 'مشاهده',
   },
   description: {
-    en: 'one link to showcase all your virtual assets',
+    en: 'Empower Your Digital Presence with a Single Link',
     fa: 'هویت مجازی شما در بلاک‌چین با یک لینک ساده',
   },
   claimDescription: {
@@ -435,6 +435,10 @@ const terms: Terms = {
     en: 'Error',
     fa: 'اشکال',
   },
+  failed: {
+    en: 'Transaction Failed',
+    fa: 'اشکال',
+  },
   preparing: {
     en: 'Preparing',
     fa: 'در حال آماده سازی',
@@ -445,6 +449,10 @@ const terms: Terms = {
   },
   commonErrorMsg: {
     en: 'Something went wrong, Please try again',
+    fa: 'مشکلی به وجود آمده است. لطفا دوباره تلاش کنید',
+  },
+  commonFailedMsg: {
+    en: 'Transaction failed due to network traffic. Please try again',
     fa: 'مشکلی به وجود آمده است. لطفا دوباره تلاش کنید',
   },
   mintSuccess: {

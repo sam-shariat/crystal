@@ -3,11 +3,11 @@ import {
   Text,
   IconButton,
   SimpleGrid,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverBody,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  useColorMode,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -18,31 +18,39 @@ import { BG_COLORS } from 'core/utils/constants';
 export default function BgPicker() {
   const [bgColor, setBgColor] = useAtom(bgColorAtom);
   const setLightMode = useSetAtom(lightModeAtom);
-  
+  const lightMode = useColorMode().colorMode === 'light';
+
   return (
     <>
-      <Popover>
-        <PopoverTrigger>
-          <Button
+      <Accordion
+        allowToggle
+        allowMultiple={false}
+        borderBottomRadius={0}
+        size="lg"
+        display={'flex'}
+        flexGrow={1}>
+        <AccordionItem border={0} borderRadius={0} width={'100%'}>
+          <AccordionButton
+            as={Button}
+            height={['44px', '52px']}
+            _expanded={{ bgColor: lightMode ? BG_COLORS[4].color : BG_COLORS[2].color }}
+            _hover={{ bgColor: lightMode ? BG_COLORS[4].color : BG_COLORS[2].color }}
             px={4}
             variant="solid"
-            size="lg"
-            width={'100%'}
             borderBottomRadius={0}
+            width={'100%'}
             justifyContent="space-between">
-            <Text>Background Color</Text>
+            <Text fontSize={'lg'}>Background Color</Text>
             <IconButton size={'sm'} aria-label="bg-color-picker" bg={bgColor}></IconButton>
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverBody>
+          </AccordionButton>
+          <AccordionPanel py={4} bgColor={lightMode ? BG_COLORS[4].color : BG_COLORS[2].color}>
             <SimpleGrid columns={[3]} gap={2}>
               {BG_COLORS.map((bg) => (
                 <IconButton
-                  height={['60px','60px','120px']}
+                  height={['60px', '60px', '120px']}
                   aria-label="bg-color-picker"
                   bg={bg.color}
-                  key={'bg-color-picker-'+bg.color}
+                  key={'bg-color-picker-' + bg.color}
                   onClick={() => {
                     setBgColor(bg.color);
                     setLightMode(bg.lightMode);
@@ -58,9 +66,9 @@ export default function BgPicker() {
                 </IconButton>
               ))}
             </SimpleGrid>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 }

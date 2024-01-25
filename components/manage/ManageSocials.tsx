@@ -82,19 +82,19 @@ export default function ManageSocials({ json, nftAddress }: Props) {
         allowToggle
         allowMultiple={false}
         borderRadius={10}
-        minWidth={notMobile ? 'md' : 'xs'}
+        minWidth={'100%'}
         size="lg"
         className='socials'
         backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
         display={'flex'}
         flexGrow={1}>
         <AccordionItem border={0} borderRadius={10} width={'100%'}>
-          <AccordionButton minWidth={notMobile ? 'md' : 'xs'} as={Button} size='lg' _expanded={{bgColor: 'blackAlpha.50'}}>
+          <AccordionButton minWidth={'100%'} as={Button} size='lg' _expanded={{bgColor: 'blackAlpha.50'}}>
             <Flex
               gap={2}
               alignItems={'center'}
               textAlign="left"
-              width={notMobile ? '100%' : '100%'}>
+              width={'100%'}>
               <Text fontWeight={'bold'} display={'flex'} flex={1}>
                 Social Links
               </Text>
@@ -102,8 +102,9 @@ export default function ManageSocials({ json, nftAddress }: Props) {
             </Flex>
           </AccordionButton>
 
-          <AccordionPanel pb={4} minWidth="100%">
-            <Stack my={2}>
+          <AccordionPanel py={4} minWidth="100%">
+            <Stack gap={2}>
+              <AddSocialButton />
               <SortableCon onSortEnd={onSortEnd} useDragHandle>
               <>
                 {socialsArray.map(
@@ -125,7 +126,6 @@ export default function ManageSocials({ json, nftAddress }: Props) {
                 )}
                 </>
               </SortableCon>
-              <AddSocialButton />
             </Stack>
           </AccordionPanel>
         </AccordionItem>

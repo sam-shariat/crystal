@@ -5,6 +5,7 @@ export const MINT_TOTAL_SUPPLY:number = 10000;
 export const MINT_DATE = 'Feb 01, 2024 18:00:00 UTC';
 export const MINT_MESSAGE = 'Final Phase of venom testnet minting will start on';
 export const SITE_URL = 'https://venomid.network/';
+export const SITE_URL_SHORT = 'https://venomid.network/';
 export const SITE_TITLE = 'Venom ID';
 export const SITE_DESCRIPTION = 'Your entire virtual identity in the blockchain in one simple link';
 export const SITE_FULL_DESCRIPTION =
@@ -25,10 +26,22 @@ export const CONTRACT_ADDRESS_V1 =
   '0:0f158efd58c06ff2f84726425de63d3deb4037d2c621ccd552cec61d6b6ee5bd';
 export const CONTRACT_ADDRESS_V2 =
   '0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
-//'0:7f70fd1850b1949b84528ed43593f63f45118006fdb73bd88d69f29122993b7b'
-//'0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
-//'0:427fba7e85388da8c7c0b21192bfcd4fbfba8f041823300a1a657f9f5cbdb490';
+
+export const EARLY_ADOPTERS_CONTRACT_ADDRESS = '0:9e0ea0f0fe6229aee6580a96fd9c62aabf6f2430830877c5b1ad700680ac0486';
+
+export const VENTORY_NFT_V1_ADDRESS = '0:7df675a3c099ed318d36c54e62282b1185f78fb05c21d19292699d6e200b0bb6';
+export const VENTORY_NFT_V2_ADDRESS = '0:b248dc8f494e6e8f4ff355e9032cdfaf0108889b19b06e3f11861faa0780a06c';
+
 export const ZERO_ADDRESS = '0:0000000000000000000000000000000000000000000000000000000000000000';
+
+export const TWITTER_CALLBACK_URL = 'http://localhost:3000/api/twitter/callback';
+export const TWITTER_ME = 'https://api.twitter.com/2/users/me';
+export const TWITTER_SCOPES = ['tweet.read', 'users.read', 'offline.access'];
+export const TWITTER_FOLLOW_URL = "https://twitter.com/intent/user?screen_name=venomid_network";
+export const TWITTER_RETWEET_URL = "https://twitter.com/intent/retweet?tweet_id=1747339428195078496";
+export const ZEALY_USERS_API = 'https://api.zealy.io/communities/venomid/users'
+export const IPFS_IO_URL = 'https://ipfs.io/ipfs/';
+
 export const SOCIAL_TWITTER = 'venomid_network';
 export const TWITTER_URL = 'https://twitter.com/';
 export const GITHUB_URL = 'https://github.com/sam-shariat/venomidapp';
@@ -38,8 +51,19 @@ export const YLIDE_URL = 'https://hub.ylide.io/project/venom_id/discussion';
 export const YOUTUBE_URL = 'https://www.youtube.com/@VenomID_Network';
 export const OPENSEA_URL = 'https://opensea.io/assets/';
 export const FAUCET_URL = 'https://venom.network/tasks';
+
+export const MARKETPLACE_URLS_COLLECTION: any = {
+  venomtestnet: 'https://testnet.ventory.gg/collection/',
+  venom: 'https://testnet.ventory.gg/collection/',
+  ethereum: 'https://opensea.io/assets/ethereum/',
+  polygon: 'https://opensea.io/assets/matic/',
+  arbitrum: 'https://opensea.io/assets/arbitrum/',
+  optimism: 'https://opensea.io/assets/optimism/',
+};
+
 export const MARKETPLACE_URLS: any = {
   venomtestnet: 'https://testnet.ventory.gg/nft/',
+  venom: 'https://testnet.ventory.gg/nft/',
   ethereum: 'https://opensea.io/assets/ethereum/',
   polygon: 'https://opensea.io/assets/matic/',
   arbitrum: 'https://opensea.io/assets/arbitrum/',
@@ -60,6 +84,8 @@ export const ETHERSCAN_URLS: any = {
   optimism: 'https://optimistic.etherscan.io/address/',
 };
 
+export const IPFS_IMAGE_URI = 'https://ipfs';
+
 export const IPFS_URLS = [
   'https://cf-ipfs.com/ipfs/',
   'https://gateway.ipfs.io/',
@@ -70,6 +96,8 @@ export const IPFS_URLS = [
 
 export const SIGN_MESSAGE =
   'Welcome to Venom ID. By signing this message, you agree with our terms and conditions.';
+
+export const MAX_FILE_UPLOAD = 15728640;
 
 export const DONATE_VALUES: any = {
   venomtestnet: ['1 VENOM', '10 VENOM', '50 VENOM'],
@@ -221,12 +249,17 @@ export const BG_IMAGES: BgImageItem[] = [
   { bg: 'var(--bg1Gradient)', lightMode: false },
   { bg: 'var(--bg3Gradient)', lightMode: false },
   { bg: 'var(--bg2Gradient)', lightMode: true },
+  // { bg: 'var(--bg4Gradient)', lightMode: false },
+  // { bg: 'var(--bg5Gradient)', lightMode: false },
+  // { bg: 'var(--bg6Gradient)', lightMode: false },
+  // { bg: 'var(--bg7Gradient)', lightMode: false },
 ];
 
 export const AVAILABLE_LINKS: LinkType[] = [
   { type: 'heading', av: true, reg: '' },
   { type: 'text paragraph', av: true, reg: '' },
   { type: 'nft link', av: true, reg: '' },
+  //{ type: 'wallet button', av: true, reg: '' },
   { type: 'simple link', av: true, reg: LINK_VALIDATION_REGEX },
   { type: 'image link', av: true, reg: LINK_VALIDATION_REGEX },
   { type: 'tweet', av: true, reg: TWITTER_STATUS_REGEX },
@@ -268,7 +301,7 @@ export const VARIATIONS = [
     avatarShape: 'hex',
     bg: BG_COLORS[0].color,
     lightMode: BG_COLORS[0].lightMode,
-    buttonBg: BUTTON_BG_COLORS[1],
+    buttonBg: BUTTON_BG_COLORS[2],
     variant: BUTTON_VARIANTS[0],
     round: BUTTON_ROUNDS[1],
     font: FONTS[0],
@@ -575,3 +608,15 @@ export const TOUR_STEPS = [
 
   // ...
 ];
+
+
+export const EARLY_ADOPTER_IMAGES: any = {
+  explorer: {src : 'https://ipfs.io/ipfs/QmRdewFUw4jxTWnoVMSVLyQ7WmahWUMxDrCVYEwL7TuUDq/crypto-explorer.svg', type: 'image/svg+xml'},
+  pioneer: {src : 'https://ipfs.io/ipfs/QmQ98JMocRupVnixhGcVupmDdmuMxXdsq1ozPyNhskzqEh/venom-id-pioneer.svg', type: 'image/svg+xml'},
+  family: {src : 'https://ipfs.io/ipfs/QmSoTZi3B6FXLRVBXhsTCwfYPnWMCUHpBc6HiVrGpuBU6o/venomid-family.gif', type: 'image/gif'},
+  geek: {src : 'https://ipfs.io/ipfs/QmPgY5KJ25cBmG4H4HkF6DTgxQ4gaUtzfChS8wS8EXScgH/venomid-geek.gif', type: 'image/gif'},
+  identorian: {src : 'https://ipfs.io/ipfs/QmYK9CchybNS3HxrgvgxnKGHCzeRVwNZV1cmiLGf4qpx4m/identorian.svg', type: 'image/svg+xml'},
+  maverick: {src : 'https://ipfs.io/ipfs/QmQt3CTiZEwDdrAW7ebSM7QX7ZLYts6nWfjfh36xB4iWM7/venomid-maverick.gif', type: 'image/gif'},
+  champion: {src : 'https://ipfs.io/ipfs/QmSdjoBfigMQu2yGpMj5Fhd1xFQFYoTUVTLjUZjGcpnmee/venomid-champions.gif', type: 'image/gif'},
+  
+};

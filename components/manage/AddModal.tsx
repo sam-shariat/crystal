@@ -30,7 +30,7 @@ import {
 import { capFirstLetter } from 'core/utils';
 import { LinkIcon } from 'components/logos';
 
-export default function AddModal() {
+export default function AddModal({ type = 'square' }: { type: 'square' | 'full' }) {
   const { colorMode } = useColorMode();
   const useLineIcons = useAtomValue(useLineIconsAtom);
   const [_openAddSocial, _setOpenAddSocial] = useAtom(openAddSocialAtom);
@@ -49,22 +49,34 @@ export default function AddModal() {
 
   useEffect(() => {
     _setOpen(isOpen);
-  },[isOpen]);
+  }, [isOpen]);
 
   return (
     <>
-      <Button
-        variant={'outline'}
-        colorScheme="white"
-        gap={2}
-        borderRadius={12}
-        onClick={onOpen}
-        className='add'
-        flexDirection={'column'}
-        height="72px">
-        <RiAddLine size={'28px'} />
-        Add
-      </Button>
+      {type === 'square' ? (
+        <Button
+          colorScheme={colorMode === 'light' ? "blackAlpha" : 'gray'}
+          bgGradient={
+            colorMode === 'light'
+              ? 'linear(to-r, var(--darkAlpha), var(--dark2))'
+              : 'linear(to-r, var(--whiteAlpha), var(--dark2))'
+          }
+          gap={2}
+          w={'100%'}
+          borderRadius={12}
+          onClick={onOpen}
+          className="add"
+          flexDirection={'column'}
+          height="72px">
+          <RiAddLine size={'28px'} />
+          Add
+        </Button>
+      ) : (
+        <Button gap={2} onClick={onOpen} className="add" w={'100%'} size={'lg'}>
+          <RiAddLine size={'28px'} />
+          Add
+        </Button>
+      )}
       <Modal isOpen={isOpen} onClose={onClose} isCentered size={'lg'}>
         <ModalOverlay bg="blackAlpha.700" backdropFilter="auto" backdropBlur={'6px'} />
         <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'}>
@@ -78,7 +90,6 @@ export default function AddModal() {
                   onClose();
                 }}
                 flexDir={'column'}
-                variant={'outline'}
                 gap={4}
                 height={100}>
                 Wallet Address
@@ -98,7 +109,6 @@ export default function AddModal() {
                 }}
                 flexDir={'column'}
                 gap={4}
-                variant={'outline'}
                 height={100}>
                 NFT, Link, Image, Video or Document
                 <Flex gap={2}>
@@ -116,7 +126,6 @@ export default function AddModal() {
                   onClose();
                 }}
                 flexDir={'column'}
-                variant={'outline'}
                 gap={4}
                 height={100}>
                 Social Media Links

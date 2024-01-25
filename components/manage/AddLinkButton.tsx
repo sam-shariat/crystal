@@ -63,6 +63,7 @@ import AddNFTAvatar from './AddNFTAvatar';
 import {
   AVAILABLE_LINKS,
   EXAMPLE_LINK_URLS,
+  IPFS_IMAGE_URI,
   OPENSEA_URL,
   VENOMART_NFT,
   VENTORY_NFT,
@@ -76,6 +77,8 @@ import BtcAddressInput from './‌‌BtcAddressInput';
 import Pay from 'components/Profile/Pay';
 import WalletInput from './WalletInput';
 import IconPicker from './IconPicker';
+import ManageSimpleLink from './ManageSimpleLink';
+import ManageUpload from './ManageUpload';
 
 export default function AddLinkButton() {
   const useLineIcons = useAtomValue(useLineIconsAtom);
@@ -91,7 +94,6 @@ export default function AddLinkButton() {
   const btcAddress = useAtomValue(btcAtom);
   const { colorMode } = useColorMode();
   const [linksArray, setLinksArray] = useAtom(linksArrayAtom);
-  const { mutateAsync: upload } = useStorageUpload();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const [type, setType] = useState('');
   const [_back, _setBack] = useAtom(openAddAtom);
@@ -99,7 +101,6 @@ export default function AddLinkButton() {
   const [url, setUrl] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [image, setImage] = useState('');
-  const [imageUploading, setImageUploading] = useState(false);
   const [content, setContent] = useState('');
   const [styles, setStyles] = useState<Styles>({});
   const reg = AVAILABLE_LINKS.find((e) => e.type === type)?.reg ?? '';
@@ -121,7 +122,6 @@ export default function AddLinkButton() {
 
   const addToLinks = () => {
     let _newLinksArray = [
-      ...linksArray,
       {
         type,
         title,
@@ -130,6 +130,7 @@ export default function AddLinkButton() {
         content,
         styles,
       },
+      ...linksArray
     ];
 
     setLinksArray(_newLinksArray);
@@ -148,64 +149,7 @@ export default function AddLinkButton() {
     _setOpen(isOpen);
   }, [isOpen]);
 
-  function buildFileSelector(mimetypes: string) {
-    if (process.browser) {
-      const fileSelector = document.createElement('input');
-      fileSelector.type = 'file';
-      fileSelector.multiple = false;
-      fileSelector.onchange = async (e: any) => {
-        sendproFileToIPFS(e.target.files[0], mimetypes);
-      };
-      fileSelector.accept = mimetypes;
-      return fileSelector;
-    }
-  }
-
-  const imageFileSelect = buildFileSelector('image/x-png,image/png,image/gif,image/jpeg');
-  const pdfFileSelect = buildFileSelector('application/pdf');
-
-  const sendproFileToIPFS = async (e: any, mimetypes: string) => {
-    if (e) {
-      try {
-        const formData = [e];
-        //// console.log('uploading file to ipfs');
-        toast({
-          status: 'loading',
-          title: 'Uploading to IPFS',
-          description: 'Uploading file to IPFS',
-          isClosable: true,
-        });
-        setImageUploading(true);
-        const uris = await upload({ data: formData });
-        //const ImgHash = resFile.data.IpfsHash;
-        //// console.log(ImgHash);
-        mimetypes.includes('pdf')
-          ? setUrl('https://ipfs.io/ipfs/' + uris[0].slice(7))
-          : setImage('https://ipfs.io/ipfs/' + uris[0].slice(7));
-        setImageUploading(false);
-        toast.closeAll();
-        toast({
-          status: 'success',
-          title: 'Uploaded to IPFS',
-          description: 'Upload Successful',
-          isClosable: true,
-        });
-      } catch (error) {
-        toast.closeAll();
-        toast({
-          status: 'warning',
-          title: 'Error in uploading to IPFS',
-          description:
-            'Please check your network and Try Again, If the problem presists, please send a message to venomidapp@gmail.com',
-          isClosable: true,
-        });
-        alert('Error sending File to IPFS, Please check your network and Try Again');
-        setImageUploading(false);
-        //// console.log(error);
-      }
-    }
-  };
-
+  
   const addLink = (item: LinkType) => {
     if (item?.av) {
       setTitle('');
@@ -295,60 +239,8 @@ export default function AddLinkButton() {
                   type.includes('video') ||
                   type.includes('tweet') ||
                   type.includes('soundcloud')) && (
-                  <>
-                    <InputGroup mt={2}>
-                      <Input
-                        size="lg"
-                        value={url}
-                        placeholder={`Enter ${capFirstLetter(type)} Address`}
-                        onChange={(e) => setUrl(e.currentTarget.value)}
-                        //onChange={(e) => setUrl(title.toLowerCase(),e.currentTarget.value)}
-                      />
-                      <InputRightElement>
-                        <Tooltip
-                          borderRadius={4}
-                          label={<Text p={2}>Paste</Text>}
-                          hasArrow
-                          color="white"
-                          bgColor={'black'}>
-                          <IconButton
-                            mt={2}
-                            mr={2}
-                            aria-label="paste-url"
-                            onClick={() =>
-                              navigator.clipboard.readText().then((text) => setUrl(text))
-                            }>
-                            <RiFileCopy2Line />
-                          </IconButton>
-                        </Tooltip>
-                      </InputRightElement>
-                    </InputGroup>
-                    {EXAMPLE_LINK_URLS[type.toLowerCase().replace(' ', '')] &&
-                      !RegExp(reg, 'i').test(url) && (
-                        <Box pt={2}>
-                          <Text>Example {capFirstLetter(type)}</Text>
-                          <Text color={'gray'}>
-                            {EXAMPLE_LINK_URLS[type.toLowerCase().replace(' ', '')]}
-                          </Text>
-                        </Box>
-                      )}
-                    {(type.includes('soundcloud') || type.includes('simple link')) && RegExp(reg, 'i').test(url) && (
-                      <SelectSizeButton
-                        options={['sm', 'md', 'lg']}
-                        value={String(styles?.size)}
-                        setValue={(e: any) => setStyles({ ...styles, size: e })}
-                        title="Size"
-                      />
-                    )}
-                  </>
-                )}
-
-                {type === 'simple link' && (
-                  <IconPicker
-                    value={styles?.icon}
-                    setValue={(e: any) => setStyles({ ...styles, icon: e })}
-                  />
-                )}
+                  <ManageSimpleLink type={type} url={url} setUrl={setUrl} styles={styles} setStyles={setStyles} />
+                )}                
 
                 {(type.includes('youtube') ||
                   type.includes('tweet') ||
@@ -364,28 +256,8 @@ export default function AddLinkButton() {
                     />
                   )}
 
-                {type.indexOf('image') >= 0 && (
-                  <>
-                    <Button
-                      size="lg"
-                      isDisabled={imageUploading}
-                      gap={2}
-                      onClick={() => imageFileSelect !== undefined && imageFileSelect.click()}>
-                      <RiUploadCloudLine size="24" /> Upload Image
-                    </Button>
-                  </>
-                )}
-
-                {type.indexOf('pdf') >= 0 && (
-                  <>
-                    <Button
-                      size="lg"
-                      isDisabled={imageUploading}
-                      gap={2}
-                      onClick={() => pdfFileSelect !== undefined && pdfFileSelect.click()}>
-                      <RiUploadCloudLine size="24" /> Upload PDF
-                    </Button>
-                  </>
+                {(type.includes('image') || type.includes('pdf')) && (
+                 <ManageUpload type={type} setUrl={setUrl} setImage={setImage} galleryItems={6} image={image} />
                 )}
 
                 {(type.includes('simple link') ||
@@ -402,7 +274,7 @@ export default function AddLinkButton() {
                       <Link
                         type={type}
                         title={title ? title : capFirstLetter(type)}
-                        icon={<LinkIcon type={type === 'simple link' ? String(styles.icon) : type} line={useLineIcons} />}
+                        icon={<LinkIcon type={type === 'simple link' ? String(styles.icon) : type} line={useLineIcons} size={String(styles?.icon).includes(IPFS_IMAGE_URI) ? styles?.size : styles?.size === 'sm' ? '24' : styles?.size === 'md' ? '28' : '36'} />}
                         url={url}
                         image={image}
                         styles={styles}
@@ -490,17 +362,17 @@ export default function AddLinkButton() {
                   <>
                     <WalletInput
                       title="Venom"
-                      value={String(styles.venom)}
+                      value={styles.venom ?? ''}
                       setValue={(e: any) => setStyles({ ...styles, venom: e })}
                     />
                     <WalletInput
                       title="Ethereum"
-                      value={String(styles.eth)}
+                      value={styles.eth ?? ''}
                       setValue={(e: any) => setStyles({ ...styles, eth: e })}
                     />
                     <WalletInput
                       title="Bitcoin"
-                      value={String(styles.btc)}
+                      value={styles.btc ?? ''}
                       setValue={(e: any) => setStyles({ ...styles, btc: e })}
                     />
                     <Text>Thank you note</Text>

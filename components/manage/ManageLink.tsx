@@ -28,7 +28,7 @@ import React, { useState } from 'react';
 import { capFirstLetter } from 'core/utils';
 import { ImageLink, Link } from 'components/Profile';
 import { useStorageUpload } from '@thirdweb-dev/react';
-import { AVAILABLE_LINKS, EXAMPLE_LINK_URLS, OPENSEA_URL, VENTORY_NFT } from 'core/utils/constants';
+import { AVAILABLE_LINKS, EXAMPLE_LINK_URLS, IPFS_IMAGE_URI, OPENSEA_URL, VENTORY_NFT } from 'core/utils/constants';
 import { LinkIcon } from 'components/logos';
 import { Styles } from 'types';
 import NftLink from 'components/Profile/NftLink';
@@ -39,6 +39,8 @@ import Donate from 'components/Profile/Donate';
 import Pay from 'components/Profile/Pay';
 import { useLineIconsAtom } from 'core/atoms';
 import IconPicker from './IconPicker';
+import ManageSimpleLink from './ManageSimpleLink';
+import ManageUpload from './ManageUpload';
 
 const DragHandle = SortableHandle(() => (
   <span>
@@ -74,53 +76,14 @@ export default function ManageLink({
   const { colorMode } = useColorMode();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const [_title, setTitle] = useState(title);
-  const [imageUploading, setImageUploading] = useState(false);
   const [_url, setURL] = useState(url);
   const [_content, setContent] = useState(content);
   const [_image, setImage] = useState(image);
   const [_styles, setStyles] = useState(styles);
   const lineIcons = useAtomValue(useLineIconsAtom);
-  const { mutateAsync: upload } = useStorageUpload();
   const reg = AVAILABLE_LINKS.find((e) => e.type === type)?.reg ?? '';
 
   const toast = useToast();
-
-  function buildFileSelector(mimetypes: string) {
-    if (process.browser) {
-      const fileSelector = document.createElement('input');
-      fileSelector.type = 'file';
-      fileSelector.multiple = false;
-      fileSelector.onchange = async (e: any) => {
-        sendproFileToIPFS(e.target.files[0], mimetypes);
-      };
-      fileSelector.accept = mimetypes;
-      return fileSelector;
-    }
-  }
-
-  const imageFileSelect = buildFileSelector('image/x-png,image/png,image/gif,image/jpeg');
-  const pdfFileSelect = buildFileSelector('application/pdf');
-
-  const sendproFileToIPFS = async (e: any, mimetypes: string) => {
-    if (e) {
-      try {
-        const formData = [e];
-        //// console.log('uploading file to ipfs');
-        setImageUploading(true);
-        const uris = await upload({ data: formData });
-        //const ImgHash = resFile.data.IpfsHash;
-        //// console.log(ImgHash);
-        mimetypes.includes('pdf')
-          ? setURL('https://ipfs.io/ipfs/' + uris[0].slice(7))
-          : setImage('https://ipfs.io/ipfs/' + uris[0].slice(7));
-        setImageUploading(false);
-      } catch (error) {
-        alert('Error sending File to IPFS, Please check your network and Try Again');
-        setImageUploading(false);
-        //// console.log(error);
-      }
-    }
-  };
 
   return (
     <>
@@ -128,7 +91,7 @@ export default function ManageLink({
         allowToggle
         allowMultiple={false}
         borderRadius={10}
-        minWidth={notMobile ? 'md' : 'xs'}
+        minWidth={'100%'}
         size="lg"
         backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
         display={'flex'}
@@ -137,15 +100,11 @@ export default function ManageLink({
           {({ isExpanded }) => (
             <>
               <AccordionButton
-                minWidth={notMobile ? 'md' : 'xs'}
+                minWidth={'100%'}
                 as={Button}
                 height={'52px'}
                 _expanded={{ bgColor: 'blackAlpha.50' }}>
-                <Flex
-                  gap={2}
-                  alignItems={'center'}
-                  textAlign="left"
-                  width={notMobile ? '100%' : '100%'}>
+                <Flex gap={2} alignItems={'center'} textAlign="left" width={'100%'}>
                   <DragHandle />
                   {icon}
                   <Stack display={'flex'} flex={1} gap={0}>
@@ -178,51 +137,13 @@ export default function ManageLink({
                       type.includes('video') ||
                       type.includes('tweet') ||
                       type.includes('soundcloud')) && (
-                      <>
-                        <InputGroup mt={2}>
-                          <Input
-                            size="lg"
-                            value={_url}
-                            placeholder={`Enter ${capFirstLetter(type)} URL`}
-                            onChange={(e) => setURL(e.currentTarget.value)}
-                            //onChange={(e) => setUrl(title.toLowerCase(),e.currentTarget.value)}
-                          />
-                          <InputRightElement>
-                            <Tooltip
-                              borderRadius={4}
-                              label={<Text p={2}>Paste</Text>}
-                              hasArrow
-                              color="white"
-                              bgColor={'black'}>
-                              <IconButton
-                                mt={2}
-                                aria-label="paste-url"
-                                mr={2}
-                                onClick={() =>
-                                  navigator.clipboard.readText().then((text) => setURL(text))
-                                }>
-                                <RiFileCopy2Line />
-                              </IconButton>
-                            </Tooltip>
-                          </InputRightElement>
-                        </InputGroup>
-                        {EXAMPLE_LINK_URLS[type.toLowerCase().replace(' ', '')] && (
-                          <Box pt={2}>
-                            <Text>Example {capFirstLetter(type)}</Text>
-                            <Text color={'gray'}>
-                              {EXAMPLE_LINK_URLS[type.toLowerCase().replace(' ', '')]}
-                            </Text>
-                          </Box>
-                        )}
-                        {(type.includes('soundcloud') || type.includes('youtube')) && RegExp(reg, 'i').test(_url) && (
-                          <SelectSizeButton
-                            options={['sm', 'md', 'lg']}
-                            value={String(_styles?.size)}
-                            setValue={(e: any) => setStyles({ ..._styles, size: e })}
-                            title="Size"
-                          />
-                        )}
-                      </>
+                      <ManageSimpleLink
+                        type={type}
+                        url={_url}
+                        setUrl={setURL}
+                        styles={_styles}
+                        setStyles={setStyles}
+                      />
                     )}
 
                   {isExpanded &&
@@ -240,55 +161,48 @@ export default function ManageLink({
                       />
                     )}
 
-                  {isExpanded && type.indexOf('image') >= 0 && (
-                    <>
-                      <Button
-                        size="lg"
-                        isDisabled={imageUploading}
-                        gap={2}
-                        onClick={() => imageFileSelect !== undefined && imageFileSelect.click()}>
-                        <RiUploadCloudLine size="24" /> Upload Image
-                      </Button>
-                    </>
-                  )}
-
-                  {isExpanded && type.indexOf('pdf') >= 0 && (
-                    <>
-                      <Button
-                        size="lg"
-                        isDisabled={imageUploading}
-                        gap={2}
-                        onClick={() => pdfFileSelect !== undefined && pdfFileSelect.click()}>
-                        <RiUploadCloudLine size="24" /> Upload PDF
-                      </Button>
-                    </>
-                  )}
-
-                  {isExpanded && type.indexOf('simple link') >= 0 && (
-                    <>
-                      <IconPicker
-                        value={_styles?.icon}
-                        setValue={(e: any) => setStyles({ ..._styles, icon: e })}
-                      />
-                    </>
+                  {isExpanded && (type.includes('image') || type.includes('pdf')) && (
+                    <ManageUpload
+                      type={type}
+                      setImage={setImage}
+                      image={image}
+                      setUrl={setURL}
+                      galleryItems={6}
+                    />
                   )}
 
                   {(type.includes('simple link') ||
                     type.includes('image') ||
                     type.includes('pdf')) && (
                     <>
-                      {/* <SelectSizeButton
-                        options={[true, false]}
-                        value={String(_styles?.popup) ?? false}
-                        setValue={(e: any) => setStyles({ ..._styles, popup: e })}
-                        title="Open In Pop Up"
-                      /> */}
                       {(_image || _url) && (
                         <Link
                           type={type}
-                          key={type === 'simple link' ? _title + '-' +String(_styles?.icon) : _title + '-' +type}
+                          key={
+                            type === 'simple link'
+                              ? _title + '-' + String(_styles?.icon)
+                              : _title + '-' + type
+                          }
                           title={_title ? _title : capFirstLetter(type)}
-                          icon={<LinkIcon key={type === 'simple link' ? _title + '-' +String(_styles?.icon) : _title + '-' +type} type={type === 'simple link' ? String(_styles?.icon) : type} line={lineIcons} size={_styles?.size === 'sm' ? '24px' : _styles?.size === 'lg' ? '36px' : '28px'}/>}
+                          icon={
+                            <LinkIcon
+                              key={
+                                type === 'simple link'
+                                  ? _title + '-' + String(_styles?.icon)
+                                  : _title + '-' + type
+                              }
+                              type={type === 'simple link' ? String(_styles?.icon) : type}
+                              line={lineIcons}
+                              size={
+                                String(_styles?.icon).includes(IPFS_IMAGE_URI) ? _styles?.size : 
+                                _styles?.size === 'sm'
+                                  ? '24px'
+                                  : _styles?.size === 'lg'
+                                  ? '36px'
+                                  : '28px'
+                              }
+                            />
+                          }
                           url={String(_url)}
                           image={String(_image)}
                           styles={_styles}
@@ -375,17 +289,17 @@ export default function ManageLink({
                     <>
                       <WalletInput
                         title="Venom"
-                        value={String(_styles?.venom)}
+                        value={_styles?.venom ?? ''}
                         setValue={(e: any) => setStyles({ ..._styles, venom: e })}
                       />
                       <WalletInput
                         title="Ethereum"
-                        value={String(_styles?.eth)}
+                        value={_styles?.eth ?? ''}
                         setValue={(e: any) => setStyles({ ..._styles, eth: e })}
                       />
                       <WalletInput
                         title="Bitcoin"
-                        value={String(_styles?.btc)}
+                        value={_styles?.btc ?? ''}
                         setValue={(e: any) => setStyles({ ..._styles, btc: e })}
                       />
                       <Text>Thank you note</Text>

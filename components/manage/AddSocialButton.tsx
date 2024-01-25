@@ -64,8 +64,8 @@ export default function AddSocialButton() {
 
   const addToSocial = () => {
     let _newSocialsArray = [
-      ...socialsArray,
       { key: selectedSocial.toLowerCase(), value: selectedSocialUrl },
+      ...socialsArray
     ];
     setSocialsArray(_newSocialsArray);
     setSelectedSocialUrl('');

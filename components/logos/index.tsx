@@ -97,15 +97,19 @@ import Solana from './Solana';
 import Tron from './Tron';
 import Ylide from './Ylide';
 import * as Icons from 'react-icons/ri';
+import { Avatar, Icon } from '@chakra-ui/react';
+import EmojiIcon from 'components/Profile/Emoji';
+import { IPFS_IMAGE_URI } from 'core/utils/constants';
 
 interface LinkIconProps {
   type: string;
   line?: boolean;
   color?: string;
   size?: string;
+  rounded?: string;
 }
 
-const LinkIcon = ({ type, line, color, size = '28px' }: LinkIconProps) => {
+const LinkIcon = ({ type, line, color, size = '28px', rounded = 'sm' }: LinkIconProps) => {
   switch (type) {
     case 'x':
     case 'twitter':
@@ -274,9 +278,9 @@ const LinkIcon = ({ type, line, color, size = '28px' }: LinkIconProps) => {
       );
     case 'zealy':
       return line ? (
-        <Zealy color={color ? color : undefined} />
+        <Zealy color={color ? color : undefined} size={size} />
       ) : (
-        <Zealy color={color ? color : undefined} />
+        <Zealy color={color ? color : undefined} size={size} />
       );
     case 'galxe':
       return line ? (
@@ -313,6 +317,7 @@ const LinkIcon = ({ type, line, color, size = '28px' }: LinkIconProps) => {
     case 'simple link':
       return line ? <RiLinksLine size={size} /> : <RiLinksFill size={size} />;
     case 'image link':
+    case 'image':
     case 'image/png':
     case 'image/svg':
     case 'image/svg+xml':
@@ -341,6 +346,10 @@ const LinkIcon = ({ type, line, color, size = '28px' }: LinkIconProps) => {
     case 'venom':
     case 'venomtestnet':
       return <VenomFoundation color={color ? color : undefined} />;
+    case 'venomid':
+      return <Logo />;
+    case 'venomidicon':
+      return <LogoIcon />;
     case 'donate':
     case 'donate button':
       return line ? <RiServiceLine size={size} /> : <RiServiceFill size={size} />;
@@ -378,23 +387,33 @@ const LinkIcon = ({ type, line, color, size = '28px' }: LinkIconProps) => {
     case 'sol':
       return <Solana color={color ? color : undefined} />;
     case 'ylide':
-      return <Ylide color={color ? color : undefined} />;
+      return <Ylide color={color ? color : undefined} size={size} />;
     case 'wallet':
-      return line ? <RiWallet3Line size={size} /> : <RiWallet3Fill size={size} />;
+    case 'wallet button':
+      return line ? (
+        <RiWallet3Line size={size} color={color ? color : undefined} />
+      ) : (
+        <RiWallet3Fill size={size} color={color ? color : undefined} />
+      );
     case 'tron':
     case 'trx':
       return <Tron color={color ? color : undefined} />;
     case 'image/gif':
     case 'gif':
-      return line ? <RiFileGifLine size={size} /> : <RiFileGifFill size={size} />;
+      return line ? (
+        <RiFileGifLine size={size} color={color ? color : undefined} />
+      ) : (
+        <RiFileGifFill size={size} color={color ? color : undefined} />
+      );
     default:
       //// console.log('here : ', type);
       if (type.indexOf('Ri') === 0) {
         const SelectedIcon = Icons[type as keyof typeof Icons];
-
-        return <SelectedIcon size={size} />;
+        return <SelectedIcon size={size} color={color ? color : undefined} />;
+      } else if (type.indexOf(IPFS_IMAGE_URI) === 0) {
+        return <Avatar src={type} size={size} rounded={'none'} borderRadius={'8px'} name='vid' colorScheme='gray' />;
       } else {
-        return <></>;
+        return <EmojiIcon size={parseInt(size)} native={type} />;
       }
   }
 };

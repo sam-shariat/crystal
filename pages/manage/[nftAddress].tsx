@@ -16,6 +16,16 @@ import {
   Link,
   useToast,
   Box,
+  Tooltip,
+  GridItem,
+  ButtonGroup,
+  Menu,
+  MenuButton,
+  MenuList,
+  IconButton,
+  DarkMode,
+  LightMode,
+  Stack,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { sleep, truncAddress } from 'core/utils';
@@ -27,6 +37,10 @@ import {
   BioTextInput,
   TitleInput,
   ManageWallets,
+  PreviewModal,
+  ButtonColorPicker,
+  ButtonRoundPicker,
+  ButtonVarianticker,
 } from 'components/manage';
 import { useAtom, useAtomValue } from 'jotai';
 import {
@@ -61,7 +75,8 @@ import {
   nftJsonAtom,
   avatarShapeAtom,
   isStyledAtom,
-  networkAtom
+  networkAtom,
+  mobileViewAtom,
 } from 'core/atoms';
 import {
   SITE_DESCRIPTION,
@@ -79,12 +94,22 @@ import { getNft } from 'core/utils/nft';
 import NFTAbi from 'abi/Nft.abi.json';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
 import { useStorageUpload } from '@thirdweb-dev/react';
-import { RiAddLine, RiShareLine, RiUpload2Line } from 'react-icons/ri';
+import {
+  RiAddLine,
+  RiComputerLine,
+  RiShareLine,
+  RiSmartphoneLine,
+  RiUpload2Line,
+} from 'react-icons/ri';
 import AddModal from 'components/manage/AddModal';
 import ShareButton from 'components/manage/Share';
 import Preview from 'components/Profile/Preview';
 import ProfileCompletion from 'components/manage/ProfileCompletion';
 import CropAvatar from 'components/manage/CropAvatar';
+import ManageSidebar from 'components/manage/ManageSidebar';
+import { LinkIcon } from 'components/logos';
+import StyleDrawer from 'components/manage/StyleDrawer';
+import ManageHeader from 'components/manage/ManageHeader';
 
 const ManagePage: NextPage = () => {
   const { provider } = useVenomProvider();
@@ -113,7 +138,9 @@ const ManagePage: NextPage = () => {
   const [buttonBgColor, setButtonBgColor] = useAtom(buttonBgColorAtom);
   const [variant, setVariant] = useAtom(variantAtom);
   const [font, setFont] = useAtom(fontAtom);
-  const [ notMobile ] = useMediaQuery('(min-width: 800px)');
+  const [notMobile] = useMediaQuery('(min-width: 992px)');
+  const [notMobileH] = useMediaQuery('(min-height: 896px)');
+  const [desktop] = useMediaQuery('(min-width: 1280px)');
   const [avatar, setAvatar] = useAtom(avatarAtom);
   const [avatarShape, setAvatarShape] = useAtom(avatarShapeAtom);
   const [socialIcons, setSocialIcons] = useAtom(horizontalSocialAtom);
@@ -127,6 +154,7 @@ const ManagePage: NextPage = () => {
   const [jsonUploading, setJsonUploading] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
   const minFee = 660000000;
@@ -134,7 +162,9 @@ const ManagePage: NextPage = () => {
   const nftAddress = String(router.query.nftAddress);
   const [nftContract, setNftContract] = useAtom(nftContractAtom);
   const { colorMode } = useColorMode();
+  const [mobileView, setMobileView] = useAtom(mobileViewAtom);
   const toast = useToast();
+  //const [horizontalWallet, setHorizontalWallet] = useAtom(horizontalWalletsAtom);
 
   const getJson = () => {
     let socialsObj: any = {};
@@ -147,8 +177,7 @@ const ManagePage: NextPage = () => {
       walletsObj[wallet['key']] = wallet['value'];
     });
 
-    let styles: any = 
-    {
+    let styles: any = {
       lineIcons: lineIcons,
       lightMode: lightMode,
       bgColor: bgColor,
@@ -156,7 +185,7 @@ const ManagePage: NextPage = () => {
       round: round,
       variant: variant,
       font: font,
-      isStyled: isStyled
+      isStyled: isStyled,
     };
 
     const data = {
@@ -178,14 +207,13 @@ const ManagePage: NextPage = () => {
       WalletButtons: walletButtons,
       socialButtons: socialButtons,
       bgColor: bgColor,
-      styles: styles
+      styles: styles,
     };
 
     return data;
   };
 
   const uploadJson = async () => {
-    
     const data = JSON.stringify(getJson());
 
     // console.log(data);
@@ -316,16 +344,14 @@ const ManagePage: NextPage = () => {
             return;
           }
 
-          if(network !== 'venom'){
-            setError(
-              `Please switch your network to Venom`
-            );
+          if (network !== 'venom') {
+            setError(`Please switch your network to Venom`);
             setIsLoading(false);
             return;
           }
 
-          if(json) {
-            return
+          if (json) {
+            return;
           }
 
           setIsLoading(true);
@@ -351,7 +377,9 @@ const ManagePage: NextPage = () => {
           }
           setNftJson(nftJson);
 
-          const ipfsData: string | undefined = nftJson.attributes?.find((att) => att.trait_type === 'DATA')?.value;
+          const ipfsData: string | undefined = nftJson.attributes?.find(
+            (att) => att.trait_type === 'DATA'
+          )?.value;
           setJsonHash(String(ipfsData));
           if (ipfsData === '') {
             setJson({
@@ -396,6 +424,7 @@ const ManagePage: NextPage = () => {
             setFont(FONTS[0]);
             setIsStyled(false);
             setIsLoading(false);
+            setIsLoaded(true);
             return;
           }
 
@@ -423,13 +452,14 @@ const ManagePage: NextPage = () => {
           setFont(res.data?.styles?.font ?? FONTS[0]);
           setIsStyled(res.data?.styles?.isStyled ?? false);
           setIsLoading(false);
+          setIsLoaded(true);
         } catch (error: any) {
           // console.log('error fetching nft', error);
           // console.log("retries : " + retries)
-          if (error.code === 'ERR_NETWORK' || error.code === "ERR_BAD_REQUEST") {
+          if (error.code === 'ERR_NETWORK' || error.code === 'ERR_BAD_REQUEST') {
             // console.log("retries : " + retries)
             if (retries < 5) {
-              setRetries((r)=>  r + 1)
+              setRetries((r) => r + 1);
               let currentIndex = IPFS_URLS.indexOf(ipfsGateway);
               let newIndex = currentIndex === IPFS_URLS.length - 1 ? 0 : currentIndex + 1;
               setIpfsGateway(IPFS_URLS[newIndex]);
@@ -454,7 +484,6 @@ const ManagePage: NextPage = () => {
               });
               setIsLoading(false);
               setError(error.message + ' please try again');
-              
             }
           } else {
             setIsLoading(false);
@@ -465,13 +494,15 @@ const ManagePage: NextPage = () => {
       }
     }
     getProfileJson();
-  }, [connectedAccount,account,network]);
+  }, [connectedAccount, account, network]);
 
   return (
     <>
       <Head>
         <title>
-          {`${json && !isLoading ? json.name : SITE_TITLE} | ${json && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION}`}
+          {`${json && !isLoading ? json.name : SITE_TITLE} | ${
+            json && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
+          }`}
         </title>
         <meta
           name="description"
@@ -486,76 +517,117 @@ const ManagePage: NextPage = () => {
       </Head>
 
       {connected ? (
-        <Box width="100%" minH="85vh">
+        <Box width="100%">
           <Container
             as="main"
-            maxW="container.lg"
+            maxW="full"
             display="grid"
-            placeContent="center"
-            placeItems="center"
-            minH="85vh">
+            key={'manage-venomid-main'}
+            placeContent={['center', 'center', 'center', 'start', 'start', 'start']}
+            placeItems={['start']}
+            h="100vh">
             {error ? (
               <Text my={20}>{error}</Text>
             ) : (
               <>
                 {!isLoading && json ? (
-                  
-                  <Flex my={10} direction={'column'} gap={4} width="100%">
-                    <ProfileCompletion />
-                    <EditAvatar />
-                    <CropAvatar />
-                    {/* <VenomAddressButton venomAddress={json.venomAddress} /> */}
-                    {/* <BtcAddressInput />
-                    <EthAddressInput /> */}
-                    <TitleInput />
-                    <BioTextInput />
-                    <ManageWallets json={json} nftAddress={nftAddress} />
-                    <ManageLinks json={json} nftAddress={nftAddress} />
-                    <ManageSocials json={json} nftAddress={nftAddress} />
+                  <Flex gap={[4, 4, 4, 4, 6]} justify={'center'}>
+                    {notMobile && desktop && (
+                      <Flex display={['none', 'none', 'none', 'none', 'flex']} flexDir={'column'}>
+                        <ManageSidebar onSave={uploadJson} />
+                      </Flex>
+                    )}
+
+                    <Flex display={'flex'} flexDir={'column'}>
+                      <Flex
+                        my={4}
+                        direction={'column'}
+                        
+                        gap={2}
+                        borderRadius={12}
+                        width={['100%', 'md', 'lg', 'md', 'md', 'xl']}
+                        backgroundColor={colorMode === 'light' ? 'white' : 'blackAlpha.600'}
+                        justify={'space-between'}
+                        h={notMobileH ? '96vh' : '100vh'}
+                        p={3}>
+                        <Stack>
+                        <ManageHeader />
+                        <Flex
+                          direction={'column'}
+                          maxHeight={notMobileH ? '77vh' : '80vh'}
+                          overflow={'auto'}
+                          w={'100%'}
+                          className='noscroll'
+                          gap={4}
+                          rounded={'lg'}>
+                          <ProfileCompletion />
+                          <EditAvatar />
+                          <CropAvatar />
+                          {/* <VenomAddressButton venomAddress={json.venomAddress} /> */}
+                          {/* <BtcAddressInput />
+                        <EthAddressInput /> */}
+                          <TitleInput />
+                          <BioTextInput />
+                          <ManageWallets json={json} nftAddress={nftAddress} />
+                          <ManageLinks json={json} nftAddress={nftAddress} />
+                          <ManageSocials json={json} nftAddress={nftAddress} />
+                        </Flex>
+                        </Stack>
+                        <Flex gap={2} justify={'stretch'}>
+                          <AddModal type={'square'} />
+                          {!isLoading && json && !notMobile && (
+                            <PreviewModal json={getJson()} onSave={uploadJson} />
+                          )}
+
+                          <Flex display={['none', 'none', 'none', 'flex', 'none']}>
+                            <StyleDrawer onSave={uploadJson} />
+                          </Flex>
+                          <LightMode>
+                            <Button
+                              gap={2}
+                              borderRadius={12}
+                              colorScheme="green"
+                              bgGradient={
+                                colorMode === 'light'
+                                  ? 'linear(to-r, var(--venom0), var(--bluevenom2))'
+                                  : 'linear(to-r, var(--venom0), var(--bluevenom2))'
+                              }
+                              flexDirection={'column'}
+                              w={'100%'}
+                              className="save"
+                              height="72px"
+                              isLoading={jsonUploading || isSaving || isConfirming}
+                              isDisabled={isLoading || isSaving || isConfirming}
+                              loadingText={
+                                isSaving ? 'Saving...' : isConfirming ? 'Confirming...' : ''
+                              }
+                              onClick={uploadJson}>
+                              <LinkIcon type="RiSave2Line" />
+                              Save
+                            </Button>
+
+                            <ShareButton name={name} type={'blue'} />
+                          </LightMode>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                    {isLoaded && json && notMobile && (
+                      <Flex my={4} position={'fixed'} top={1} right={4}>
+                        <Preview json={json} onSave={uploadJson} />
+                      </Flex>
+                    )}
                   </Flex>
                 ) : (
-                  <Center width={'100%'} height={150}>
+                  <Center w={'96%'} minH="94vh" position={'absolute'}>
                     <Spinner size="lg" />
                   </Center>
                 )}
-
-                <Flex
-                  my={4}
-                  gap={2}
-                  position={'fixed'}
-                  justifyContent={'center'}
-                  width={'100%'}
-                  zIndex={100}
-                  bottom={-5}
-                  p={4}
-                  py={6}
-                  backgroundColor={colorMode === 'light' ? 'whiteAlpha.600' : 'blackAlpha.600'}
-                  backdropFilter="blur(12px)">
-                  <AddModal />
-                  {!isLoading && json && <Preview json={getJson()} onSave={uploadJson} />}
-                  <Button
-                    variant={'outline'}
-                    gap={2}
-                    borderRadius={12}
-                    colorScheme="green"
-                    flexDirection={'column'}
-                    className='save'
-                    height="72px"
-                    isLoading={jsonUploading || isSaving || isConfirming}
-                    isDisabled={isLoading || isSaving || isConfirming}
-                    loadingText={isSaving ? 'Saving...' : isConfirming ? 'Confirming...' : ''}
-                    onClick={uploadJson}>
-                    <RiUpload2Line size={'28px'} />
-                    Save
-                  </Button>
-                  <ShareButton name={name} />
-                </Flex>
               </>
             )}
           </Container>
         </Box>
       ) : (
-        <Center my={8} flexDirection="column" minH="75vh">
+        <Center my={8} flexDirection="column" minH="100vh">
           <Text my={4}>Please Connect Your Venom Wallet</Text>
           <ConnectButton />
         </Center>

@@ -2,16 +2,17 @@ import * as React from 'react';
 import { Box, useColorMode } from '@chakra-ui/react';
 interface Props {
   color?: string;
+  size?: string | number;
 }
 
-function ZealyLogo({ color }: Props) {
+function ZealyLogo({ color, size = '34' }: Props) {
   const { colorMode } = useColorMode();
   return (
     <Box>
       <svg
         aria-label="Logo"
-        width={34}
-        height={34}
+        width={size}
+        height={size}
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg">
         <path

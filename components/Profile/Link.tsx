@@ -68,12 +68,14 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           id={`venom-id-${title}-link`}>
           <Button
             size={styles?.size === 'sm' ? 'md' : 'lg'}
-            fontSize={styles?.size === 'lg' ? 'xl' : styles?.size === 'md' ? 'lg' : 'md'}
-            height={styles?.size === 'lg' ? '68px' : styles?.size === 'md' ? '48px' : '40px'}
+            fontSize={styles?.size === 'lg' ? 'xl' : styles?.size === 'md' ? 'lg' : 'mg'}
+            height={styles?.size === 'lg' ? '80px' : styles?.size === 'md' ? '64px' : '44px'}
             rounded={round}
             variant={variant}
             colorScheme={buttonBg}
             color={getColor(variant, buttonBg, lightMode)}
+            placeContent={'center'}
+            placeItems={'center'}
             width={'100%'}>
             {icon}
             <Text px={2}>{title}</Text>
@@ -194,7 +196,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
               }}
               width={'100%'}
               height={styles?.size === 'lg' ? '320px' : styles?.size === 'md' ? '160px' : '80px'}
-              style={{ borderRadius: round === 'none' ? 0 : round === 'md' ? 8 : 16 }}
+              style={{ borderRadius: round === 'none' ? '0px' : round === 'md' ? '8px' : '16px' }}
             />
           }
         </Box>

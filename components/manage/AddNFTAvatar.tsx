@@ -39,6 +39,7 @@ import {
   openAddLinkAtom,
   openAddNftAtom,
   socialsArrayAtom,
+  editingAvatarFileAtom,
 } from 'core/atoms';
 import { capFirstLetter, getAvatarUrl, sleep, truncAddress } from 'core/utils';
 import { LinkIcon } from 'components/logos';
@@ -68,6 +69,7 @@ import {
 import axios from 'axios';
 import NetworkModal from './NetworkModal';
 import { ThirdwebNftMedia } from '@thirdweb-dev/react';
+import ReactPlayer from 'react-player';
 
 interface Props {
   defaultType: string;
@@ -97,6 +99,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
   const [currentNetwork, setCurrentNetwork] = useState(network);
   const [nftjsons, setNftJsons] = useState<BaseNftJson[] | undefined>(undefined);
   const [editingAvatar, setEditingAvatar] = useAtom(editingAvatarAtom);
+  const setEditingAvatarFile = useSetAtom(editingAvatarFileAtom);
   const [avatarNft, setAvatarNft] = useAtom(avatarNftAtom);
   const avatarShape = useAtomValue(avatarShapeAtom);
 
@@ -140,6 +143,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
     }
 
     setEditingAvatar(String(avatarURL));
+    setEditingAvatarFile(undefined);
     setAvatarNft(String(nft.address));
     onClose();
   }
@@ -171,12 +175,15 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
         : nft.preview?.source;
     }
 
+    let _styleType;
+
     _setType('nft link');
     _setTitle(String(nft.name));
     _setImage(String(avatarURL));
     if (nft.network?.includes('venom')) {
       _setUrl(VENTORY_NFT + String(nft.address));
       _setContent(String(nft.address));
+      _styleType = 'normal';
     } else {
       _setUrl(
         OPENSEA_URL + String(nft.network) + '/' + String(nft.address) + '/' + String(nft.tokenId)
@@ -187,17 +194,22 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
           metadata: nft.metadata,
         })
       );
+      if (
+        (nft.metadata && nft.metadata?.animation_url) ||
+        String(nft.preview?.mimetype).includes('mp4') ||
+        String(nft.preview?.mimetype).includes('mp3')
+      ) {
+        _styleType = 'complex';
+      } else {
+        _styleType = 'normal';
+      }
     }
+
     _setStyles({
       size: 'md',
       network: nft.network,
       scanLink: false,
-      type:
-        (nft.metadata && nft.metadata.animation_url) ||
-        String(nft.preview?.mimetype).includes('mp4') ||
-        String(nft.preview?.mimetype).includes('mp3')
-          ? 'complex'
-          : 'normal',
+      type: _styleType,
     });
     _setAddLinkOpen(true);
     onClose();
@@ -430,7 +442,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
           _setOpen(true);
           onOpen();
         }}>
-        {defaultType === 'avatar' ? 'Pick From NFTs' : 'Pick NFT'}
+        {defaultType === 'avatar' ? 'Pick NFT Avatar' : 'Pick NFT'}
       </Button>
       <Drawer key={key} onClose={onClose} isOpen={_open} size={'full'} placement="bottom">
         <DrawerOverlay />
@@ -493,7 +505,8 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
                       alignItems={'center'}
                       justifyContent={'center'}>
                       <Box width={listView ? 100 : 150} maxH={250}>
-                        {String(nft.preview?.mimetype).includes('mp4') ? (
+                        {String(nft.preview?.mimetype).includes('mp4') &&
+                        !nft.network?.includes('venom') ? (
                           <Center width={listView ? 100 : 150} height={180}>
                             <ThirdwebNftMedia
                               metadata={nft.metadata}
@@ -503,6 +516,8 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
                               style={{ borderRadius: 12 }}
                             />
                           </Center>
+                        ) : String(nft.preview?.mimetype).includes('mp4') ? (
+                          <ReactPlayer url={nft?.preview?.source} width={'100%'} loop muted playing height={230}/>
                         ) : (
                           <Avatar
                             noanimate
@@ -556,8 +571,6 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
                 <Text fontSize="xl">
                   Looks like You don't own any NFTs on {capFirstLetter(network)}
                 </Text>
-                
-                
               </Center>
             )}
           </DrawerBody>

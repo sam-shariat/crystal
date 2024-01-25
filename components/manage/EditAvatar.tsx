@@ -12,8 +12,8 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 import { Avatar } from 'components/Profile';
-import { avatarAtom, avatarNftAtom, avatarShapeAtom, editingAvatarAtom, jsonAtom, nameAtom, nftJsonAtom } from 'core/atoms';
-import { useAtom, useAtomValue } from 'jotai';
+import { avatarAtom, avatarNftAtom, avatarShapeAtom, editingAvatarAtom, editingAvatarFileAtom, jsonAtom, nameAtom, nftJsonAtom } from 'core/atoms';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import AddNFTAvatar from './AddNFTAvatar';
 
@@ -23,8 +23,9 @@ export default function EditAvatar() {
   const name = useAtomValue(nameAtom);
   const avatarShape = useAtomValue(avatarShapeAtom);
   const [avatar, setAvatar] = useAtom(avatarAtom);
-  const [editingAvatar, setEditingAvatar] = useAtom(editingAvatarAtom);
-  const [notMobile] = useMediaQuery('(min-width: 770px)');
+  const setEditingAvatar = useSetAtom(editingAvatarAtom);
+  const setEditingAvatarFile = useSetAtom(editingAvatarFileAtom);
+  const [notMobile] = useMediaQuery('(min-width: 992px)');
 
   function buildFileSelector() {
     if (process.browser) {
@@ -33,6 +34,7 @@ export default function EditAvatar() {
       fileSelector.multiple = false;
       fileSelector.onchange = async (e: any) => {
         setEditingAvatar(URL.createObjectURL(e.target.files[0]))
+        setEditingAvatarFile(e.target.files[0])
         //sendproFileToIPFS(e.target.files[0]);
       };
       fileSelector.accept = 'image/x-png,image/gif,image/jpeg';
@@ -43,30 +45,27 @@ export default function EditAvatar() {
   const imageFileSelect = buildFileSelector();
 
   return (
-    <Flex my={4} gap={[6,6,8]} alignItems={'center'} justify={'center'} className='avatar'>
-      <Box w={notMobile ? '200px' : '100px'} key={avatar}>
-        <Avatar maxH={notMobile ? '200px' : '100px'} url={avatar} shape={avatarShape} />
+    <Flex gap={[6,6,8]} alignItems={['center']} justify={['center']} className='avatar'>
+      <Box w={notMobile ? '100px' : '120px'} key={avatar}>
+        <Avatar maxH={notMobile ? '100' : '120'} url={avatar} shape={avatarShape} />
       </Box>
       <Stack>
-        <Heading fontWeight="bold" fontSize="2xl" textShadow="0 0 20px #00000070">
-          {name}
-        </Heading>
-        <Flex>
-        <Menu>
-          <MenuButton as={Button} variant={'outline'} colorScheme={colorMode === 'light' ? 'dark' : 'light'}>
+        
+        {/* <Flex><Menu>
+          <MenuButton as={Button} variant={'outline'} colorScheme={'gray'}>
             Select Avatar
           </MenuButton>
-          <MenuList p={0} display={'flex'} flexDir={'column'} bg={`${colorMode}.400`}>
+          <MenuList p={0} display={'flex'} flexDir={'column'} bg={`${colorMode}.400`}> */}
             <AddNFTAvatar defaultType="avatar" />
             <Button
               isLoading={avatarUploading}
               variant={'outline'}
               onClick={() => imageFileSelect !== undefined && imageFileSelect.click()}>
-              Upload To IPFS
+              Upload Avatar
             </Button>
-          </MenuList>
-        </Menu>
-        </Flex>
+          {/* </MenuList>
+        </Menu> </Flex>*/}
+        
       </Stack>
     </Flex>
   );

@@ -60,8 +60,8 @@ export default function AddWalletButton() {
 
   const addWallet = () => {
     let _newWalletsArray = [
-      ...walletsArray,
       { key: selectedWallet.toLowerCase(), value: selectedWalletUrl },
+      ...walletsArray
     ];
     setWalletsArray(_newWalletsArray);
     setSelectedWalletUrl('');

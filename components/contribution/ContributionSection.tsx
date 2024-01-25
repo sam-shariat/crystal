@@ -13,6 +13,11 @@ import {
   Container,
   Box,
   Collapse,
+  AccordionItem,
+  Accordion,
+  AccordionButton,
+  AccordionPanel,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import {
@@ -40,6 +45,7 @@ export default function ContributionSection() {
   const [role, setRole] = useState('Graphic Designer');
   const [uploading, setUploading] = useState(false);
   const [sending, setSending] = useState(false);
+  const [small] = useMediaQuery('(min-width: 375px)');
   const [sent, setSent] = useState(false);
   const [telegram, setTelegram] = useState('');
   const [email, setEmail] = useState('');
@@ -162,28 +168,39 @@ export default function ContributionSection() {
 
   return (
     <>
-      <Box>
-        <Container
-          as="main"
-          maxW="container.lg"
-          display="grid"
-          flexDir={'column'}
-          justifyContent={'center'}
-          alignContent={'center'}
-          minH={'84vh'}
-          flexGrow={1}>
-          <Box py={6} gap={2} width={'100%'}>
-            <Flex align={'center'} justify={'center'} gap={2} my={12} flexDir={['column','column','column','row']}>
-              <Text fontSize={['4xl','5xl','6xl']} fontWeight={'bold'} textAlign={['center','center','center','left']}>
-                {t('contributer')}
+      <Accordion
+        allowToggle
+        allowMultiple={false}
+        defaultIndex={[0]}
+        className="bio"
+        borderRadius={10}
+        minWidth={'100%'}
+        size="lg"
+        backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
+        display={'flex'}>
+        <AccordionItem border={0} borderRadius={10} width={'100%'}>
+          <AccordionButton
+            width={'100%'}
+            as={Button}
+            justifyContent={'center'}
+            h={'120px'}>
+            <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
+              <LinkIcon type="RiShakeHandsLine" size={small ? '46' : '36'} />
+              <Text fontWeight={'bold'} display={'flex'} flex={1} fontSize={['xl', '2xl']}>
+                Contributions Program
               </Text>
-              <ImageBox srcUrl="/screens/contribute.png" animation />
             </Flex>
+          </AccordionButton>
+          <AccordionPanel py={4} minWidth="100%">
             <Flex>
-              <Box display={'flex'} flexDir={'column'} gap={10} w={'100%'} fontSize={['lg','lg','lg','xl']} my={10}>
-                <Text>There are several ways to become a major contributor in venom id</Text>
-                  
-                
+              <Box
+                display={'flex'}
+                flexDir={'column'}
+                gap={10}
+                w={'100%'}
+                fontSize={['lg', 'lg', 'lg', 'xl']}
+                my={10}>
+                <Text>There are several ways to become a major contributor at Venom ID</Text>
 
                 <Flex gap={2} align={'center'}>
                   <Select
@@ -234,7 +251,7 @@ export default function ContributionSection() {
                   p={4}
                   py={6}
                   bgColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}>
-                  <Text fontWeight={['normal','normal','bold']}>Email address</Text>
+                  <Text fontWeight={['normal', 'normal', 'bold']}>Email address</Text>
                   <Input
                     _focus={{ borderColor: useColorModeValue('var(--dark1)', 'var(--white)') }}
                     value={email}
@@ -246,7 +263,7 @@ export default function ContributionSection() {
                     }}
                   />
 
-                  <Text fontWeight={['normal','normal','bold']} mt={4}>
+                  <Text fontWeight={['normal', 'normal', 'bold']} mt={4}>
                     Telegram username (optional)
                   </Text>
                   <Input
@@ -261,7 +278,7 @@ export default function ContributionSection() {
                   />
                   {role !== 'Investment NFT' && (
                     <>
-                      <Text fontWeight={['normal','normal','bold']} mt={4}>
+                      <Text fontWeight={['normal', 'normal', 'bold']} mt={4}>
                         Resume (optional)
                       </Text>
                       <Button
@@ -277,7 +294,7 @@ export default function ContributionSection() {
                   )}
                   {role === 'Investment NFT' && (
                     <>
-                      <Text fontWeight={['normal','normal','bold']} mt={4}>
+                      <Text fontWeight={['normal', 'normal', 'bold']} mt={4}>
                         Ethereum Wallet Address (optional)
                       </Text>
                       <Input
@@ -294,9 +311,8 @@ export default function ContributionSection() {
                       />
                     </>
                   )}
-                  <Text fontWeight={['normal','normal','bold']} mt={4}>
-                  Anything you wanna share (optional)
-
+                  <Text fontWeight={['normal', 'normal', 'bold']} mt={4}>
+                    Anything you wanna share (optional)
                   </Text>
                   <Input
                     _focus={{ borderColor: useColorModeValue('var(--dark1)', 'var(--white)') }}
@@ -336,14 +352,14 @@ export default function ContributionSection() {
                 </Button>
               )}
               <ShareButtons
-                    text={`🌐 Contribution Opportunity%0a%0a🚀Join Venom ID as a ${role} Contributor!%0a%0aBe part of the team shaping the future of identity management.%0a%0aJoin us now! @venomid_network%0a%0a`}
-                    hashtags={`${role.replaceAll(' ', '').replace('/', '')},role`}
-                    url={SITE_URL + 'contribute'}
-                  />
+                text={`🌐 Contribution Opportunity%0a%0a🚀Join Venom ID as a ${role} Contributor!%0a%0aBe part of the team shaping the future of identity management.%0a%0aJoin us now! @venomid_network%0a%0a`}
+                hashtags={`${role.replaceAll(' ', '').replace('/', '')},role`}
+                url={SITE_URL + 'contribute'}
+              />
             </Flex>
-          </Box>
-        </Container>
-      </Box>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 }

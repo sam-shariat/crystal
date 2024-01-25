@@ -48,6 +48,7 @@ export default function WalletInput({ title, value, setValue }: Props) {
         size="lg"
         value={value}
         variant={'filled'}
+        border={'1px solid gray'}
         placeholder={`Enter ${title} Wallet Address`}
         onChange={(e) => setValue(e.currentTarget.value)}
         pr={title !== 'Bitcoin' ? '96px' : '48px'}

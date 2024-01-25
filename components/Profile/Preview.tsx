@@ -1,73 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Button,
   Container,
   Heading,
   Stack,
-  HStack,
-  useClipboard,
-  Tooltip,
-  IconButton,
-  useDisclosure,
   Text,
   Flex,
   useMediaQuery,
-  Center,
   useColorMode,
   Box,
-  Link,
-  SimpleGrid,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  ModalOverlay,
-  Menu,
-  MenuButton,
-  MenuList,
-  Switch,
-  ButtonGroup,
+  LightMode,
+  DarkMode,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { Avatar, Socials, ProfileSkeleton } from 'components/Profile';
 import Links from 'components/Profile/Links';
+
 import {
-  RiFileCopyLine,
-  RiCheckDoubleFill,
-  RiCloseLine,
-  RiUpload2Line,
-  RiMessage3Line,
-  RiComputerLine,
-  RiSmartphoneLine,
-} from 'react-icons/ri';
-import { MdOutlineVisibility } from 'react-icons/md';
-import {
+  avatarAtom,
   avatarShapeAtom,
   bgColorAtom,
   colorModeAtom,
-  enableDonationsAtom,
-  enablePaymentsAtom,
   fontAtom,
   horizontalSocialAtom,
-  horizontalWalletsAtom,
   isStyledAtom,
   lightModeAtom,
-  showAllNftsAtom,
+  mobileViewAtom,
   socialButtonsAtom,
+  subtitleAtom,
+  titleAtom,
   useLineIconsAtom,
-  variantAtom,
   walletButtonsAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import BgPicker from 'components/manage/BgPicker';
-import NftBgPicker from 'components/manage/NftBgPicker';
-import SettingsButton from 'components/manage/SettingButton';
 import Wallets from './Wallets';
-import { ButtonColorPicker, ButtonRoundPicker, ButtonVarianticker } from 'components/manage';
-import FontPicker from 'components/manage/FontPicker';
-import { getIconInButtonColor } from 'core/utils';
-import AvatarShapePicker from 'components/manage/AvatarShapePicker';
+import { DeviceFrameset } from 'react-device-frameset';
+import 'react-device-frameset/styles/marvel-devices.min.css';
 
 interface Attribute {
   trait_type: string;
@@ -81,7 +48,6 @@ interface Props {
 
 const Preview = ({ json, onSave }: Props) => {
   const { t } = useTranslate();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const { colorMode, toggleColorMode } = useColorMode();
   const [useLineIcons, setUseLineIcons] = useAtom(useLineIconsAtom);
@@ -93,104 +59,109 @@ const Preview = ({ json, onSave }: Props) => {
   const setIsStyled = useSetAtom(isStyledAtom);
   const avatarShape = useAtomValue(avatarShapeAtom);
   const font = useAtomValue(fontAtom);
-  const [showAllNfts, setShowAllNfts] = useAtom(showAllNftsAtom);
-  const [donations, setDonations] = useAtom(enableDonationsAtom);
-  const [payments, setPayments] = useAtom(enablePaymentsAtom);
-  const lightMode = json.lightMode;
+  const avatar = useAtomValue(avatarAtom);
+  const title = useAtomValue(titleAtom);
+  const subtitle = useAtomValue(subtitleAtom);
+  const lightMode = useAtomValue(lightModeAtom);
   const [colorM, setColorM] = useAtom(colorModeAtom);
-  const [mobileView, setMobileView] = useState(false);
+  const mobileView = useAtomValue(mobileViewAtom);
 
-  useEffect(() => {
-    // console.log(json)
-    if (isOpen) {
-      if (lightMode === true && colorMode === 'dark') {
-        toggleColorMode();
-        // console.log('toggledColor');
-      }
+  // useEffect(() => {
+  //   // console.log(json)
 
-      if (lightMode === false && colorMode === 'light') {
-        toggleColorMode();
-        // console.log('toggledColor');
-      }
-      setIsStyled(true);
-    } else {
-      if (colorMode !== colorM) {
-        toggleColorMode();
-      }
-    }
-  }, [isOpen,lightMode]);
+  //   if (lightMode === true && colorMode === 'dark') {
+  //     toggleColorMode();
+  //     // console.log('toggledColor');
+  //   }
+
+  //   if (lightMode === false && colorMode === 'light') {
+  //     toggleColorMode();
+  //     // console.log('toggledColor');
+  //   }
+
+  //   setIsStyled(true);
+  // }, [lightMode]);
 
   return (
     <>
-      <Button
-        variant={'outline'}
-        gap={2}
-        borderRadius={12}
-        onClick={onOpen}
-        className='design'
-        colorScheme={'purple'}
-        flexDirection={'column'}
-        height="72px">
-        <MdOutlineVisibility size={'28px'} />
-        Design
-      </Button>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        size={mobileView ? 'md' : 'fullscreen'}
-        scrollBehavior="outside"
-        isCentered>
-        <ModalOverlay bg="blackAlpha.800" backdropFilter="auto" backdropBlur={'6px'} />
-        <ModalContent
+      <DeviceFrameset
+        // @ts-ignore: Unreachable code error
+        device={String(mobileView ? 'iPhone X' : 'iPad Mini')}
+        color={colorMode === 'light' ? 'black' : 'silver'}
+        // @ts-ignore: Unreachable code error
+        height={mobileView ? '90vh' : '76vh'}>
+        {/* <Center
+          rounded={'2xl'}
+          w={'100%'}
+          borderRadius={0}
+          px={4}
+          py={2}
+          h={mobileView ? '88px' : '60px'}
+          transition={'"all 1s ease"'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
+          pt={mobileView ? 9 : 2}
+          bgColor={useColorModeValue('light.600', 'dark.600')}>
+          <RiLinksLine/>
+
+          <Text transition={'all 1s ease'} borderRadius={12} border={'1px solid gray'} p={2} px={4}>
+            venomid.link/{json.name.slice(0, -4)}
+          </Text>
+
+          <FaCircle />
+        </Center> */}
+
+        <Flex
           bg={bgColor}
+          key={`preview-venomid-desktop-${lightMode}`}
           bgSize={'cover'}
           bgRepeat={'no-repeat'}
           bgPosition={'center'}
-          pb={notMobile ? 0 : 10}
-          pt={notMobile ? 10 : 0}>
-          <ModalBody p={notMobile ? 'auto' : '0px'} py={10}>
+          justify={'center'}
+          minH={'100%'}
+          color={lightMode ? 'var(--dark1)' : 'white'}
+        >
+          <Flex my={10}>
             <>
               <Container
-                as="main"
-                width={mobileView ? '100%' : ['100%','100%','md','lg','xl']}
+                width={mobileView ? '380px' : 'lg'}
+                key={`venomid-preview-main-${lightMode}`}
                 display="flex"
                 flexDir={'column'}
                 gap={4}
-                placeContent="center"
-                placeItems="center"
-                fontFamily={font}
-                color={!lightMode ? 'var(--white)' : 'var(--dark1)'}
-                minH="95vh">
+                fontFamily={font}>
                 {json && (
-                  <Flex direction='column' justify={'center'} align={'center'} gap={2} width='100%'>
-                    {(!notMobile || mobileView) && (
-                      <Stack mt={6} textAlign="center" w={'100%'}>
-                        <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
-                          {json.title}
-                        </Heading>
-                        <Heading fontWeight="normal" fontSize="xl" fontFamily={font}>
-                          {json.subtitle}
-                        </Heading>
-                      </Stack>
-                    )}
-                    <Flex gap={8} mt={notMobile ? 4 : 0} align={'center'} justify={'center'} w={'100%'}>
-                      
-                      <Box maxW={['200px','200px','200px','220px']}>
-                        <Avatar
-                          my={6}
-                          url={json.avatar}
-                          alt={json.name + 'avatar image'}
-                          shape={avatarShape}
-                          shadow="none"
-                        />
-                      </Box>
-                      {(notMobile && !mobileView) && (
-                        <Stack >
+                  <Flex direction="column" justify={'center'} align={'center'} gap={4} width="100%">
+                    <Box
+                      as={lightMode ? LightMode : DarkMode}
+                      key={`preview-venomid-desktop-mode-${lightMode}`}>
+                      <Flex
+                        gap={notMobile && !mobileView ? 8 : 0}
+                        my={4}
+                        alignItems={'center'}
+                        justifyContent={'center'}
+                        w={'100%'}
+                        flexDir={notMobile && !mobileView ? 'row' : 'column'}>
+                        <Box
+                          maxW={notMobile && !mobileView ? '200px' : '180px'}
+                          key={'avatar-box-' + avatar}>
+                          <Avatar
+                            my={6}
+                            key={'avatar-' + avatar}
+                            maxH={notMobile && !mobileView ? '200' : '180'}
+                            url={avatar}
+                            alt={json.name + 'avatar image'}
+                            shape={avatarShape}
+                            shadow="none"
+                          />
+                        </Box>
+
+                        <Stack textAlign={notMobile && !mobileView ? 'left' : 'center'}>
                           <Heading fontWeight="bold" fontSize="3xl" fontFamily={font}>
-                            {json.title}
+                            {title}
                           </Heading>
                           <Heading fontWeight="normal" fontSize="xl" fontFamily={font}>
-                            {json.subtitle}
+                            {subtitle}
                           </Heading>
                           <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
                             {json.name}
@@ -203,198 +174,51 @@ const Preview = ({ json, onSave }: Props) => {
                             Message
                           </Button> */}
                         </Stack>
-                      )}
-                    </Flex>
-                    {(!notMobile || mobileView) && (
-                      <>
-                        <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
-                          {json.name}
-                        </Heading>
-                        {/* <Button
-                          borderRadius={'25'}
-                          variant={'outline'}
-                          leftIcon={<RiMessage3Line />}>
-                          Message
-                        </Button> */}
-                      </>
-                    )}
+                      </Flex>
 
-                    {horizontalSocial && (
-                      <Socials
-                        json={json}
-                        onlyIcons
-                      />
-                    )}
+                      {horizontalSocial && <Socials json={json} onlyIcons />}
 
-                    {walletButtons && (
-                      <Wallets
-                        json={json}
-                        color={
-                          !lightMode
-                            ? 'var(--chakra-colors-gray-100)'
-                            : 'var(--chakra-colors-gray-800)'
-                        }
-                      />
-                    )}
-
-                    <Stack width={'100%'} gap={2}>
-                      {json.bio && json.bio.length > 0 && (
-                        <Text
-                          fontWeight="normal"
-                          fontSize={notMobile ? 'xl' : 'lg'}
-                          my={4}
-                          textAlign={'center'}>
-                          {json.bio}
-                        </Text>
-                      )}
-                      <Links
-                        json={json}
-                        color={
-                          !lightMode
-                            ? 'var(--chakra-colors-gray-100)'
-                            : 'var(--chakra-colors-gray-800)'
-                        }
-                      />
-
-                      {socialButtons && (
-                        <Socials
+                      {walletButtons && (
+                        <Wallets
                           json={json}
+                          color={
+                            !lightMode
+                              ? 'var(--chakra-colors-gray-100)'
+                              : 'var(--chakra-colors-gray-800)'
+                          }
                         />
                       )}
-                    </Stack>
+
+                      <Stack width={'100%'} gap={2} pb={4}>
+                        {json.bio && json.bio.length > 0 && (
+                          <Text
+                            fontWeight="normal"
+                            fontSize={notMobile ? 'xl' : 'lg'}
+                            my={4}
+                            textAlign={'center'}>
+                            {json.bio}
+                          </Text>
+                        )}
+
+                        <Links
+                          json={json}
+                          color={
+                            !lightMode
+                              ? 'var(--chakra-colors-gray-100)'
+                              : 'var(--chakra-colors-gray-800)'
+                          }
+                        />
+
+                        {socialButtons && <Socials json={json} />}
+                      </Stack>
+                    </Box>
                   </Flex>
                 )}
-                <Flex
-                  gap={2}
-                  position={'fixed'}
-                  justifyContent={'space-between'}
-                  width={'100%'}
-                  display={'flex'}
-                  zIndex={1000}
-                  top={notMobile ? 0 : 'inherit'}
-                  bottom={!notMobile ? 0 : 'inherit'}
-                  left={0}
-                  p={3}
-
-                  backgroundColor={'blackAlpha.600'}
-                  backdropFilter="blur(12px)">
-                  <ButtonGroup isAttached={!notMobile}>
-                    <Menu>
-                      <MenuButton as={Button}>styles</MenuButton>
-                      <MenuList
-                        py={0}
-                        width={'300px'}
-                        bg={colorMode === 'light' ? 'var(--lightGrey)' : 'var(--dark)'}>
-                        <BgPicker />
-                        <NftBgPicker />
-                        <ButtonColorPicker />
-                        <ButtonRoundPicker />
-                        <ButtonVarianticker />
-                        <AvatarShapePicker />
-                        <FontPicker />
-                      </MenuList>
-                    </Menu>
-                    <Menu>
-                      <MenuButton as={Button}>layout</MenuButton>
-                      <MenuList
-                        py={0}
-                        width={'300px'}
-                        borderRadius={12}
-                        bg={colorMode === 'light' ? 'var(--lightGrey)' : 'var(--dark)'}>
-                        <SettingsButton
-                          title="Use Line Icons"
-                          value={useLineIcons}
-                          setValue={setUseLineIcons}
-                          top
-                        />
-                        <SettingsButton
-                          title="Social Icons"
-                          value={horizontalSocial}
-                          setValue={setHorizontalSocial}
-                        />
-                        <SettingsButton
-                          title="Wallet Buttons"
-                          value={walletButtons}
-                          setValue={setWalletButtons}
-                        />
-                        <SettingsButton
-                          title="Social Buttons"
-                          value={socialButtons}
-                          setValue={setSocialButtons}
-                          bottom
-                        />
-                      </MenuList>
-                    </Menu>
-
-                    {/* <Menu>
-                      <MenuButton as={Button}>options</MenuButton>
-                      <MenuList
-                        py={0}
-                        width={'300px'}
-                        borderRadius={12}
-                        bg={colorMode === 'light' ? 'var(--lightGrey)' : 'var(--dark)'}>
-                        <SettingsButton
-                          title="NFT Gallery"
-                          value={showAllNfts}
-                          setValue={setShowAllNfts}
-                          top
-                        />
-                        <SettingsButton
-                          title="Enable Donations"
-                          value={donations}
-                          setValue={setDonations}
-                        />
-                        <SettingsButton
-                          title="Enable Payments"
-                          value={payments}
-                          setValue={setPayments}
-                          bottom
-                        />
-                      </MenuList>
-                    </Menu> */}
-                  </ButtonGroup>
-                  <Flex gap={2}>
-                    {notMobile && (
-                      <Tooltip
-                        borderRadius={4}
-                        label={<Text p={2}>{mobileView ? 'Desktop View' : 'Mobile View'}</Text>}
-                        hasArrow
-                        color="white"
-                        bgColor={'black'}>
-                        <IconButton
-                          aria-label="mobile-desktop-view"
-                          onClick={() => {
-                            setMobileView(!mobileView);
-                          }}>
-                          {mobileView ? <RiComputerLine /> : <RiSmartphoneLine />}
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                    <Tooltip
-                      borderRadius={4}
-                      label={<Text p={2}>Save</Text>}
-                      hasArrow
-                      color="white"
-                      bgColor={'black'}>
-                      <IconButton
-                        aria-label="save-design-modal"
-                        onClick={() => {
-                          onClose();
-                          onSave();
-                        }}>
-                        <RiUpload2Line />
-                      </IconButton>
-                    </Tooltip>
-                    <IconButton aria-label="close-design-modal" onClick={onClose}>
-                      <RiCloseLine />
-                    </IconButton>
-                  </Flex>
-                </Flex>
               </Container>
             </>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+          </Flex>
+        </Flex>
+      </DeviceFrameset>
     </>
   );
 };

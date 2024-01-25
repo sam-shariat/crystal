@@ -39,22 +39,24 @@ export default function Header() {
   const { colorMode, toggleColorMode } = useColorMode();
   const [locale, setLocale] = useAtom(localeAtom);
   const [notMobile] = useMediaQuery('(min-width: 992px)');
+  const [small] = useMediaQuery('(min-width: 375px)');
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { pathname } = useRouter();
   const { t } = useTranslate();
   const home = pathname === '/' ? true : false;
 
   useEffect(() => {
-    if (colorMode !== colorM) {
-
-      toggleColorMode();
+    if (!pathname.includes('nftAddress')) {
+      if (colorMode !== colorM) {
+        toggleColorMode();
+      }
     }
-  }, [colorM,colorMode]);
+  }, [colorM, colorMode]);
 
   return (
     <>
-      {pathname === ('/') && (
-        <Center px={[4,4,0]} py={2} bgColor="var(--venom3)" color={'white'}>
+      {pathname === '/' && (
+        <Center px={[4, 4, 0]} py={2} bgColor="var(--venom3)" color={'white'}>
           {t('testnetNotice')}
         </Center>
       )}
@@ -71,7 +73,7 @@ export default function Header() {
         backdropBlur={'8px'}
         backgroundColor={useColorModeValue('whiteAlpha.700', 'blackAlpha.700')}
         borderBottomColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}>
-        <Container maxW="container.lg" py={2} px={[2,4,4,4,0]}>
+        <Container maxW="container.lg" py={2} px={[2, 4, 4, 4, 0]}>
           <Flex justifyContent="space-between">
             <HStack gap={1}>
               {!notMobile && (
@@ -80,11 +82,19 @@ export default function Header() {
                 </IconButton>
               )}
               <NextLink href="/" passHref>
-                <Button id="venomidlogo" fontWeight="bold" variant="ghost" p={2} gap={2} >
+                <Button id="venomidlogo" fontWeight="bold" variant="ghost" p={2} gap={2}>
                   <Logo />
-                  <Text bgGradient={useColorModeValue('linear(to-r, var(--venom2), var(--bluevenom2))','linear(to-r, var(--venom0), var(--bluevenom0))')} bgClip='text'>
-                    Venom ID
-                  </Text>
+                  {small && (
+                    <Text
+                      bgGradient={
+                        colorMode === 'light'
+                          ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                          : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                      }
+                      bgClip="text">
+                      Venom ID
+                    </Text>
+                  )}
                 </Button>
               </NextLink>
               {notMobile && (
@@ -107,8 +117,8 @@ export default function Header() {
               )}
 
               {notMobile && (
-                <NextLink href="/contribute" passHref>
-                  <Button variant="ghost">{t('contribute')}</Button>
+                <NextLink href="/community" passHref>
+                  <Button variant="ghost">{t('community')}</Button>
                 </NextLink>
               )}
 
@@ -202,9 +212,9 @@ export default function Header() {
                   </Button>
                 </Link>
 
-                <Link href="/contribute">
+                <Link href="/community">
                   <Button variant="ghost" width="100%" justifyContent="left" onClick={onClose}>
-                    {t('contribute')}
+                    {t('community')}
                   </Button>
                 </Link>
                 <Link href="/manage">

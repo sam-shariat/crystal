@@ -1,47 +1,54 @@
 import {
   Button,
   Text,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverBody,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
   IconButton,
   SimpleGrid,
+  useColorMode,
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { avatarAtom, bgColorAtom, lightModeAtom } from 'core/atoms';
 import { RiCheckDoubleLine, RiCheckLine } from 'react-icons/ri';
-import { BG_IMAGES } from 'core/utils/constants';
+import { BG_COLORS, BG_IMAGES } from 'core/utils/constants';
 
 export default function NftBgPicker() {
   const [bgColor, setBgColor] = useAtom(bgColorAtom);
   const avatar = useAtom(avatarAtom);
   const setLightMode = useSetAtom(lightModeAtom);
+  const lightMode = useColorMode().colorMode === 'light';
 
   return (
     <>
-      <Popover>
-        <PopoverTrigger>
-          <Button
+      <Accordion
+        allowToggle
+        allowMultiple={false}
+        borderRadius={0}
+        size="lg"
+        display={'flex'}
+        flexGrow={1}>
+        <AccordionItem border={0} borderRadius={0} width={'100%'}>
+          <AccordionButton
+            as={Button}
+            height={['44px', '52px']}
+            _expanded={{ bgColor: lightMode ? BG_COLORS[4].color : BG_COLORS[2].color }}
+            _hover={{ bgColor: lightMode ? BG_COLORS[4].color : BG_COLORS[2].color }}
             px={4}
             variant="solid"
-            size="lg"
-            width={'100%'}
             borderRadius={0}
+            width={'100%'}
             justifyContent="space-between">
-            <Text>Background Image</Text>
+            <Text fontSize={'lg'}>Background Image</Text>
             <IconButton
               size={'sm'}
               aria-label="bg-image-picker"
               bg={bgColor}
               bgSize={'cover'}></IconButton>
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <PopoverArrow />
-          <PopoverBody>
+          </AccordionButton>
+          <AccordionPanel py={4} bgColor={lightMode ? BG_COLORS[4].color : BG_COLORS[2].color}>
             <SimpleGrid columns={[3]} gap={2}>
               {/* <IconButton
                 height={'180px'}
@@ -86,9 +93,9 @@ export default function NftBgPicker() {
                 </IconButton>
               ))}
             </SimpleGrid>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </>
   );
 }

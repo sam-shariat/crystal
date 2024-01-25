@@ -53,6 +53,8 @@ import ImageBox from 'components/claiming/ImageBox';
 import { useStorageUpload } from '@thirdweb-dev/react';
 import VIDImage from 'components/claiming/VIDImage';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { LinkIcon } from 'components/logos';
+import Link from 'next/link';
 
 interface Message {
   type: any;
@@ -596,6 +598,23 @@ const ClaimSection = () => {
                   </Flex>
                 </>
               )}
+              <Button
+              as={Link}
+              href="\community"
+              style={{ textDecoration: 'none' }}
+              width={'100%'}
+              color={'white'}
+              py={4}
+              justifyContent={'center'}
+              gap={2}
+              height={'56px'}
+              size={'lg'}
+              variant={'ghost'}>
+              <LinkIcon type="RiVerifiedBadgeLine" size={notMobile ? '32' : '24'} />
+              <Text fontWeight={'bold'} fontSize={['lg','xl']}>
+              {notMobile ? 'Join The' : 'Join'} Early Adopter Program
+              </Text>
+            </Button>
             </Stack>
           {/* ) : (
             <Center width={'100%'} gap={8} height={160} bg={colorMode === 'light' ? 'var(--venom1)':'var(--venom)'} rounded={'xl'}>
@@ -605,6 +624,7 @@ const ClaimSection = () => {
 
             </Center>
           )} */}
+          
           {name.length > 2 && !typing && fee !== -1 && venomContract?.methods && (
             <Flex
               minWidth={notMobile ? 'md' : 'xs'}

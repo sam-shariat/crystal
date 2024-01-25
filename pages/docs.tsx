@@ -16,6 +16,7 @@ import 'swagger-ui-react/swagger-ui.css';
 import { SITE_PROFILE_URL, SITE_URL } from 'core/utils/constants';
 import { Seo } from 'components/Layout/Seo';
 import Highlight from 'react-highlight';
+import Head from 'next/head';
 
 // @ts-ignore: Unreachable code error
 const SwaggerUI = dynamic<{ spec: any }>(import('swagger-ui-react'), { ssr: false });
@@ -23,67 +24,87 @@ const SwaggerUI = dynamic<{ spec: any }>(import('swagger-ui-react'), { ssr: fals
 function Docs({ spec }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { colorMode } = useColorMode();
   const [notMobile] = useMediaQuery('(min-width: 770px)');
+  const title = 'Venom ID API Docs';
+  const des = 'Naming Service for Venom';
 
   return (
-    <Box bgColor={useColorModeValue('whiteAlpha.100', 'var(--dark0)')}>
-      <Seo title="Venom ID API Docs" description="Anyone, Anywhere can access Venom IDs Data" />
-      <Container
-        as="main"
-        maxW="container.lg"
-        display="grid"
-        placeContent="center"
-        placeItems="center"
-        minH="75vh"
-        pb={12}>
-        <Stack>
-          <Stack my={12} gap={20} px={2}>
-            <Heading fontWeight="bold" fontSize="4xl">
-              Venom ID API Docs (Beta)
-            </Heading>
-            <Stack>
-              <Text fontSize="4xl" fontWeight={'bold'}>
-                Overview
-              </Text>
-              <Text>
-                Venom ID (VID) is a system that connects easy-to-understand names like 'sam.vid'
-                with technical identifiers like Venom addresses, cryptocurrency addresses, avatars,
-                and data information. VID also has a feature called 'reverse resolution' which
-                allows you to link names with Venom addresses.
-              </Text>
-            </Stack>
-            <Stack>
-              <Text fontSize="4xl" fontWeight={'bold'}>
-                Enabling Venom ID in your DApp
-              </Text>
-              <Text>
-                Integrating Venom ID (VID) into your application involves several crucial features
-                that can be implemented independently. While a comprehensive VID integration is
-                ideal, even basic support can greatly benefit users. Below, we present three levels
-                of VID integration. Level 1 is easily achievable and provides significant impact for
-                users, while levels 2 and 3 offer additional functionality, enhancing your dApp's
-                usability and improving users' experience when interacting with it.
-              </Text>
-            </Stack>
-            <Stack>
-              <Text fontSize="4xl" fontWeight={'bold'}>
-                Resolving Venom ID names
-              </Text>
-              <Text>
-                The initial step in supporting Venom ID in your application is enabling your
-                application to understand VID names and accept them wherever an address is required.{' '}
-              </Text>
-              <Text>Currently, the simplest way to do this is through our rest APIs</Text>
-              <Box rounded={'lg'} py={4} gap={2}>
-                Example In Javascript :
-                <Highlight className="javascript">
-                  {`
+    <>
+      <Seo title={title} description={des} />
+      <Head>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={des} />
+        <meta
+          name="twitter:image"
+          content={`${SITE_URL}/api/og?title=${title}&subtitle=${des}&w=30&image=${SITE_URL}logos/vidicon.svg`}
+        />
+        <meta name="og:title" content={title} />
+        <meta name="og:description" content={des} />
+        <meta
+          name="og:image"
+          content={`${SITE_URL}/api/og?title=${title}&subtitle=${des}&w=30&image=${SITE_URL}logos/vidicon.svg`}
+        />
+        <link rel="icon" type="image/png" href="/logos/vidicon.png" />
+      </Head>
+      <Box bgColor={useColorModeValue('whiteAlpha.100', 'var(--dark0)')}>
+        <Container
+          as="main"
+          maxW="container.lg"
+          display="grid"
+          placeContent="center"
+          placeItems="center"
+          minH="75vh"
+          pb={12}>
+          <Stack>
+            <Stack my={12} gap={20} px={2}>
+              <Heading fontWeight="bold" fontSize="4xl">
+                Venom ID API Docs (Beta)
+              </Heading>
+              <Stack>
+                <Text fontSize="4xl" fontWeight={'bold'}>
+                  Overview
+                </Text>
+                <Text>
+                  Venom ID (VID) is a system that connects easy-to-understand names like 'sam.vid'
+                  with technical identifiers like Venom addresses, cryptocurrency addresses,
+                  avatars, and data information. VID also has a feature called 'reverse resolution'
+                  which allows you to link names with Venom addresses.
+                </Text>
+              </Stack>
+              <Stack>
+                <Text fontSize="4xl" fontWeight={'bold'}>
+                  Enabling Venom ID in your DApp
+                </Text>
+                <Text>
+                  Integrating Venom ID (VID) into your application involves several crucial features
+                  that can be implemented independently. While a comprehensive VID integration is
+                  ideal, even basic support can greatly benefit users. Below, we present three
+                  levels of VID integration. Level 1 is easily achievable and provides significant
+                  impact for users, while levels 2 and 3 offer additional functionality, enhancing
+                  your dApp's usability and improving users' experience when interacting with it.
+                </Text>
+              </Stack>
+              <Stack>
+                <Text fontSize="4xl" fontWeight={'bold'}>
+                  Resolving Venom ID names
+                </Text>
+                <Text>
+                  The initial step in supporting Venom ID in your application is enabling your
+                  application to understand VID names and accept them wherever an address is
+                  required.{' '}
+                </Text>
+                <Text>Currently, the simplest way to do this is through our rest APIs</Text>
+                <Box rounded={'lg'} py={4} gap={2}>
+                  Example In Javascript :
+                  <Highlight className="javascript">
+                    {`
 import axios from 'axios';
 
 const resolveAddress = async (name${notMobile ? `:string` : ``}) => 
 { 
   return axios({
     method: 'get',
-    url: '${notMobile ? `https://venomid.network`: ``}/api/name/ownerAddress',
+    url: '${notMobile ? `https://venomid.network` : ``}/api/name/ownerAddress',
     data: {
       name: name;
     }
@@ -95,36 +116,40 @@ await resolveAddress('sam')
   // console.log(res.data);
 }))
 
-// Output : ${notMobile ? `0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765` : `0:4b...venom address`}
+// Output : ${
+                      notMobile
+                        ? `0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765`
+                        : `0:4b...venom address`
+                    }
 
 `}
-                </Highlight>
-              </Box>
-              <Text>
-                By accepting VID names in your application, you eliminate the need for users to
-                manually copy, paste, or type out lengthy and obscure Venom addresses. This reduces
-                errors and the risk of losing funds.
-              </Text>
-            </Stack>
-            <Stack>
-              <Text fontSize="4xl" fontWeight={'bold'}>
-                Reverse Resolution
-              </Text>
-              <Text>
-                The second level of VID integration involves displaying VID names wherever your app
-                currently displays addresses.
-              </Text>
-              <Text>
-                If a user enters a VID in your DApp, retain this name and display it whenever you
-                would typically show the address.
-              </Text>
-              <Text>
-                If a user enters an address or the address is obtained from another source, you are
-                able to display an associated VID name by using the following request. 
-                <Box rounded={'lg'} py={4} gap={2}>
-                Example In Javascript :
-                <Highlight className="javascript">
-                  {`
+                  </Highlight>
+                </Box>
+                <Text>
+                  By accepting VID names in your application, you eliminate the need for users to
+                  manually copy, paste, or type out lengthy and obscure Venom addresses. This
+                  reduces errors and the risk of losing funds.
+                </Text>
+              </Stack>
+              <Stack>
+                <Text fontSize="4xl" fontWeight={'bold'}>
+                  Reverse Resolution
+                </Text>
+                <Text>
+                  The second level of VID integration involves displaying VID names wherever your
+                  app currently displays addresses.
+                </Text>
+                <Text>
+                  If a user enters a VID in your DApp, retain this name and display it whenever you
+                  would typically show the address.
+                </Text>
+                <Text>
+                  If a user enters an address or the address is obtained from another source, you
+                  are able to display an associated VID name by using the following request.
+                  <Box rounded={'lg'} py={4} gap={2}>
+                    Example In Javascript :
+                    <Highlight className="javascript">
+                      {`
 import axios from 'axios';
 
 const resolveName = async (address${notMobile ? `:string` : ``}) =>
@@ -138,49 +163,52 @@ const resolveName = async (address${notMobile ? `:string` : ``}) =>
   });
 };
 
-${notMobile ? `await resolveName('0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765').then((res)=> {
+${
+  notMobile
+    ? `await resolveName('0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765').then((res)=> {
   // console.log(res.data);
-}))` : `await resolveName('0:4b...venom address')
+}))`
+    : `await resolveName('0:4b...venom address')
 .then((res)=> {
   // console.log(res.data);
-}))`}
+}))`
+}
 
 // Output => sam
 
 `}
-                </Highlight>
-              </Box>
-              </Text>
-              <Text>
-                This allows you to find the canonical name for an address and display it when
-                available. If no canonical name is provided, your application can fallback to
-                displaying the address as it did before.
-              </Text>
-              <Text>
-                By supporting reverse resolution, you make it easier for your users to identify the
-                accounts they interact with by associating them with a concise and readable name
-                instead of a long, cryptic Venom address.
-              </Text>
+                    </Highlight>
+                  </Box>
+                </Text>
+                <Text>
+                  This allows you to find the canonical name for an address and display it when
+                  available. If no canonical name is provided, your application can fallback to
+                  displaying the address as it did before.
+                </Text>
+                <Text>
+                  By supporting reverse resolution, you make it easier for your users to identify
+                  the accounts they interact with by associating them with a concise and readable
+                  name instead of a long, cryptic Venom address.
+                </Text>
 
-              <Text>
-              Full SDK and API Documentation Coming Soon
-              </Text>
+                <Text>Full SDK and API Documentation Coming Soon</Text>
+              </Stack>
+              <Stack>
+                <Text fontSize="4xl" fontWeight={'bold'}>
+                  API Endpoints
+                </Text>
+                <Text fontWeight={'bold'}>https://venomid.network/api/</Text>
+                <Text fontWeight={'bold'}>https://venomid.tools/api/</Text>
+                <Text fontWeight={'bold'}>https://venomid.link/api/</Text>
+              </Stack>
             </Stack>
-            <Stack>
-              <Text fontSize="4xl" fontWeight={'bold'}>
-                API Endpoints
-              </Text>
-              <Text fontWeight={'bold'}>https://venomid.network/api/</Text>
-              <Text fontWeight={'bold'}>https://venomid.tools/api/</Text>
-              <Text fontWeight={'bold'}>https://venomid.link/api/</Text>
-            </Stack>
+            <Flex width={'100%'}>
+              <SwaggerUI spec={spec} />
+            </Flex>
           </Stack>
-          <Flex width={'100%'}>
-            <SwaggerUI spec={spec} />
-          </Flex>
-        </Stack>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+    </>
   );
 }
 

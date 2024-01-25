@@ -50,18 +50,18 @@ export default function ManageSocial({ title, icon, url, setUrl, removeUrl, ind 
         allowToggle
         allowMultiple={false}
         borderRadius={10}
-        minWidth={notMobile ? 'md' : 'xs'}
+        minWidth={'100%'}
         size="lg"
         backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
         display={'flex'}
         flexGrow={1}>
         <AccordionItem border={0} borderRadius={10} width={'100%'}>
-          <AccordionButton minWidth={notMobile ? 'md' : 'xs'} as={Button} size='lg' _expanded={{bgColor: 'blackAlpha.50'}}>
+          <AccordionButton minWidth={'100%'} as={Button} size='lg' _expanded={{bgColor: 'blackAlpha.50'}}>
             <Flex
               gap={2}
               alignItems={'center'}
               textAlign="left"
-              width={notMobile ? '100%' : '100%'}>
+              width={'100%'}>
               <DragHandle />
               {icon}
               <Text fontWeight={'bold'} display={'flex'} flex={1}>

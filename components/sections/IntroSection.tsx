@@ -17,6 +17,8 @@ import {
   Progress,
   IconButton,
   Flex,
+  LightMode,
+  DarkMode,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { Avatar, Links, Socials } from 'components/Profile';
@@ -178,8 +180,6 @@ export default function IntroSection() {
                 min={0}
                 max={8000}
                 width={'100%'}
-                
-                
                 value={timer}
                 isAnimated
               />
@@ -210,6 +210,8 @@ export default function IntroSection() {
                     filter: 'blur(20px)',
                     transition: { ease: 'backOut', duration: 0.2 },
                   }}>
+                    <Box 
+                as={lightMode ? LightMode : DarkMode}>
                   <HStack gap={4}>
                     <Box maxW={notMobile ? '160px' : '100px'}>
                       <Avatar
@@ -265,6 +267,7 @@ export default function IntroSection() {
                       links: links,
                     }}
                   />
+                  </Box>
                 </motion.div>
               </Center>
             </Flex>

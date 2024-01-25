@@ -22,6 +22,7 @@ import {
   CONTRACT_ADDRESS,
   CONTRACT_ADDRESS_V1,
   CONTRACT_ADDRESS_V2,
+  EARLY_ADOPTERS_CONTRACT_ADDRESS,
   FAUCET_URL,
   MINT_OPEN,
   SIGN_MESSAGE,
@@ -34,6 +35,7 @@ import { useConnect, useSignMessage, useVenomProvider } from 'venom-react-hooks'
 import { useAtom, useAtomValue } from 'jotai';
 import { Address } from 'everscale-inpage-provider';
 import VenomAbi from 'abi/Collection.abi.json';
+import OATCollectionABI from 'abi/OATCollection.abi.json';
 import {
   RiLogoutBoxRLine,
   RiFileCopyLine,
@@ -45,6 +47,7 @@ import {
 import LogoIcon from '../logos/LogoIcon';
 import {
   connectedAccountAtom,
+  earlyAdopterContractAtom,
   ethAtom,
   ethPrimaryNameAtom,
   isConnectedAtom,
@@ -133,6 +136,7 @@ export default function ConnectButton() {
   const [venomContract, setVenomContract] = useAtom(venomContractAtom);
   const [venomContractV1, setVenomContractV1] = useAtom(venomContractAtomV1);
   const [venomContractV2, setVenomContractV2] = useAtom(venomContractAtomV2);
+  const [earlyAdopterContract, setEarlyAdopterContract] = useAtom(earlyAdopterContractAtom);
   const { onCopy, hasCopied } = useClipboard(String(address));
 
   async function getPrimary() {
@@ -140,6 +144,10 @@ export default function ConnectButton() {
     setIsConnected(true);
     setConnectedAccount(account?.address.toString() ?? '');
     try {
+
+      const _earlyAdopterContract = new provider.Contract(OATCollectionABI, new Address(EARLY_ADOPTERS_CONTRACT_ADDRESS));
+      setEarlyAdopterContract(_earlyAdopterContract);
+
       const _venomContract = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS));
       setVenomContract(_venomContract);
 
@@ -272,11 +280,16 @@ export default function ConnectButton() {
           <MenuButton
             as={Button}
             size={'lg'}
+            px={4}
             bgColor={colorMode === 'light' ? 'whiteAlpha.900' : 'var(--dark)'}>
             <Center gap={2} justifyContent={'left'}>
               <LinkIcon type={network === '' ? 'wallet' : network.toLowerCase()} />
               {network === '' || (!isConnected && !ethAddress) ? (
-                'Connect'
+                <Stack gap={1}>
+                  <Text>
+                  Connect
+                  </Text>
+                </Stack>
               ) : (
                 <Stack gap={1}>
                   <Text
@@ -298,10 +311,10 @@ export default function ConnectButton() {
                     bgClip="text"
                     my={'0 !important'}>
                     {network === 'venom'
-                      ? primaryName?.name !== ''
+                      ? primaryName && primaryName?.name !== ''
                         ? capFirstLetter(String(primaryName.name))
                         : truncAddress(String(address))
-                      : ethPrimaryName?.name !== ''
+                      : ethPrimaryName && ethPrimaryName?.name !== ''
                       ? capFirstLetter(String(ethPrimaryName.name))
                       : truncAddress(String(address))}
                   </Text>

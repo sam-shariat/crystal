@@ -86,14 +86,18 @@ export default function ManageWallets({ json, nftAddress }: Props) {
         allowToggle
         allowMultiple={false}
         borderRadius={10}
-        minWidth={notMobile ? 'md' : 'xs'}
+        minWidth={'100%'}
         size="lg"
-        className='wallets'
+        className="wallets"
         backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
         display={'flex'}
         flexGrow={1}>
         <AccordionItem border={0} borderRadius={10} width={'100%'}>
-          <AccordionButton minWidth={notMobile ? 'md' : 'xs'} as={Button} size="lg" _expanded={{bgColor: 'blackAlpha.50'}}>
+          <AccordionButton
+            minWidth={'100%'}
+            as={Button}
+            size="lg"
+            _expanded={{ bgColor: 'blackAlpha.50' }}>
             <Flex
               gap={2}
               alignItems={'center'}
@@ -106,8 +110,10 @@ export default function ManageWallets({ json, nftAddress }: Props) {
             </Flex>
           </AccordionButton>
 
-          <AccordionPanel pb={4} minWidth="100%">
-            <Stack my={2}>
+          <AccordionPanel py={4} minWidth="100%">
+            <Stack gap={2}>
+              <AddWalletButton />
+
               <SortableCon onSortEnd={onSortEnd} useDragHandle>
                 <>
                   {walletsArray.map(
@@ -129,7 +135,6 @@ export default function ManageWallets({ json, nftAddress }: Props) {
                   )}
                 </>
               </SortableCon>
-              <AddWalletButton />
             </Stack>
           </AccordionPanel>
         </AccordionItem>

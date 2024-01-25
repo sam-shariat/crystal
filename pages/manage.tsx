@@ -5,15 +5,25 @@ import { SITE_DESCRIPTION, SITE_URL, SITE_TITLE } from 'core/utils/constants';
 import { Seo } from 'components/Layout/Seo';
 
 const Manage: NextPage = () => {
-  const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
+  const title = "Dashboard";
+  const des = "Venom ID Management";
   return (
     <>
-    <Seo title="Dashboard" description="Venom ID Management" />
-    <Head>
+    <Seo title={title} description={des} />
+      <Head>
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={SITE_TITLE} />
-        <meta name="twitter:description" content={SITE_DESCRIPTION} />
-        <meta name="twitter:image" content={`${origin}/vidorigin.png`} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={des} />
+        <meta
+          name="twitter:image"
+          content={`${SITE_URL}/api/og?title=${title}&subtitle=${des}&w=30&image=${SITE_URL}logos/vidicon.svg`}
+        />
+        <meta name="og:title" content={title} />
+        <meta name="og:description" content={des} />
+        <meta
+          name="og:image"
+          content={`${SITE_URL}/api/og?title=${title}&subtitle=${des}&w=30&image=${SITE_URL}logos/vidicon.svg`}
+        />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
       

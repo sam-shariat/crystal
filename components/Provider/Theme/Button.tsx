@@ -5,12 +5,12 @@ const popVariant = defineStyle((props) => {
   return {
     bg: `${c}.500`,
     fontWeight: 'semibold',
-    color: c === 'dark' ? 'white' : 'gray.800',
+    color: c === 'dark' || c === 'darker' ? 'white' : 'gray.800',
     borderRadius: 'none',
     transition: 'transform 0.15s ease-out, background 0.15s ease-out',
     _dark: {
       bg: `${c}.200`,
-      color: c === 'dark' ? 'white' : 'gray.800',
+      color: c === 'dark' || c === 'darker' ? 'white' : 'gray.800',
     },
 
     _hover: {
@@ -120,9 +120,11 @@ const fillVariant = defineStyle((props) => {
     _active: {
       bg: `${c}.700`,
       transform: 'scale(.95, .95)',
+      color: c === 'light' || c === 'yellow' || c === 'cyan' ? 'black' : 'white',
 
       _dark: {
         bg: `${c}.400`,
+        color: c === 'light' || c === 'yellow' || c === 'cyan' ? 'black' : 'white',
       },
     },
   };

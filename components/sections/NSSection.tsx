@@ -190,7 +190,7 @@ export default function NSSection() {
                     <Stack gap={1}>
                       <Text>{t('apiLinkButton')}</Text>
                       <Text display={'flex'} fontSize={'sm'} gap={1} color={colorMode === 'dark' ? 'gray.300' : 'gray.600'}>
-                        venomid.tools <RiExternalLinkLine size='18px'/>
+                        naming service on venom <RiExternalLinkLine size='18px'/>
                       </Text>
                     </Stack>
                   </Flex>

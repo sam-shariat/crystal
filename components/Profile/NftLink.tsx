@@ -13,13 +13,8 @@ import {
 import { getColor, truncAddress } from 'core/utils';
 import { LinkIcon } from 'components/logos';
 import {
-  ETHERSCAN_ADDRESS,
   ETHERSCAN_URLS,
   MARKETPLACE_URLS,
-  OPENSEA_URL,
-  VENOMART_NFT,
-  VENOMSCAN_NFT,
-  VENTORY_NFT,
 } from 'core/utils/constants';
 import { RiExternalLinkLine } from 'react-icons/ri';
 import { ThirdwebNftMedia, ThirdwebNftMediaProps } from '@thirdweb-dev/react';
@@ -71,7 +66,7 @@ const NftLink = ({ url, title, link, address, styles, alt, loading, color }: Pro
           align={'center'}
           justify={'center'}     
           width={'100%'}
-          bgColor={'blackAlpha.300'}>
+          bgColor={lightMode ? 'blackAlpha.200' : 'whiteAlpha.200'}>
           <>
             {type === 'normal' ? (
               <Image

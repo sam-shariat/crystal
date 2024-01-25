@@ -36,14 +36,14 @@ export default function TitleInput() {
       defaultIndex={[0]}
       className="titlee"
       borderRadius={10}
-      minWidth={notMobile ? 'md' : 'xs'}
+      width={'100%'}
       size="lg"
       backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
       display={'flex'}
       flexGrow={1}>
       <AccordionItem border={0} borderRadius={10} width={'100%'}>
         <AccordionButton
-          minWidth={notMobile ? 'md' : 'xs'}
+          minWidth={'100%'}
           as={Button}
           size="lg"
           _expanded={{ bgColor: 'blackAlpha.50' }}>

@@ -5,18 +5,28 @@ import { Seo } from 'components/Layout/Seo';
 import LitepaperSection from 'components/sections/LitepaperSection';
 
 const Litepaper: NextPage = () => {
-  const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
+  const title = "Venom ID Litepaper";
+  const des = "Everything about the Venom ID Project";
   return (
     <>
-    <Seo title='Venom ID Litepaper' description='Everything about the Venom ID Project' />
-    <Head>
+      <Seo title={title} description={des} />
+      <Head>
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={SITE_TITLE} />
-        <meta name="twitter:description" content={SITE_DESCRIPTION} />
-        <meta name="twitter:image" content={`${origin}/vidorigin.png`} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={des} />
+        <meta
+          name="twitter:image"
+          content={`${SITE_URL}/ogs/litepaperog.png`}
+        />
+        <meta name="og:title" content={title} />
+        <meta name="og:description" content={des} />
+        <meta
+          name="og:image"
+          content={`${SITE_URL}/ogs/litepaperog.png`}
+        />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
-      
+
       {/* <ClaimSection /> */}
       <LitepaperSection />
     </>

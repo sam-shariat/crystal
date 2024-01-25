@@ -1,12 +1,13 @@
 import { useColorMode, Box } from '@chakra-ui/react';
 interface Props {
   color?: string;
+  size?: string | number;
 }
-function Ylide({ color }: Props) {
+function Ylide({ color, size = '26'}: Props) {
   const { colorMode } = useColorMode();
   return (
     <Box>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width={26} height={26}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width={size} height={size}>
         <path
           d="M190.061584,42.279335 
 	C193.537964,49.622509 193.741211,56.564690 188.796783,62.824406 

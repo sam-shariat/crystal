@@ -1,18 +1,18 @@
 :root {
   --darkGradient: radial-gradient(
     farthest-corner at 60% 55%,
-    #1e201d 10%,
-    #241925 45%,
-    #261d24 60%,
-    #1e2823 90%
+    #1a1b19 10%,
+    #1f191f 45%,
+    #1f1b1f 60%,
+    #1e2421 90%
   );
   
   --lightGradient: radial-gradient(
     farthest-corner at 60% 55%,
     #ebe3e0 10%,
-    #e0dbe0 45%,
+    #ece6ec 45%,
     #e4e4e4 60%,
-    #dddddd 90%
+    #eeeeee 90%
   );
 
   --lightLinearGradient: linear-gradient(
@@ -53,6 +53,10 @@
   --bluevenom1: #10a9b6;
   --bluevenom2: #0e94a0;
   --bluevenom3: #0d828d;
+  --purplevenom0: #ff2fff;
+  --purplevenom1: #ff00ff;
+  --purplevenom2: #c900c9;
+  --purplevenom3: #990099;
   --purple0: #7951e9;
   --purple1: #6343bb;
   --purple2: #503aa1;
@@ -77,6 +81,14 @@
   --bg2: #e6e6e6;
   --bg3Gradient: url("/bgs/bg3.jpg") center;
   --bg3: #272727;
+  --bg4Gradient: url("/bgs/bg4.svg") center;
+  --bg4: #272727;
+  --bg5Gradient: url("/bgs/bg5.svg") center;
+  --bg5: #f3f3f3;
+  --bg6Gradient: url("/bgs/bg6.svg") center;
+  --bg6: #f3f3f3;
+  --bg7Gradient: url("/bgs/bg7.svg") center;
+  --bg7: #2bb673;
 
 }
 
@@ -229,4 +241,31 @@ hue-6-2: #e6c07b
 
 .hljs-link {
   text-decoration: underline;
+}
+
+.marvel-device .screen {
+  overflow: auto !important;
+}
+
+.marvel-device .screen::-webkit-scrollbar , .noscroll::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+
+.marvel-device .screen::-webkit-scrollbar-track {
+  background-color: #19191b;
+}
+
+.marvel-device .screen::-webkit-scrollbar-thumb {
+  background-color: #383838;
+  border-radius: 100px;
+}
+
+em-emoji-picker {
+  width: 100%;
+  min-width: 100%;
+  height: 480px;
+  resize: horizontal;
+  
 }
