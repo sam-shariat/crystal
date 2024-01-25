@@ -351,11 +351,11 @@ export default function ContributionSection() {
                   )}
                 </Button>
               )}
-              <ShareButtons
+              {/* <ShareButtons
                 text={`🌐 Contribution Opportunity%0a%0a🚀Join Venom ID as a ${role} Contributor!%0a%0aBe part of the team shaping the future of identity management.%0a%0aJoin us now! @venomid_network%0a%0a`}
                 hashtags={`${role.replaceAll(' ', '').replace('/', '')},role`}
                 url={SITE_URL + 'contribute'}
-              />
+              /> */}
             </Flex>
           </AccordionPanel>
         </AccordionItem>
