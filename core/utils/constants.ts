@@ -38,7 +38,7 @@ export const TWITTER_CALLBACK_URL = 'https://venomid.network/api/twitter/callbac
 export const TWITTER_ME = 'https://api.twitter.com/2/users/me';
 export const TWITTER_SCOPES = ['tweet.read', 'users.read', 'offline.access'];
 export const TWITTER_FOLLOW_URL = "https://twitter.com/intent/user?screen_name=venomid_network";
-export const TWITTER_RETWEET_URL = "https://twitter.com/intent/retweet?tweet_id=1747339428195078496";
+export const TWITTER_RETWEET_URL = "https://twitter.com/intent/retweet?tweet_id=1750574775158624742";
 export const ZEALY_USERS_API = 'https://api.zealy.io/communities/venomid/users'
 export const IPFS_IO_URL = 'https://ipfs.io/ipfs/';
 
