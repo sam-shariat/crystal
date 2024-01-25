@@ -35,6 +35,7 @@ export const VENTORY_NFT_V2_ADDRESS = '0:b248dc8f494e6e8f4ff355e9032cdfaf0108889
 export const ZERO_ADDRESS = '0:0000000000000000000000000000000000000000000000000000000000000000';
 
 export const TWITTER_CALLBACK_URL = 'https://venomid.network/api/twitter/callback';
+//export const TWITTER_CALLBACK_URL = 'http://localhost:3000/api/twitter/callback';
 export const TWITTER_ME = 'https://api.twitter.com/2/users/me';
 export const TWITTER_SCOPES = ['tweet.read', 'users.read', 'offline.access'];
 export const TWITTER_FOLLOW_URL = "https://twitter.com/intent/user?screen_name=venomid_network";

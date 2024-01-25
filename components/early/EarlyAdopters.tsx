@@ -413,12 +413,14 @@ export default function EarlyAdopters() {
   }, [twitterAuth]);
 
   useEffect(() => {
-    if (twitterFollowed && twitterRetweeted && twitterUser.id !== '') {
+    //if (twitterFollowed && twitterRetweeted && twitterUser.id !== '') {
+      if (twitterUser.id !== '') {
       setTwitterVerified(true);
     } else {
       setTwitterVerified(false);
     }
-  }, [twitterFollowed, twitterRetweeted, twitterUser]);
+  }, [twitterUser]);
+//}, [twitterFollowed, twitterRetweeted, twitterUser]);
 
   const _validateZealy = async () => {
     setZealyLoading(true);
@@ -465,27 +467,27 @@ export default function EarlyAdopters() {
         return;
       }
     } else {
-      if (twitterFollowed.length > 10) {
-        if (twitterRetweeted.length > 10) {
+      // if (twitterFollowed.length > 10) {
+      //   if (twitterRetweeted.length > 10) {
           setTwitterVerified(true);
           setTwitterLoading(false);
           return;
-        } else {
-          setTwitterLoading(true);
-          window.open(TWITTER_RETWEET_URL, 'self', 'width=420,height=800');
-          setTimeout(() => {
-            setTwitterRetweeted(Buffer.from(`retweeted-on-${Date.now()}`).toString('base64'));
-            setTwitterLoading(false);
-          }, 3000);
-        }
-      } else {
-        setTwitterLoading(true);
-        window.open(TWITTER_FOLLOW_URL, 'self', 'width=420,height=800');
-        setTimeout(() => {
-          setTwitterFollowed(Buffer.from(`followed-on-${Date.now()}`).toString('base64'));
-          setTwitterLoading(false);
-        }, 3000);
-      }
+      //   } else {
+      //     setTwitterLoading(true);
+      //     window.open(TWITTER_RETWEET_URL, 'self', 'width=420,height=800');
+      //     setTimeout(() => {
+      //       setTwitterRetweeted(Buffer.from(`retweeted-on-${Date.now()}`).toString('base64'));
+      //       setTwitterLoading(false);
+      //     }, 3000);
+      //   }
+      // } else {
+      //   setTwitterLoading(true);
+      //   window.open(TWITTER_FOLLOW_URL, 'self', 'width=420,height=800');
+      //   setTimeout(() => {
+      //     setTwitterFollowed(Buffer.from(`followed-on-${Date.now()}`).toString('base64'));
+      //     setTwitterLoading(false);
+      //   }, 3000);
+      // }
     }
   };
 
@@ -810,11 +812,11 @@ export default function EarlyAdopters() {
                 onClick={handleTwitter}>
                 {twitterUser.id === ''
                   ? 'Login'
-                  : twitterFollowed
-                  ? twitterRetweeted
-                    ? 'Done'
-                    : 'Retweet'
-                  : 'Follow'}
+                  // : twitterFollowed
+                  // ? twitterRetweeted
+                  //   ? 'Done'
+                  //   : 'Retweet'
+                  : 'Done'}
               </Button>
             </Flex>
             <Flex
