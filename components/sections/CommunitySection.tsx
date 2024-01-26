@@ -33,7 +33,7 @@ import { render } from '@react-email/render';
 import ContributionsMail from 'components/mail/Contribution';
 import sendEmail from 'core/utils/sendEmail';
 import ShareButtons from 'components/Profile/ShareButtons';
-import { SITE_URL } from 'core/utils/constants';
+import { SITE_URL, YLIDE_URL, ZEALY_URL } from 'core/utils/constants';
 import WaitlistMail from 'components/mail/Waitlist';
 import ImageBox from 'components/claiming/ImageBox';
 import EarlyAdopters from 'components/early/EarlyAdopters';
@@ -48,6 +48,11 @@ export default function CommunitySection() {
   const connectedAccount = useAtomValue(connectedAccountAtom);
   const primary = useAtomValue(primaryNameAtom);
   const { t } = useTranslate();
+
+  const openWindow = (url: string, e: any) => {
+    window.open(url, 'newwindow', 'width=420,height=800');
+    e !== null && e.preventDefault();
+  };
 
   return (
     <>
@@ -91,6 +96,10 @@ export default function CommunitySection() {
                 w={'100%'}
                 h={['220px', '220px', '160px']}
                 size={'lg'}
+                as={Link}
+                style={{ textDecoration: 'none' }}
+                href={YLIDE_URL}
+                target="_blank"
                 gap={6}
                 flexDir={['column', 'column', 'row']}
                 justifyContent={['center', 'center', 'start']}>
@@ -102,7 +111,7 @@ export default function CommunitySection() {
                 </Flex>
                 <Flex flexDirection={'column'} align={['center', 'center', 'start']} gap={2}>
                   <Text display={['none', 'none', 'block']} fontSize={'xl'}>
-                  Ylide Community
+                    Ylide Community
                   </Text>
                   <Flex
                     fontWeight={'normal'}
@@ -121,6 +130,10 @@ export default function CommunitySection() {
                 h={['220px', '220px', '160px']}
                 size={'lg'}
                 gap={6}
+                as={Link}
+                href={ZEALY_URL}
+                style={{ textDecoration: 'none' }}
+                target="_blank"
                 flexDir={['column', 'column', 'row']}
                 justifyContent={['center', 'center', 'start']}>
                 <Flex align={'center'} gap={4}>

@@ -171,7 +171,6 @@ export default function ContributionSection() {
       <Accordion
         allowToggle
         allowMultiple={false}
-        defaultIndex={[0]}
         className="bio"
         borderRadius={10}
         minWidth={'100%'}
