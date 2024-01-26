@@ -21,6 +21,7 @@ import AddLinkButton from './AddLinkButton';
 import ManageLink from './ManageLink';
 import { capFirstLetter, arrayRemove } from 'core/utils';
 import { CustomLink, SortableItemProps, SortableConProps } from 'types';
+import { IPFS_IMAGE_URI } from 'core/utils/constants';
 
 interface Props {
   json: any;
@@ -119,11 +120,7 @@ export default function ManageLinks({ json, nftAddress }: Props) {
             as={Button}
             size="lg"
             _expanded={{ bgColor: 'blackAlpha.50' }}>
-            <Flex
-              gap={2}
-              alignItems={'center'}
-              textAlign="left"
-              width={'100%'}>
+            <Flex gap={2} alignItems={'center'} textAlign="left" width={'100%'}>
               <Text fontWeight={'bold'} display={'flex'} flex={1}>
                 Links & NFTs
               </Text>
@@ -142,7 +139,13 @@ export default function ManageLinks({ json, nftAddress }: Props) {
                       <>
                         <ManageLink
                           icon={
-                            <LinkIcon type={item.styles?.icon ?? item.type} line={useLineIcons} size='md'/>
+                            <LinkIcon
+                              type={item.styles?.icon ?? item.type}
+                              line={useLineIcons}
+                              size={
+                                String(item.styles?.icon).includes(IPFS_IMAGE_URI) ? 'md' : '28px'
+                              }
+                            />
                           }
                           title={item.title}
                           image={item.image}
