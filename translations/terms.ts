@@ -216,8 +216,8 @@ const terms: Terms = {
     fa: 'مشاهده',
   },
   description: {
-    en: 'Empower Your Digital Presence with a Single Link',
-    fa: 'هویت مجازی شما در بلاک‌چین با یک لینک ساده',
+    en: 'Empower Your Digital Presence with a Link',
+    fa: 'هویت مجازی شما در بلاک‌چین با یک لینک',
   },
   claimDescription: {
     en: 'your entire virtual identity in the blockchain through one simple link',
