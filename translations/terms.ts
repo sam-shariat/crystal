@@ -224,8 +224,8 @@ const terms: Terms = {
     fa: 'هویت مجازی شما در بلاکچین به وسیله یک لینک ساده با ونوم آیدی',
   },
   claimButton: {
-    en: 'Claim your VENOM ID',
-    fa: 'ونوم آی دی خود را دریافت کنید',
+    en: 'Register Domain',
+    fa: 'ثبت نام دامنه',
   },
   manageDescription: {
     en: 'experience the ease of managing your online presence',

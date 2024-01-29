@@ -25,6 +25,7 @@ import {
   EARLY_ADOPTERS_CONTRACT_ADDRESS,
   FAUCET_URL,
   MINT_OPEN,
+  ROOT_CONTRACT_ADDRESS,
   SIGN_MESSAGE,
   SITE_PROFILE_URL,
   SITE_URL,
@@ -32,9 +33,10 @@ import {
 } from 'core/utils/constants';
 import { sleep, truncAddress, capFirstLetter, isValidSignHash } from 'core/utils';
 import { useConnect, useSignMessage, useVenomProvider } from 'venom-react-hooks';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { Address } from 'everscale-inpage-provider';
 import VenomAbi from 'abi/Collection.abi.json';
+import RootAbi from 'abi/Root.abi.json';
 import OATCollectionABI from 'abi/OATCollection.abi.json';
 import {
   RiLogoutBoxRLine,
@@ -53,6 +55,7 @@ import {
   isConnectedAtom,
   networkAtom,
   primaryNameAtom,
+  rootContractAtom,
   signDateAtom,
   signHashAtom,
   signRequestAtom,
@@ -133,10 +136,11 @@ export default function ConnectButton() {
   const [signDate, setSignDate] = useAtom(signDateAtom);
   const [connectedAccount, setConnectedAccount] = useAtom(connectedAccountAtom);
   const venomContractAddress = useAtomValue(venomContractAddressAtom);
-  const [venomContract, setVenomContract] = useAtom(venomContractAtom);
-  const [venomContractV1, setVenomContractV1] = useAtom(venomContractAtomV1);
-  const [venomContractV2, setVenomContractV2] = useAtom(venomContractAtomV2);
-  const [earlyAdopterContract, setEarlyAdopterContract] = useAtom(earlyAdopterContractAtom);
+  const setVenomContract = useSetAtom(venomContractAtom);
+  const setRootContract = useSetAtom(rootContractAtom);
+  const setVenomContractV1 = useSetAtom(venomContractAtomV1);
+  const setVenomContractV2 = useSetAtom(venomContractAtomV2);
+  const setEarlyAdopterContract = useSetAtom(earlyAdopterContractAtom);
   const { onCopy, hasCopied } = useClipboard(String(address));
 
   async function getPrimary() {
@@ -144,6 +148,9 @@ export default function ConnectButton() {
     setIsConnected(true);
     setConnectedAccount(account?.address.toString() ?? '');
     try {
+
+      const _rootContract = new provider.Contract(RootAbi, new Address(ROOT_CONTRACT_ADDRESS));
+      setRootContract(_rootContract);
 
       const _earlyAdopterContract = new provider.Contract(OATCollectionABI, new Address(EARLY_ADOPTERS_CONTRACT_ADDRESS));
       setEarlyAdopterContract(_earlyAdopterContract);

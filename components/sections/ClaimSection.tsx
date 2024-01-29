@@ -16,8 +16,12 @@ import {
   useColorModeValue,
   Center,
   Spinner,
+  InputRightAddon,
+  InputRightElement,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { Address } from 'everscale-inpage-provider';
+import DomainAbi from 'abi/Domain.abi.json';
 import {
   nameAtom,
   venomContractAtom,
@@ -32,6 +36,8 @@ import {
   mintOpenAtom,
   isConnectedAtom,
   claimingNameAtom,
+  rootContractAtom,
+  pathAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { addAsset, useConnect, useVenomProvider } from 'venom-react-hooks';
@@ -71,7 +77,7 @@ const ClaimSection = () => {
   let timer: any;
   const { t } = useTranslate();
   const { isConnected, account } = useConnect();
-  const connected = useAtomValue(isConnectedAtom)
+  const connected = useAtomValue(isConnectedAtom);
   const { provider } = useVenomProvider();
   const signHash = useAtomValue(signHashAtom);
   const signDate = useAtomValue(signDateAtom);
@@ -79,6 +85,7 @@ const ClaimSection = () => {
   const { colorMode } = useColorMode();
   const locale = useAtomValue(localeAtom);
   const venomContract = useAtomValue(venomContractAtom);
+  const rootContract = useAtomValue(rootContractAtom);
   const venomContractV1 = useAtomValue(venomContractAtomV1);
   const venomContractV2 = useAtomValue(venomContractAtomV2);
   const [feeIsLoading, setFeeIsLoading] = useState(false);
@@ -86,10 +93,6 @@ const ClaimSection = () => {
   const [isConfirming, setIsConfirming] = useState(false);
   const { mutateAsync: upload } = useStorageUpload();
   const [fee, setFee] = useState<number | null>();
-  const [d, setD] = useState<number | null>();
-  const [m, setM] = useState<number | null>();
-  const [h, setH] = useState<number | null>();
-  const [s, setS] = useState<number | null>();
   //const [totalSupply, setTotalSupply] = useState<number | null>(0);
   const [typing, setTyping] = useState<boolean>(false);
   const [message, setMessage] = useState<Message>({ type: '', title: '', msg: '', link: '' });
@@ -101,83 +104,49 @@ const ClaimSection = () => {
   //const [venomContract, setVenomContract] = useState<any>(undefined);
   const minFee = 660000000;
   const [name, setName] = useAtom(claimingNameAtom);
+  const [path, setPath] = useAtom(pathAtom);
   //const [vidUrl, setVidUrl] = useState('');
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
   const toast = useToast();
 
-  const getJson = (vidUrl: string) => {
-    return {
-      type: 'Basic NFT',
-      name: name + '.VID',
-      description: name + '.VID, a Venom ID',
-      preview: {
-        source: vidUrl,
-        mimetype: 'image/svg',
-      },
-      files: [
-        {
-          source: vidUrl,
-          mimetype: 'image/svg',
-        },
-      ],
-      external_url: SITE_PROFILE_URL + name,
-    };
-  };
-
-  const updateTimer = () => {
-    if (!mintOpen) {
-      let future = Date.parse(MINT_DATE);
-      let now = Date.now();
-      let diff = future - now;
-      if (future.toString() === 'NaN') {
-        diff = 0;
-      }
-
-      let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      let hours = Math.floor(diff / (1000 * 60 * 60));
-      let mins = Math.floor(diff / (1000 * 60));
-      let secs = Math.floor(diff / 1000);
-
-      setD(days);
-      setH(hours - days * 24);
-      setM(mins - hours * 60);
-      setS(secs - mins * 60);
-
-      if (diff <= 0) {
-        setMintOpen(true);
-      }
-    }
-  };
-
   async function inputChange() {
-    if (name === '') return;
+    if (path === '') return;
     window.clearTimeout(timer);
     clearTimeout(timer);
 
-    if (venomContract && venomContract.methods !== undefined) {
+    if (provider && provider?.isInitialized && rootContract && rootContract.methods !== undefined) {
       try {
         setFeeIsLoading(true);
         setTyping(false);
         toast.closeAll();
         // @ts-ignore: Unreachable code error
-        const { value0: _fee } = await venomContract.methods
-          .calculateMintingFee({ name: String(name).toLowerCase() })
-          .call();
+        const { amount: _fee } = await rootContract.methods
+          .expectedRegisterAmount({
+            name: `${path}.vid`,
+            duration: 60 * 60 * 24 * 365,
+            answerId: 22,
+          })
+          .call({ responsible: true });
 
         // @ts-ignore: Unreachable code error
-        const { value0: _nameExists } = await venomContract?.methods
-          .nameExists({ name: String(name).toLowerCase() })
-          .call();
+        const certificateAddr = await rootContract.methods
+          .resolve({ path: `${path}.vid`, answerId: 0 })
+          .call({ responsible: true });
+          console.log(certificateAddr);
 
-        const { value0: _nameExistsV1 } = await venomContractV1?.methods
-          .nameExists({ name: String(name).toLowerCase() })
-          .call();
+        const domainContract = new provider.Contract(DomainAbi, certificateAddr.certificate);
+        console.log(domainContract)
+        try { 
+        // @ts-ignore: Unreachable code error
+          let result = await domainContract.methods.getStatus({ answerId: 0 }).call();
+          console.log(result)
+          setNameExists(result ? true : false);
+        } catch (e){
+          setNameExists(false);
 
-        const { value0: _nameExistsV2 } = await venomContractV2?.methods
-          .nameExists({ name: String(name).toLowerCase() })
-          .call();
-
-        setNameExists(_nameExists || _nameExistsV1 || _nameExistsV2);
+        }
+        
+        console.log(_fee);
         setFee(_fee);
         setFeeIsLoading(false);
       } catch (er) {
@@ -196,7 +165,7 @@ const ClaimSection = () => {
   }
 
   useEffect(() => {
-    if (!connected && name.length > 2) {
+    if (!connected && path.length > 2) {
       toast.closeAll();
       toast({
         status: 'info',
@@ -208,7 +177,7 @@ const ClaimSection = () => {
       return;
     }
 
-    if (name.length > 2 && !isValidUsername(name) && name.length < 30) {
+    if (path.length > 2 && !isValidUsername(path) && path.length < 30) {
       toast.closeAll();
       toast({
         status: 'warning',
@@ -219,7 +188,7 @@ const ClaimSection = () => {
       return;
     }
 
-    if (name.length > 0) {
+    if (path.length > 3) {
       window.clearTimeout(timer);
       clearTimeout(timer);
       setTyping(true);
@@ -231,69 +200,17 @@ const ClaimSection = () => {
         clearTimeout(timer);
       }
     };
-  }, [name]);
-
-  useEffect(() => {
-    setName('');
-    let intervalId: NodeJS.Timeout | undefined = undefined;
-
-    if (!mintOpen) {
-      intervalId = setInterval(updateTimer, 1000);
-    } else {
-      clearInterval(intervalId);
-    }
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [mintOpen]);
-
-  // const getTotalSupply = async () => {
-  //   //if (totalSupply === 0) {
-  //   if (venomContract && venomContract.methods !== undefined) {
-  //     // @ts-ignore: Unreachable code error
-  //     const { count: _totalSupply0 } = await venomContract?.methods
-  //       .totalSupply({ answerId: 0 })
-  //       .call();
-
-  //     // @ts-ignore: Unreachable code error
-  //     const { count: _totalSupply1 } = await venomContractV1?.methods
-  //       .totalSupply({ answerId: 0 })
-  //       .call();
-
-  //     // @ts-ignore: Unreachable code error
-  //     const { count: _totalSupply2 } = await venomContractV2?.methods
-  //       .totalSupply({ answerId: 0 })
-  //       .call();
-
-  //     const _totalSupply = Number(_totalSupply0) + Number(_totalSupply1) + Number(_totalSupply2);
-  //     setTotalSupply(_totalSupply);
-
-  //     if (_totalSupply >= MINT_TOTAL_SUPPLY) {
-  //       setMintOpen(false);
-  //     } else {
-  //       setMintOpen(true);
-  //     }
-  //   }
-  //   //}
-  // };
+  }, [path]);
 
   // useEffect(() => {
-  //   let intervalId: NodeJS.Timeout | undefined = undefined;
-
-  //   if (mintOpen || totalSupply === 0) {
-  //     getTotalSupply();
-  //     intervalId = setInterval(getTotalSupply, 30000);
-  //   } else {
-  //     if (totalSupply && totalSupply >= MINT_TOTAL_SUPPLY) {
-  //       clearInterval(intervalId);
-  //     }
+  //   async function checkActive() {
+  //     const isActive = await rootContract.methods._active().call();
+  //     setMintOpen(isActive._active);
   //   }
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, [venomContract, mintOpen]);
+  //   if (provider?.isInitialized && rootContract && rootContract.methods._active()) {
+  //     checkActive();
+  //   }
+  // }, [provider, rootContract]);
 
   async function claimVid(e: string) {
     if (!isConnected && name.length > 0) {
@@ -342,25 +259,25 @@ const ClaimSection = () => {
         duration: null,
       });
 
-      const vidimage = renderToStaticMarkup(<VIDImage name={name} key={name} />);
-      const vidbase64 = btoa(vidimage);
-      const vidblob = base64ToBlob(vidbase64, 'image/svg+xml');
+      // const vidimage = renderToStaticMarkup(<VIDImage name={name} key={name} />);
+      // const vidbase64 = btoa(vidimage);
+      // const vidblob = base64ToBlob(vidbase64, 'image/svg+xml');
 
-      const uris = await upload({ data: [vidblob] });
-      let vidImageUrl = '';
-      if (uris[0].length > 30 && uris[0].includes('ipfs://')) {
-        vidImageUrl = 'https://ipfs.io/ipfs/' + uris[0].slice(7);
-        // console.log(vidImageUrl)
-      } else {
-        toast.closeAll();
-        toast({
-          status: 'warning',
-          title: t('uploading problem'),
-          description: t('there is a problem with uploading the nft image to ipfs'),
-          duration: null,
-        });
-        return;
-      }
+      // const uris = await upload({ data: [vidblob] });
+      // let vidImageUrl = '';
+      // if (uris[0].length > 30 && uris[0].includes('ipfs://')) {
+      //   vidImageUrl = 'https://ipfs.io/ipfs/' + uris[0].slice(7);
+      //   // console.log(vidImageUrl)
+      // } else {
+      //   toast.closeAll();
+      //   toast({
+      //     status: 'warning',
+      //     title: t('uploading problem'),
+      //     description: t('there is a problem with uploading the nft image to ipfs'),
+      //     duration: null,
+      //   });
+      //   return;
+      // }
 
       toast.closeAll();
       toast({
@@ -371,7 +288,7 @@ const ClaimSection = () => {
       });
       // @ts-ignore: Unreachable code error
       const mintTx = await venomContract?.methods
-        .mintNft({ json: JSON.stringify(getJson(vidImageUrl)), name: name.toLowerCase() })
+        .mintNft({ json: JSON.stringify({}), name: name.toLowerCase() })
         .send({
           amount: String(minFee + Number(fee)),
           bounce: true,
@@ -468,11 +385,11 @@ const ClaimSection = () => {
           <SimpleGrid
             columns={[1, 1, 2]}
             spacing={['64px', '64px', '32px']}
-            gap={8}
-            py={4}
+            gap={'64px'}
+            py={10}
             alignItems={'center'}
             minWidth={['100%', '100%', '100%', 'container.md', 'container.lg']}>
-            <Box display="flex" flexDirection="column" px={4}>
+            <Box display="flex" flexDirection="column">
               <Heading
                 textAlign={['center', 'center', locale === 'fa' ? 'right' : 'left']}
                 fontWeight="bold"
@@ -482,7 +399,7 @@ const ClaimSection = () => {
               <Heading
                 h={'3'}
                 py={0}
-                pb={[4,4,12]}
+                pb={[4, 4, 12]}
                 textAlign={['center', 'center', locale === 'fa' ? 'right' : 'left']}
                 fontWeight="bold"
                 fontSize={['2xl', '2xl', '3xl', '4xl', '4xl']}
@@ -490,132 +407,88 @@ const ClaimSection = () => {
                 {t('description')}
               </Heading>
             </Box>
-            <Box display="flex" flexDirection="column" alignItems={'center'} pt={8}>
-              <ImageBox srcUrl="/logos/venomid.png" />
+            <Box display="flex" flexDirection="column" alignItems={['center', 'center', 'end']}>
+              <ImageBox
+                srcUrl="/logos/vidicon.svg"
+                size={['240px', '240px', '240px', '280px', '320px']}
+              />
             </Box>
           </SimpleGrid>
           <ClaimModal claimedName={claimedName} message={message} />
           {/* {totalSupply ? ( */}
-            <Stack py={10} w={'100%'} align={'center'} gap={8}>
-              <SimpleGrid columns={[1]} gap={8} w={'100%'}>
+          <Stack py={[10]} w={'100%'} align={'center'} gap={8}>
+            <SimpleGrid columns={[1]} gap={8} w={'100%'}>
                 <TextCard
                   domain={`10K unique names`}
                   text={"3.5k owners & 12k txs on Beta"}
                   header={''}
                 />
               </SimpleGrid>
-              {mintOpen ? (
-                <Stack direction={['column', 'column', 'row']} w={'100%'} align={'center'}>
-                  <InputGroup size="lg">
-                    <InputLeftAddon
-                      border={'1px solid gray'}
-                      bg={'whiteAlpha.200'}
-                      height={'58px'}
-                      fontSize={['xl']}>
-                      venomid.link/
-                    </InputLeftAddon>
-                    <Input
-                      height={'58px'}
-                      placeholder="samy"
-                      value={name}
-                      _focus={{
-                        borderColor: 'white',
+            {mintOpen ? (
+              <Flex direction={'column'} w={'100%'} align={'center'}>
+                <InputGroup size="lg">
+                  <Input
+                    height={['64px', '72px', '80px']}
+                    placeholder="Enter Domain Name"
+                    variant={'filled'}
+                    value={path}
+                    fontSize={['lg', 'xl', '2xl']}
+                    borderWidth="1px"
+                    rounded={'full'}
+                    px={[4, 4, 6]}
+                    onChange={(e) => setPath(e.target.value.toLowerCase())}
+                    //bg={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
+                    disabled={isMinting || isConfirming}
+                  />
+                  <InputRightElement
+                    w={'max-content'}
+                    height={['64px', '72px', '80px']}
+                    mx={[2, 2, 3]}>
+                    <Button
+                      minWidth={['100%', '100%', 'fit-content']}
+                      colorScheme="green"
+                      size="lg"
+                      gap={2}
+                      fontSize={'xl'}
+                      rounded={'full'}
+                      bgGradient={
+                        colorMode === 'light'
+                          ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
+                          : 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                      }
+                      _hover={{
+                        bgGradient:
+                          colorMode === 'light'
+                            ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                            : 'linear(to-r, var(--venom0), var(--bluevenom0))',
                       }}
-                      fontSize={['xl']}
-                      border={'1px solid gray'}
-                      onChange={(e) => setName(e.target.value.toLowerCase())}
-                      bg={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
-                      disabled={isMinting || isConfirming}
-                    />
-                  </InputGroup>
-                  <Button
-                    minWidth={['100%', '100%', 'fit-content']}
-                    colorScheme="green"
-                    size="lg"
-                    fontSize={'xl'}
-                    height={'58px'}
-                    disabled={name.length < 3 || nameExists || isMinting || isConfirming}
-                    isLoading={feeIsLoading || isMinting}
-                    loadingText={
-                      isMinting && !isConfirming
-                        ? 'Claiming ...'
-                        : isMinting && isConfirming
-                        ? t('confirming')
-                        : ''
-                    }
-                    onClick={(e) => claimVid(e.currentTarget.value)}>
-                    {t('claimButton')}
-                  </Button>
-                </Stack>
-              ) : (
-                <>
-                  <Flex
-                    direction={'column'}
-                    gap={4}
-                    w={'100%'}>
-                    <Text
-                          my={2}
-                          w={'100%'}
-                          textAlign={'center'}
-                          fontSize={['lg', 'lg', 'xl', '2xl']}>
-                          {MINT_MESSAGE} <strong>{MINT_DATE}</strong>
-                        </Text>
-                      <Flex
-                        w={'100%'}
-                        rounded={'xl'}
-                        my={2}
-                        flexGrow={1}
-                        // eslint-disable-next-line react-hooks/rules-of-hooks
-                        bg={useColorModeValue('var(--vidGradient)', 'var(--vidGradient)')}
-                        justify={['space-evenly', 'space-evenly', 'center']}
-                        gap={8}
-                        py={4}>
-                        <Stack justify={'center'} align={'center'}>
-                          <Text fontWeight={'bold'} fontSize={'4xl'}>
-                            {d}
-                          </Text>
-                          <Text>Days</Text>
-                        </Stack>
-                        <Stack justify={'center'} align={'center'}>
-                          <Text fontWeight={'bold'} fontSize={'4xl'}>
-                            {h}
-                          </Text>
-                          <Text>Hours</Text>
-                        </Stack>
-                        <Stack justify={'center'} align={'center'}>
-                          <Text fontWeight={'bold'} fontSize={'4xl'}>
-                            {m}
-                          </Text>
-                          <Text>Mins</Text>
-                        </Stack>
-                        <Stack justify={'center'} align={'center'}>
-                          <Text fontWeight={'bold'} fontSize={'4xl'}>
-                            {s}
-                          </Text>
-                          <Text>Secs</Text>
-                        </Stack>
-                      </Flex>
-                  </Flex>
-                </>
-              )}
-              <Button
-              as={Link}
-              href="\community"
-              style={{ textDecoration: 'none' }}
-              width={'100%'}
-              color={'white'}
-              py={4}
-              justifyContent={'center'}
-              gap={2}
-              height={'56px'}
-              size={'lg'}
-              variant={'ghost'}>
-              <LinkIcon type="RiVerifiedBadgeLine" size={notMobile ? '32' : '24'} />
-              <Text fontWeight={'bold'} fontSize={['lg','xl']}>
-              {notMobile ? 'Join The' : 'Join'} Early Adopter Program
-              </Text>
-            </Button>
-            </Stack>
+                      height={['50px', '58px']}
+                      disabled={name.length < 3 || nameExists || isMinting || isConfirming}
+                      isLoading={feeIsLoading || isMinting}
+                      loadingText={
+                        isMinting && !isConfirming
+                          ? 'Claiming ...'
+                          : isMinting && isConfirming
+                          ? t('confirming')
+                          : ''
+                      }
+                      onClick={(e) => claimVid(e.currentTarget.value)}>
+                      {notMobile ? 'Search' : ''}
+                      <LinkIcon type="RiSearchLine" />
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </Flex>
+            ) : (
+              <>
+                <Flex direction={'column'} gap={4} w={'100%'}>
+                  <Text my={2} w={'100%'} textAlign={'center'} fontSize={['lg', 'lg', 'xl', '2xl']}>
+                    {MINT_MESSAGE} <strong>{MINT_DATE}</strong>
+                  </Text>
+                </Flex>
+              </>
+            )}
+          </Stack>
           {/* ) : (
             <Center width={'100%'} gap={8} height={160} bg={colorMode === 'light' ? 'var(--venom1)':'var(--venom)'} rounded={'xl'}>
               
@@ -625,7 +498,8 @@ const ClaimSection = () => {
             </Center>
           )} */}
           
-          {name.length > 2 && !typing && fee !== -1 && venomContract?.methods && (
+
+          {path.length > 2 && !typing && fee !== -1 && venomContract?.methods && (
             <Flex
               minWidth={notMobile ? 'md' : 'xs'}
               borderColor={'whiteAlpha.100'}
@@ -652,7 +526,7 @@ const ClaimSection = () => {
                   textAlign={'right'}
                   fontWeight={colorMode === 'light' ? 'bold' : 'light'}
                   color={nameExists ? 'var(--red1)' : 'var(--venom2)'}>
-                  {nameExists ? name + '.VID ' + t('taken') : name + '.VID ' + t('available')}
+                  {nameExists ? path + '.vid ' + t('taken') : path + '.vid ' + t('available')}
                 </Text>
               ) : (
                 <Text
@@ -665,6 +539,29 @@ const ClaimSection = () => {
               )}
             </Flex>
           )}
+
+          <Button
+            as={Link}
+            href="\community"
+            style={{ textDecoration: 'none' }}
+            width={'100%'}
+            py={4}
+            justifyContent={'center'}
+            gap={2}
+            rounded={'full'}
+            variant={'ghost'}
+            height={['64px', '72px', '80px']}
+            size={'lg'}>
+            <LinkIcon type="RiVerifiedBadgeLine" size={notMobile ? '32' : '24'} color={colorMode === 'light' ? 'var(--venom2)': 'var(--venom0)'}/>
+            <Text fontWeight={'bold'} fontSize={['lg', 'xl', '2xl']} bgGradient={
+                      colorMode === 'light'
+                        ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                        : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                    }
+                    bgClip="text">
+              {notMobile ? 'Join The' : 'Join'} Early Adopter Program
+            </Text>
+          </Button>
           {/* <Text fontWeight="light" fontSize={'xl'} py={6}>
             {t('claimDescription')}
           </Text> */}

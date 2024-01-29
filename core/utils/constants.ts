@@ -2,7 +2,7 @@ import { BgColorItem, LinkType, BgImageItem } from 'types';
 
 export const MINT_OPEN = false;
 export const MINT_TOTAL_SUPPLY:number = 10000;
-export const MINT_DATE = 'Feb 01, 2024 18:00:00 UTC';
+export const MINT_DATE = 'Feb 03, 2024 18:00 UTC';
 export const MINT_MESSAGE = 'Final Phase of venom testnet minting will start on';
 export const SITE_URL = 'https://venomid.network/';
 export const SITE_URL_SHORT = 'https://venomid.network/';
@@ -26,6 +26,8 @@ export const CONTRACT_ADDRESS_V1 =
   '0:0f158efd58c06ff2f84726425de63d3deb4037d2c621ccd552cec61d6b6ee5bd';
 export const CONTRACT_ADDRESS_V2 =
   '0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
+
+export const ROOT_CONTRACT_ADDRESS = '0:36f1cf41b7e7046303896a8a82b976106b359b8432a2cedd26738e9f331444f1';
 
 export const EARLY_ADOPTERS_CONTRACT_ADDRESS = '0:9e0ea0f0fe6229aee6580a96fd9c62aabf6f2430830877c5b1ad700680ac0486';
 

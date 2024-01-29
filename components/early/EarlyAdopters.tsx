@@ -413,14 +413,14 @@ export default function EarlyAdopters() {
   }, [twitterAuth]);
 
   useEffect(() => {
-    //if (twitterFollowed && twitterRetweeted && twitterUser.id !== '') {
+    if (twitterFollowed && twitterUser.id !== '') {
       if (twitterUser.id !== '') {
       setTwitterVerified(true);
     } else {
       setTwitterVerified(false);
     }
-  }, [twitterUser]);
-//}, [twitterFollowed, twitterRetweeted, twitterUser]);
+  }
+}, [twitterFollowed, twitterUser]);
 
   const _validateZealy = async () => {
     setZealyLoading(true);
@@ -467,7 +467,7 @@ export default function EarlyAdopters() {
         return;
       }
     } else {
-      // if (twitterFollowed.length > 10) {
+       if (twitterFollowed.length > 10) {
       //   if (twitterRetweeted.length > 10) {
           setTwitterVerified(true);
           setTwitterLoading(false);
@@ -480,14 +480,14 @@ export default function EarlyAdopters() {
       //       setTwitterLoading(false);
       //     }, 3000);
       //   }
-      // } else {
-      //   setTwitterLoading(true);
-      //   window.open(TWITTER_FOLLOW_URL, 'self', 'width=420,height=800');
-      //   setTimeout(() => {
-      //     setTwitterFollowed(Buffer.from(`followed-on-${Date.now()}`).toString('base64'));
-      //     setTwitterLoading(false);
-      //   }, 3000);
-      // }
+       } else {
+         setTwitterLoading(true);
+         window.open(TWITTER_FOLLOW_URL, 'self', 'width=420,height=800');
+         setTimeout(() => {
+           setTwitterFollowed(Buffer.from(`followed-on-${Date.now()}`).toString('base64'));
+           setTwitterLoading(false);
+         }, 5000);
+       }
     }
   };
 
@@ -811,11 +811,7 @@ export default function EarlyAdopters() {
                 h={'56px'}
                 onClick={handleTwitter}>
                 {twitterUser.id === ''
-                  ? 'Login'
-                  // : twitterFollowed
-                  // ? twitterRetweeted
-                  //   ? 'Done'
-                  //   : 'Retweet'
+                  ? 'Login' : !twitterFollowed ? 'Follow'
                   : 'Done'}
               </Button>
             </Flex>
@@ -853,7 +849,7 @@ export default function EarlyAdopters() {
                 rounded={'full'}
                 h={'56px'}
                 onClick={twitterUser.id === '' ? handleTwitter : _validateZealy}>
-                {zealyUser.id !== '' ? `${zealyUser.xp} XP` : 'Verify Twitter'}{' '}
+                {zealyUser.id !== '' ? `${zealyUser.xp} XP` : 'Login'}{' '}
                 {zealyUser.xp > 500 && zealyUser.rank < 101 && (
                   <Badge
                     color={'white'}
