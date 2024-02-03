@@ -31,6 +31,14 @@ export default async function handler(req, res) {
       process.exit(1);
     }
 
+    let _name ;
+    if(req.query.name.toLowerCase().includes('.vid')){
+      _name = req.query.name.slice(0,-4);
+    } else {
+      _name = req.query.name.toLowerCase();
+    }
+    const name = String(_name).toLowerCase() + '.VID';
+
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
 
@@ -46,30 +54,39 @@ export default async function handler(req, res) {
       address: CONTRACT_ADDRESS_V1,
     });
 
-    const collectionv2 = new Account(CollectionContract, {
-      signer: signerKeys(keys),
-      client,
-      address: CONTRACT_ADDRESS_V2,
-    });
+    // const collectionv2 = new Account(CollectionContract, {
+    //   signer: signerKeys(keys),
+    //   client,
+    //   address: CONTRACT_ADDRESS_V2,
+    // });
 
-    let response = await collection.runLocal('getInfoByName', { name: String(req.query.name) });
-    let nftAddress ;
-    if(response.decoded.output.value0.name !== 'notfound'){
-      nftAddress = response.decoded.output.value0.nftAddress;
+    const { rows } = await sql`SELECT * FROM vids WHERE name = ${name};`;
+    //console.log(rows[0]);
+    let nftAddress;
+    let owner;
+    if (rows.length > 0) {
+      nftAddress = String(rows[0].address)
+      owner = String(rows[0].owner);
     } else {
-      let responsev1 = await collectionv1.runLocal('getInfoByName', { name: String(req.query.name) });
-      if(responsev1.decoded.output.value0.name !== 'notfound'){
-        nftAddress = responsev1.decoded.output.value0.nftAddress;
+      let response = await collection.runLocal('getInfoByName', {
+        name: String(_name),
+      });
+      if (response.decoded.output.value0.name !== 'notfound') {
+        nftAddress = response.decoded.output.value0.nftAddress;
+        owner = response.decoded.output.value0.owner;
       } else {
-        let responsev2 = await collectionv2.runLocal('getInfoByName', { name: String(req.query.name) });
-        nftAddress = responsev2.decoded.output.value0.nftAddress;
+        let responsev1 = await collectionv1.runLocal('getInfoByName', {
+          name: String(_name),
+        });
+        nftAddress = responsev1.decoded.output.value0.nftAddress;
+        owner = responsev1.decoded.output.value0.owner;
       }
     }
 
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
       client,
-      address: nftAddress,
+      address: nftAddress,  
     });
 
     let responseJson = await nft.runLocal('getJson', { answerId: 0 });

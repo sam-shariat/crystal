@@ -79,24 +79,6 @@ export default function ConnectButton() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const { login, disconnect, isConnected, account } = useConnect();
   const web3Name = createWeb3Name();
-  const { sign, status } = useSignMessage({
-    publicKey: String(account?.publicKey),
-    data: SIGN_MESSAGE,
-    onComplete: (result) => {
-      // console.log('Message signed successfully:', result);
-      setIsSigning(false);
-      setSignHash(result.signature);
-      setSignDate(Date.now());
-    },
-    onError: (error) => {
-      console.error('Error occurred while signing the message:', error);
-      setIsSigning(false);
-    },
-    onSettled: () => {
-      setIsSigning(false);
-    },
-  });
-
   const { provider } = useVenomProvider();
   const [network, setNetwork] = useAtom(networkAtom);
   //const ethAddress = useAtomValue(ethAtom);
@@ -141,12 +123,32 @@ export default function ConnectButton() {
   const setVenomContractV1 = useSetAtom(venomContractAtomV1);
   const setVenomContractV2 = useSetAtom(venomContractAtomV2);
   const setEarlyAdopterContract = useSetAtom(earlyAdopterContractAtom);
+  const [signMessage,setSignMessage] = useState('')
   const { onCopy, hasCopied } = useClipboard(String(address));
+  const { sign, status } = useSignMessage({
+    publicKey: String(account?.publicKey),
+    data: signMessage,
+    onComplete: (result) => {
+      // console.log('Message signed successfully:', result);
+      setIsSigning(false);
+      setSignHash(result.signature);
+      setSignDate(Date.now());
+    },
+    onError: (error) => {
+      console.error('Error occurred while signing the message:', error);
+      setIsSigning(false);
+    },
+    onSettled: () => {
+      setIsSigning(false);
+    },
+  });
+
 
   async function getPrimary() {
     if (!provider || !provider?.isInitialized || !account?.address) return;
     setIsConnected(true);
     setConnectedAccount(account?.address.toString() ?? '');
+    
     try {
 
       const _rootContract = new provider.Contract(RootAbi, new Address(ROOT_CONTRACT_ADDRESS));
@@ -171,18 +173,15 @@ export default function ConnectButton() {
       // if (value0?.name !== '' && !primaryName?.nftAddress) {
       //   setPrimaryName(value0);
       // } else {
-      await getVid(String(account.address))
-        .then((res) => {
-          if (res.status === 200) {
-            setPrimaryName({ name: res.data + '.vid', nftAddress: res.data });
-          } else {
-            setPrimaryName({ name: '', nftAddress: undefined });
-          }
-        })
-        .catch((e) => {
-          setPrimaryName({ name: '', nftAddress: undefined });
-          // console.log('no primary', e);
-        });
+      const _resolve = await getVid(String(account.address))
+      //console.log(_resolve)
+      if(_resolve.status === 200){
+        setPrimaryName({ name: _resolve.data + '.vid', nftAddress: _resolve.data });
+        setSignMessage(`Hey there ${_resolve.data}.vid ,${SIGN_MESSAGE}`);
+      } else {
+        setPrimaryName({ name: '', nftAddress: undefined });
+        setSignMessage(SIGN_MESSAGE);
+      }
 
       if (_status !== 'connected' && _status !== 'connecting') {
         switchNetwork('venom');
@@ -196,15 +195,6 @@ export default function ConnectButton() {
 
     setPrimaryLoaded(true);
     //console.log('primary loaded')
-
-    if (!isValidSignHash(signHash, signDate) && network === 'venom') {
-      try {
-        !isSigning && sign();
-        setIsSigning(true);
-      } catch (e) {
-        setIsSigning(false);
-      }
-    }
   }
 
   async function getEthPrimary() {
@@ -221,6 +211,18 @@ export default function ConnectButton() {
 
     setEthPrimaryLoaded(true);
   }
+
+  useEffect(()=> {
+    //console.log(network,signMessage,isValidSignHash(signHash, signDate))
+    if (!isValidSignHash(signHash, signDate) && network === 'venom' && signMessage.length > 10) {
+      try {
+        !isSigning && sign();
+        setIsSigning(true);
+      } catch (e) {
+        setIsSigning(false);
+      }
+    }
+  },[signMessage,network])
 
   const switchAccount = async () => {
     await logout();

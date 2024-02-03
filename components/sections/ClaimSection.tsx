@@ -18,10 +18,14 @@ import {
   Spinner,
   InputRightAddon,
   InputRightElement,
+  SkeletonCircle,
+  SkeletonText,
+  Skeleton,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Address } from 'everscale-inpage-provider';
 import DomainAbi from 'abi/Domain.abi.json';
+import TokenWalletAbi from 'abi/TokenWallet.abi.json';
 import {
   nameAtom,
   venomContractAtom,
@@ -50,17 +54,27 @@ import {
   MINT_DATE,
   MINT_MESSAGE,
   MINT_TOTAL_SUPPLY,
+  TOKEN_WALLET_ADDRESS,
+  ROOT_CONTRACT_ADDRESS,
+  MIN_NAME_LENGTH,
 } from 'core/utils/constants';
 import { Transaction } from 'everscale-inpage-provider';
-import { base64ToBlob, isValidSignHash, isValidUsername, sleep } from 'core/utils';
+import {
+  base64ToBlob,
+  invalidUsernameMessage,
+  isValidSignHash,
+  isValidUsername,
+  sleep,
+} from 'core/utils';
 import ClaimModal from 'components/claiming/ClaimModal';
 import TextCard from 'components/claiming/TextCard';
 import ImageBox from 'components/claiming/ImageBox';
-import { useStorageUpload } from '@thirdweb-dev/react';
+import { useSDK, useStorageUpload } from '@thirdweb-dev/react';
 import VIDImage from 'components/claiming/VIDImage';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { LinkIcon } from 'components/logos';
 import Link from 'next/link';
+import { isValidName } from 'ethers/lib/utils';
 
 interface Message {
   type: any;
@@ -97,22 +111,38 @@ const ClaimSection = () => {
   const [typing, setTyping] = useState<boolean>(false);
   const [message, setMessage] = useState<Message>({ type: '', title: '', msg: '', link: '' });
   const [nameExists, setNameExists] = useState(false);
+  const [nameStatus, setNameStatus] = useState<number | null>();
   const [claimedName, setClaimedName] = useState('');
   const { add } = addAsset(String(account?.address), CONTRACT_ADDRESS);
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   const [mintOpen, setMintOpen] = useAtom(mintOpenAtom);
   //const [venomContract, setVenomContract] = useState<any>(undefined);
-  const minFee = 660000000;
+  const minFee = 330000000;
   const [name, setName] = useAtom(claimingNameAtom);
   const [path, setPath] = useAtom(pathAtom);
   //const [vidUrl, setVidUrl] = useState('');
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
   const toast = useToast();
+  const sdk = useSDK();
 
   async function inputChange() {
     if (path === '') return;
     window.clearTimeout(timer);
     clearTimeout(timer);
+
+    if (!isValidUsername(path)) {
+      toast.closeAll();
+      toast({
+        status: 'info',
+        colorScheme: 'light',
+        title: t('invalidName'),
+        description: invalidUsernameMessage(path),
+        isClosable: true,
+        duration:6000
+      });
+      setFee(null);
+      return;
+    }
 
     if (provider && provider?.isInitialized && rootContract && rootContract.methods !== undefined) {
       try {
@@ -132,21 +162,24 @@ const ClaimSection = () => {
         const certificateAddr = await rootContract.methods
           .resolve({ path: `${path}.vid`, answerId: 0 })
           .call({ responsible: true });
-          console.log(certificateAddr);
+        console.log(certificateAddr);
 
         const domainContract = new provider.Contract(DomainAbi, certificateAddr.certificate);
-        console.log(domainContract)
-        try { 
-        // @ts-ignore: Unreachable code error
-          let result = await domainContract.methods.getStatus({ answerId: 0 }).call();
-          console.log(result)
+        console.log(domainContract);
+        try {
+          // @ts-ignore: Unreachable code error
+          let result: { status: string | number } = await domainContract.methods.getStatus({ answerId: 0 })
+            .call();
+          if (result && result?.status) {
+            setNameStatus(Number(result?.status));
+            console.log(result);
+          }
           setNameExists(result ? true : false);
-        } catch (e){
+        } catch (e) {
           setNameExists(false);
-
+          setNameStatus(7);
         }
-        
-        console.log(_fee);
+
         setFee(_fee);
         setFeeIsLoading(false);
       } catch (er) {
@@ -165,7 +198,7 @@ const ClaimSection = () => {
   }
 
   useEffect(() => {
-    if (!connected && path.length > 2) {
+    if (!connected && path.length > MIN_NAME_LENGTH) {
       toast.closeAll();
       toast({
         status: 'info',
@@ -177,23 +210,10 @@ const ClaimSection = () => {
       return;
     }
 
-    if (path.length > 2 && !isValidUsername(path) && path.length < 30) {
-      toast.closeAll();
-      toast({
-        status: 'warning',
-        title: t('invalidName'),
-        description: t('invalidNameMsg'),
-        isClosable: true,
-      });
-      return;
-    }
-
-    if (path.length > 3) {
-      window.clearTimeout(timer);
-      clearTimeout(timer);
-      setTyping(true);
-      timer = window.setTimeout(inputChange, 2000);
-    }
+    window.clearTimeout(timer);
+    clearTimeout(timer);
+    setTyping(true);
+    timer = window.setTimeout(inputChange, 1400);
 
     return () => {
       if (timer) {
@@ -202,18 +222,18 @@ const ClaimSection = () => {
     };
   }, [path]);
 
-  // useEffect(() => {
-  //   async function checkActive() {
-  //     const isActive = await rootContract.methods._active().call();
-  //     setMintOpen(isActive._active);
-  //   }
-  //   if (provider?.isInitialized && rootContract && rootContract.methods._active()) {
-  //     checkActive();
-  //   }
-  // }, [provider, rootContract]);
+  useEffect(() => {
+    async function checkActive() {
+      const isActive = await rootContract.methods._active().call();
+      //setMintOpen(isActive._active);
+    }
+    if (provider?.isInitialized && rootContract && rootContract.methods._active()) {
+      checkActive();
+    }
+  }, [provider, rootContract]);
 
   async function claimVid(e: string) {
-    if (!isConnected && name.length > 0) {
+    if (!isConnected && path.length > 0) {
       toast.closeAll();
       toast({
         status: 'info',
@@ -224,12 +244,13 @@ const ClaimSection = () => {
       return;
     }
 
-    if (name.length > 2 && !isValidUsername(name) && name.length < 30) {
+    if (!isValidUsername(path)) {
       toast.closeAll();
       toast({
-        status: 'warning',
+        status: 'info',
+        colorScheme: 'light',
         title: t('invalidName'),
-        description: t('invalidNameMsg'),
+        description: invalidUsernameMessage(path),
         isClosable: true,
       });
       return;
@@ -250,7 +271,14 @@ const ClaimSection = () => {
 
     setMessage({ type: '', title: '', msg: '' });
 
-    if (name.length >= 3 && !nameExists && venomContract?.methods) {
+    if (
+      provider &&
+      provider?.isInitialized &&
+      rootContract &&
+      rootContract.methods !== undefined &&
+      !nameExists &&
+      account?.address
+    ) {
       setIsMinting(true);
       toast({
         status: 'loading',
@@ -286,13 +314,25 @@ const ClaimSection = () => {
         description: t('confirmInWallet'),
         duration: null,
       });
+
+      // const mintTx = await venomContract?.methods
+      //   .mintNft({ json: JSON.stringify({}), name: name.toLowerCase() })
+      //   .send({
+      //     amount: String(minFee + Number(fee)),
+      //     bounce: true,
+      //     from: account?.address,
+      //   })
+
       // @ts-ignore: Unreachable code error
-      const mintTx = await venomContract?.methods
-        .mintNft({ json: JSON.stringify({}), name: name.toLowerCase() })
+      const mintTx = await rootContract.methods
+        .betaReg({
+          path: `${path}.vid`,
+          domainOwner: account?.address,
+        })
         .send({
-          amount: String(minFee + Number(fee)),
+          from: account?.address!,
+          amount: String(2e9),
           bounce: true,
-          from: account?.address,
         })
         .catch((e: any) => {
           if (e.code === 3) {
@@ -324,19 +364,23 @@ const ClaimSection = () => {
           await subscriber
             .trace(mintTx)
             .tap((tx_in_tree: any) => {
-              //// console.log('tx_in_tree : ', tx_in_tree);
-              if (tx_in_tree.account.equals(VenomContractAddress)) {
+              console.log('tx_in_tree : ', tx_in_tree);
+              if (tx_in_tree.account.equals(rootContract.address)) {
                 receiptTx = tx_in_tree;
               }
             })
             .finished();
 
         // Decode events by using abi
+        //  let tx = await provider.unpackFromCell({boc: String(receiptTx?.inMessage.boc),allowPartial:true,structure:[{ name: "callback", type: "string" }] as const});
+        // let tx = await tokenWallet.decodeTransaction({transaction : receiptTx as Transaction, methods : tokenWallet.methods});
+        //console.log(tx)
         // we are looking for event Game(address player, uint8 bet, uint8 result, uint128 prize);
-
-        let events = await venomContract.decodeTransactionEvents({
+        let events = await rootContract.decodeTransactionEvents({
           transaction: receiptTx as Transaction,
         });
+
+        console.log(events);
 
         if (events.length !== 1 || events[0].event !== 'NftCreated') {
           toast.closeAll();
@@ -349,7 +393,7 @@ const ClaimSection = () => {
         } else {
           // @ts-ignore: Unreachable code error
           const nftAddress = String(events[0].data?.nft && events[0].data?.nft?._address);
-          setClaimedName(name);
+          setClaimedName(path);
           toast.closeAll();
           setMessage({
             type: 'success',
@@ -358,13 +402,23 @@ const ClaimSection = () => {
             link: nftAddress,
           });
           if (primaryName?.name === '') {
-            setPrimaryName({ name: name });
+            setPrimaryName({ name: `${path}.vid`, nftAddress: nftAddress });
           }
         }
         setIsMinting(false);
         setIsConfirming(false);
         await sleep(1000);
         setName('');
+      } else {
+        toast.closeAll();
+        toast({
+          status: 'error',
+          title: t('error'),
+          description: t('commonErrorMsg'),
+          isClosable: true,
+        });
+        setIsMinting(false);
+        setIsConfirming(false);
       }
     }
   }
@@ -385,7 +439,7 @@ const ClaimSection = () => {
           <SimpleGrid
             columns={[1, 1, 2]}
             spacing={['64px', '64px', '32px']}
-            gap={'64px'}
+            gap={['64px', '64px', '32px']}
             py={10}
             alignItems={'center'}
             minWidth={['100%', '100%', '100%', 'container.md', 'container.lg']}>
@@ -417,13 +471,6 @@ const ClaimSection = () => {
           <ClaimModal claimedName={claimedName} message={message} />
           {/* {totalSupply ? ( */}
           <Stack py={[10]} w={'100%'} align={'center'} gap={8}>
-            <SimpleGrid columns={[1]} gap={8} w={'100%'}>
-                <TextCard
-                  domain={`10K unique names`}
-                  text={"3.5k owners & 12k txs on Beta"}
-                  header={''}
-                />
-              </SimpleGrid>
             {mintOpen ? (
               <Flex direction={'column'} w={'100%'} align={'center'}>
                 <InputGroup size="lg">
@@ -434,10 +481,19 @@ const ClaimSection = () => {
                     value={path}
                     fontSize={['lg', 'xl', '2xl']}
                     borderWidth="1px"
+                    borderColor={'whiteAlpha.200'}
                     rounded={'full'}
+                    _focus={{
+                      borderColor: 'whiteAlpha.500',
+                      bg: colorMode === 'dark' ? 'blackAlpha.400' : 'white',
+                    }}
+                    _hover={{
+                      borderColor: 'whiteAlpha.500',
+                      bg: colorMode === 'dark' ? 'blackAlpha.400' : 'white',
+                    }}
                     px={[4, 4, 6]}
                     onChange={(e) => setPath(e.target.value.toLowerCase())}
-                    //bg={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
+                    bg={colorMode === 'dark' ? 'blackAlpha.300' : 'whiteAlpha.700'}
                     disabled={isMinting || isConfirming}
                   />
                   <InputRightElement
@@ -463,7 +519,7 @@ const ClaimSection = () => {
                             : 'linear(to-r, var(--venom0), var(--bluevenom0))',
                       }}
                       height={['50px', '58px']}
-                      disabled={name.length < 3 || nameExists || isMinting || isConfirming}
+                      isDisabled={!isValidName(path) || nameExists || isMinting || isConfirming}
                       isLoading={feeIsLoading || isMinting}
                       loadingText={
                         isMinting && !isConfirming
@@ -473,8 +529,14 @@ const ClaimSection = () => {
                           : ''
                       }
                       onClick={(e) => claimVid(e.currentTarget.value)}>
-                      {notMobile ? 'Search' : ''}
-                      <LinkIcon type="RiSearchLine" />
+                      {!typing && nameStatus !== -1 ? (
+                        'Register'
+                      ) : (
+                        <>
+                          {notMobile ? 'Search' : ''}
+                          <LinkIcon type="RiSearchLine" />
+                        </>
+                      )}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
@@ -497,71 +559,76 @@ const ClaimSection = () => {
 
             </Center>
           )} */}
-          
 
-          {path.length > 2 && !typing && fee !== -1 && venomContract?.methods && (
+          {path.length > MIN_NAME_LENGTH && rootContract?.methods && (
             <Flex
               minWidth={notMobile ? 'md' : 'xs'}
-              borderColor={'whiteAlpha.100'}
+              borderColor={'whiteAlpha.200'}
               borderWidth={1}
-              borderRadius={10}
+              rounded={'full'}
+              gap={2}
               justifyContent={'space-between'}
               alignItems={'center'}
-              mb={4}
               p={5}
-              bgColor={'blackAlpha.200'}>
-              <Box>
-                <Text fontWeight={'bold'}>
-                  {t('mintingFee')} :{' '}
-                  {fee && !feeIsLoading ? Math.round(fee / 1e3) / 1e6 : t('calculating')}
-                </Text>
-                <Text fontWeight={'light'}>
-                  {t('reserveFee')} : {`${Math.round(minFee / 1e3) / 1e6}`}
-                </Text>
-              </Box>
-
-              {!feeIsLoading ? (
-                <Text
-                  fontSize={'lg'}
-                  textAlign={'right'}
-                  fontWeight={colorMode === 'light' ? 'bold' : 'light'}
-                  color={nameExists ? 'var(--red1)' : 'var(--venom2)'}>
-                  {nameExists ? path + '.vid ' + t('taken') : path + '.vid ' + t('available')}
-                </Text>
+              bgColor={colorMode === 'light' ? 'whiteAlpha.700' : 'blackAlpha.200'}>
+              {typing ? (
+                <>
+                  <Flex gap={2} align={'center'}>
+                    <SkeletonCircle w={'64px'} h={'64px'} />
+                    <Stack gap={2}>
+                      <Skeleton w={'160px'} h={'30px'} />
+                      <Skeleton w={'210px'} h={'28px'} />
+                    </Stack>
+                  </Flex>
+                </>
               ) : (
-                <Text
-                  fontSize={'lg'}
-                  textAlign={'right'}
-                  fontWeight={colorMode === 'light' ? 'bold' : 'light'}>
-                  {' '}
-                  {t('availability')}
-                </Text>
+                <>
+                  {!feeIsLoading ? (
+                    <Flex gap={2} align={'center'}>
+                      <LinkIcon
+                        type={nameExists ? 'RiCloseCircleFill' : 'RiCheckboxCircleFill'}
+                        color={nameExists ? 'var(--red)' : 'var(--venom1)'}
+                        size={64}
+                      />
+
+                      <Stack gap={0}>
+                        <Text
+                          fontSize={'2xl'}
+                          fontWeight={colorMode === 'light' ? 'bold' : 'normal'}>
+                          {path + '.vid '}
+                        </Text>
+                        <Text
+                          fontSize={'xl'}
+                          textAlign={'left'}
+                          fontWeight={colorMode === 'light' ? 'bold' : 'normal'}
+                          color={nameExists ? 'var(--red1)' : 'var(--venom2)'}>
+                          {nameExists ? t('taken') : t('available')}
+                        </Text>
+                      </Stack>
+                    </Flex>
+                  ) : (
+                    <Flex gap={2} align={'center'}>
+                      <Box w={'64px'}>
+                        <Spinner size={'xl'} />
+                      </Box>
+                      <Stack gap={0}>
+                        <Text
+                          fontSize={'2xl'}
+                          fontWeight={colorMode === 'light' ? 'bold' : 'normal'}>
+                          {path + '.vid '}
+                        </Text>
+                        <Text fontSize={'xl'} fontWeight={colorMode === 'light' ? 'bold' : 'light'}>
+                          {' '}
+                          {t('availability')}
+                        </Text>
+                      </Stack>
+                    </Flex>
+                  )}
+                </>
               )}
             </Flex>
           )}
 
-          <Button
-            as={Link}
-            href="\community"
-            style={{ textDecoration: 'none' }}
-            width={'100%'}
-            py={4}
-            justifyContent={'center'}
-            gap={2}
-            rounded={'full'}
-            variant={'ghost'}
-            height={['64px', '72px', '80px']}
-            size={'lg'}>
-            <LinkIcon type="RiVerifiedBadgeLine" size={notMobile ? '32' : '24'} color={colorMode === 'light' ? 'var(--venom2)': 'var(--venom0)'}/>
-            <Text fontWeight={'bold'} fontSize={['lg', 'xl', '2xl']} bgGradient={
-                      colorMode === 'light'
-                        ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                        : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                    }
-                    bgClip="text">
-              {notMobile ? 'Join The' : 'Join'} Early Adopter Program
-            </Text>
-          </Button>
           {/* <Text fontWeight="light" fontSize={'xl'} py={6}>
             {t('claimDescription')}
           </Text> */}

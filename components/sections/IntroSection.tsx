@@ -19,6 +19,7 @@ import {
   Flex,
   LightMode,
   DarkMode,
+  Link,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { Avatar, Links, Socials } from 'components/Profile';
@@ -44,6 +45,8 @@ import { getIconColor, getRandomNumber, sleep } from 'core/utils';
 import { RiArrowRightCircleFill, RiLinksLine } from 'react-icons/ri';
 import { FaCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import TextCard from 'components/claiming/TextCard';
+import { LinkIcon } from 'components/logos';
 
 export default function IntroSection() {
   let changeTimer: any;
@@ -173,7 +176,7 @@ export default function IntroSection() {
                 sx={{
                   '& > div:first-of-type': {
                     transitionProperty: 'width',
-                    background: 'linear-gradient(to right, #2bb673 10%, #10a9b6 90%)'
+                    background: 'linear-gradient(to right, #2bb673 10%, #10a9b6 90%)',
                   },
                 }}
                 size={'xs'}
@@ -198,7 +201,13 @@ export default function IntroSection() {
                 transition={'all .5s ease'}
                 p={4}>
                 <motion.div
-                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width:'100%', gap: 12 }}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    width: '100%',
+                    gap: 12,
+                  }}
                   key={`venomid-templates-${current}`}
                   transition={{ duration: 0.5, ease: 'linear' }}
                   initial={{ y: 20, scale: 0.9, opacity: 0.5, filter: 'blur(20px)' }}
@@ -210,63 +219,62 @@ export default function IntroSection() {
                     filter: 'blur(20px)',
                     transition: { ease: 'backOut', duration: 0.2 },
                   }}>
-                    <Box 
-                as={lightMode ? LightMode : DarkMode}>
-                  <HStack gap={4}>
-                    <Box maxW={notMobile ? '160px' : '100px'}>
-                      <Avatar
-                        url={avatar}
-                        alt={'venom id avatar image'}
-                        shape={avatarShape}
-                        shadow="none"
-                      />
-                    </Box>
+                  <Box as={lightMode ? LightMode : DarkMode}>
+                    <HStack gap={4}>
+                      <Box maxW={notMobile ? '160px' : '100px'}>
+                        <Avatar
+                          url={avatar}
+                          alt={'venom id avatar image'}
+                          shape={avatarShape}
+                          shadow="none"
+                        />
+                      </Box>
 
-                    <Stack gap={0}>
-                      <Text
-                        fontFamily={font}
-                        fontWeight="bold"
-                        fontSize="2xl"
-                        color={getIconColor(lightMode)}>
-                        {title}
-                      </Text>
-                      <Text
-                        fontWeight="normal"
-                        fontSize="lg"
-                        fontFamily={font}
-                        color={getIconColor(lightMode)}>
-                        {subtitle}
-                      </Text>
-                      <Text
-                        fontFamily={font}
-                        fontWeight="bold"
-                        fontSize="xl"
-                        color={getIconColor(lightMode)}>
-                        {vid}
-                      </Text>
-                    </Stack>
-                  </HStack>
-                  <Socials
-                    key={`socials-${current}-${colorMode}`}
-                    onlyIcons
-                    json={{
-                      lightMode: lightMode,
-                      socials: socials,
-                      lineIcons: lightMode,
-                    }}
-                  />
-                  <Wallets
-                    key={`wallets-${current}-${colorMode}`}
-                    json={{
-                      wallets: wallets,
-                    }}
-                  />
-                  <Links
-                    key={`links-${current}-${colorMode}`}
-                    json={{
-                      links: links,
-                    }}
-                  />
+                      <Stack gap={0}>
+                        <Text
+                          fontFamily={font}
+                          fontWeight="bold"
+                          fontSize="2xl"
+                          color={getIconColor(lightMode)}>
+                          {title}
+                        </Text>
+                        <Text
+                          fontWeight="normal"
+                          fontSize="lg"
+                          fontFamily={font}
+                          color={getIconColor(lightMode)}>
+                          {subtitle}
+                        </Text>
+                        <Text
+                          fontFamily={font}
+                          fontWeight="bold"
+                          fontSize="xl"
+                          color={getIconColor(lightMode)}>
+                          {vid}
+                        </Text>
+                      </Stack>
+                    </HStack>
+                    <Socials
+                      key={`socials-${current}-${colorMode}`}
+                      onlyIcons
+                      json={{
+                        lightMode: lightMode,
+                        socials: socials,
+                        lineIcons: lightMode,
+                      }}
+                    />
+                    <Wallets
+                      key={`wallets-${current}-${colorMode}`}
+                      json={{
+                        wallets: wallets,
+                      }}
+                    />
+                    <Links
+                      key={`links-${current}-${colorMode}`}
+                      json={{
+                        links: links,
+                      }}
+                    />
                   </Box>
                 </motion.div>
               </Center>
@@ -283,10 +291,60 @@ export default function IntroSection() {
               </Heading>
               <Text
                 fontWeight="normal"
-                fontSize={['xl', '2xl', '3xl', '3xl']}
+                fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 {t('watis')}
               </Text>
+              <Stack gap={6}>
+                
+                <Button
+                  as={Link}
+                  href="\litepaper"
+                  style={{ textDecoration: 'none' }}
+                  width={'100%'}
+                  py={4}
+                  justifyContent={'center'}
+                  borderColor={colorMode === 'light' ? 'blackAlpha.300' : 'whiteAlpha.300'}
+                  gap={2}
+                  rounded={'full'}
+                  variant={'outline'}
+                  height={['56px', '64px']}
+                  size={'lg'}>
+                  <LinkIcon type="RiFileList3Line" size={notMobile ? '32' : '24'} />
+                  <Text fontWeight={'bold'} fontSize={['lg', 'xl']}>
+                    Beta Litepaper
+                  </Text>
+                </Button>
+                <Button
+                  as={Link}
+                  href="\community"
+                  style={{ textDecoration: 'none' }}
+                  width={'100%'}
+                  py={4}
+                  justifyContent={'center'}
+                  gap={2}
+                  color={'white'}
+                  bgGradient={
+                    colorMode === 'light'
+                      ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
+                      : 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                  }
+                  _hover={{
+                    bgGradient:
+                      colorMode === 'light'
+                        ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                        : 'linear(to-r, var(--venom0), var(--bluevenom0))',
+                  }}
+                  rounded={'full'}
+                  variant={'ghost'}
+                  height={['56px', '64px']}
+                  size={'lg'}>
+                  <LinkIcon type="RiVerifiedBadgeLine" size={notMobile ? '32' : '24'} />
+                  <Text fontWeight={'bold'} fontSize={['lg', 'xl']}>
+                    Early Adopter Program
+                  </Text>
+                </Button>
+              </Stack>
             </Stack>
           </GridItem>
         </Grid>

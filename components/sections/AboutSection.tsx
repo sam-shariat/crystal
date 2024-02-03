@@ -43,7 +43,7 @@ export default function AboutSection() {
               gap={2}
               size={'lg'}
               variant={'outline'}>
-              <RiFileList3Line size={28} />
+              <LinkIcon type="RiFileList3Line" size={28} />
               <Text>{t('litepaper')}</Text>
             </Button>
             <Button

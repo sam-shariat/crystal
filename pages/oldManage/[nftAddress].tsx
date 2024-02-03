@@ -91,7 +91,7 @@ import {
 } from 'core/utils/constants';
 import { ConnectButton } from 'components/venomConnect';
 import { getNft } from 'core/utils/nft';
-import DomainAbi from 'abi/Domain.abi.json';
+import NFTAbi from 'abi/Nft.abi.json';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
 import { useStorageUpload } from '@thirdweb-dev/react';
 import {
@@ -111,7 +111,7 @@ import { LinkIcon } from 'components/logos';
 import StyleDrawer from 'components/manage/StyleDrawer';
 import ManageHeader from 'components/manage/ManageHeader';
 
-const ManagePage: NextPage = () => {
+const OldManagePage: NextPage = () => {
   const { provider } = useVenomProvider();
   const { isConnected, account } = useConnect();
   const { mutateAsync: upload } = useStorageUpload();
@@ -275,14 +275,9 @@ const ManagePage: NextPage = () => {
         duration: null,
         isClosable: true,
       });
-      const tvmCell = await provider.packIntoCell({
-        data : {ipfsdata : String(_jsonHash)},
-        structure : [{ name: 'ipfsdata', type: 'string' }] as const
-      });
-      console.log(tvmCell);
       // @ts-ignore: Unreachable code error
       const saveTx = await nftContract.methods
-        .setRecord({ key: 33, value: tvmCell.boc })
+        .setData({ data: String(_jsonHash) })
         .send({
           amount: String(minFee),
           bounce: true,
@@ -317,7 +312,6 @@ const ManagePage: NextPage = () => {
           await subscriber
             .trace(saveTx)
             .tap((tx_in_tree: any) => {
-              console.log(tx_in_tree);
               if (tx_in_tree.account.equals(nftAddress)) {
                 toast.closeAll();
                 toast({
@@ -350,14 +344,6 @@ const ManagePage: NextPage = () => {
             return;
           }
 
-          if (!nftContract || !nftContract.methods) {
-            const _nftContract = new provider.Contract(DomainAbi, new Address(nftAddress));
-            setNftContract(_nftContract);
-            await sleep(1000);
-            getProfileJson();
-            return
-          }
-
           if (network !== 'venom') {
             setError(`Please switch your network to Venom`);
             setIsLoading(false);
@@ -370,7 +356,11 @@ const ManagePage: NextPage = () => {
 
           setIsLoading(true);
           // console.log('getting nft0');
-          
+
+          if (nftContract === undefined) {
+            const _nftContract = new provider.Contract(NFTAbi, new Address(nftAddress));
+            setNftContract(_nftContract);
+          }
           // console.log('getting nft');
           const nftJson = await getNft(provider, new Address(nftAddress));
           if (
@@ -386,27 +376,10 @@ const ManagePage: NextPage = () => {
             setError('');
           }
           setNftJson(nftJson);
-          console.log(nftJson);
 
-          let ipfsData = '';
-          let result = await nftContract.methods.query({ key: 33, answerId: 1337 })
-            .call({ responsible: true });
-
-          if (!result.value) {
-            console.log('No ipfs record found');
-          } else {
-            const unpackedTargetAddress = await provider.unpackFromCell({
-              structure: [{ name: 'ipfsdata', type: 'string' }] as const,
-              boc: result.value!,
-              allowPartial: true,
-            });
-  
-            ipfsData = unpackedTargetAddress.data.ipfsdata.toString();
-  
-            console.log(`ipfsData : ${ipfsData}`);
-          }
-          // Extract the Account address from the cell
-          
+          const ipfsData: string | undefined = nftJson.attributes?.find(
+            (att) => att.trait_type === 'DATA'
+          )?.value;
           setJsonHash(String(ipfsData));
           if (ipfsData === '') {
             setJson({
@@ -511,19 +484,17 @@ const ManagePage: NextPage = () => {
               });
               setIsLoading(false);
               setError(error.message + ' please try again');
-              console.log(error)
             }
           } else {
             setIsLoading(false);
-              console.log(error)
-              setError(error.message + ' please try again');
+            setError(error.message + ' please try again');
             //router.reload();
           }
         }
       }
     }
     getProfileJson();
-  }, [connectedAccount, account, network, nftContract]);
+  }, [connectedAccount, account, network]);
 
   return (
     <>
@@ -571,6 +542,7 @@ const ManagePage: NextPage = () => {
                       <Flex
                         my={4}
                         direction={'column'}
+                        
                         gap={2}
                         borderRadius={12}
                         width={['100%', 'md', 'lg', 'md', 'md', 'xl']}
@@ -579,27 +551,27 @@ const ManagePage: NextPage = () => {
                         h={notMobileH ? '96vh' : '100vh'}
                         p={3}>
                         <Stack>
-                          <ManageHeader />
-                          <Flex
-                            direction={'column'}
-                            maxHeight={notMobileH ? '77vh' : '80vh'}
-                            overflow={'auto'}
-                            w={'100%'}
-                            className="noscroll"
-                            gap={4}
-                            rounded={'lg'}>
-                            <ProfileCompletion />
-                            <EditAvatar />
-                            <CropAvatar />
-                            {/* <VenomAddressButton venomAddress={json.venomAddress} /> */}
-                            {/* <BtcAddressInput />
+                        <ManageHeader />
+                        <Flex
+                          direction={'column'}
+                          maxHeight={notMobileH ? '77vh' : '80vh'}
+                          overflow={'auto'}
+                          w={'100%'}
+                          className='noscroll'
+                          gap={4}
+                          rounded={'lg'}>
+                          <ProfileCompletion />
+                          <EditAvatar />
+                          <CropAvatar />
+                          {/* <VenomAddressButton venomAddress={json.venomAddress} /> */}
+                          {/* <BtcAddressInput />
                         <EthAddressInput /> */}
-                            <TitleInput />
-                            <BioTextInput />
-                            <ManageWallets json={json} nftAddress={nftAddress} />
-                            <ManageLinks json={json} nftAddress={nftAddress} />
-                            <ManageSocials json={json} nftAddress={nftAddress} />
-                          </Flex>
+                          <TitleInput />
+                          <BioTextInput />
+                          <ManageWallets json={json} nftAddress={nftAddress} />
+                          <ManageLinks json={json} nftAddress={nftAddress} />
+                          <ManageSocials json={json} nftAddress={nftAddress} />
+                        </Flex>
                         </Stack>
                         <Flex gap={2} justify={'stretch'}>
                           <AddModal type={'square'} />
@@ -664,4 +636,4 @@ const ManagePage: NextPage = () => {
   );
 };
 
-export default ManagePage;
+export default OldManagePage;

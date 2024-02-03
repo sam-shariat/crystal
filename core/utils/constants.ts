@@ -1,11 +1,12 @@
 import { BgColorItem, LinkType, BgImageItem } from 'types';
 
-export const MINT_OPEN = false;
+export const MINT_OPEN = true;
 export const MINT_TOTAL_SUPPLY:number = 10000;
 export const MINT_DATE = 'Feb 03, 2024 18:00 UTC';
 export const MINT_MESSAGE = 'Final Phase of venom testnet minting will start on';
 export const SITE_URL = 'https://venomid.network/';
 export const SITE_URL_SHORT = 'https://venomid.network/';
+export const VID_IMAGE_API = 'https://img.venomid.network/api/';
 export const SITE_TITLE = 'Venom ID';
 export const SITE_DESCRIPTION = 'Your entire virtual identity in the blockchain in one simple link';
 export const SITE_FULL_DESCRIPTION =
@@ -27,9 +28,32 @@ export const CONTRACT_ADDRESS_V1 =
 export const CONTRACT_ADDRESS_V2 =
   '0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
 
-export const ROOT_CONTRACT_ADDRESS = '0:36f1cf41b7e7046303896a8a82b976106b359b8432a2cedd26738e9f331444f1';
-
+export const ROOT_CONTRACT_ADDRESS = '0:5475e9e7b9d178f4c35cd1136e83a100ca95e28b38c5c52d0689771372ba43ec';
+export const MAX_NAME_LENGTH = 63;
+export const MIN_NAME_LENGTH = 5;
 export const EARLY_ADOPTERS_CONTRACT_ADDRESS = '0:9e0ea0f0fe6229aee6580a96fd9c62aabf6f2430830877c5b1ad700680ac0486';
+export const WRAPPED_VENOM_ADDRESS = '0:2c3a2ff6443af741ce653ae4ef2c85c2d52a9df84944bbe14d702c3131da3f14';
+export const TOKEN_WALLET_ADDRESS = '0:2b5bbfe1d86e4df852a2ff33512495c7038c585f5c6c8c0a84f7af8997e2ff05';
+export enum CertificateStatus {
+  RESERVED,
+  NEW,
+  IN_ZERO_AUCTION,
+  COMMON,
+  EXPIRING,
+  GRACE,
+  EXPIRED
+}
+
+export const CertificateStatusNames =[
+  'RESERVED',
+  'NEW',
+  'IN AUCTION',
+  'COMMON',
+  'EXPIRING',
+  'GRACE',
+  'EXPIRED',
+  'AVAILABLE'
+]
 
 export const VENTORY_NFT_V1_ADDRESS = '0:7df675a3c099ed318d36c54e62282b1185f78fb05c21d19292699d6e200b0bb6';
 export const VENTORY_NFT_V2_ADDRESS = '0:b248dc8f494e6e8f4ff355e9032cdfaf0108889b19b06e3f11861faa0780a06c';

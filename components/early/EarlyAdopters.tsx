@@ -40,6 +40,7 @@ import {
   ETHERSCAN_URLS,
   MARKETPLACE_URLS,
   MARKETPLACE_URLS_COLLECTION,
+  ROOT_CONTRACT_ADDRESS,
   SITE_URL,
   TWITTER_FOLLOW_URL,
   TWITTER_RETWEET_URL,
@@ -660,12 +661,17 @@ export default function EarlyAdopters() {
 
   const _checkOwnVid = async () => {
     setOwnVidLoading(true);
+    const v0nfts = await loadByContract(ROOT_CONTRACT_ADDRESS);
     const v1nfts = await loadByContract(CONTRACT_ADDRESS);
     const v2nfts = await loadByContract(CONTRACT_ADDRESS_V1);
     const v3nfts = await loadByDb();
 
     //console.log(v1nfts, v2nfts, v3nfts);
     let _no = 0;
+    if (Number(v0nfts) > 0) {
+      _no += 1;
+    };
+
     if (Number(v1nfts) > 0) {
       setOwnVid(true);
       _no += 1;
@@ -686,7 +692,7 @@ export default function EarlyAdopters() {
       setOwnVid2(false);
     }
 
-    console.log(v1nfts, v2nfts, v3nfts);
+    console.log(v0nfts,v1nfts, v2nfts, v3nfts);
 
     setOwnVidChecked(true);
     setOwnVidLoading(false);

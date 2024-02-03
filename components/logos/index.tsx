@@ -105,7 +105,7 @@ interface LinkIconProps {
   type: string;
   line?: boolean;
   color?: string;
-  size?: string;
+  size?: any;
   rounded?: string;
 }
 

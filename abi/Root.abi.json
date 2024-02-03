@@ -203,6 +203,24 @@
 			]
 		},
 		{
+			"name": "betaReg",
+			"inputs": [
+				{"name":"path","type":"string"},
+				{"name":"domainOwner","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "migrate",
+			"inputs": [
+				{"name":"paths","type":"string[]"},
+				{"name":"domainOwner","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "unreserve",
 			"inputs": [
 				{"name":"path","type":"string"},
@@ -731,6 +749,15 @@
 			"inputs": [
 				{"name":"path","type":"string"},
 				{"name":"reason","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "Registered",
+			"inputs": [
+				{"name":"path","type":"string"},
+				{"name":"owner","type":"address"}
 			],
 			"outputs": [
 			]

@@ -210,6 +210,15 @@
 			]
 		},
 		{
+			"name": "ipfs",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"hash","type":"string"}
+			]
+		},
+		{
 			"name": "query",
 			"inputs": [
 				{"name":"answerId","type":"uint32"},
@@ -232,6 +241,14 @@
 			"name": "setTarget",
 			"inputs": [
 				{"name":"target","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setIpfs",
+			"inputs": [
+				{"name":"hash","type":"string"}
 			],
 			"outputs": [
 			]
@@ -461,6 +478,14 @@
 			]
 		},
 		{
+			"name": "_ipfs",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_ipfs","type":"string"}
+			]
+		},
+		{
 			"name": "_records",
 			"inputs": [
 			],
@@ -579,6 +604,15 @@
 			]
 		},
 		{
+			"name": "ChangedIpfs",
+			"inputs": [
+				{"name":"oldHash","type":"string"},
+				{"name":"newHash","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "ChangedTarget",
 			"inputs": [
 				{"name":"oldTarget","type":"address"},
@@ -662,6 +696,7 @@
 		{"name":"_initTime","type":"uint32"},
 		{"name":"_expireTime","type":"uint32"},
 		{"name":"_target","type":"address"},
+		{"name":"_ipfs","type":"string"},
 		{"name":"_records","type":"map(uint32,cell)"},
 		{"components":[{"name":"startZeroAuction","type":"uint32"},{"name":"expiring","type":"uint32"},{"name":"grace","type":"uint32"}],"name":"_durationConfig","type":"tuple"},
 		{"components":[{"name":"maxDuration","type":"uint32"},{"name":"graceFinePercent","type":"uint128"}],"name":"_config","type":"tuple"},

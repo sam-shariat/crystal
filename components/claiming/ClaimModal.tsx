@@ -25,7 +25,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { capFirstLetter, truncAddress } from 'core/utils';
-import { SITE_MANAGE_URL, SITE_URL, VENOMSCAN_NFT } from 'core/utils/constants';
+import { SITE_MANAGE_URL, SITE_URL, VENOMSCAN_NFT, VID_IMAGE_API } from 'core/utils/constants';
 import { VenomScanIcon } from 'components/logos';
 import {
   RiCheckDoubleFill,
@@ -49,8 +49,8 @@ export default function ClaimModal({ message, claimedName }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { t } = useTranslate();
   const { onCopy, hasCopied } = useClipboard(String(message.link));
-  const vidimage = renderToStaticMarkup(<VIDImage name={claimedName} key={claimedName}/>);
-  const vidbase64 = "data:image/svg+xml;base64," + btoa(vidimage);
+  // const vidimage = renderToStaticMarkup(<VIDImage name={claimedName} key={claimedName}/>);
+  // const vidbase64 = "data:image/svg+xml;base64," + btoa(vidimage);
 
   useEffect(() => {
     if (message.msg.length > 0 && message.type == 'success') {
@@ -82,7 +82,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
                     {claimedName}.VID{' '}
                   </Text>
                   <Avatar my={1} noanimate nodrag url={''} alt={claimedName} radius={12} /> */}
-                  <ImageBox srcUrl={vidbase64} key={claimedName} size={'xs'} rounded='lg' shadow='none'/>
+                  <ImageBox srcUrl={VID_IMAGE_API + claimedName + '.vid'} key={claimedName} size={'xs'} rounded='lg' shadow='none'/>
                 </Box>
               </Flex>
               <Flex gap={4} flexDirection={'column'} justify={'center'} align={'center'}>

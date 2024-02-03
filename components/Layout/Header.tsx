@@ -56,7 +56,7 @@ export default function Header() {
   return (
     <>
       {pathname === '/' && (
-        <Center px={[4, 4, 0]} py={2} bgColor="var(--venom3)" color={'white'}>
+        <Center px={[4, 4, 0]} py={2} bgGradient={'linear(to-r, var(--venom2), var(--bluevenom2))'} color={'white'}>
           {t('testnetNotice')}
         </Center>
       )}

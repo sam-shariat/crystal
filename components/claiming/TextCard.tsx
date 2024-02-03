@@ -29,7 +29,7 @@ export default function TextCard({ header, domain, text, icon, url }: Props) {
       align={'center'}
       borderWidth={1}
       borderColor="grayAlpha.500"
-      boxShadow={'inset 0 0 8px var(--venom1)'}
+      //boxShadow={'inset 0 0 8px var(--venom1)'}
       p={[4,6,8]}
       gap={2}
       width={'100%'}>

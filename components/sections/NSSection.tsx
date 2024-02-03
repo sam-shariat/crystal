@@ -133,22 +133,22 @@ export default function NSSection() {
     setIsLoadig(false);
   };
 
-  useEffect(() => {
-    if (!loaded) {
-      if (address.includes('.vid')) {
-        getAddress();
-      } else if (isValidVenomAddress(address)) {
-        getName();
-      } else {
-        setName('');
-      }
-    }
+  // useEffect(() => {
+  //   if (!loaded) {
+  //     if (address.includes('.vid')) {
+  //       getAddress();
+  //     } else if (isValidVenomAddress(address)) {
+  //       getName();
+  //     } else {
+  //       setName('');
+  //     }
+  //   }
 
-    if (!String(address).includes('.vid') && !isValidVenomAddress(String(address))) {
-      setName('');
-      setLoaded(false);
-    }
-  }, [address]);
+  //   if (!String(address).includes('.vid') && !isValidVenomAddress(String(address))) {
+  //     setName('');
+  //     setLoaded(false);
+  //   }
+  // }, [address]);
 
   return (
     <Box id="ns">
@@ -234,7 +234,7 @@ export default function NSSection() {
               maxW={'100%'}
               w={'100%'}
               isLoading={isLoading}
-              isDisabled={name.length < 3}
+              isDisabled={true}
               gap={2}
               size={'lg'}
               colorScheme="green"
@@ -243,7 +243,7 @@ export default function NSSection() {
                 setIsLoadig(true);
                 run();
               }}>
-              Send 0.01 TEST VENOM
+              Locked till Feb, 06 2024
               {name.length > 3 && (
                 <>
                   <RiSendPlane2Line size={28} />

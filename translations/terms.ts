@@ -92,11 +92,11 @@ const terms: Terms = {
     fa: ' توان مندی کاربران برای داشتن کنترل و استقلال در حضور آنلاین خود.',
   },
   wat: {
-    en: 'what is <vid> venom id?',
+    en: 'what exactly are <vids> ?',
     fa: 'ونوم آی دی چیست ؟',
   },
   watis: {
-    en: 'a decentralized platform to manage and showcase all your virtual assets in one customizable page',
+    en: 'vid(s) are domain names within the venom network empowering you to organize and exhibit your assets and links in a customizable web address.',
     fa: 'یک پلتفرم غیرمتمرکز برای مدیریت و نمایش تمام لینک ها ، شبکه های اجتماعی و کیف پول های شما',
   },
   watis2: {
@@ -216,8 +216,8 @@ const terms: Terms = {
     fa: 'مشاهده',
   },
   description: {
-    en: 'Empower Your Digital Presence with a Link',
-    fa: 'هویت مجازی شما در بلاک‌چین با یک لینک',
+    en: 'Empower Your Digital Presence with a Name',
+    fa: 'هویت مجازی شما در بلاک‌چین با یک نام',
   },
   claimDescription: {
     en: 'your entire virtual identity in the blockchain through one simple link',
@@ -240,7 +240,7 @@ const terms: Terms = {
     fa: 'بخش مدیریت',
   },
   apiLinkButton: {
-    en: 'Venom ID API Docs (Beta)',
+    en: 'Venom ID API Docs (old)',
     fa: 'مستندات API',
   },
   apiDescription: {
@@ -384,12 +384,12 @@ const terms: Terms = {
     fa: ' در حال بررسی موجودیت ',
   },
   available: {
-    en: `is Available`,
+    en: `available`,
     fa: ' در دسترس است ',
   },
   taken: {
-    en: `is Taken`,
-    fa: ' در دسترس نیست ',
+    en: `not available`,
+    fa: 'در دسترس نیست ',
   },
   calculating: {
     en: 'Calculating',
@@ -404,12 +404,12 @@ const terms: Terms = {
     fa: 'اتصال کیف پول',
   },
   invalidName: {
-    en: 'Invalid Name Character',
+    en: 'Invalid Name',
     fa: 'نام غیرقابل قبول',
   },
   invalidNameMsg: {
-    en: 'Name can only contain URL-friendly characters. (letters and numbers )',
-    fa: 'نام فقط می‌تواند شامل حروف و اعداد باشد (فقط انگلیسی)',
+    en: 'Name can only contain letters ,numbers and - (dash) character in between',
+    fa: 'نام فقط می‌تواند شامل حروف و اعداد و خط فاصله (-) باشد (فقط انگلیسی)',
   },
   signWarning: {
     en: 'Wallet Not Signed',
@@ -460,7 +460,7 @@ const terms: Terms = {
     fa: 'مینت موفق',
   },
   mintSuccessMsg: {
-    en: 'Venom ID Claimed Successfully',
+    en: 'Venom ID Registered Successfully',
     fa: 'ونوم آی دی با موفقیت مینت شد',
   },
   onlyLinks: {
