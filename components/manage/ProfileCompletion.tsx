@@ -110,7 +110,7 @@ export default function ProfileCompletion() {
     if (isStyled) {
       _progress += 1;
     } else {
-      step = step === null ? 6 : step;
+      step = step === null ? 9 : step;
     }
 
     if (jsonHash.length > 20) {
@@ -121,7 +121,7 @@ export default function ProfileCompletion() {
 
     setProgress(_progress);
     setNextStep(step);
-  }, [title, subtitle, avatar, wallets, links, socials, bio, jsonHash]);
+  }, [title, subtitle, avatar, wallets, links, socials, bio, jsonHash,isStyled]);
 
   const gotoTour = (step: number) => {
     setCurrentStep(step);

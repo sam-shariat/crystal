@@ -224,8 +224,9 @@ const ClaimSection = () => {
 
   useEffect(() => {
     async function checkActive() {
-      const isActive = await rootContract.methods._active().call();
-      //setMintOpen(isActive._active);
+      const totalSupply = await rootContract.methods.totalSupply({answerId:0}).call();
+      //console.log('totalSupply')
+      console.log(totalSupply)
     }
     if (provider?.isInitialized && rootContract && rootContract.methods._active()) {
       checkActive();

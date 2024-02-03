@@ -23,6 +23,7 @@ import ButtonRoundPicker from './ButtonRoundPicker';
 import ButtonVarianticker from './ButtonVariantPicker';
 import {
   horizontalSocialAtom,
+  isStyledAtom,
   lightModeAtom,
   mobileViewAtom,
   nameAtom,
@@ -30,7 +31,7 @@ import {
   useLineIconsAtom,
   walletButtonsAtom,
 } from 'core/atoms';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import ShareButton from './Share';
 
 interface Props {
@@ -48,6 +49,11 @@ export default function ManageSidebar({ onSave }: Props) {
   const [walletButtons, setWalletButtons] = useAtom(walletButtonsAtom);
   const lightMode = useAtomValue(lightModeAtom);
   const name = useAtomValue(nameAtom);
+  const setIsStyled = useSetAtom(isStyledAtom);
+
+  if(notMobile){
+    setIsStyled(true);
+  }
 
   return (
     <>

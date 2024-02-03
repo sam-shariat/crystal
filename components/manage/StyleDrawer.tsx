@@ -13,8 +13,8 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { RiAddFill, RiAddLine, RiFileCopy2Line } from 'react-icons/ri';
-import { useAtom, useAtomValue } from 'jotai';
-import { useLineIconsAtom } from 'core/atoms';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { isStyledAtom, useLineIconsAtom } from 'core/atoms';
 import { capFirstLetter } from 'core/utils';
 import { LinkIcon } from 'components/logos';
 import ManageSidebar from './ManageSidebar';
@@ -31,6 +31,7 @@ export default function StyleDrawer({ onSave }: Props) {
   const btnRef = useRef(null);
   const [notMobile] = useMediaQuery('(min-width: 992px)');
   const [desktop] = useMediaQuery('(min-width: 1280px)');
+  const setIsStyled = useSetAtom(isStyledAtom);
 
   useEffect(()=>{
     if(!notMobile){
@@ -40,8 +41,12 @@ export default function StyleDrawer({ onSave }: Props) {
     if(desktop){
        onClose();
     }
+
+    if(isOpen){
+      setIsStyled(true);
+    }
     
-  },[notMobile,desktop])
+  },[notMobile,desktop, isOpen])
 
   return (
     <>
