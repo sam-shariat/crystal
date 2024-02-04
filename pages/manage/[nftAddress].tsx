@@ -386,7 +386,7 @@ const ManagePage: NextPage = () => {
             setError('');
           }
           setNftJson(nftJson);
-          console.log(nftJson);
+          //console.log(nftJson);
 
           let ipfsData = '';
           let result = await nftContract.methods.query({ key: 33, answerId: 1337 })
@@ -634,7 +634,7 @@ const ManagePage: NextPage = () => {
                               Save
                             </Button>
 
-                            <ShareButton name={name} type={'blue'} />
+                            <ShareButton name={name} type={'blue'} url={nftJson.external_url}/>
                           </LightMode>
                         </Flex>
                       </Flex>

@@ -134,7 +134,7 @@ const ClaimSection = () => {
       toast.closeAll();
       toast({
         status: 'info',
-        colorScheme: 'light',
+        colorScheme: colorMode === 'dark' ? 'light' : 'dark',
         title: t('invalidName'),
         description: invalidUsernameMessage(path),
         isClosable: true,
@@ -150,13 +150,13 @@ const ClaimSection = () => {
         setTyping(false);
         toast.closeAll();
         // @ts-ignore: Unreachable code error
-        const { amount: _fee } = await rootContract.methods
-          .expectedRegisterAmount({
-            name: `${path}.vid`,
-            duration: 60 * 60 * 24 * 365,
-            answerId: 22,
-          })
-          .call({ responsible: true });
+        // const { amount: _fee } = await rootContract.methods
+        //   .expectedRegisterAmount({
+        //     name: `${path}.vid`,
+        //     duration: 60 * 60 * 24 * 365,
+        //     answerId: 22,
+        //   })
+        //   .call({ responsible: true });
 
         // @ts-ignore: Unreachable code error
         const certificateAddr = await rootContract.methods
@@ -180,7 +180,7 @@ const ClaimSection = () => {
           setNameStatus(7);
         }
 
-        setFee(_fee);
+        //setFee(_fee);
         setFeeIsLoading(false);
       } catch (er) {
         console.log(er);

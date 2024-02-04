@@ -606,7 +606,7 @@ const OldManagePage: NextPage = () => {
                               Save
                             </Button>
 
-                            <ShareButton name={name} type={'blue'} />
+                            <ShareButton name={name} type={'blue'} url={`${SITE_PROFILE_URL}o/${nftJson.name}`}/>
                           </LightMode>
                         </Flex>
                       </Flex>

@@ -141,6 +141,7 @@ function ManageSection() {
           _nftJson.manageUrl = '/manage/' + _nftJson.address;
         } else {
           _nftJson.manageUrl = '/oldManage/' + _nftJson.address;
+          _nftJson.external_url = `${SITE_PROFILE_URL}o/${_nftJson.name}` 
         }
         _nftJson.network = 'venom';
         setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
@@ -179,6 +180,7 @@ function ManageSection() {
             _nftJson.avatar = ''; //_nftJson.preview?.source;
           }
           _nftJson.manageUrl = '/oldManage/' + _nftJson.address;
+          _nftJson.external_url = `${SITE_PROFILE_URL}o/${_nftJson.name}` 
           _nftJson.network = 'venom';
           setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
         } catch (e: any) {

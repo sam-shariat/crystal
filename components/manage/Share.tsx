@@ -6,12 +6,13 @@ import { RiShareLine } from 'react-icons/ri';
 export default function ShareButton({
   name,
   type = 'blue',
+  url
 }: {
   name: string;
   type: 'blue' | 'gray';
+  url: string;
 }) {
   const shareProfile = async () => {
-    let url = SITE_PROFILE_URL + name.slice(0, -4);
     let hashtags = 'blockchain,profile';
     let text =
       '👋 Hey Folks%0a%0aCheck out my Venom ID profile on the venom blockchain%0a%0aclaim yours via @venomid_network%0a%0a';
