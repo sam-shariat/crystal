@@ -166,21 +166,41 @@ export default function ConnectButton() {
       const _venomContractV2 = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS_V2));
       setVenomContractV2(_venomContractV2);
 
-      // @ts-ignore: Unreachable code error
-      const { value0 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
-        .call();
+      if(!_venomContract?.methods || !_venomContractV1?.methods || !_venomContractV2?.methods){
+        return
+      }
 
-      // if (value0?.name !== '' && !primaryName?.nftAddress) {
-      //   setPrimaryName(value0);
-      // } else {
-      const _resolve = await getVid(String(account.address))
-      //console.log(_resolve)
-      if(_resolve.status === 200){
-        setPrimaryName({ name: _resolve.data + '.vid', nftAddress: _resolve.data });
-        setSignMessage(`Hey there ${_resolve.data}.vid ,${SIGN_MESSAGE}`);
+      // @ts-ignore: Unreachable code error
+      const { value0 : name1 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
+        .call();
+      
+
+      if (name1?.name !== '' && !primaryName?.nftAddress) {
+        setPrimaryName(name1);
+        setSignMessage(`Hey there ${name1.name}.vid ,${SIGN_MESSAGE}`);
       } else {
-        setPrimaryName({ name: '', nftAddress: undefined });
-        setSignMessage(SIGN_MESSAGE);
+        console.log('cheking second ...')
+      // @ts-ignore: Unreachable code error
+        const { value0 : namev1 }: any = await _venomContractV1?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
+        .call();
+        console.log(namev1)
+        if(namev1?.name !== ''){
+            setPrimaryName(namev1);
+            setSignMessage(`Hey there ${namev1.name}.vid ,${SIGN_MESSAGE}`);
+          } else {
+            console.log('cheking third ...');
+            // @ts-ignore: Unreachable code error
+            const { value0 : namev2 }: any = await _venomContractV2?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
+            .call();
+            console.log(namev2);
+            if(namev2?.naame !== ''){
+              setPrimaryName(namev2);
+              setSignMessage(`Hey there ${namev2.name}.vid ,${SIGN_MESSAGE}`);
+            } else {
+              setPrimaryName({ name: '', nftAddress: undefined });
+              setSignMessage(SIGN_MESSAGE);
+            }
+        }
       }
 
       if (_status !== 'connected' && _status !== 'connecting') {
