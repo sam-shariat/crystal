@@ -321,7 +321,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
                   </Flex>
                 </Flex>
                 
-                    {target === '' && <TargetAddress nftAddress={nftAddress} />}
+                    <TargetAddress nftAddress={nftAddress} />
                     {/* {target !== '' && <EditAvatar />}
                     <CropAvatar />
                     {target !== '' && <TitleInput />} */}
