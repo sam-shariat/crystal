@@ -322,9 +322,9 @@ export default function ClaimModal({ message, claimedName }: Props) {
                 </Flex>
                 
                     {target === '' && <TargetAddress nftAddress={nftAddress} />}
-                    {target !== '' && <EditAvatar />}
+                    {/* {target !== '' && <EditAvatar />}
                     <CropAvatar />
-                    {target !== '' && <TitleInput />}
+                    {target !== '' && <TitleInput />} */}
                  
                 {/* {step === 1 && <BioTextInput />}
                 {step === 2 && (
@@ -362,21 +362,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
             <ModalFooter p={6} justifyContent={'center'} w={'100%'}>
               <Flex justifyContent={'space-between'} w={['100%', '100%', 'md', 'lg']}>
                 <Button onClick={onClose}>Close</Button>
-                {jsonHash === '' ? <Button
-                  isDisabled={title === '' || avatar === ''}
-                  bgGradient={
-                    lightMode
-                      ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                      : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                  }
-                  onClick={handleSave}
-                  _hover={{
-                    bgGradient: lightMode
-                      ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                      : 'linear(to-r, var(--venom0), var(--bluevenom0))',
-                  }}>
-                  Save Profile
-                </Button> : <Link
+                <Link
                   href={'manage/' + message.link}
                   target="_blank"
                   id={`venom-id-manage-nft-link`}>
@@ -393,7 +379,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
                       : 'linear(to-r, var(--venom0), var(--bluevenom0))',
                   }}>
                   Continue Customizing
-                </Button></Link>}
+                </Button></Link>
               </Flex>
             </ModalFooter>
           </ModalContent>
