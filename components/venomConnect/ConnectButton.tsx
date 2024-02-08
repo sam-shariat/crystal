@@ -58,6 +58,7 @@ import {
   rootContractAtom,
   signDateAtom,
   signHashAtom,
+  signMessageAtom,
   signRequestAtom,
   venomContractAddressAtom,
   venomContractAtom,
@@ -123,7 +124,7 @@ export default function ConnectButton() {
   const setVenomContractV1 = useSetAtom(venomContractAtomV1);
   const setVenomContractV2 = useSetAtom(venomContractAtomV2);
   const setEarlyAdopterContract = useSetAtom(earlyAdopterContractAtom);
-  const [signMessage,setSignMessage] = useState('')
+  const [signMessage,setSignMessage] = useAtom(signMessageAtom)
   const { onCopy, hasCopied } = useClipboard(String(address));
   const { sign, status } = useSignMessage({
     publicKey: String(account?.publicKey),
@@ -264,13 +265,13 @@ export default function ConnectButton() {
     setNetwork(_network);
   };
 
-  useEffect(() => {
-    if (signRequest && !isValidSignHash(signHash, signDate)) {
-      sign();
-      setIsSigning(true);
-      setSignRequest(false);
-    }
-  }, [signRequest]);
+  // useEffect(() => {
+  //   if (signRequest && !isValidSignHash(signHash, signDate)) {
+  //     sign();
+  //     setIsSigning(true);
+  //     setSignRequest(false);
+  //   }
+  // }, [signRequest]);
 
   useEffect(() => {
     async function checkPrimary() {

@@ -79,6 +79,7 @@ import WalletInput from './WalletInput';
 import IconPicker from './IconPicker';
 import ManageSimpleLink from './ManageSimpleLink';
 import ManageUpload from './ManageUpload';
+import ManageDonate from './ManageDonate';
 
 export default function AddLinkButton() {
   const useLineIcons = useAtomValue(useLineIconsAtom);
@@ -359,49 +360,7 @@ export default function AddLinkButton() {
                 )}
 
                 {(type.includes('donate') || type.includes('pay')) && (
-                  <>
-                    <WalletInput
-                      title="Venom"
-                      value={styles.venom ?? ''}
-                      setValue={(e: any) => setStyles({ ...styles, venom: e })}
-                    />
-                    <WalletInput
-                      title="Ethereum"
-                      value={styles.eth ?? ''}
-                      setValue={(e: any) => setStyles({ ...styles, eth: e })}
-                    />
-                    <WalletInput
-                      title="Bitcoin"
-                      value={styles.btc ?? ''}
-                      setValue={(e: any) => setStyles({ ...styles, btc: e })}
-                    />
-                    <Text>Thank you note</Text>
-                    <Textarea
-                      minWidth="xs"
-                      title="Thank you note"
-                      my={2}
-                      rows={2}
-                      maxLength={500}
-                      placeholder={`${capFirstLetter(
-                        type.slice(0, type.indexOf(' '))
-                      )} Successful. Thank you`}
-                      size="lg"
-                      bg={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
-                      variant="outline"
-                      border="none"
-                      resize={'none'}
-                      value={content}
-                      onChange={(e) => setContent(e.currentTarget.value)}
-                    />
-
-                    {(styles.btc || styles.eth || styles.venom) && type.includes('donate') && (
-                      <Donate title={title ? title : 'Donate'} content={content} style={styles} />
-                    )}
-
-                    {(styles.btc || styles.eth || styles.venom) && type.includes('pay') && (
-                      <Pay title={title ? title : 'Pay'} content={content} style={styles} />
-                    )}
-                  </>
+                    <ManageDonate title={title} type={type} content={String(content)} setContent={setContent} setStyles={setStyles} styles={styles ? styles : {}} preview/>
                 )}
               </Stack>
             ) : (

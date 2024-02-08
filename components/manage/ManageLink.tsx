@@ -41,6 +41,7 @@ import { useLineIconsAtom } from 'core/atoms';
 import IconPicker from './IconPicker';
 import ManageSimpleLink from './ManageSimpleLink';
 import ManageUpload from './ManageUpload';
+import ManageDonate from './ManageDonate';
 
 const DragHandle = SortableHandle(() => (
   <span>
@@ -286,41 +287,7 @@ export default function ManageLink({
                   )}
 
                   {isExpanded && (type.includes('donate') || type.includes('pay')) && (
-                    <>
-                      <WalletInput
-                        title="Venom"
-                        value={_styles?.venom ?? ''}
-                        setValue={(e: any) => setStyles({ ..._styles, venom: e })}
-                      />
-                      <WalletInput
-                        title="Ethereum"
-                        value={_styles?.eth ?? ''}
-                        setValue={(e: any) => setStyles({ ..._styles, eth: e })}
-                      />
-                      <WalletInput
-                        title="Bitcoin"
-                        value={_styles?.btc ?? ''}
-                        setValue={(e: any) => setStyles({ ..._styles, btc: e })}
-                      />
-                      <Text>Thank you note</Text>
-                      <Textarea
-                        minWidth="xs"
-                        title="Thank you note"
-                        my={2}
-                        rows={2}
-                        maxLength={500}
-                        placeholder={`${capFirstLetter(
-                          type.slice(0, type.indexOf(' '))
-                        )} Successful. Thank you`}
-                        size="lg"
-                        bg={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
-                        variant="outline"
-                        border="none"
-                        resize={'none'}
-                        value={_content}
-                        onChange={(e) => setContent(e.currentTarget.value)}
-                      />
-                    </>
+                    <ManageDonate title={_title} type={type} content={String(_content)} setContent={setContent} setStyles={setStyles} styles={_styles ? _styles : {}} />
                   )}
 
                   <Flex gap={2} width={'100%'}>

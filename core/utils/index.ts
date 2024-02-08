@@ -73,7 +73,8 @@ const isValidEmail = (email: string) => {
     );
 };
 
-function isValidVenomAddress(address: string) {
+function isValidVenomAddress(address: string | undefined) {
+  if(!address) return false;
   if (!address.startsWith('0:') || address.length !== 66) {
     return false;
   }

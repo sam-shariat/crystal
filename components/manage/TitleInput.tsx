@@ -39,8 +39,7 @@ export default function TitleInput() {
       width={'100%'}
       size="lg"
       backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
-      display={'flex'}
-      flexGrow={1}>
+      display={'flex'}>
       <AccordionItem border={0} borderRadius={10} width={'100%'}>
         <AccordionButton
           minWidth={'100%'}
@@ -69,7 +68,7 @@ export default function TitleInput() {
               <Input
                 pl={'96px'}
                 variant={'filled'}
-                placeholder={'Sam Walters'}
+                placeholder={'Enter Nickname'}
                 value={title}
                 onChange={(e) => setTitle(e.currentTarget.value)}
               />
@@ -86,7 +85,7 @@ export default function TitleInput() {
               <Input
                 variant={'filled'}
                 pl={'96px'}
-                placeholder={'Blockchain Developer'}
+                placeholder={'Enter Subtitle'}
                 value={subtitle}
                 onChange={(e) => setSubtitle(e.currentTarget.value)}
               />

@@ -243,7 +243,7 @@ export default function NSSection() {
                 setIsLoadig(true);
                 run();
               }}>
-              Locked till Feb, 06 2024
+              Locked till Feb, 16 2024
               {name.length > 3 && (
                 <>
                   <RiSendPlane2Line size={28} />

@@ -16,19 +16,11 @@ import {
   Link,
   useToast,
   Box,
-  Tooltip,
-  GridItem,
-  ButtonGroup,
-  Menu,
-  MenuButton,
-  MenuList,
-  IconButton,
-  DarkMode,
   LightMode,
   Stack,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import { sleep, truncAddress } from 'core/utils';
+import { isValidVenomAddress, sleep, truncAddress } from 'core/utils';
 import axios from 'axios';
 import {
   ManageSocials,
@@ -38,9 +30,6 @@ import {
   TitleInput,
   ManageWallets,
   PreviewModal,
-  ButtonColorPicker,
-  ButtonRoundPicker,
-  ButtonVarianticker,
 } from 'components/manage';
 import { useAtom, useAtomValue } from 'jotai';
 import {
@@ -77,6 +66,7 @@ import {
   isStyledAtom,
   networkAtom,
   mobileViewAtom,
+  targetAtom,
 } from 'core/atoms';
 import {
   SITE_DESCRIPTION,
@@ -88,19 +78,13 @@ import {
   BUTTON_VARIANTS,
   BG_COLORS,
   FONTS,
+  MIN_FEE,
 } from 'core/utils/constants';
 import { ConnectButton } from 'components/venomConnect';
 import { getNft } from 'core/utils/nft';
 import DomainAbi from 'abi/Domain.abi.json';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
 import { useStorageUpload } from '@thirdweb-dev/react';
-import {
-  RiAddLine,
-  RiComputerLine,
-  RiShareLine,
-  RiSmartphoneLine,
-  RiUpload2Line,
-} from 'react-icons/ri';
 import AddModal from 'components/manage/AddModal';
 import ShareButton from 'components/manage/Share';
 import Preview from 'components/Profile/Preview';
@@ -110,6 +94,7 @@ import ManageSidebar from 'components/manage/ManageSidebar';
 import { LinkIcon } from 'components/logos';
 import StyleDrawer from 'components/manage/StyleDrawer';
 import ManageHeader from 'components/manage/ManageHeader';
+import TargetAddress from 'components/manage/TargetAddress';
 
 const ManagePage: NextPage = () => {
   const { provider } = useVenomProvider();
@@ -118,6 +103,7 @@ const ManagePage: NextPage = () => {
   const { t } = useTranslate();
   const [name, setName] = useAtom(nameAtom);
   const [bio, setBio] = useAtom(bioAtom);
+  const [target, setTarget] = useAtom(targetAtom);
   const [lightMode, setLightMode] = useAtom(lightModeAtom);
   const [isStyled, setIsStyled] = useAtom(isStyledAtom);
   const [ipfsGateway, setIpfsGateway] = useAtom(ipfsGatewayAtom);
@@ -157,7 +143,6 @@ const ManagePage: NextPage = () => {
   const [isLoaded, setIsLoaded] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
-  const minFee = 660000000;
   const router = useRouter();
   const nftAddress = String(router.query.nftAddress);
   const [nftContract, setNftContract] = useAtom(nftContractAtom);
@@ -270,7 +255,7 @@ const ManagePage: NextPage = () => {
       setIsSaving(true);
       toast({
         status: 'loading',
-        title: 'saving changes to the blockchain',
+        title: 'saving venom id profile to the blockchain',
         description: 'Please confirm the transaction in your wallet',
         duration: null,
         isClosable: true,
@@ -284,7 +269,7 @@ const ManagePage: NextPage = () => {
       const saveTx = await nftContract.methods
         .setRecord({ key: 33, value: tvmCell.boc })
         .send({
-          amount: String(minFee),
+          amount: String(MIN_FEE),
           bounce: true,
           from: account?.address,
         })
@@ -304,6 +289,7 @@ const ManagePage: NextPage = () => {
 
       if (saveTx) {
         setIsConfirming(true);
+        toast.closeAll();
         toast({
           status: 'loading',
           title: 'confirming changes on the blockchain',
@@ -388,25 +374,11 @@ const ManagePage: NextPage = () => {
           setNftJson(nftJson);
           //console.log(nftJson);
 
-          let ipfsData = '';
-          let result = await nftContract.methods.query({ key: 33, answerId: 1337 })
-            .call({ responsible: true });
-
-          if (!result.value) {
-            console.log('No ipfs record found');
-          } else {
-            const unpackedTargetAddress = await provider.unpackFromCell({
-              structure: [{ name: 'ipfsdata', type: 'string' }] as const,
-              boc: result.value!,
-              allowPartial: true,
-            });
-  
-            ipfsData = unpackedTargetAddress.data.ipfsdata.toString();
-  
-            console.log(`ipfsData : ${ipfsData}`);
-          }
+          let ipfsData = nftJson.hash && nftJson.hash?.indexOf('not set') < 0 && nftJson.hash.length > 10 ? nftJson.hash : '';
           // Extract the Account address from the cell
-          
+          if(nftJson.target &&  isValidVenomAddress(nftJson.target)){
+            setTarget(nftJson.target);
+          }
           setJsonHash(String(ipfsData));
           if (ipfsData === '') {
             setJson({
@@ -438,7 +410,7 @@ const ManagePage: NextPage = () => {
             setAvatar('');
             setTitle('');
             setSubtitle('');
-            setAvatarShape('circle');
+            setAvatarShape('round');
             setSocialIcons(true);
             setSocialButtons(true);
             setWalletButtons(true);
@@ -466,7 +438,7 @@ const ManagePage: NextPage = () => {
           //setBtc(res.data.btcAddress);
           //setEth(res.data.ethAddress);
           setAvatar(res.data.avatar);
-          setAvatarShape(res.data.avatarShape ?? 'circle');
+          setAvatarShape(res.data.avatarShape ?? 'round');
           setSocialIcons(res.data.socialIcons ?? true);
           setSocialButtons(res.data.socialButtons ?? true);
           setWalletButtons(res.data.waletButtons ?? true);
@@ -589,6 +561,7 @@ const ManagePage: NextPage = () => {
                             gap={4}
                             rounded={'lg'}>
                             <ProfileCompletion />
+                            <TargetAddress nftAddress={nftAddress} />
                             <EditAvatar />
                             <CropAvatar />
                             {/* <VenomAddressButton venomAddress={json.venomAddress} /> */}

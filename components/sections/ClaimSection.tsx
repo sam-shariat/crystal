@@ -42,6 +42,7 @@ import {
   claimingNameAtom,
   rootContractAtom,
   pathAtom,
+  signMessageAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { addAsset, useConnect, useVenomProvider } from 'venom-react-hooks';
@@ -57,6 +58,7 @@ import {
   TOKEN_WALLET_ADDRESS,
   ROOT_CONTRACT_ADDRESS,
   MIN_NAME_LENGTH,
+  SIGN_MESSAGE,
 } from 'core/utils/constants';
 import { Transaction } from 'everscale-inpage-provider';
 import {
@@ -95,7 +97,7 @@ const ClaimSection = () => {
   const { provider } = useVenomProvider();
   const signHash = useAtomValue(signHashAtom);
   const signDate = useAtomValue(signDateAtom);
-  const setSignRequest = useSetAtom(signRequestAtom);
+  const setSignMessage = useSetAtom(signMessageAtom);
   const { colorMode } = useColorMode();
   const locale = useAtomValue(localeAtom);
   const venomContract = useAtomValue(venomContractAtom);
@@ -202,6 +204,7 @@ const ClaimSection = () => {
       toast.closeAll();
       toast({
         status: 'info',
+        colorScheme: colorMode === 'dark' ? 'light' : 'dark',
         title: t('connectWallet'),
         description: t('venomWalletConnect'),
         duration: 3000,
@@ -238,6 +241,7 @@ const ClaimSection = () => {
       toast.closeAll();
       toast({
         status: 'info',
+        colorScheme: colorMode === 'dark' ? 'light' : 'dark',
         title: t('connectWallet'),
         description: t('venomWalletConnect'),
         isClosable: true,
@@ -249,7 +253,7 @@ const ClaimSection = () => {
       toast.closeAll();
       toast({
         status: 'info',
-        colorScheme: 'light',
+        colorScheme: colorMode === 'dark' ? 'light' : 'dark',
         title: t('invalidName'),
         description: invalidUsernameMessage(path),
         isClosable: true,
@@ -265,7 +269,7 @@ const ClaimSection = () => {
         description: t('signWarningMsg'),
         isClosable: true,
       });
-      setSignRequest(true);
+      setSignMessage(primaryName && primaryName?.name !== '' ? `Hey there ${primaryName.name}, ${SIGN_MESSAGE}` : SIGN_MESSAGE);
       // console.log('need to sign');
       return;
     }
@@ -281,12 +285,13 @@ const ClaimSection = () => {
       account?.address
     ) {
       setIsMinting(true);
-      toast({
-        status: 'loading',
-        title: t('preparing'),
-        description: t('preparingMint'),
-        duration: null,
-      });
+      // toast({
+      //   status: 'loading',
+      //   colorScheme: colorMode === 'dark' ? 'light' : 'dark',
+      //   title: t('preparing'),
+      //   description: t('preparingMint'),
+      //   duration: null,
+      // });
 
       // const vidimage = renderToStaticMarkup(<VIDImage name={name} key={name} />);
       // const vidbase64 = btoa(vidimage);
@@ -311,6 +316,7 @@ const ClaimSection = () => {
       toast.closeAll();
       toast({
         status: 'loading',
+        colorScheme: colorMode === 'dark' ? 'light' : 'dark',
         title: t('minting'),
         description: t('confirmInWallet'),
         duration: null,
@@ -354,6 +360,7 @@ const ClaimSection = () => {
         toast({
           status: 'loading',
           title: t('confirming'),
+          colorScheme: colorMode === 'dark' ? 'light' : 'dark',
           description: t('confirmingTx'),
           duration: null,
         });
@@ -365,7 +372,7 @@ const ClaimSection = () => {
           await subscriber
             .trace(mintTx)
             .tap((tx_in_tree: any) => {
-              console.log('tx_in_tree : ', tx_in_tree);
+              //console.log('tx_in_tree : ', tx_in_tree);
               if (tx_in_tree.account.equals(rootContract.address)) {
                 receiptTx = tx_in_tree;
               }
@@ -409,7 +416,7 @@ const ClaimSection = () => {
         setIsMinting(false);
         setIsConfirming(false);
         await sleep(1000);
-        setName('');
+        setPath('');
       } else {
         toast.closeAll();
         toast({

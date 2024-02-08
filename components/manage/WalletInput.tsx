@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { RiFileCopy2Line } from 'react-icons/ri';
 import { useAddress, useConnect as useThirdWebConnect, metamaskWallet } from '@thirdweb-dev/react';
 import { useAtomValue } from 'jotai';
-import { addressAtom } from 'core/atoms';
+import { addressAtom, connectedAccountAtom } from 'core/atoms';
 
 const metamaskConfig = metamaskWallet();
 
@@ -21,29 +21,32 @@ interface Props {
   title: string;
   value: string;
   setValue: Function;
+  hideTitle?: boolean;
 }
 
-export default function WalletInput({ title, value, setValue }: Props) {
+export default function WalletInput({ title, value, setValue, hideTitle = false }: Props) {
   const [autoEth, setAutoEth] = useState(false);
-  const venomAddress = useAtomValue(addressAtom);
+  const venomAddress = useAtomValue(connectedAccountAtom);
   const ethAddressFromWallet = useAddress();
   const connectWithThirdweb = useThirdWebConnect();
 
   useEffect(() => {
     if (autoEth && ethAddressFromWallet) {
+    console.log('this')
+
       setValue(String(ethAddressFromWallet));
       setAutoEth(false);
     }
   }, [autoEth, ethAddressFromWallet]);
 
   return (
-    <InputGroup size="lg" minWidth="xs" borderColor="gray">
-      <InputLeftAddon height={'48px'}>
+    <InputGroup size="lg" borderColor="gray" w={'100%'}>
+      {!hideTitle && <InputLeftAddon height={'48px'}>
         <Flex gap={2}>
           <LinkIcon type={title.toLowerCase()} />
           {title}
         </Flex>
-      </InputLeftAddon>
+      </InputLeftAddon>}
       <Input
         size="lg"
         value={value}
@@ -64,7 +67,6 @@ export default function WalletInput({ title, value, setValue }: Props) {
             bgColor={'black'}>
             <IconButton
               aria-label="use venom wallet address"
-              
               onClick={async () => setValue(venomAddress)}>
               <LinkIcon type='venom' color='var(--venom)'/>
             </IconButton>

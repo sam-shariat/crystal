@@ -112,8 +112,7 @@ export default function ManageLinks({ json, nftAddress }: Props) {
         size="lg"
         backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
         display={'flex'}
-        className="links"
-        flexGrow={1}>
+        className="links">
         <AccordionItem border={0} borderRadius={10} width={'100%'}>
           <AccordionButton
             minWidth={'100%'}

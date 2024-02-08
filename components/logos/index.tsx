@@ -398,6 +398,8 @@ const LinkIcon = ({ type, line, color, size = '28px', rounded = 'sm' }: LinkIcon
     case 'tron':
     case 'trx':
       return <Tron color={color ? color : undefined} />;
+    case 'venomscan':
+        return <VenomScanIcon color={color ? color : undefined} />;
     case 'image/gif':
     case 'gif':
       return line ? (

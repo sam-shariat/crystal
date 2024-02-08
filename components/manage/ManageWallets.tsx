@@ -90,8 +90,7 @@ export default function ManageWallets({ json, nftAddress }: Props) {
         size="lg"
         className="wallets"
         backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
-        display={'flex'}
-        flexGrow={1}>
+        display={'flex'}>
         <AccordionItem border={0} borderRadius={10} width={'100%'}>
           <AccordionButton
             minWidth={'100%'}

@@ -443,7 +443,7 @@ function ManageSection() {
                         borderRadius={4}
                         label={
                           <Text p={2}>
-                            Migrating from old contract to new contract will be available from Feb 06 to Feb 16, 2024.
+                            Migrating from old contract to new contract will be available from Feb 16 to Feb 30, 2024.
                           </Text>
                         }
                         hasArrow

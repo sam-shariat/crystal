@@ -11,6 +11,8 @@ export interface BaseNftJson {
   address?: string;
   network?: string;
   avatar?: string;
+  hash?: string;
+  target?: string;
   manageUrl?: string;
   description?: string;
   preview?: {

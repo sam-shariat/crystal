@@ -456,8 +456,8 @@ const terms: Terms = {
     fa: 'مشکلی به وجود آمده است. لطفا دوباره تلاش کنید',
   },
   mintSuccess: {
-    en: 'Mint Successful',
-    fa: 'مینت موفق',
+    en: 'Domain Registered Successfully',
+    fa: 'دامنه با موفقیت ثبت شد',
   },
   mintSuccessMsg: {
     en: 'Venom ID Registered Successfully',
