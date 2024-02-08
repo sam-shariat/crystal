@@ -96,9 +96,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
   const handleSave = async () => {
     if(jsonHash === ''){
       uploadJson();
-    } else {
-      window.location.href = "https://exampleURL.com/";
-    }
+    } ;
   };
 
   // const vidimage = renderToStaticMarkup(<VIDImage name={claimedName} key={claimedName}/>);
@@ -276,7 +274,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
                 gap={8}>
                 {/* <Text fontSize={'lg'}>{message.msg}</Text> */}
                 {avatar !== '' ? 
-                <ImageBox srcUrl={VID_IMAGE_API + claimedName + '.vid'} key={claimedName} size={'xs'} rounded='lg' shadow='none'/>
+                <ImageBox srcUrl={avatar} key={claimedName} size={'250px'} rounded='lg' shadow='none'/>
                                       :
                 <LinkIcon type={'RiCheckboxCircleFill'} color={'var(--venom1)'} size={120} />}
                 <Flex align={'center'} width={'100%'} minW={['xs','sm','md','lg']} gap={4}>
@@ -325,7 +323,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
                 
                     {target === '' && <TargetAddress nftAddress={nftAddress} />}
                     {target !== '' && <EditAvatar />}
-                    {target !== '' && <CropAvatar />}
+                    <CropAvatar />
                     {target !== '' && <TitleInput />}
                  
                 {/* {step === 1 && <BioTextInput />}
@@ -389,7 +387,6 @@ export default function ClaimModal({ message, claimedName }: Props) {
                       ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
                       : 'linear(to-r, var(--venom2), var(--bluevenom2))'
                   }
-                  onClick={handleSave}
                   _hover={{
                     bgGradient: lightMode
                       ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
