@@ -58,7 +58,7 @@ export default function TargetAddress({ nftAddress }: Props) {
         status: 'success',
         title: 'Save Successful',
         description: 'Target Venom Address Saved Successfully',
-        duration: null,
+        duration: 5000,
         isClosable: true,
       });
       setTarget(_target);

@@ -364,10 +364,10 @@ export default function ClaimModal({ message, claimedName }: Props) {
                 <Button onClick={onClose}>Close</Button>
                 <Link
                   href={'manage/' + message.link}
-                  target="_blank"
+                  target="_self"
                   id={`venom-id-manage-nft-link`}>
                     <Button
-                  isDisabled={title === ''}
+                  
                   bgGradient={
                     lightMode
                       ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
