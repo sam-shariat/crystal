@@ -133,8 +133,8 @@ const PreviewModal = ({ json, onSave }: Props) => {
         w={'100%'}
         flexDirection={'column'}
         height="72px">
-        <MdOutlineVisibility size={'28px'} />
-        Design
+        <LinkIcon type="RiPaletteLine" size="28" />
+        Styles
       </Button>
       <Modal
         isOpen={isOpen}

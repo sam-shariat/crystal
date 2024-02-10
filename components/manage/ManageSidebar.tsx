@@ -22,6 +22,7 @@ import ButtonColorPicker from './ButtonColorPicker';
 import ButtonRoundPicker from './ButtonRoundPicker';
 import ButtonVarianticker from './ButtonVariantPicker';
 import {
+  colorModeAtom,
   horizontalSocialAtom,
   isStyledAtom,
   lightModeAtom,
@@ -33,16 +34,20 @@ import {
 } from 'core/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import ShareButton from './Share';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 interface Props {
   onSave: Function;
 }
 
 export default function ManageSidebar({ onSave }: Props) {
+  const [colorM, setColorM] = useAtom(colorModeAtom);
+  const { colorMode, toggleColorMode } = useColorMode();
   const [mobileView, setMobileView] = useAtom(mobileViewAtom);
   const [notMobile] = useMediaQuery('(min-width: 990px)');
+  const [notMobileH] = useMediaQuery('(min-height: 896px)');
   const [desktop] = useMediaQuery('(min-width: 1280px)');
-  const { colorMode } = useColorMode();
   const [useLineIcons, setUseLineIcons] = useAtom(useLineIconsAtom);
   const [horizontalSocial, setHorizontalSocial] = useAtom(horizontalSocialAtom);
   const [socialButtons, setSocialButtons] = useAtom(socialButtonsAtom);
@@ -50,10 +55,21 @@ export default function ManageSidebar({ onSave }: Props) {
   const lightMode = useAtomValue(lightModeAtom);
   const name = useAtomValue(nameAtom);
   const setIsStyled = useSetAtom(isStyledAtom);
+  const { pathname } = useRouter();
 
-  if(notMobile){
+  if (notMobile) {
     setIsStyled(true);
   }
+
+  useEffect(() => {
+    if (notMobile) {
+      if (!pathname.includes('nftAddress')) {
+        if (colorMode !== colorM) {
+          toggleColorMode();
+        }
+      }
+    }
+  }, [colorM, colorMode]);
 
   return (
     <>
@@ -63,29 +79,51 @@ export default function ManageSidebar({ onSave }: Props) {
         borderRadius={12}
         p={3}
         my={4}
-        className={desktop ? "design" : "designMob"}
+        className={desktop ? 'design' : 'designMob'}
         w={['100%', 'md', 'xs', 'sm', 'xs', 'md']}
         backgroundColor={colorMode === 'light' ? 'white' : 'blackAlpha.600'}>
-        <Flex flexDir="column" h={['94vh','94vh','auto','auto','94vh']} overflow={['auto','auto','hidden','hidden','auto']} gap={4} rounded={'lg'}>
-          <Flex justify={'space-between'}>
+        <Flex
+          flexDir="column"
+          h={notMobileH ? ['93vh', '93vh', 'auto', 'auto', '93vh'] : ['92vh', '92vh', 'auto', 'auto', '92vh']}
+          overflow={['auto', 'auto', 'hidden', 'hidden', 'auto']}
+          gap={4}
+          rounded={'lg'}>
+          <Flex justify={'space-between'} align={'center'}>
             <Text fontSize={'xl'} fontWeight={'bold'} p={1}>
               Styles
             </Text>
-            {notMobile && (
-              <Button
-                gap={2}
+            <Flex gap={2}>
+              {notMobile && (
+                <Button
+                  size={'lg'}
+                  gap={2}
+                  onClick={() => {
+                    setMobileView(!mobileView);
+                  }}>
+                  {mobileView ? (
+                    <LinkIcon type="RiComputerLine" />
+                  ) : (
+                    <LinkIcon type="RiSmartphoneLine" />
+                  )}
+                  {mobileView ? 'Bigger' : 'Mobile'}
+                </Button>
+              )}
+              <IconButton
+                aria-label="theme-mode"
+                size={'lg'}
                 onClick={() => {
-                  setMobileView(!mobileView);
-                }}>
-                {mobileView ? (
-                  <LinkIcon type="RiComputerLine" />
-                ) : (
-                  <LinkIcon type="RiSmartphoneLine" />
-                )}
-                {mobileView ? 'Bigger' : 'Mobile'}
-
-              </Button>
-            )}
+                  setColorM(colorMode === 'light' ? 'dark' : 'light');
+                  toggleColorMode();
+                }}
+                icon={
+                  colorMode === 'light' ? (
+                    <LinkIcon type="RiMoonFill" size="20px" />
+                  ) : (
+                    <LinkIcon type="RiSunFill" size="20px" />
+                  )
+                }
+              />
+            </Flex>
           </Flex>
           <Box>
             <BgPicker />

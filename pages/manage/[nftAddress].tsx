@@ -135,7 +135,7 @@ const ManagePage: NextPage = () => {
   const [title, setTitle] = useAtom(titleAtom);
   const [subtitle, setSubtitle] = useAtom(subtitleAtom);
   const [json, setJson] = useAtom(jsonAtom);
-  const [nftJson, setNftJson] = useAtom(nftJsonAtom);
+  const [_nftJson, setNftJson] = useAtom(nftJsonAtom);
   const [jsonHash, setJsonHash] = useAtom(jsonHashAtom);
   const [jsonUploading, setJsonUploading] = useState(false);
   const [error, setError] = useState('');
@@ -261,8 +261,8 @@ const ManagePage: NextPage = () => {
         isClosable: true,
       });
       const tvmCell = await provider.packIntoCell({
-        data : {ipfsdata : String(_jsonHash)},
-        structure : [{ name: 'ipfsdata', type: 'string' }] as const
+        data: { ipfsdata: String(_jsonHash) },
+        structure: [{ name: 'ipfsdata', type: 'string' }] as const,
       });
       console.log(tvmCell);
       // @ts-ignore: Unreachable code error
@@ -336,12 +336,9 @@ const ManagePage: NextPage = () => {
             return;
           }
 
-          if (!nftContract || !nftContract.methods) {
+          if (nftContract === undefined) {
             const _nftContract = new provider.Contract(DomainAbi, new Address(nftAddress));
             setNftContract(_nftContract);
-            await sleep(1000);
-            getProfileJson();
-            return
           }
 
           if (network !== 'venom') {
@@ -356,7 +353,7 @@ const ManagePage: NextPage = () => {
 
           setIsLoading(true);
           // console.log('getting nft0');
-          
+
           // console.log('getting nft');
           const nftJson = await getNft(provider, new Address(nftAddress));
           if (
@@ -374,9 +371,12 @@ const ManagePage: NextPage = () => {
           setNftJson(nftJson);
           //console.log(nftJson);
 
-          let ipfsData = nftJson.hash && nftJson.hash?.indexOf('not set') < 0 && nftJson.hash.length > 10 ? nftJson.hash : '';
+          let ipfsData =
+            nftJson.hash && nftJson.hash?.indexOf('not set') < 0 && nftJson.hash.length > 10
+              ? nftJson.hash
+              : '';
           // Extract the Account address from the cell
-          if(nftJson.target &&  isValidVenomAddress(nftJson.target)){
+          if (nftJson.target && isValidVenomAddress(nftJson.target)) {
             setTarget(nftJson.target);
           }
           setJsonHash(String(ipfsData));
@@ -483,19 +483,19 @@ const ManagePage: NextPage = () => {
               });
               setIsLoading(false);
               setError(error.message + ' please try again');
-              console.log(error)
+              console.log(error);
             }
           } else {
             setIsLoading(false);
-              console.log(error)
-              setError(error.message + ' please try again');
+            console.log(error);
+            setError(error.message + ' please try again');
             //router.reload();
           }
         }
       }
     }
     getProfileJson();
-  }, [connectedAccount, account, network, nftContract]);
+  }, [connectedAccount, account, network, nftContract, nftAddress]);
 
   return (
     <>
@@ -548,13 +548,13 @@ const ManagePage: NextPage = () => {
                         width={['100%', 'md', 'lg', 'md', 'md', 'xl']}
                         backgroundColor={colorMode === 'light' ? 'white' : 'blackAlpha.600'}
                         justify={'space-between'}
-                        h={notMobileH ? '96vh' : '100vh'}
+                        h={notMobileH ? '96vh' : '96vh'}
                         p={3}>
                         <Stack>
                           <ManageHeader />
                           <Flex
                             direction={'column'}
-                            maxHeight={notMobileH ? '77vh' : '80vh'}
+                            maxHeight={notMobileH ? '77vh' : '72vh'}
                             overflow={'auto'}
                             w={'100%'}
                             className="noscroll"
@@ -606,8 +606,7 @@ const ManagePage: NextPage = () => {
                               <LinkIcon type="RiSave2Line" />
                               Save
                             </Button>
-
-                            <ShareButton name={name} type={'blue'} url={nftJson.external_url}/>
+                            <ShareButton name={name} type={'blue'} url={_nftJson.external_url} />
                           </LightMode>
                         </Flex>
                       </Flex>

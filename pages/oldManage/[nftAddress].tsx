@@ -494,7 +494,7 @@ const OldManagePage: NextPage = () => {
       }
     }
     getProfileJson();
-  }, [connectedAccount, account, network]);
+  }, [connectedAccount, account, network,nftContract]);
 
   return (
     <>
@@ -548,13 +548,13 @@ const OldManagePage: NextPage = () => {
                         width={['100%', 'md', 'lg', 'md', 'md', 'xl']}
                         backgroundColor={colorMode === 'light' ? 'white' : 'blackAlpha.600'}
                         justify={'space-between'}
-                        h={notMobileH ? '96vh' : '100vh'}
+                        h={'96vh'}
                         p={3}>
                         <Stack>
                         <ManageHeader />
                         <Flex
                           direction={'column'}
-                          maxHeight={notMobileH ? '77vh' : '80vh'}
+                          maxHeight={notMobileH ? '77vh' : '72vh'}
                           overflow={'auto'}
                           w={'100%'}
                           className='noscroll'

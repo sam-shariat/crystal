@@ -283,6 +283,11 @@ const getRandomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
+const openWindow = (url: string, e: any) => {
+  window.open(url, 'newwindow', 'width=420,height=800');
+  e !== null && e.preventDefault();
+};
+
 export {
   withHttps,
   base64ToBlob,
@@ -300,4 +305,5 @@ export {
   getRandomNumber,
   isValidVenomAddress,
   isValidSignHash,
+  openWindow
 };

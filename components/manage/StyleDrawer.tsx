@@ -10,6 +10,7 @@ import {
   DrawerBody,
   useDisclosure,
   DrawerHeader,
+  LightMode,
 } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { RiAddFill, RiAddLine, RiFileCopy2Line } from 'react-icons/ri';
@@ -33,43 +34,47 @@ export default function StyleDrawer({ onSave }: Props) {
   const [desktop] = useMediaQuery('(min-width: 1280px)');
   const setIsStyled = useSetAtom(isStyledAtom);
 
-  useEffect(()=>{
-    if(!notMobile){
-        onClose();
-    };
-
-    if(desktop){
-       onClose();
+  useEffect(() => {
+    if (!notMobile) {
+      onClose();
     }
 
-    if(isOpen){
+    if (desktop) {
+      onClose();
+    }
+
+    if (isOpen) {
       setIsStyled(true);
     }
-    
-  },[notMobile,desktop, isOpen])
+  }, [notMobile, desktop, isOpen]);
 
   return (
     <>
-      <Button
-        gap={2}
-        borderRadius={12}
-        onClick={onOpen}
-        className={desktop && notMobile ? 'designDesk' : 'design'}
-        colorScheme={'purple'}
-        bgGradient={
-          colorMode === 'light'
-            ? 'linear(to-r, var(--purple0), var(--purplevenom2))'
-            : 'linear(to-r, var(--purple0), var(--purplevenom2))'
-        }
-        color={'white'}
-        flexDirection={'column'}
-        w={'100%'}
-        height="72px">
-        <LinkIcon type="RiPaletteLine" size="28" />
-        Styles
-      </Button>
+      <LightMode>
+        <Button
+          gap={2}
+          borderRadius={12}
+          onClick={onOpen}
+          className={desktop && notMobile ? 'designDesk' : 'design'}
+          colorScheme={'purple'}
+          bgGradient={
+            colorMode === 'light'
+              ? 'linear(to-r, var(--purple0), var(--purplevenom2))'
+              : 'linear(to-r, var(--purple0), var(--purplevenom2))'
+          }
+          color={'white'}
+          flexDirection={'column'}
+          w={'100%'}
+          height="72px">
+          <LinkIcon type="RiPaletteLine" size="28px" />
+          Styles
+        </Button>
+      </LightMode>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={btnRef} size={'md'}>
-        <DrawerContent bg={colorMode === 'light' ? 'white' : 'black'} placeItems={'center'} placeContent={'center'}>
+        <DrawerContent
+          bg={colorMode === 'light' ? 'white' : 'black'}
+          placeItems={'center'}
+          placeContent={'center'}>
           <DrawerHeader>
             <DrawerCloseButton />
           </DrawerHeader>
