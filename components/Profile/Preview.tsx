@@ -10,6 +10,8 @@ import {
   Box,
   LightMode,
   DarkMode,
+  Center,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { Avatar, Socials, ProfileSkeleton } from 'components/Profile';
@@ -35,6 +37,8 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import Wallets from './Wallets';
 import { DeviceFrameset } from 'react-device-frameset';
 import 'react-device-frameset/styles/marvel-devices.min.css';
+import { RiLinksLine } from 'react-icons/ri';
+import { FaCircle } from 'react-icons/fa';
 
 interface Attribute {
   trait_type: string;
@@ -90,13 +94,13 @@ const Preview = ({ json, onSave }: Props) => {
         color={colorMode === 'light' ? 'black' : 'silver'}
         // @ts-ignore: Unreachable code error
         height={mobileView ? '90vh' : '76vh'}>
-        {/* <Center
+        <Center
           rounded={'2xl'}
           w={'100%'}
           borderRadius={0}
           px={4}
           py={2}
-          h={mobileView ? '88px' : '60px'}
+          h={mobileView ? '92px' : '60px'}
           transition={'"all 1s ease"'}
           justifyContent={'space-between'}
           alignItems={'center'}
@@ -109,7 +113,7 @@ const Preview = ({ json, onSave }: Props) => {
           </Text>
 
           <FaCircle />
-        </Center> */}
+        </Center>
 
         <Flex
           bg={bgColor}

@@ -86,7 +86,7 @@ export default function ConnectButton() {
   const ethAddress = useAddress();
   const _status = useConnectionStatus();
   const ethBalance = useBalance();
-  const symbol = network === 'venom' ? 'VENOM' : 'BNB' ;//ethBalance.data?.symbol;
+  const symbol = network === 'venom' ? 'VENOM' : 'BNB'; //ethBalance.data?.symbol;
   const chain = useChain();
   const switchChain = useSwitchChain();
   const currentChain = 'BNB';
@@ -124,7 +124,7 @@ export default function ConnectButton() {
   const setVenomContractV1 = useSetAtom(venomContractAtomV1);
   const setVenomContractV2 = useSetAtom(venomContractAtomV2);
   const setEarlyAdopterContract = useSetAtom(earlyAdopterContractAtom);
-  const [signMessage,setSignMessage] = useAtom(signMessageAtom)
+  const [signMessage, setSignMessage] = useAtom(signMessageAtom);
   const { onCopy, hasCopied } = useClipboard(String(address));
   const { sign, status } = useSignMessage({
     publicKey: String(account?.publicKey),
@@ -144,18 +144,19 @@ export default function ConnectButton() {
     },
   });
 
-
   async function getPrimary() {
     if (!provider || !provider?.isInitialized || !account?.address) return;
     setIsConnected(true);
     setConnectedAccount(account?.address.toString() ?? '');
-    
-    try {
 
+    try {
       const _rootContract = new provider.Contract(RootAbi, new Address(ROOT_CONTRACT_ADDRESS));
       setRootContract(_rootContract);
 
-      const _earlyAdopterContract = new provider.Contract(OATCollectionABI, new Address(EARLY_ADOPTERS_CONTRACT_ADDRESS));
+      const _earlyAdopterContract = new provider.Contract(
+        OATCollectionABI,
+        new Address(EARLY_ADOPTERS_CONTRACT_ADDRESS)
+      );
       setEarlyAdopterContract(_earlyAdopterContract);
 
       const _venomContract = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS));
@@ -167,40 +168,61 @@ export default function ConnectButton() {
       const _venomContractV2 = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS_V2));
       setVenomContractV2(_venomContractV2);
 
-      if(!_venomContract?.methods || !_venomContractV1?.methods || !_venomContractV2?.methods){
-        return
+      if (!_venomContract?.methods || !_venomContractV1?.methods || !_venomContractV2?.methods || !_rootContract?.methods) {
+        return;
       }
 
-      // @ts-ignore: Unreachable code error
-      const { value0 : name1 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
-        .call();
+
+
+    //  try { 
+    //   // @ts-ignore: Unreachable code error
+    //   const { codeHash }: any = await _rootContract?.methods.expectedCertificateCodeHash({ answerId:0 , target: account.address, sid: 1 })
+    //     .call();
+
+    //   console.log(codeHash);
+
+
+    //   // @ts-ignore: Unreachable code error
+    //   const { nft }: any = await _rootContract?.methods.nftAddress({ answerId:0 , id: codeHash })
+    //   .call();
       
+    //   console.log('nft',nft);
+    
+    // } catch(e){
+    //     console.log('error root')
+    //     console.log(e)
+    //   }
+
+
+      // @ts-ignore: Unreachable code error
+      const { value0: name1 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
+        .call();
 
       if (name1?.name !== '' && !primaryName?.nftAddress) {
         setPrimaryName(name1);
         setSignMessage(`Hey there ${name1.name}.vid ,${SIGN_MESSAGE}`);
       } else {
-        console.log('cheking second ...')
-      // @ts-ignore: Unreachable code error
-        const { value0 : namev1 }: any = await _venomContractV1?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
-        .call();
-        console.log(namev1)
-        if(namev1?.name !== ''){
-            setPrimaryName(namev1);
-            setSignMessage(`Hey there ${namev1.name}.vid ,${SIGN_MESSAGE}`);
-          } else {
-            console.log('cheking third ...');
-            // @ts-ignore: Unreachable code error
-            const { value0 : namev2 }: any = await _venomContractV2?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
+        console.log('cheking second ...');
+        // @ts-ignore: Unreachable code error
+        const { value0: namev1 }: any = await _venomContractV1?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
+          .call();
+        console.log(namev1);
+        if (namev1?.name !== '') {
+          setPrimaryName(namev1);
+          setSignMessage(`Hey there ${namev1.name}.vid ,${SIGN_MESSAGE}`);
+        } else {
+          console.log('cheking third ...');
+          // @ts-ignore: Unreachable code error
+          const { value0: namev2 }: any = await _venomContractV2?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
             .call();
-            console.log(namev2);
-            if(namev2?.naame !== ''){
-              setPrimaryName(namev2);
-              setSignMessage(`Hey there ${namev2.name}.vid ,${SIGN_MESSAGE}`);
-            } else {
-              setPrimaryName({ name: '', nftAddress: undefined });
-              setSignMessage(SIGN_MESSAGE);
-            }
+          console.log(namev2);
+          if (namev2?.naame !== '') {
+            setPrimaryName(namev2);
+            setSignMessage(`Hey there ${namev2.name}.vid ,${SIGN_MESSAGE}`);
+          } else {
+            setPrimaryName({ name: '', nftAddress: undefined });
+            setSignMessage(SIGN_MESSAGE);
+          }
         }
       }
 
@@ -233,7 +255,7 @@ export default function ConnectButton() {
     setEthPrimaryLoaded(true);
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     //console.log(network,signMessage,isValidSignHash(signHash, signDate))
     if (!isValidSignHash(signHash, signDate) && network === 'venom' && signMessage.length > 10) {
       try {
@@ -243,7 +265,7 @@ export default function ConnectButton() {
         setIsSigning(false);
       }
     }
-  },[signMessage,network])
+  }, [signMessage, network]);
 
   const switchAccount = async () => {
     await logout();
@@ -316,9 +338,7 @@ export default function ConnectButton() {
               <LinkIcon type={network === '' ? 'wallet' : network.toLowerCase()} />
               {network === '' || (!isConnected && !ethAddress) ? (
                 <Stack gap={1}>
-                  <Text>
-                  Connect
-                  </Text>
+                  <Text>Connect</Text>
                 </Stack>
               ) : (
                 <Stack gap={1}>

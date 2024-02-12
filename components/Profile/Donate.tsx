@@ -16,7 +16,9 @@ import {
   TabList,
   Tab,
   TabPanels,
-  TabPanel
+  TabPanel,
+  LightMode,
+  DarkMode
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { RiCheckLine } from 'react-icons/ri';
@@ -152,7 +154,7 @@ export default function Donate({ title, content, style }: Props) {
         <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'} fontFamily={font} color={lightMode ? 'var(--dark1)' : 'white'}>
           <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody as={lightMode ? LightMode : DarkMode}>
             <Tabs variant={'soft-rounded'} colorScheme={colorMode === 'light' ? "blackAlpha" : 'whiteAlpha'}>
               <TabList justifyContent={'center'} >
                 {venom && <Tab gap={2} onClick={() => setValue('1 VENOM')} justifyContent={'center'}><LinkIcon type='venom' size='24'/>Venom</Tab>}

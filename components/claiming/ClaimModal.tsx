@@ -250,9 +250,6 @@ export default function ClaimModal({ message, claimedName }: Props) {
     }
   }, [message]);
 
-  useEffect(() => {
-    console.log('target is', target);
-  }, [target]);
 
   return (
     <>

@@ -338,7 +338,7 @@ const ClaimSection = () => {
         })
         .send({
           from: account?.address!,
-          amount: String(2e9),
+          amount: String(55e7),
           bounce: true,
         })
         .catch((e: any) => {
