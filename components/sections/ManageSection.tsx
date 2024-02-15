@@ -72,6 +72,7 @@ import VIDImage from 'components/claiming/VIDImage';
 import getNftsByAddress from 'core/utils/getNftsByAddress';
 import { useAddress } from '@thirdweb-dev/react';
 import { createWeb3Name } from '@web3-name-sdk/core';
+import MigrateModal from 'components/manage/MigrateModal';
 
 function ManageSection() {
   const { provider } = useVenomProvider();
@@ -80,9 +81,8 @@ function ManageSection() {
   const [_ethAddress, _setEthAddress] = useState(ethAddress);
   const [listIsEmpty, setListIsEmpty] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [names, setNames] = useState<string[]>();
   const [loaded, setLoaded] = useState(false);
-  const [listView, setListView] = useAtom(manageListViewAtom);
-  const [oldnftjsons, setOldNftJsons] = useState<BaseNftJson[] | undefined>(undefined);
   const [nftjsons, setNftJsons] = useState<BaseNftJson[] | undefined>(undefined);
   const network = useAtomValue(networkAtom);
   const [_network, _setNetwork] = useState(network);
@@ -105,6 +105,7 @@ function ManageSection() {
   const loadByContract = async (_contractAddress: string) => {
     if (!provider || !provider.isInitialized) return;
     setIsLoading(true);
+    setNames([]);
     const saltedCode = await saltCode(provider, String(account?.address), _contractAddress);
     // Hash it
     const codeHash = await provider.getBocHash(String(saltedCode));
@@ -138,6 +139,7 @@ function ManageSection() {
           }
         }
         if (_contractAddress === ROOT_CONTRACT_ADDRESS) {
+          setNames((n) => [...(n ? n : []), String(_nftJson.name)])
           _nftJson.manageUrl = '/manage/' + _nftJson.address;
         } else {
           _nftJson.manageUrl = '/oldManage/' + _nftJson.address;
@@ -145,6 +147,7 @@ function ManageSection() {
         }
         _nftJson.network = 'venom';
         setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
+
       } catch (e: any) {
         // console.log('error getting venomid nft ', indexAddress);
       }
@@ -203,6 +206,7 @@ function ManageSection() {
       await loadByContract(ROOT_CONTRACT_ADDRESS);
       await loadByContract(CONTRACT_ADDRESS);
       await loadByContract(CONTRACT_ADDRESS_V1);
+      //await loadByContract(CONTRACT_ADDRESS_V2);
       await loadByDb();
 
       setLoaded(true);
@@ -439,24 +443,14 @@ function ManageSection() {
                   </Box>
                   <HStack><Text flexGrow={1} fontWeight={'bold'} fontSize={['xl', 'xl', '2xl']}>
                   {String(nft.name).toLowerCase()}
-                </Text>{nft.manageUrl?.includes('old') && <Tooltip
-                        borderRadius={4}
-                        label={
-                          <Text p={2}>
-                            Migrating from old contract to new contract will be available from Feb 16 to Feb 30, 2024.
-                          </Text>
-                        }
-                        hasArrow
-                        color="white"
-                        bgColor={'black'}><Badge p={1} px={2} rounded={'full'} colorScheme='red'>migrate</Badge></Tooltip>}</HStack>
-                
+                </Text></HStack>
                 </Flex>
                   
 
                 
 
                 {notMobile ? (
-                  <Flex gap={2}>
+                  <Flex gap={2} align={'center'}>
                     {/* {nft.network === 'venom' && <Button
                         colorScheme="green"
                         isLoading={isSaving || isConfirming}
@@ -480,7 +474,8 @@ function ManageSection() {
                           ? 'Primary VID'
                           : 'Set Primary'}
                       </Button>} */}
-
+                      {nft.manageUrl?.includes('old') && nft.name && nft.address && !isLoading && <MigrateModal nft={nft} names={names} nfts={nftjsons} avatar={nft.avatar} />}
+                
                     {nft.network === 'venom' && (
                       <NextLink href={String(nft.manageUrl)} passHref>
                         <Button
@@ -518,6 +513,8 @@ function ManageSection() {
                     </Link>
                   </Flex>
                 ) : (
+                  <Flex gap={2} align={'center'}>{nft.manageUrl?.includes('old') && nft.name && nft.address && !isLoading && <MigrateModal names={names} nft={nft} nfts={nftjsons} avatar={nft.avatar} />}
+                  
                   <Menu>
                     <IconButton size={'lg'} rounded={'full'} as={MenuButton} aria-label="more-settings" variant={'ghost'} p={2}>
                       <RiMoreFill size={32} />
@@ -574,6 +571,7 @@ function ManageSection() {
                       </MenuItem>
                     </MenuList>
                   </Menu>
+                  </Flex>
                 )}
               </Flex>
             ))}

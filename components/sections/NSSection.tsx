@@ -30,9 +30,9 @@ import { useEffect, useState } from 'react';
 import { isValidVenomAddress } from 'core/utils';
 import { useAtomValue } from 'jotai';
 import { useSendMessage, useVenomProvider, useConnect } from 'venom-react-hooks';
-import { venomContractAddressAtom } from 'core/atoms';
+import { rootContractAtom, venomContractAddressAtom } from 'core/atoms';
 import { Address } from 'everscale-inpage-provider';
-import VenomAbi from 'abi/Collection.abi.json';
+import DomainAbi from 'abi/Domain.abi.json';
 import getVid from 'core/utils/getVid';
 import resolveAddress from 'core/utils/resolveAddress';
 
@@ -41,13 +41,14 @@ export default function NSSection() {
   const [notMobile] = useMediaQuery('(min-width: 769px)');
   const { colorMode } = useColorMode();
   const [address, setAddress] = useState('');
-  const [name, setName] = useState('');
+  const [searchedName, setSearchedName] = useState('');
   const [isLoading, setIsLoadig] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [sent, setSent] = useState(false);
   const { provider } = useVenomProvider();
   const { account } = useConnect();
   const venomContractAddress = useAtomValue(venomContractAddressAtom);
+  const rootContract = useAtomValue(rootContractAtom);
 
   const { run, status } = useSendMessage({
     from: new Address(String(account?.address)),
@@ -70,85 +71,87 @@ export default function NSSection() {
   const again = ()=> {
     setLoaded(false);
     setSent(false);
-    setName('');
+    setSearchedName('');
     setAddress('');
   }
 
-  const getName = async () => {
-    setIsLoadig(true);
-    //if(MINT_OPEN){
-      if (!provider || !provider.isInitialized) return;
-      const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
-      // @ts-ignore: Unreachable code error
-      const { value0 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) })
-        .call();
+  // const getName = async () => {
+  //   setIsLoadig(true);
+  //   //if(MINT_OPEN){
+  //     if (!provider || !provider.isInitialized) return;
+  //     const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
+  //     // @ts-ignore: Unreachable code error
+  //     const { value0 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(address)) })
+  //       .call();
 
-      if (value0?.name !== '') {
-        setLoaded(true);
-        setName(value0.name + '.vid');
-      } else {
-      await getVid(String(address)).then((res)=> {
-        if(res.status === 200){
-          setLoaded(true);
-          setName(res.data+ '.vid');
-        } else {
-          setName('');
-          setLoaded(false);
-        }
-      }).catch((e)=> {
-        setName('');
-        setLoaded(false);
-      })
-    }
-    setIsLoadig(false);
-  };
+  //     if (value0?.name !== '') {
+  //       setLoaded(true);
+  //       setSearchedName(value0.name + '.vid');
+  //     } else {
+  //     await getVid(String(address)).then((res)=> {
+  //       if(res.status === 200){
+  //         setLoaded(true);
+  //         setSearchedName(res.data+ '.vid');
+  //       } else {
+  //         setSearchedName('');
+  //         setLoaded(false);
+  //       }
+  //     }).catch((e)=> {
+  //       setSearchedName('');
+  //       setLoaded(false);
+  //     })
+  //   }
+  //   setIsLoadig(false);
+  // };
 
   const getAddress = async () => {
     setIsLoadig(true);
     
       if (!provider) return;
-      const _venomContract = new provider.Contract(VenomAbi, new Address(venomContractAddress));
+      const certificateAddr = await rootContract.methods.resolve({ path: String(address), answerId: 0 })
+          .call({ responsible: true });
+      
+      const domainContract = new provider.Contract(DomainAbi, certificateAddr.certificate);
+      console.log(certificateAddr);
+    try {
       // @ts-ignore: Unreachable code error
-      const { value0 }: any = await _venomContract?.methods.getInfoByName({ name: String(address.slice(0, -4)) })
-        .call();
-      if (value0?.name !== 'notfound') {
+      const { target } = await domainContract.methods.resolve({ answerId:0 }).call({responsible:true});
+        console.log(target)
+      if (target) {
         setLoaded(true);
-        setName(address);
-        setAddress(String(value0.owner));
+        setSearchedName(address);
+        setAddress(String(target));
+        console.log(String(address))
       } else {
-      await resolveAddress(String(address.slice(0, -4))).then((res)=> {
-        if(res.data !== ZERO_ADDRESS){
-          setLoaded(true);
-          setName(address);
-          setAddress(res.data);
-        } else {
-          setName('');
+          setSearchedName('');
           setLoaded(false);
-        }
-      }).catch((e)=> {
-        setName('');
+      };
+    } catch(e) {
+          setSearchedName('');
+          setLoaded(false);
+       }
+      setIsLoadig(false);
+  }
+    
+
+  useEffect(() => {
+    if (!loaded) {
+      if (address.includes('.vid')) {
+        getAddress();
+      } 
+      // else if (isValidVenomAddress(address)) {
+      //   getName();
+      // } 
+      else {
+        setSearchedName('');
+      }
+    } else {
+      if (!String(address).includes('.vid') && !isValidVenomAddress(address)) {
+        setSearchedName('');
         setLoaded(false);
-      })
+      }
     }
-    setIsLoadig(false);
-  };
-
-  // useEffect(() => {
-  //   if (!loaded) {
-  //     if (address.includes('.vid')) {
-  //       getAddress();
-  //     } else if (isValidVenomAddress(address)) {
-  //       getName();
-  //     } else {
-  //       setName('');
-  //     }
-  //   }
-
-  //   if (!String(address).includes('.vid') && !isValidVenomAddress(String(address))) {
-  //     setName('');
-  //     setLoaded(false);
-  //   }
-  // }, [address]);
+  }, [address]);
 
   return (
     <Box id="ns">
@@ -199,11 +202,11 @@ export default function NSSection() {
           </Flex>
           <Flex p={4} py={8} flexDir={'column'} align={'center'} justify={'center'} gap={4} bg={useColorModeValue('white','blackAlpha.500')} width={['xs','sm','xs','md']} borderRadius={15} border={'1px dashed gray'}>
             <Text fontSize={['3xl']} position={'relative'} top={0}>use case</Text>
-            <Text fontSize={['md', 'lg', 'xl', 'xl']} color={'gray'}>Enter your .vid name or a venom address than owns a venom id e.g. sam.vid</Text>
+            <Text fontSize={['md', 'lg', 'xl', 'xl']} color={'gray'}>Enter your domain name e.g. faucet.vid</Text>
             <InputGroup>
               <Input
                 height={'58px'}
-                placeholder="sam.vid or 0:4bc6 XXXX 3765"
+                placeholder="e.g. faucet.vid"
                 value={address}
                 _focus={{
                   borderColor: 'white',
@@ -214,18 +217,23 @@ export default function NSSection() {
                 bg={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
                 isDisabled={isLoading}
               />
-              {name.length > 3 && (
+              {searchedName.length > 1 && (
                 <InputRightAddon
                   bg={colorMode === 'light' ? 'var(--venom)': 'whiteAlpha.300'}
-                  w={name.length * 15}
+                  w={searchedName.length * 15}
                   py={7}
                   justifyContent={'center'}>
                   <Text
-                    color={colorMode === 'light' ? 'white': 'var(--venom0)'}
+                    bgGradient={
+                      colorMode === 'light'
+                        ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                        : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                    }
+                    bgClip="text"
                     textAlign={'center'}
                     fontSize={'xl'}
                     fontWeight={'bold'}>
-                    {name}
+                    {searchedName}
                   </Text>
                 </InputRightAddon>
               )}
@@ -234,7 +242,7 @@ export default function NSSection() {
               maxW={'100%'}
               w={'100%'}
               isLoading={isLoading}
-              isDisabled={true}
+              isDisabled={isLoading || !isValidVenomAddress(address)}
               gap={2}
               size={'lg'}
               colorScheme="green"
@@ -243,9 +251,11 @@ export default function NSSection() {
                 setIsLoadig(true);
                 run();
               }}>
-              Locked till Feb, 16 2024
-              {name.length > 3 && (
+              <Text>
+              Send 0.01</Text>
+              {searchedName.length > 1 && (
                 <>
+                <Text fontSize={'xl'} fontWeight={'extrabold'}>To {searchedName}</Text>
                   <RiSendPlane2Line size={28} />
                 </>
               )}
@@ -255,7 +265,7 @@ export default function NSSection() {
             backgroundColor={colorMode === 'light' ? 'whiteAlpha.700' : 'blackAlpha.700'}
             borderBottomColor={colorMode === 'light' ? 'blackAlpha.100' : 'whiteAlpha.100'}>
               <Text fontSize={['xl','xl','2xl']} lineHeight={'40px'}>
-                Awesome. You have transferred 0.01 TEST VENOM to <strong>{name}</strong> at <strong>{new Date().toLocaleString()}</strong>
+                🔥 Awesome. You have transferred 0.01 TEST VENOM to <strong>{searchedName}</strong> at <strong>{new Date().toLocaleString()}</strong>
               </Text>
               <Button
               maxW={'100%'}

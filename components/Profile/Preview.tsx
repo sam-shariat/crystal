@@ -12,6 +12,9 @@ import {
   DarkMode,
   Center,
   useColorModeValue,
+  IconButton,
+  Link,
+  Button,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import { Avatar, Socials, ProfileSkeleton } from 'components/Profile';
@@ -37,8 +40,9 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import Wallets from './Wallets';
 import { DeviceFrameset } from 'react-device-frameset';
 import 'react-device-frameset/styles/marvel-devices.min.css';
-import { RiLinksLine } from 'react-icons/ri';
+import { RiExternalLinkLine, RiLinksLine } from 'react-icons/ri';
 import { FaCircle } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 interface Attribute {
   trait_type: string;
@@ -69,6 +73,8 @@ const Preview = ({ json, onSave }: Props) => {
   const lightMode = useAtomValue(lightModeAtom);
   const [colorM, setColorM] = useAtom(colorModeAtom);
   const mobileView = useAtomValue(mobileViewAtom);
+  const { pathname } = useRouter();
+  console.log(pathname)
 
   // useEffect(() => {
   //   // console.log(json)
@@ -100,19 +106,17 @@ const Preview = ({ json, onSave }: Props) => {
           borderRadius={0}
           px={4}
           py={2}
+          gap={3}
           h={mobileView ? '92px' : '60px'}
           transition={'"all 1s ease"'}
-          justifyContent={'space-between'}
           alignItems={'center'}
           pt={mobileView ? 9 : 2}
           bgColor={useColorModeValue('light.600', 'dark.600')}>
-          <RiLinksLine/>
+          
 
-          <Text transition={'all 1s ease'} borderRadius={12} border={'1px solid gray'} p={2} px={4}>
-            venomid.link/{json.name.slice(0, -4)}
-          </Text>
-
-          <FaCircle />
+          <Button as={Link} href={`https://venomid.link/${pathname.includes('old') ? `o/` : ''}${json.name}`} target='_blank' variant={'outline'} gap={2} display={'flex'}>
+          <RiExternalLinkLine /> venomid.link/{pathname.includes('old') ? `o/` : ''}{json.name}
+          </Button>
         </Center>
 
         <Flex

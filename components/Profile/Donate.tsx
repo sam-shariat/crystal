@@ -36,7 +36,7 @@ import { capFirstLetter, getColor, truncAddress } from 'core/utils';
 import { LinkIcon, VenomFoundation } from 'components/logos';
 import QRCode from 'react-qr-code';
 import { Address } from 'everscale-inpage-provider';
-import { useConnect, useSendMessage } from 'venom-react-hooks';
+import { useConnect, useSendMessage, useVenomProvider } from 'venom-react-hooks';
 import {
   ConnectWallet,
   useSDK,
@@ -64,11 +64,13 @@ export default function Donate({ title, content, style }: Props) {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const lightMode = useAtomValue(lightModeAtom);
+  const {provider} = useVenomProvider();
   const round = useAtomValue(roundAtom);
   const font = useAtomValue(fontAtom);
   const variant = useAtomValue(variantAtom);
   const buttonBg = useAtomValue(buttonBgColorAtom);
   const connected = useAtomValue(isConnectedAtom);
+  const [comment,setComment] = useState<string | undefined>();
   const [autoEth, setAutoEth] = useState(false);
   const [isDonating, setIsDonating] = useState(false);
   const [donateSuccessful, setDonateSuccessful] = useState(false);
@@ -76,6 +78,25 @@ export default function Donate({ title, content, style }: Props) {
 
   useEffect(() => {
     _setOpen(isOpen)
+    // async function check() {
+    //   const coment = (await provider?.packIntoCell({
+    //     structure: [
+    //         { name: "op", type: "uint32" }, // operation
+    //         { name: "comment", type: "bytes" }
+    //     ] as const,
+    //     data: {
+    //         "op": 0,
+    //         "comment": Buffer.from("Donation received").toString("hex"),
+    //     },
+    //     abiVersion : '2.3'
+    //   }))?.boc;
+    //   setComment(coment);
+    // }
+
+    // if(isOpen && !comment){
+    //   check();
+    // }
+    
   }, [isOpen]);
 
   const ethAddressFromWallet = useAddress();
@@ -99,6 +120,7 @@ export default function Donate({ title, content, style }: Props) {
     from: new Address(String(account?.address)),
     to: String(venom),
     amount: String(Number(value.slice(0, value.indexOf(' '))) * 1e9),
+    //payload: comment
   });
 
   const sdk = useSDK();

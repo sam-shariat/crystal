@@ -244,7 +244,7 @@ const terms: Terms = {
     fa: 'مستندات API',
   },
   apiDescription: {
-    en: 'The initial step in supporting Venom ID in your application is enabling your application to understand VID names and accept them wherever an address is required.',
+    en: 'The initial step in supporting Venom ID in your application is enabling your application to understand VID names and accept them wherever a venom address is required.',
     fa: 'گام اولیه در پشتیبانی از ونوم آی دی در برنامه شما این است که برنامه شما را قادر می سازد تا نام های VID را بفهمد و آنها را در هر جایی که نیاز به آدرس است بپذیرد.',
   },
   profileLink: {
@@ -360,7 +360,7 @@ const terms: Terms = {
     fa: 'در حال مینت',
   },
   confirming: {
-    en: `Confirming ...`,
+    en: `Confirming TX`,
     fa: 'در حال تایید ...',
   },
   confirmingTx: {

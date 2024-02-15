@@ -174,24 +174,7 @@ export default function ConnectButton() {
 
 
 
-    //  try { 
-    //   // @ts-ignore: Unreachable code error
-    //   const { codeHash }: any = await _rootContract?.methods.expectedCertificateCodeHash({ answerId:0 , target: account.address, sid: 1 })
-    //     .call();
-
-    //   console.log(codeHash);
-
-
-    //   // @ts-ignore: Unreachable code error
-    //   const { nft }: any = await _rootContract?.methods.nftAddress({ answerId:0 , id: codeHash })
-    //   .call();
-      
-    //   console.log('nft',nft);
-    
-    // } catch(e){
-    //     console.log('error root')
-    //     console.log(e)
-    //   }
+     
 
 
       // @ts-ignore: Unreachable code error

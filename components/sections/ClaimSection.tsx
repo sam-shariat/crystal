@@ -285,34 +285,6 @@ const ClaimSection = () => {
       account?.address
     ) {
       setIsMinting(true);
-      // toast({
-      //   status: 'loading',
-      //   colorScheme: colorMode === 'dark' ? 'light' : 'dark',
-      //   title: t('preparing'),
-      //   description: t('preparingMint'),
-      //   duration: null,
-      // });
-
-      // const vidimage = renderToStaticMarkup(<VIDImage name={name} key={name} />);
-      // const vidbase64 = btoa(vidimage);
-      // const vidblob = base64ToBlob(vidbase64, 'image/svg+xml');
-
-      // const uris = await upload({ data: [vidblob] });
-      // let vidImageUrl = '';
-      // if (uris[0].length > 30 && uris[0].includes('ipfs://')) {
-      //   vidImageUrl = 'https://ipfs.io/ipfs/' + uris[0].slice(7);
-      //   // console.log(vidImageUrl)
-      // } else {
-      //   toast.closeAll();
-      //   toast({
-      //     status: 'warning',
-      //     title: t('uploading problem'),
-      //     description: t('there is a problem with uploading the nft image to ipfs'),
-      //     duration: null,
-      //   });
-      //   return;
-      // }
-
       toast.closeAll();
       toast({
         status: 'loading',
@@ -321,14 +293,6 @@ const ClaimSection = () => {
         description: t('confirmInWallet'),
         duration: null,
       });
-
-      // const mintTx = await venomContract?.methods
-      //   .mintNft({ json: JSON.stringify({}), name: name.toLowerCase() })
-      //   .send({
-      //     amount: String(minFee + Number(fee)),
-      //     bounce: true,
-      //     from: account?.address,
-      //   })
 
       // @ts-ignore: Unreachable code error
       const mintTx = await rootContract.methods
@@ -379,11 +343,7 @@ const ClaimSection = () => {
             })
             .finished();
 
-        // Decode events by using abi
-        //  let tx = await provider.unpackFromCell({boc: String(receiptTx?.inMessage.boc),allowPartial:true,structure:[{ name: "callback", type: "string" }] as const});
-        // let tx = await tokenWallet.decodeTransaction({transaction : receiptTx as Transaction, methods : tokenWallet.methods});
-        //console.log(tx)
-        // we are looking for event Game(address player, uint8 bet, uint8 result, uint128 prize);
+        
         let events = await rootContract.decodeTransactionEvents({
           transaction: receiptTx as Transaction,
         });
