@@ -646,5 +646,6 @@ export const EARLY_ADOPTER_IMAGES: any = {
   identorian: {src : 'https://ipfs.io/ipfs/QmYK9CchybNS3HxrgvgxnKGHCzeRVwNZV1cmiLGf4qpx4m/identorian.svg', type: 'image/svg+xml'},
   maverick: {src : 'https://ipfs.io/ipfs/QmQt3CTiZEwDdrAW7ebSM7QX7ZLYts6nWfjfh36xB4iWM7/venomid-maverick.gif', type: 'image/gif'},
   champion: {src : 'https://ipfs.io/ipfs/QmSdjoBfigMQu2yGpMj5Fhd1xFQFYoTUVTLjUZjGcpnmee/venomid-champions.gif', type: 'image/gif'},
+  earlier: {src : 'https://ipfs.io/ipfs/Qmb1huuaLMpA3JodFysEqpWc65vy4NkXfuix5mYkvaBkJE/earlier.svg', type: 'image/svg+xml'},
   
 };

@@ -27,42 +27,42 @@ const withHttps = (url: string) =>
 
 function isValidUsername(name: string) {
   var length = Buffer.byteLength(name);
-    if (length <= MIN_NAME_LENGTH || length > MAX_NAME_LENGTH) {
-        return false;
+  if (length <= MIN_NAME_LENGTH || length > MAX_NAME_LENGTH) {
+    return false;
+  }
+  var nameAsBytes = Buffer.from(name);
+  if (nameAsBytes[0] === 0x2d || nameAsBytes[length - 1] === 0x2d) {
+    // starts or ends with char '-'
+    return false;
+  }
+  for (var i = 0; i < length; i++) {
+    var char = nameAsBytes[i];
+    var ok = (char >= 0x61 && char <= 0x7a) || (char >= 0x30 && char <= 0x39) || char === 0x2d; // a-z0-9-
+    if (!ok) {
+      return false;
     }
-    var nameAsBytes = Buffer.from(name);
-    if (nameAsBytes[0] === 0x2d || nameAsBytes[length - 1] === 0x2d) {
-        // starts or ends with char '-'
-        return false;
-    }
-    for (var i = 0; i < length; i++) {
-        var char = nameAsBytes[i];
-        var ok = (char >= 0x61 && char <= 0x7a) || (char >= 0x30 && char <= 0x39) || (char === 0x2d);  // a-z0-9-
-        if (!ok) {
-            return false;
-        }
-    }
-    return true;
+  }
+  return true;
 }
 
 function invalidUsernameMessage(name: string) {
   var length = Buffer.byteLength(name);
-    if (length <= MIN_NAME_LENGTH || length > MAX_NAME_LENGTH) {
-        return 'Domain name should be more than 5 characters on testnet. all names will be available on Mainnet!';
+  if (length <= MIN_NAME_LENGTH || length > MAX_NAME_LENGTH) {
+    return 'Domain name should be more than 5 characters on testnet. all names will be available on Mainnet!';
+  }
+  var nameAsBytes = Buffer.from(name);
+  if (nameAsBytes[0] === 0x2d || nameAsBytes[length - 1] === 0x2d) {
+    // starts or ends with char '-'
+    return 'Domain Name can not start or end with hyphen (-)';
+  }
+  for (var i = 0; i < length; i++) {
+    var char = nameAsBytes[i];
+    var ok = (char >= 0x61 && char <= 0x7a) || (char >= 0x30 && char <= 0x39) || char === 0x2d; // a-z0-9-
+    if (!ok) {
+      return 'Domain Name can consist English letters, numbers, and hyphen (-)';
     }
-    var nameAsBytes = Buffer.from(name);
-    if (nameAsBytes[0] === 0x2d || nameAsBytes[length - 1] === 0x2d) {
-        // starts or ends with char '-'
-        return 'Domain Name can not start or end with hyphen (-)';
-    }
-    for (var i = 0; i < length; i++) {
-        var char = nameAsBytes[i];
-        var ok = (char >= 0x61 && char <= 0x7a) || (char >= 0x30 && char <= 0x39) || (char === 0x2d);  // a-z0-9-
-        if (!ok) {
-          return 'Domain Name can consist English letters, numbers, and hyphen (-)';
-        }
-    }
-    return '';
+  }
+  return '';
 }
 
 const isValidEmail = (email: string) => {
@@ -74,7 +74,7 @@ const isValidEmail = (email: string) => {
 };
 
 function isValidVenomAddress(address: string | undefined) {
-  if(!address) return false;
+  if (!address) return false;
   if (!address.startsWith('0:') || address.length !== 66) {
     return false;
   }
@@ -288,6 +288,14 @@ const openWindow = (url: string, e: any) => {
   e !== null && e.preventDefault();
 };
 
+const arrayRemoveDuplicates = (arr: any) => {
+  const unique = arr.filter((obj: any, index: number) => {
+    return index === arr.findIndex((o: any) => obj.name === o.name);
+  });
+
+  return unique;
+};
+
 export {
   withHttps,
   base64ToBlob,
@@ -296,6 +304,7 @@ export {
   isValidEmail,
   capFirstLetter,
   arrayRemove,
+  arrayRemoveDuplicates,
   isValidUsername,
   invalidUsernameMessage,
   getColor,
@@ -305,5 +314,5 @@ export {
   getRandomNumber,
   isValidVenomAddress,
   isValidSignHash,
-  openWindow
+  openWindow,
 };

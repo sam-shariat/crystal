@@ -135,6 +135,10 @@ const terms: Terms = {
     en: 'Your Venom IDs',
     fa: 'ونوم آی دی های شما',
   },
+  yourOldVids: {
+    en: 'Old Venom IDs',
+    fa: 'ونوم آی دی های قدیمی',
+  },
   yourSids: {
     en: 'Your Space IDs',
     fa: 'اسپیس آی دی های شما',

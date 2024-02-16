@@ -73,6 +73,7 @@ import getNftsByAddress from 'core/utils/getNftsByAddress';
 import { useAddress } from '@thirdweb-dev/react';
 import { createWeb3Name } from '@web3-name-sdk/core';
 import MigrateModal from 'components/manage/MigrateModal';
+import { useRouter } from 'next/router';
 
 function ManageSection() {
   const { provider } = useVenomProvider();
@@ -98,9 +99,7 @@ function ManageSection() {
   const minFee = 660000000;
   const { colorMode } = useColorMode();
   const web3Name = createWeb3Name();
-  if (nftjsons) {
-    // console.log(nftjsons);
-  }
+  const { pathname } = useRouter();
 
   const loadByContract = async (_contractAddress: string) => {
     if (!provider || !provider.isInitialized) return;
@@ -110,13 +109,13 @@ function ManageSection() {
     // Hash it
     const codeHash = await provider.getBocHash(String(saltedCode));
     if (!codeHash) {
-      setIsLoading(false);
+      //setIsLoading(false);
       return;
     }
     // Fetch all Indexes by hash
     const indexesAddresses = await getAddressesFromIndex(codeHash, provider);
     if (!indexesAddresses || !indexesAddresses.length) {
-      setIsLoading(false);
+      //setIsLoading(false);
       return;
     }
     // Fetch all nfts
@@ -128,6 +127,18 @@ function ManageSection() {
             (att: any) => att.trait_type === 'DATA'
           )?.value;
           if (ipfsData !== '' && ipfsData) {
+            const res = await axios.get(ipfsGateway + ipfsData);
+            if (res) {
+              _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
+            } else {
+              _nftJson.avatar = ''; //_nftJson.preview?.source;
+            }
+          } else {
+            _nftJson.avatar = ''; //_nftJson.preview?.source;
+          }
+        } else {
+          const ipfsData = _nftJson.hash;
+          if (!ipfsData?.includes('not set') && ipfsData) {
             const res = await axios.get(ipfsGateway + ipfsData);
             if (res) {
               _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
@@ -203,11 +214,15 @@ function ManageSection() {
       setNftJsons([]);
       setIsLoading(true);
       setListIsEmpty(false);
-      await loadByContract(ROOT_CONTRACT_ADDRESS);
-      await loadByContract(CONTRACT_ADDRESS);
-      await loadByContract(CONTRACT_ADDRESS_V1);
-      //await loadByContract(CONTRACT_ADDRESS_V2);
-      await loadByDb();
+      if(pathname.includes('old')){
+        await loadByContract(CONTRACT_ADDRESS);
+        await loadByContract(CONTRACT_ADDRESS_V1);
+        //await loadByContract(CONTRACT_ADDRESS_V2);
+        await loadByDb();
+      } else {
+        await loadByContract(ROOT_CONTRACT_ADDRESS);
+
+      }
 
       setLoaded(true);
       setIsLoading(false);
@@ -385,14 +400,47 @@ function ManageSection() {
         <Box py={6} gap={2} width={'100%'} pb={12}>
           {isConnected && (
             <Stack gap={10} width={'100%'} my={4}>
-              <Flex minWidth={['350px', '420px', '580px', '800px']} align={'center'} height={'64px'} >
+              <Flex minWidth={['350px', '420px', '580px', '800px']} align={'center'} height={'64px'} gap={3}>
                 <Text
                   flexGrow={1}
                   fontWeight="bold"
                   fontSize={notMobile ? '4xl' : '2xl'}
                   my={notMobile ? 10 : 4}>
-                  {network === 'venom' ? t('yourVids') : t('yourSids')}
+                  {network === 'venom' ? pathname.includes('old') ? t('yourOldVids') : t('yourVids') : t('yourSids')}
                 </Text>
+                {!pathname.includes('old') ? <Tooltip
+                        borderRadius={4}
+                        label={
+                          <Text p={2}>
+                            All Venom ID(s) Minted before 2024 have to migrate to the new contract
+                          </Text>
+                        }
+                        hasArrow
+                        color="white"
+                        bgColor={'black'}>
+                        <Button
+                as={Link}
+                href='/oldManage'
+                  aria-label="old-nfts"
+                  key={`link-to-old-nfts`}
+                  rounded={'full'}
+                  size={'lg'}
+                  variant={'outline'}
+                  color={'red'}
+                  gap={2}>
+                  old
+                </Button></Tooltip> : <Button
+                as={Link}
+                href='/manage'
+                  aria-label="old-nfts"
+                  key={`link-to-old-nfts`}
+                  rounded={'full'}
+                  size={'lg'}
+                  variant={'outline'}
+                  color={'green'}
+                  gap={2}>
+                  main
+                </Button>}
                 <Button
                   aria-label="reload-nfts"
                   key={`reload-${network}-nfts`}
@@ -474,10 +522,10 @@ function ManageSection() {
                           ? 'Primary VID'
                           : 'Set Primary'}
                       </Button>} */}
-                      {nft.manageUrl?.includes('old') && nft.name && nft.address && !isLoading && <MigrateModal nft={nft} names={names} nfts={nftjsons} avatar={nft.avatar} />}
+                      {nft.manageUrl?.includes('old') && nft.name && nft.address && !isLoading && <MigrateModal nft={nft} />}
                 
-                    {nft.network === 'venom' && (
-                      <NextLink href={String(nft.manageUrl)} passHref>
+                    {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
+                      <NextLink target='_blank' href={String(nft.manageUrl)} passHref>
                         <Button
                           aria-label="customize-venom-id"
                           gap={2}
@@ -513,9 +561,9 @@ function ManageSection() {
                     </Link>
                   </Flex>
                 ) : (
-                  <Flex gap={2} align={'center'}>{nft.manageUrl?.includes('old') && nft.name && nft.address && !isLoading && <MigrateModal names={names} nft={nft} nfts={nftjsons} avatar={nft.avatar} />}
+                  <Flex gap={2} align={'center'}>{nft.manageUrl?.includes('old') && nft.name && nft.address && !isLoading && <MigrateModal nft={nft} />}
                   
-                  <Menu>
+                  {!nft.manageUrl?.includes('old') && <Menu>
                     <IconButton size={'lg'} rounded={'full'} as={MenuButton} aria-label="more-settings" variant={'ghost'} p={2}>
                       <RiMoreFill size={32} />
                     </IconButton>
@@ -544,8 +592,8 @@ function ManageSection() {
                             ? 'Primary VID'
                             : 'Set Primary'}
                         </Button>} */}
-                      {nft.network === 'venom' && (
-                        <NextLink href={String(nft.manageUrl)} passHref>
+                      {nft.network === 'venom' && !nft.manageUrl?.includes('old') &&(
+                        <NextLink target='_blank' href={String(nft.manageUrl)} passHref>
                           <MenuItem
                             height={'48px'}
                             bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
@@ -570,7 +618,7 @@ function ManageSection() {
                         View {nft.network === 'venom' ? 'Venom ID Link' : 'Space ID Link'}
                       </MenuItem>
                     </MenuList>
-                  </Menu>
+                  </Menu>}
                   </Flex>
                 )}
               </Flex>
@@ -579,7 +627,7 @@ function ManageSection() {
 
           {listIsEmpty && !isLoading && (
             <Center display="flex" flexDirection="column" gap={4} minH={'75%'}>
-              <Text fontSize="xl">You don't own any Venom IDs</Text>
+              <Text fontSize="xl">You don't own any {pathname.includes('old') ? ' old ' : ''} Venom IDs</Text>
               <NextLink href={'/'} passHref>
                 <Button
                   variant="outline"

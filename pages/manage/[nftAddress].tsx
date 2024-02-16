@@ -356,6 +356,7 @@ const ManagePage: NextPage = () => {
 
           // console.log('getting nft');
           const nftJson = await getNft(provider, new Address(nftAddress));
+          console.log(nftJson);
           if (
             String(nftJson.info.owner) !== connectedAccount ||
             String(nftJson.info.manager) !== connectedAccount
