@@ -70,13 +70,13 @@ export default function NetworkModal() {
                   <Text fontSize={'sm'} color={'gray'}>{`NFTs of ${truncAddress(venom)}`}</Text>
                 </Stack>
               </Button>
-              {!eth && (
+              {eth.length < 30 && (
                 <Stack my={2}>
                   <Text>Connect your Ethereum address to pick from NFTs</Text>
                   <EthAddressInput />
                 </Stack>
               )}
-              {eth && <Button
+              {eth.length > 30 && <Button
                 colorScheme={network.includes('ethereum') ? 'green' : 'gray'}
                 gap={2}
                 height={'80px'}

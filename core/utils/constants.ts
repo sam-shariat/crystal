@@ -325,7 +325,7 @@ export const FONTS = ['Poppins', 'Lato', 'Pixelify Sans', 'Space Mono', 'Playfai
 
 export const VARIATIONS = [
   {
-    avatar: 'https://ipfs.io/ipfs/QmQSKU12cc8qJSVNbGUrNWwdfFZiMWn8Xh2egovR8dUXGQ/john.jpg',
+    avatar: 'https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/arb-mainnet/3fdf3aa004f6b271dec08edcfc73b5eb',
     avatarShape: 'hex',
     bg: BG_COLORS[0].color,
     lightMode: BG_COLORS[0].lightMode,
@@ -333,36 +333,23 @@ export const VARIATIONS = [
     variant: BUTTON_VARIANTS[0],
     round: BUTTON_ROUNDS[1],
     font: FONTS[0],
-    title: 'Jonathan Due',
+    title: 'Jonathan',
     subtitle: 'Crypto Agent',
     vid: 'jonathon.VID',
   },
   {
     avatar:
-      'https://ipfs.io/ipfs/QmTNgHnxMXqcno1A85vG3qxpsJty91FJDfXh6Mfi7HwRyB/vidiconcircle%20(1).png',
+      'https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/arb-mainnet/05882773ea2030c4cc8ee5cabc7b7a4c',
     avatarShape: 'circle',
-    bg: BG_IMAGES[2].bg,
-    lightMode: BG_IMAGES[2].lightMode,
-    buttonBg: BUTTON_BG_COLORS[0],
-    variant: BUTTON_VARIANTS[2],
-    round: BUTTON_ROUNDS[2],
-    font: FONTS[0],
-    title: 'VenomID APP',
-    subtitle: 'Decentralized APP',
-    vid: 'venomid.VID',
-  },
-  {
-    avatar: 'https://ipfs.io/ipfs/QmWm9XDd6f2q1ESG7wR6pJxGQCSRpGfKyB2mC25wCvkZLw',
-    avatarShape: 'hex',
-    bg: BG_COLORS[1].color,
-    lightMode: BG_COLORS[1].lightMode,
-    buttonBg: BUTTON_BG_COLORS[8],
+    bg: BG_IMAGES[3].bg,
+    lightMode: BG_IMAGES[3].lightMode,
+    buttonBg: BUTTON_BG_COLORS[1],
     variant: BUTTON_VARIANTS[1],
-    round: BUTTON_ROUNDS[1],
-    font: FONTS[2],
-    title: 'Tomy Williams',
-    subtitle: 'Crypto Enthusiast',
-    vid: 'tomwilliams.VID',
+    round: BUTTON_ROUNDS[2],
+    font: FONTS[3],
+    title: 'SmoLizard',
+    subtitle: 'Crypto Analyst',
+    vid: 'samoel.VID',
   },
   {
     avatar: 'https://ipfs.io/ipfs/QmeTz133js4XjdXbbPRAW5CYTMankbhLt6FGGogaiBhQBx',
@@ -373,9 +360,22 @@ export const VARIATIONS = [
     variant: BUTTON_VARIANTS[4],
     round: BUTTON_ROUNDS[2],
     font: FONTS[0],
-    title: 'Venom ID Passport',
+    title: 'Passport ID',
     subtitle: 'NFT Collection',
     vid: 'passport.VID',
+  },
+  {
+    avatar: 'https://ipfs.io/ipfs/QmWm9XDd6f2q1ESG7wR6pJxGQCSRpGfKyB2mC25wCvkZLw',
+    avatarShape: 'hex',
+    bg: BG_IMAGES[5].bg,
+    lightMode: BG_IMAGES[5].lightMode,
+    buttonBg: BUTTON_BG_COLORS[8],
+    variant: BUTTON_VARIANTS[5],
+    round: BUTTON_ROUNDS[1],
+    font: FONTS[2],
+    title: 'Tomy Williams',
+    subtitle: 'Crypto Enthusiast',
+    vid: 'tomwilliams.VID',
   },
   {
     avatar: 'https://nft-cdn.alchemy.com/arb-mainnet/af6fbf53fb1a6f0e582a3948ddc47d65',
@@ -386,22 +386,22 @@ export const VARIATIONS = [
     variant: BUTTON_VARIANTS[3],
     round: BUTTON_ROUNDS[0],
     font: FONTS[2],
-    title: 'Sam Walters',
-    subtitle: 'Blockchain Developer',
+    title: 'Sam Walt',
+    subtitle: 'Blockchain Dev',
     vid: 'sam.VID',
   },
   {
-    avatar: 'https://nft-cdn.alchemy.com/matic-mainnet/da195f672ee72993f128fc4a02880d49',
-    avatarShape: 'circle',
-    bg: BG_COLORS[6].color,
-    lightMode: BG_COLORS[6].lightMode,
+    avatar: 'https://ipfs.io/ipfs/QmTNgHnxMXqcno1A85vG3qxpsJty91FJDfXh6Mfi7HwRyB/vidiconcircle%20(1).png',
+    avatarShape: 'round',
+    bg: BG_IMAGES[4].bg,
+    lightMode: BG_IMAGES[4].lightMode,
     buttonBg: BUTTON_BG_COLORS[1],
-    variant: BUTTON_VARIANTS[5],
+    variant: BUTTON_VARIANTS[0],
     round: BUTTON_ROUNDS[1],
-    font: FONTS[3],
-    title: 'Stoned Ape',
-    subtitle: 'Crypto Analyst',
-    vid: 'stonedape.VID',
+    font: FONTS[0],
+    title: 'Venom ID',
+    subtitle: 'Domains on venom',
+    vid: 'venomid.VID',
   },
 ];
 
@@ -439,20 +439,19 @@ export const LINK_VARIATIONS = [
       },
     },
     {
-      type: 'soundcloud track',
-      title: 'music',
+      type: 'nft link',
+      title: 'Venom ID Family OAT',
+      url: 'https://testnet.ventory.gg/nft/0:e4244873c4ab215bbc8cec48ae4b35d427f1aeac33475795bce8efc76472ba14',
+      image: 'https://ipfs.io/ipfs/QmSoTZi3B6FXLRVBXhsTCwfYPnWMCUHpBc6HiVrGpuBU6o/venomid-family.gif',
+      content: '0:e4244873c4ab215bbc8cec48ae4b35d427f1aeac33475795bce8efc76472ba14',
       styles: {
-        size: 'md',
+        scanLink: false,
+        size: 'sm',
+        network: 'venom testnet',
+        type: 'normal',
       },
-      url: 'https://soundcloud.com/prod-inverted/skylar-grey-last-one-standing-remix-ft-xxxtentacion-polo-g-mozzy-eminem',
     },
-  ],
-  [
-    {
-      type: 'tweet',
-      title: 'tweet',
-      url: 'https://twitter.com/SamyWalters/status/1720165257019073014',
-    },
+    
   ],
   [
     {
@@ -473,6 +472,13 @@ export const LINK_VARIATIONS = [
         icon: 'RiYoutubeFill',
         size: 'md'
       },
+    },
+  ],
+  [
+    {
+      type: 'tweet',
+      title: 'tweet',
+      url: 'https://twitter.com/SamyWalters/status/1720165257019073014',
     },
   ],
   [
@@ -502,19 +508,14 @@ export const LINK_VARIATIONS = [
     },
   ],
   [
-    {
-      type: 'nft link',
-      title: 'Venom ID NFT #406',
-      url: 'https://testnet.ventory.gg/nft/0:6cf1db7a90e005a8f582a75c95ea2fac36fbe695c210bff42d5e884ded91b428',
-      image: 'https://ipfs.ventory.gg:443/ventory/upload-quest/111gif1691486132060.gif',
-      content: '0:6cf1db7a90e005a8f582a75c95ea2fac36fbe695c210bff42d5e884ded91b428',
-      styles: {
-        scanLink: false,
-        size: 'sm',
-        network: 'venom testnet',
-        type: 'normal',
-      },
-    },
+    // {
+    //   type: 'soundcloud track',
+    //   title: 'music',
+    //   styles: {
+    //     size: 'sm',
+    //   },
+    //   url: 'https://soundcloud.com/sam-walters-715497925/sets/trippy',
+    // },
   ],
 ];
 
@@ -583,8 +584,6 @@ export const WALLETS_VARIATIONS = [
   },
   {
     venom: '0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765',
-    optimism: '0xBFd210db795A9Ac48D0C3be2a74232BE44144E84',
-    polygon: '0xBFd210db795A9Ac48D0C3be2a74232BE44144E84',
   },
 ];
 
