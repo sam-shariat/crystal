@@ -27,6 +27,7 @@ import { GiCubeforce } from 'react-icons/gi';
 import { CgIfDesign } from 'react-icons/cg';
 import { MdOutlineSecurity, MdOutlineVisibility } from 'react-icons/md';
 import TextIcon from 'components/features/TextIcon';
+import { motion, Variants } from 'framer-motion';
 
 export default function FeaturesSection() {
   const { t } = useTranslate();
@@ -56,38 +57,46 @@ export default function FeaturesSection() {
                 <stop stopColor="#10a9b6" offset="100%" />
               </linearGradient>
             </svg>
+            
             <SimpleGrid
               columns={[1, 1, 2, 2, 3]}
               gap={6}
               my={6}
               width={['xs', 'md', 'container.sm', 'container.md', 'container.lg']}>
+                
               <TextIcon
                 text={t('feature1')}
                 hoverText={t('feature1d')}
                 icon={<GiCubeforce size={'48px'} style={{ stroke: "url(#venom-gradient)" }}/>}
+                
               />
               <TextIcon
                 text={t('feature2')}
                 hoverText={t('feature2d')}
                 icon={<CgIfDesign size={'48px'} style={{ stroke: "url(#venom-gradient)" }}/>}
+                i={0.3}
               />
               <TextIcon
                 text={t('feature3')}
                 hoverText={t('feature3d')}
+                i={0.6}
                 icon={<RiProfileLine size={'48px'} style={{ stroke: "url(#venom-gradient)" }}/>}
               />
               <TextIcon
                 text={t('feature4')}
                 hoverText={t('feature4d')}
+                i={0.9}
                 icon={<RiArrowUpDoubleLine size={'48px'} style={{ stroke: "url(#venom-gradient)" }}/>}
               />
               <TextIcon
                 text={t('feature5')}
                 hoverText={t('feature5d')}
+                i={1.2}
                 icon={<RiFingerprint2Line size={'48px'} style={{ stroke: "url(#venom-gradient)" }}/>}
               />
               <TextIcon
                 text={t('feature6')}
+                i={1.5}
                 hoverText={t('feature6d')}
                 icon={<RiExchangeLine size={'48px'} style={{ stroke: "url(#venom-gradient)" }}/>}
               />
@@ -101,20 +110,24 @@ export default function FeaturesSection() {
               }) && (
                 <TextIcon
                   text={t('feature7')}
-                  hoverText={t('feature7d')}
+                i={1.8}
+                hoverText={t('feature7d')}
                   icon={<MdOutlineVisibility size={'48px'} style={{ stroke: "url(#venom-gradient)" }}/>}
                 />
               )}
               <TextIcon
                 text={t('feature8')}
                 hoverText={t('feature8d')}
+                i={2.1}
                 icon={<MdOutlineSecurity size={'48px'} style={{ stroke: "url(#venom-gradient)" }}/>}
               />
               <TextIcon
                 text={t('feature9')}
                 hoverText={t('feature9d')}
+                i={2.4}
                 icon={<RiUserVoiceLine size={'48px'} style={{ stroke: "url(#venom-gradient)" }}/>}
               />
+              
             </SimpleGrid>
             
           </Box>

@@ -132,11 +132,11 @@ const terms: Terms = {
     fa: 'مدیریت',
   },
   yourVids: {
-    en: 'Your Venom IDs',
+    en: 'Manage Venom IDs',
     fa: 'ونوم آی دی های شما',
   },
   yourOldVids: {
-    en: 'Old Venom IDs',
+    en: 'Migrate Old Venom IDs',
     fa: 'ونوم آی دی های قدیمی',
   },
   yourSids: {

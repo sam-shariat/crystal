@@ -14794,6 +14794,15 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+vid-sdk@0.0.73:
+  version "0.0.73"
+  resolved "https://registry.yarnpkg.com/vid-sdk/-/vid-sdk-0.0.73.tgz#4304668dc912473544c4cdfb23a82779562cf3d6"
+  integrity sha512-i6c4DxQNRYcsgIWimcY3tEVmroGS/PT07hB46cLMS9I4aCZR/HSDbYy7ffmFCjB775HcXkeqgCJZZNSv/LKo4w==
+  dependencies:
+    everscale-inpage-provider "^0.3.61"
+    react "18"
+    react-dom "18"
+
 viem@^1.21.1:
   version "1.21.1"
   resolved "https://registry.yarnpkg.com/viem/-/viem-1.21.1.tgz#f0996347fd339b1590dd82e379f18e1ae96bbcf5"

@@ -73,6 +73,7 @@
     "twitter-api-sdk": "^1.2.1",
     "venom-connect": "1.0.24",
     "venom-react-hooks": "^0.1.5",
+    "vid-sdk": "0.0.73",
     "viem": "^1.21.1"
   },
   "devDependencies": {

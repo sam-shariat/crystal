@@ -1033,7 +1033,7 @@ export default function MigrateModal({ nft }: Props) {
                     </Flex>
                   </Flex>
                 <Text>Last step is burning your old domain</Text>
-                <Text>This step will start on 20 Feb 2024</Text>
+                <Text>This step will start on 30 Feb 2024</Text>
                 <Flex gap={4} align={'center'} justify={'space-between'}>
                   <Button
                     display={'flex'}

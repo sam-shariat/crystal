@@ -92,8 +92,8 @@
 
 }
 
-* {
-  scroll-behavior: smooth;
+*, html {
+  scroll-behavior: smooth !important;
 }
 
 body, div {

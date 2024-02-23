@@ -75,6 +75,8 @@ import {
 } from '@thirdweb-dev/react';
 import getVid from 'core/utils/getVid';
 import { createWeb3Name } from '@web3-name-sdk/core';
+import { getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
+//import { lookupName } from 'vid-sdk';
 
 export default function ConnectButton() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
@@ -173,41 +175,71 @@ export default function ConnectButton() {
       }
 
 
-
-     
+    const saltedCode = await saltCode(provider, String(account?.address), ROOT_CONTRACT_ADDRESS);
+    // Hash it
+    const codeHash = await provider.getBocHash(String(saltedCode));
+    if (!codeHash) {
+      //setIsLoading(false);
+      return;
+    }
+    // Fetch all Indexes by hash
+    const indexesAddresses = await getAddressesFromIndex(codeHash, provider,5);
+    if (!indexesAddresses || !indexesAddresses.length) {
+      //setIsLoading(false);
+      return;
+    }
+    // Fetch all nfts
+    let primary = false;
+    indexesAddresses.map(async (indexAddress) => {
+      try {
+        if(!primary){
+          let _nftJson = await getNftByIndex(provider, indexAddress);
+          if(_nftJson.target === account.address.toString() && !primary){
+            primary = true ;
+            setPrimaryName({name: _nftJson.name, nftAddress: _nftJson.address});
+            setSignMessage(`Hey there ${_nftJson.name} ,${SIGN_MESSAGE}`);
+            return
+          }
+        }
+        
+      } catch (e: any) {
+        // console.log('error getting venomid nft ', indexAddress);
+      }
+    });
+      
 
 
       // @ts-ignore: Unreachable code error
-      const { value0: name1 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
-        .call();
+      // const { value0: name1 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
+      //   .call();
 
-      if (name1?.name !== '' && !primaryName?.nftAddress) {
-        setPrimaryName(name1);
-        setSignMessage(`Hey there ${name1.name}.vid ,${SIGN_MESSAGE}`);
-      } else {
-        console.log('cheking second ...');
-        // @ts-ignore: Unreachable code error
-        const { value0: namev1 }: any = await _venomContractV1?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
-          .call();
-        console.log(namev1);
-        if (namev1?.name !== '') {
-          setPrimaryName(namev1);
-          setSignMessage(`Hey there ${namev1.name}.vid ,${SIGN_MESSAGE}`);
-        } else {
-          console.log('cheking third ...');
-          // @ts-ignore: Unreachable code error
-          const { value0: namev2 }: any = await _venomContractV2?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
-            .call();
-          console.log(namev2);
-          if (namev2?.naame !== '') {
-            setPrimaryName(namev2);
-            setSignMessage(`Hey there ${namev2.name}.vid ,${SIGN_MESSAGE}`);
-          } else {
-            setPrimaryName({ name: '', nftAddress: undefined });
-            setSignMessage(SIGN_MESSAGE);
-          }
-        }
-      }
+      // if (name1?.name !== '' && !primaryName?.nftAddress) {
+      //   setPrimaryName(name1);
+      //   setSignMessage(`Hey there ${name1.name}.vid ,${SIGN_MESSAGE}`);
+      // } else {
+      //   console.log('cheking second ...');
+      //   // @ts-ignore: Unreachable code error
+      //   const { value0: namev1 }: any = await _venomContractV1?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
+      //     .call();
+      //   console.log(namev1);
+      //   if (namev1?.name !== '') {
+      //     setPrimaryName(namev1);
+      //     setSignMessage(`Hey there ${namev1.name}.vid ,${SIGN_MESSAGE}`);
+      //   } else {
+      //     console.log('cheking third ...');
+      //     // @ts-ignore: Unreachable code error
+      //     const { value0: namev2 }: any = await _venomContractV2?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
+      //       .call();
+      //     console.log(namev2);
+      //     if (namev2?.naame !== '') {
+      //       setPrimaryName(namev2);
+      //       setSignMessage(`Hey there ${namev2.name}.vid ,${SIGN_MESSAGE}`);
+      //     } else {
+      //       setPrimaryName({ name: '', nftAddress: undefined });
+      //       setSignMessage(SIGN_MESSAGE);
+      //     }
+      //   }
+      // }
 
       if (_status !== 'connected' && _status !== 'connecting') {
         switchNetwork('venom');

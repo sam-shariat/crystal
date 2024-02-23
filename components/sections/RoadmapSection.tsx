@@ -61,6 +61,7 @@ export default function RoadmapSection() {
                   bg={colorMode === 'dark' ? 'blackAlpha.500' : 'var(--light)'}
                   borderRadius={12}
                   p={8}
+                  gap={4}
                   pt={4}>
                   <Text
                     fontWeight="bold"
@@ -72,7 +73,7 @@ export default function RoadmapSection() {
                   <Progress
                     boxShadow={'base'}
                     height={'2px'}
-                    value={45}
+                    value={65}
                     sx={{
                       '& > div:first-of-type': {
                         transitionProperty: 'width',
@@ -87,22 +88,22 @@ export default function RoadmapSection() {
                     size="lg"
                     defaultChecked
                     color={'var(--venom1)'}
-                    colorScheme={'green'}>
+                    colorScheme={'green'} isReadOnly>
                     {t('roadmapPhase11')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg" defaultChecked>
+                  <Checkbox fontWeight="bold" mt={1} size="lg" defaultChecked isReadOnly>
                     {t('roadmapPhase12')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg" defaultChecked>
+                  <Checkbox fontWeight="bold" mt={1} size="lg" defaultChecked isReadOnly>
                     {t('roadmapPhase13')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg" defaultChecked>
+                  <Checkbox fontWeight="bold" mt={1} size="lg" defaultChecked isReadOnly>
                     {t('roadmapPhase14')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" isReadOnly>
                     {t('roadmapPhase15')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" isReadOnly>
                     {t('roadmapPhase16')}
                   </Checkbox>
                 </Flex>
@@ -111,6 +112,7 @@ export default function RoadmapSection() {
                   width={['xs', 'sm', 'xs', 'md']}
                   bg={colorMode === 'dark' ? 'blackAlpha.500' : 'var(--light)'}
                   borderRadius={12}
+                  gap={2}
                   p={8}
                   pt={4}>
                   <Text
@@ -128,22 +130,22 @@ export default function RoadmapSection() {
                     mx={-8}
                     mb={8}
                   />
-                  <Checkbox fontWeight="bold" mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" isReadOnly>
                     {t('roadmapPhase21')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" isReadOnly>
                     {t('roadmapPhase22')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" isReadOnly>
                     {t('roadmapPhase23')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" isReadOnly>
                     {t('roadmapPhase24')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" isReadOnly>
                     {t('roadmapPhase25')}
                   </Checkbox>
-                  <Checkbox fontWeight="bold" mt={1} size="lg">
+                  <Checkbox fontWeight="bold" mt={1} size="lg" isReadOnly>
                     {t('roadmapPhase26')}
                   </Checkbox>
                 </Flex>

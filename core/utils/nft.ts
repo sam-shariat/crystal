@@ -54,7 +54,7 @@ export const getNft = async (provider: ProviderRpcClient, nftAddress: Address): 
 
     // calling getJson function of NFT contract
     const getJsonAnswer = (await nftContract.methods.getJson({ answerId: 0 } as never).call()) as { json: string };
-    console.log(getJsonAnswer);
+    //console.log(getJsonAnswer);
     const getInfoAnswer = (await nftContract.methods.getInfo({ answerId: 0 } as never).call()) as any;
     const json = JSON.parse(getJsonAnswer.json ?? '{}') as BaseNftJson;
     json.address = nftAddress.toString();
@@ -147,7 +147,7 @@ export const getNftsByIndexes = async (provider: ProviderRpcClient, indexAddress
   };
 
   // Method, that return Index'es addresses by single query with fetched code hash
-  export const getAddressesFromIndex = async (codeHash: string,provider: ProviderRpcClient): Promise<Address[] | undefined> => {
-    const addresses = await provider?.getAccountsByCodeHash({ codeHash });
+  export const getAddressesFromIndex = async (codeHash: string,provider: ProviderRpcClient, limit?: number): Promise<Address[] | undefined> => {
+    const addresses = await provider?.getAccountsByCodeHash({ codeHash, limit });
     return addresses?.accounts;
   };

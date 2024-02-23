@@ -87,16 +87,10 @@ function ManageSection() {
   const [nftjsons, setNftJsons] = useState<BaseNftJson[] | undefined>(undefined);
   const network = useAtomValue(networkAtom);
   const [_network, _setNetwork] = useState(network);
-  const venomContract = useAtomValue(venomContractAtom);
-  const venomContractAddress = useAtomValue(venomContractAddressAtom);
   const { t } = useTranslate();
   const ipfsGateway = useAtomValue(ipfsGatewayAtom);
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
   const [notMobile] = useMediaQuery('(min-width: 800px)');
-  const [isSaving, setIsSaving] = useState(false);
-  const toast = useToast();
-  const [isConfirming, setIsConfirming] = useState(false);
-  const minFee = 660000000;
   const { colorMode } = useColorMode();
   const web3Name = createWeb3Name();
   const { pathname } = useRouter();
@@ -248,7 +242,6 @@ function ManageSection() {
         try {
           //let r = await web3Name.getDomainRecord({name: nft});
           let _avatar = await web3Name.getDomainRecord({ name: nft, key: 'avatar' });
-          let _name = await web3Name.getDomainRecord({ name: nft, key: 'name' });
           let _nftJson: BaseNftJson = { name: nft, avatar: _avatar ?? '', address: nft };
           //_nftJson.ipfsData = _venomid;
           _nftJson.address = nft; //_nftJson.preview?.source;
@@ -305,89 +298,6 @@ function ManageSection() {
     getNfts();
   }, [isConnected, provider, network, ethAddress]);
 
-  async function setAsPrimary(_nftAddress: string, _name: string) {
-    if (!isConnected) {
-      toast({
-        status: 'info',
-        title: 'connect wallet',
-        description: 'please connect your venom wallet',
-        isClosable: true,
-      });
-      return;
-    }
-    if (!provider) {
-      toast({
-        status: 'info',
-        title: 'Provider Not Ready',
-        description:
-          'Please wait a few seconds and try again, Your Wallet Provider is not ready, yet',
-      });
-      return;
-    }
-    // console.log('before saving', _nftAddress, _name.slice(0, -4));
-    if (provider.isInitialized) {
-      // console.log('saving ', provider);
-      setIsSaving(true);
-      toast({
-        status: 'loading',
-        title: 'setting ' + _name + ' as primary name',
-        description: 'Please wait a few moments while your changes are saved',
-        duration: null,
-        isClosable: true,
-      });
-      const setPrimaryTx = await venomContract?.methods
-        .setPrimaryName({ _nftAddress: new Address(_nftAddress), _name: _name.slice(0, -4) })
-        .send({
-          amount: String(minFee),
-          bounce: true,
-          from: account?.address,
-        })
-        .catch((e: any) => {
-          if (e.code === 3) {
-            // rejected by a user
-            toast.closeAll();
-            setIsSaving(false);
-            return Promise.resolve(null);
-          } else {
-            setIsSaving(false);
-            // console.log(e);
-            toast.closeAll();
-            return Promise.reject(e);
-          }
-        });
-
-      if (setPrimaryTx) {
-        // console.log('setPrimary tx : ', setPrimaryTx);
-        setIsConfirming(true);
-        let receiptTx: Transaction | undefined;
-        const subscriber = provider && new provider.Subscriber();
-        if (subscriber)
-          await subscriber
-            .trace(setPrimaryTx)
-            .tap((tx_in_tree: any) => {
-              // console.log('tx_in_tree : ', tx_in_tree);
-              if (tx_in_tree.account.equals(venomContractAddress)) {
-                toast.closeAll();
-                toast({
-                  status: 'success',
-                  title: 'Update Successful',
-                  description: _name + ' was succesfully set as your primary name',
-                  duration: null,
-                  isClosable: true,
-                });
-              }
-            })
-            .finished();
-
-        setIsSaving(false);
-        setIsConfirming(false);
-        setPrimaryName({ nftAddress: new Address(_nftAddress), name: _name.slice(0, -4) });
-        loadVenomNFTs();
-      }
-      // console.log('save primary finished');
-    }
-  }
-
   return (
     <Box>
       <Container
@@ -426,9 +336,8 @@ function ManageSection() {
                   rounded={'full'}
                   size={'lg'}
                   variant={'outline'}
-                  color={'red'}
                   gap={2}>
-                  old
+                  show old
                 </Button></Tooltip> : <Button
                 as={Link}
                 href='/manage'
@@ -437,9 +346,8 @@ function ManageSection() {
                   rounded={'full'}
                   size={'lg'}
                   variant={'outline'}
-                  color={'green'}
                   gap={2}>
-                  main
+                  show main
                 </Button>}
                 <Button
                   aria-label="reload-nfts"
