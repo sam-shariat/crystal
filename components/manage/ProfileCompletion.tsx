@@ -87,7 +87,7 @@ export default function ProfileCompletion() {
     } else {
       step = step === null ? 2 : step;
     }
-    if (bio.length > 14) {
+    if (bio && bio.length > 14) {
       _progress += 1;
     } else {
       step = step === null ? 3 : step;
@@ -229,7 +229,7 @@ export default function ProfileCompletion() {
                 variant={'ghost'}
                 onClick={() => gotoTour(3)}>
                 <Text>{t(`guideStep${3}`)}</Text>
-                {bio.length > 0 ? (
+                {bio && bio.length > 0 ? (
                   <RiCheckboxCircleFill color="var(--venom2)" size={26} />
                 ) : (
                   <RiQuestionFill size={26} />

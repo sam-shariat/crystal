@@ -42,7 +42,7 @@ import ImageBox from 'components/claiming/ImageBox';
 
 export default function ContributionSection() {
   const { colorMode } = useColorMode();
-  const [role, setRole] = useState('Graphic Designer');
+  const [role, setRole] = useState('Investment NFT');
   const [uploading, setUploading] = useState(false);
   const [sending, setSending] = useState(false);
   const [small] = useMediaQuery('(min-width: 375px)');
@@ -213,27 +213,27 @@ export default function ContributionSection() {
                       setSent(false);
                     }}
                     value={role}>
-                    <option value={'Graphic Designer'}>Graphic Designer</option>
+                    {/* <option value={'Graphic Designer'}>Graphic Designer</option> */}
                     <option value={'Investment NFT'}>Investment NFT</option>
                     <option value={'Partnership'}>Partnership</option>
-                    <option value={'UI/UX Designer'}>UI/UX Designer</option>
+                    {/* <option value={'UI/UX Designer'}>UI/UX Designer</option>
                     <option value={'FrontEnd Developer'}>Front-End Developer</option>
                     <option value={'Solidity Developer'}>Solidity Developer</option>
                     <option value={'Content Creator'}>Content Creator</option>
                     <option value={'Community Manager'}>Community Manager</option>
-                    <option value={'Marketing Manager'}>Marketing Manager</option>
+                    <option value={'Marketing Manager'}>Marketing Manager</option> */}
                   </Select>
                 </Flex>
                 <Collapse startingHeight={80} in={isOpen}>
                   <Stack gap={2} my={4}>
-                    <Text fontWeight={'bold'}>WHAT IS THE ROLE LIKE?</Text>
+                    <Text fontWeight={'bold'}>WHAT IS THIS?</Text>
 
                     <Text>{t(role.replaceAll(' ', '').replace('/', ''))}</Text>
                   </Stack>
                   <Stack gap={2} mb={4}>
-                    <Text fontWeight={'bold'}>IMPORTANT NOTE</Text>
+                    {/* <Text fontWeight={'bold'}>IMPORTANT NOTE</Text> */}
 
-                    <Text>{t('roleClarify')}</Text>
+                    {/* <Text>{t('roleClarify')}</Text> */}
                     <Text>{t('roleClarify2')}</Text>
                   </Stack>
                   {role === 'FrontEnd Developer' && (

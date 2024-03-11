@@ -33,7 +33,7 @@ import { render } from '@react-email/render';
 import ContributionsMail from 'components/mail/Contribution';
 import sendEmail from 'core/utils/sendEmail';
 import ShareButtons from 'components/Profile/ShareButtons';
-import { SITE_URL, YLIDE_URL, ZEALY_URL } from 'core/utils/constants';
+import { DISCORD_URL, SITE_URL, YLIDE_URL, ZEALY_URL } from 'core/utils/constants';
 import WaitlistMail from 'components/mail/Waitlist';
 import ImageBox from 'components/claiming/ImageBox';
 import EarlyAdopters from 'components/early/EarlyAdopters';
@@ -98,6 +98,38 @@ export default function CommunitySection() {
                 size={'lg'}
                 as={Link}
                 style={{ textDecoration: 'none' }}
+                href={DISCORD_URL}
+                target="_blank"
+                gap={6}
+                flexDir={['column', 'column', 'row']}
+                justifyContent={['center', 'center', 'start']}>
+                <Flex align={'center'} gap={4}>
+                  <LinkIcon type="discord" size={notMobile ? '70' : '40'} />
+                  <Text display={['block', 'block', 'none']} fontSize={'xl'}>
+                    Discord Community
+                  </Text>
+                </Flex>
+                <Flex flexDirection={'column'} align={['center', 'center', 'start']} gap={2}>
+                  <Text display={['none', 'none', 'block']} fontSize={'xl'}>
+                    Discord Community
+                  </Text>
+                  <Flex
+                    fontWeight={'normal'}
+                    flexDirection={['column', 'column', 'row']}
+                    gap={2}
+                    align={['center', 'center', 'start']}>
+                    <Text>Say gm To Venom ID Family! </Text>
+                    <Text>Get Support, Ask Questions</Text>
+                  </Flex>
+                  <Text fontWeight={'normal'}> Get early access to perks!</Text>
+                </Flex>
+              </Button>
+              <Button
+                w={'100%'}
+                h={['220px', '220px', '160px']}
+                size={'lg'}
+                as={Link}
+                style={{ textDecoration: 'none' }}
                 href={YLIDE_URL}
                 target="_blank"
                 gap={6}
@@ -118,10 +150,10 @@ export default function CommunitySection() {
                     flexDirection={['column', 'column', 'row']}
                     gap={2}
                     align={['center', 'center', 'start']}>
-                    <Text>Say Hello To Venom ID Fam! </Text>
+                    <Text>Say Hello To Ylide Community! </Text>
                     <Text>Suggest new Features and Ideas</Text>
                   </Flex>
-                  <Text fontWeight={'normal'}> We care about every comment!</Text>
+                  <Text fontWeight={'normal'}> We care about every message!</Text>
                 </Flex>
               </Button>
 

@@ -22,28 +22,43 @@ import {
   DrawerBody,
   useDisclosure,
   Link,
+  Popover,
+  PopoverTrigger,
+  Portal,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverCloseButton,
+  PopoverBody,
+  PopoverFooter,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { localeAtom, colorModeAtom } from 'core/atoms';
+import { localeAtom, colorModeAtom, isConnectedAtom } from 'core/atoms';
 import { ConnectButton } from 'components/venomConnect';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { RiMoonFill, RiSunFill, RiMenu2Fill, RiCloseFill } from 'react-icons/ri';
 import { Locale } from 'translations';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import { Logo } from 'components/logos';
+import { LinkIcon, Logo, VenomFoundation } from 'components/logos';
+import Footer from './Footer';
+import LogoLink from './LogoLink';
+import { DOCS_URL, GRINDING_URL, GUIDES_URL, ROADMAP_URL } from 'core/utils/constants';
 
 export default function Header() {
   const [colorM, setColorM] = useAtom(colorModeAtom);
   const { colorMode, toggleColorMode } = useColorMode();
-  const [locale, setLocale] = useAtom(localeAtom);
+  const lightMode = useColorMode().colorMode === 'light';
   const [notMobile] = useMediaQuery('(min-width: 992px)');
-  const [small] = useMediaQuery('(min-width: 375px)');
+  const [small] = useMediaQuery('(min-width: 420px)');
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { pathname } = useRouter();
-  const { t } = useTranslate();
   const home = pathname === '/' ? true : false;
+  const { t } = useTranslate();
+  const isConnected = useAtomValue(isConnectedAtom);
+  const dashboard = pathname === '/manage' ? true : false;
 
   useEffect(() => {
     if (!pathname.includes('nftAddress')) {
@@ -55,48 +70,33 @@ export default function Header() {
 
   return (
     <>
-      {pathname === '/' && (
-        <Center px={[4, 4, 0]} py={2} bgGradient={'linear(to-r, var(--venom2), var(--bluevenom2))'} color={'white'}>
+      {/* {pathname === '/' && (
+        <Center px={[4, 4, 0]} py={2} bgGradient={'linear(to-r, var(--venom), var(--bluevenom1))'} color={'white'}>
           {t('testnetNotice')}
         </Center>
-      )}
+      )} */}
 
       <Box
         as="nav"
-        borderBottom="1px"
-        position={!pathname.includes('manage/') ? 'sticky' : 'relative'}
+        position={home ? 'absolute' : 'relative'}
         top={0}
         zIndex={1000}
         px={0}
         m={0}
-        backdropFilter="auto"
-        backdropBlur={'8px'}
-        backgroundColor={useColorModeValue('whiteAlpha.700', 'blackAlpha.700')}
-        borderBottomColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}>
-        <Container maxW="container.lg" py={2} px={[2, 4, 4, 4, 0]}>
+        width={'100%'}
+        placeItems={'center'}
+
+        // backgroundColor={colorMode === 'dark' ? 'blackAlpha.200' : 'auto'}
+        // backdropFilter="auto"
+        // backdropBlur={'8px'}
+        // backgroundColor={useColorModeValue('whiteAlpha.700', 'blackAlpha.700')}
+        // borderBottomColor={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+      >
+        <Container maxW="100%" p={[3, 4, 4, 4, 8]}>
           <Flex justifyContent="space-between">
-            <HStack gap={1}>
-              {!notMobile && (
-                <IconButton aria-label="venomid-mobile-menu" variant="ghost" onClick={onOpen}>
-                  <RiMenu2Fill />
-                </IconButton>
-              )}
-              <NextLink href="/" passHref>
-                <Button id="venomidlogo" fontWeight="bold" variant="ghost" p={2} gap={2}>
-                  <Logo />
-                  {small && (
-                    <Text
-                      bgGradient={
-                        colorMode === 'light'
-                          ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                          : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                      }
-                      bgClip="text">
-                      Venom ID
-                    </Text>
-                  )}
-                </Button>
-              </NextLink>
+            <LogoLink />
+             {/*<HStack gap={1}>
+              
               {notMobile && (
                 <NextLink href={home ? '#w&w' : '/#w&w'} passHref>
                   <Button variant="ghost" color="default">
@@ -120,17 +120,148 @@ export default function Header() {
                 <NextLink href="/community" passHref>
                   <Button variant="ghost">{t('community')}</Button>
                 </NextLink>
-              )}
-
-              {notMobile && (
+              )} 
+            </HStack>*/}
+            <HStack dir="ltr">
+              {isConnected && (
                 <NextLink href="/manage" passHref>
-                  <Button variant="ghost" color="default">
-                    {t('dashboard')}
+                  <Button variant="ghost" rounded={'full'} gap={2} isActive={dashboard}>
+                    <LinkIcon type="RiApps2Line" size={24} color={dashboard ? 'var(--venom1)' : 'inherit'}/>
+                    {notMobile && <Text color={dashboard ? 'var(--venom1)' : 'default'}>
+                    {t('My Names')}
+                    </Text>}
                   </Button>
                 </NextLink>
               )}
-            </HStack>
-            <HStack dir="ltr">
+
+              <Popover>
+                <PopoverTrigger>
+                  <IconButton aria-label="venomid-mobile-menu" variant="ghost" mx={0} rounded={'full'} size={['md','lg']}>
+                    <LinkIcon type="RiMenuLine" size={22} />
+                  </IconButton>
+                </PopoverTrigger>
+                <Portal>
+                  <PopoverContent
+                    rounded={'2xl'}
+                    zIndex={10000}
+                    mt={2}
+                    bg={lightMode ? 'var(--white)' : 'var(--dark)'}>
+                    <PopoverHeader justifyContent={'space-between'} display={'flex'} alignItems={'center'} p={4} px={6}>
+                      <Flex gap={3}><VenomFoundation />
+                      <Text fontWeight={'bold'} cursor={'default'}>Venom Testnet</Text>
+                      </Flex>
+                      <IconButton
+                        variant="ghost"
+                        aria-label="theme"
+                        onClick={() => {
+                          setColorM(lightMode ? 'dark' : 'light');
+                          toggleColorMode();
+                        }}
+                        icon={lightMode ? <RiMoonFill /> : <RiSunFill />}
+                      />
+                    </PopoverHeader>
+                    <PopoverBody>
+                    
+                      <SimpleGrid columns={2} py={2} gap={2}>
+                      <NextLink href={'/what'} passHref>
+                          <Button
+                            variant="ghost"
+                            colorScheme={pathname === '/what' ? 'green' : 'gray'}
+                            width="100%"
+                            justifyContent="left">
+                            {t('What & Why')}
+                          </Button>
+                        </NextLink>
+                        <NextLink href={'/usecase'} passHref>
+                          <Button
+                            variant="ghost"
+                            colorScheme={pathname === '/usecase' ? 'green' : 'gray'}
+                            width="100%"
+                            justifyContent="left">
+                            {t('Use Case')}
+                          </Button>
+                        </NextLink>
+                        <NextLink href={'/community'} passHref>
+                          <Button
+                            variant="ghost"
+                            colorScheme={pathname === '/community' ? 'green' : 'gray'}
+                            width="100%"
+                            justifyContent="left">
+                            {t('Community')}
+                          </Button>
+                        </NextLink>
+                        <NextLink href={'/litepaper'} passHref>
+                          <Button
+                            variant="ghost"
+                            colorScheme={pathname === '/litepaper' ? 'green' : 'gray'}
+                            width="100%"
+                            justifyContent="left">
+                            {t('Litepaper')}
+                          </Button>
+                        </NextLink>
+                        
+
+                        <Link href={ROADMAP_URL} target='_blank'>
+                          <Button
+                            variant="ghost"
+                            width="100%"
+                            justifyContent="left">
+                            {t('RoadMap')}
+                          </Button>
+                        </Link>
+                        <Link href={GUIDES_URL} target='_blank'>
+                          <Button
+                            variant="ghost"
+                            width="100%"
+                            justifyContent="left">
+                            {t('Guides')}
+                          </Button>
+                        </Link>
+                        <Link href={DOCS_URL} target='_blank'>
+                          <Button
+                            variant="ghost"
+                            width="100%"
+                            justifyContent="left">
+                            {t('Developers')}
+                          </Button>
+                        </Link>
+                        <Link href={GRINDING_URL} target='_blank'>
+                          <Button
+                            variant="ghost"
+                            width="100%"
+                            justifyContent="left">
+                            {t('Reveiw Us')}
+                          </Button>
+                        </Link>
+
+                        <NextLink href={'/terms'} passHref>
+                          <Button
+                            variant="ghost"
+                            colorScheme={pathname === '/terms' ? 'green' : 'gray'}
+                            width="100%"
+                            justifyContent="left">
+                            {t('Terms of Use')}
+                          </Button>
+                        </NextLink>
+                        <NextLink href={'/privacy'} passHref>
+                          <Button
+                            variant="ghost"
+                            colorScheme={pathname === '/privacy' ? 'green' : 'gray'}
+                            width="100%"
+                            justifyContent="left">
+                            {t('Privacy Policy')}
+                          </Button>
+                        </NextLink>
+                      </SimpleGrid>
+                    </PopoverBody>
+                    <PopoverFooter>
+                      <Footer />
+                    </PopoverFooter>
+                  </PopoverContent>
+                </Portal>
+              </Popover>
+              
+
               <ConnectButton />
               {/* {notMobile && (
                 <Menu>
@@ -140,111 +271,27 @@ export default function Header() {
                     width={100}
                     border={1}
                     borderColor={'grey'}
-                    bg={colorMode === 'light' ? 'var(--lightGrey)' : 'var(--darkGradient)'}>
+                    bg={lightMode ? 'var(--lightGrey)' : 'var(--darkGradient)'}>
                     <MenuItem onClick={() => setLocale(Locale.En)}>EN</MenuItem>
                     <MenuItem onClick={() => setLocale(Locale.Fa)}>فا</MenuItem>
                   </MenuList>
                 </Menu>
               )} */}
-              {notMobile && (
+              {/* {notMobile && (
                 <IconButton
+                  rounded={'full'}
                   aria-label="theme"
                   onClick={() => {
-                    setColorM(colorMode === 'light' ? 'dark' : 'light');
+                    setColorM(lightMode ? 'dark' : 'light');
                     toggleColorMode();
                   }}
-                  icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunFill />}
+                  icon={lightMode ? <RiMoonFill /> : <RiSunFill />}
                 />
-              )}
+              )} */}
             </HStack>
           </Flex>
         </Container>
-        <Drawer
-          placement={'left'}
-          onClose={onClose}
-          isOpen={isOpen}
-          key={'nav-menu-drawer'}
-          autoFocus={false}
-          returnFocusOnClose={false}>
-          <DrawerOverlay />
-          <DrawerContent backgroundColor={colorMode === 'light' ? 'var(--white)' : 'var(--dark)'}>
-            <DrawerHeader
-              display="flex"
-              borderBottomWidth="1px"
-              gap={4}
-              justifyContent="space-between">
-              <NextLink href="/" passHref>
-                <Button color="var(--venom1)" fontWeight="bold" variant="ghost">
-                  <Logo />
-                  <Text pl={1}>VenomID</Text>
-                </Button>
-              </NextLink>
-              <HStack>
-                <IconButton
-                  variant="ghost"
-                  aria-label="theme"
-                  onClick={() => {
-                    setColorM(colorMode === 'light' ? 'dark' : 'light');
-                    toggleColorMode();
-                  }}
-                  icon={colorMode === 'light' ? <RiMoonFill /> : <RiSunFill />}
-                />
-                <IconButton aria-label="closemenu" variant="ghost" onClick={onClose}>
-                  <RiCloseFill />
-                </IconButton>
-              </HStack>
-            </DrawerHeader>
-            <DrawerBody>
-              <Stack py={4}>
-                <Link href={home ? '#w&w' : '/#w&w'}>
-                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
-                    {t('w&w')}
-                  </Button>
-                </Link>
-                <Link href={home ? '#ns' : '/#ns'}>
-                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
-                    {t('naming')}
-                  </Button>
-                </Link>
-                <Link href={'/litepaper'}>
-                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
-                    {t('litepaper')}
-                  </Button>
-                </Link>
-
-                <Link href="/community">
-                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onClose}>
-                    {t('community')}
-                  </Button>
-                </Link>
-                <Link href="/manage">
-                  <Button variant="ghost" width="100%" justifyContent="left" onClick={onToggle}>
-                    {t('dashboard')}
-                  </Button>
-                </Link>
-              </Stack>
-
-              {/* <Stack borderTopWidth="1px" width="100%" py={4}>
-                <Button
-                  onClick={() => setLocale(Locale.En)}
-                  fontWeight="bold"
-                  variant="ghost"
-                  width="100%"
-                  justifyContent="left">
-                  English
-                </Button>
-                <Button
-                  onClick={() => setLocale(Locale.Fa)}
-                  fontWeight="bold"
-                  variant="ghost"
-                  width="100%"
-                  justifyContent="left">
-                  فارسی
-                </Button>
-              </Stack> */}
-            </DrawerBody>
-          </DrawerContent>
-        </Drawer>
+        
       </Box>
     </>
   );

@@ -98,7 +98,7 @@ const steps = [
   { title: 'Intro', description: 'What is this ?' },
   { title: 'Registration', description: 'Register Domain' },
   { title: 'Migration', description: 'Moving Profile' },
-  { title: 'Destroy', description: 'Burn Old NFT' },
+  { title: 'Done', description: 'Migration Complete' },
 ];
 
 export default function MigrateModal({ nft }: Props) {
@@ -989,7 +989,7 @@ export default function MigrateModal({ nft }: Props) {
 
             {activeStep === 3 && (
               <Flex py={4} gap={8} direction={'column'}>
-                <Text>Before we proceed to the final step, we express our gratitude for your journey thus far</Text>
+                <Text>🎉 Congragtulation, You have migrated your domain Succesfully</Text>
                 <Text>You have the privilege to mint an Earlier Adopter NFT and be the pioneer in registering your domain on the mainnet! 🚀</Text>
                   <Flex gap={4}>
                     <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['earlier'].src} size={100} />
@@ -1032,38 +1032,7 @@ export default function MigrateModal({ nft }: Props) {
                       </Button>
                     </Flex>
                   </Flex>
-                <Text>Last step is burning your old domain</Text>
-                <Text>This step will start on 30 Feb 2024</Text>
-                <Flex gap={4} align={'center'} justify={'space-between'}>
-                  <Button
-                    display={'flex'}
-                    gap={3}
-                    alignItems={'center'}
-                    height={'100px'}
-                    rounded={'full'}>
-                    <Box w={'80px'}>
-                      {' '}
-                      <Avatar url={String(avatar)} maxH={'80px'} noanimate nodrag shape="circle" />
-                    </Box>
-                    <Stack gap={2}>
-                      <Text>{nft.name?.toLowerCase()}</Text>
-                      <Text>{truncAddress(nftAddress)}</Text>
-                    </Stack>
-                  </Button>{' '}
-                  <Button
-                    display={'flex'}
-                    flexDirection={'column'}
-                    gap={2}
-                    size={'lg'}
-                    height={'68px'}
-                    rounded={'full'}
-                    colorScheme="orange"
-                    isDisabled={true}
-                    isLoading={isBurning}
-                    loadingText={'Burning'}>
-                    <Text>{burned ? 'Burned!' : 'Burn'}</Text>
-                  </Button>
-                </Flex>
+                
                 <Flex gap={4} justify={'space-between'}>
                   
                   <Button size={'lg'} variant={'outline'} onClick={() => setActiveStep(2)}>

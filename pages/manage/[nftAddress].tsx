@@ -79,6 +79,7 @@ import {
   BG_COLORS,
   FONTS,
   MIN_FEE,
+  BG_IMAGES,
 } from 'core/utils/constants';
 import { ConnectButton } from 'components/venomConnect';
 import { getNft } from 'core/utils/nft';
@@ -148,8 +149,15 @@ const ManagePage: NextPage = () => {
   const [nftContract, setNftContract] = useAtom(nftContractAtom);
   const { colorMode } = useColorMode();
   const [mobileView, setMobileView] = useAtom(mobileViewAtom);
+  const [lastChange,setLastChange] = useState(0);
   const toast = useToast();
   //const [horizontalWallet, setHorizontalWallet] = useAtom(horizontalWalletsAtom);
+
+  useEffect(()=> {
+    //setLastChange(Date.now());
+    console.log(Date.now());
+    console.log(socials);
+  },[title,subtitle,links,socials,wallets,lightMode,avatarShape,bgColor,buttonBgColor,variant,font,avatar,socialButtons,walletButtons,socialIcons,lineIcons])
 
   const getJson = () => {
     let socialsObj: any = {};
@@ -393,12 +401,12 @@ const ManagePage: NextPage = () => {
               avatar: '',
               avatarNft: '',
               lineIcons: false,
-              lightMode: BG_COLORS[0].lightMode,
+              lightMode: BG_IMAGES[5].lightMode,
               socialIcons: true,
               socialButtons: false,
               walletButtons: true,
               showAllNfts: false,
-              bgColor: BG_COLORS[0].color,
+              bgColor: BG_IMAGES[5].bg,
               links: [],
               socials: {},
             });
@@ -415,12 +423,12 @@ const ManagePage: NextPage = () => {
             setSocialIcons(true);
             setSocialButtons(true);
             setWalletButtons(true);
-            setBgColor(BG_COLORS[0].color);
+            setBgColor(BG_IMAGES[5].bg);
             setLineIcons(false);
-            setLightMode(BG_COLORS[0].lightMode);
-            setButtonBgColor(BUTTON_BG_COLORS[2]);
+            setLightMode(BG_IMAGES[5].lightMode);
+            setButtonBgColor(BUTTON_BG_COLORS[1]);
             setRound(BUTTON_ROUNDS[1]);
-            setVariant(BUTTON_VARIANTS[0]);
+            setVariant(BUTTON_VARIANTS[3]);
             setFont(FONTS[0]);
             setIsStyled(false);
             setIsLoading(false);
@@ -442,13 +450,13 @@ const ManagePage: NextPage = () => {
           setAvatarShape(res.data.avatarShape ?? 'round');
           setSocialIcons(res.data.socialIcons ?? true);
           setSocialButtons(res.data.socialButtons ?? true);
-          setWalletButtons(res.data.waletButtons ?? true);
-          setBgColor(res.data?.styles?.bgColor ?? BG_COLORS[0].color);
+          setWalletButtons(res.data.WalletButtons ?? true);
+          setBgColor(res.data?.styles?.bgColor ?? BG_IMAGES[5].bg);
           setLineIcons(res.data?.styles?.lineIcons ?? false);
-          setLightMode(res.data?.styles?.lightMode ?? BG_COLORS[0].lightMode);
-          setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[2]);
+          setLightMode(res.data?.styles?.lightMode ?? BG_IMAGES[5].lightMode);
+          setButtonBgColor(res.data?.styles?.buttonBgColor ?? BUTTON_BG_COLORS[1]);
           setRound(res.data?.styles?.round ?? BUTTON_ROUNDS[1]);
-          setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[0]);
+          setVariant(res.data?.styles?.variant ?? BUTTON_VARIANTS[3]);
           setFont(res.data?.styles?.font ?? FONTS[0]);
           setIsStyled(res.data?.styles?.isStyled ?? false);
           setIsLoading(false);
@@ -502,14 +510,14 @@ const ManagePage: NextPage = () => {
     <>
       <Head>
         <title>
-          {`${json && !isLoading ? json.name : SITE_TITLE} | ${
-            json && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
+          {`${name && !isLoading ? name : SITE_TITLE} | ${
+            json && !isLoading && bio !== '' ? bio : SITE_DESCRIPTION
           }`}
         </title>
         <meta
           name="description"
-          content={`${json && !isLoading ? json.name : SITE_TITLE} | ${
-            json && !isLoading && json.bio !== '' ? json.bio : SITE_DESCRIPTION
+          content={`${json && !isLoading ? name : SITE_TITLE} | ${
+            json && !isLoading && bio !== '' ? bio : SITE_DESCRIPTION
           }`}
         />
         <link
@@ -578,7 +586,7 @@ const ManagePage: NextPage = () => {
                         <Flex gap={2} justify={'stretch'}>
                           <AddModal type={'square'} />
                           {!isLoading && json && !notMobile && (
-                            <PreviewModal json={getJson()} onSave={uploadJson} />
+                            <PreviewModal json={getJson()} onSave={uploadJson} key={lastChange}/>
                           )}
 
                           <Flex display={['none', 'none', 'none', 'flex', 'none']}>
@@ -614,7 +622,7 @@ const ManagePage: NextPage = () => {
                     </Flex>
                     {isLoaded && json && notMobile && (
                       <Flex my={4} position={'fixed'} top={1} right={4}>
-                        <Preview json={json} onSave={uploadJson} />
+                        <Preview json={getJson()} onSave={uploadJson} key={lastChange}/>
                       </Flex>
                     )}
                   </Flex>

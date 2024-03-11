@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  BaseNftJson,
   getAddressesFromIndex,
   getNft,
   getNftByIndex,
@@ -45,6 +44,7 @@ import {
   manageListViewAtom,
   ipfsGatewayAtom,
   networkAtom,
+  connectedAccountAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue } from 'jotai';
 import { Address, Transaction } from 'everscale-inpage-provider';
@@ -74,10 +74,12 @@ import { useAddress } from '@thirdweb-dev/react';
 import { createWeb3Name } from '@web3-name-sdk/core';
 import MigrateModal from 'components/manage/MigrateModal';
 import { useRouter } from 'next/router';
+import { BaseNftJson, getAllNames } from 'core/utils/reverse';
 
 function ManageSection() {
   const { provider } = useVenomProvider();
   const { isConnected, account } = useConnect();
+  const connectedAccount = useAtomValue(connectedAccountAtom);
   const ethAddress = useAddress();
   const [_ethAddress, _setEthAddress] = useState(ethAddress);
   const [listIsEmpty, setListIsEmpty] = useState(false);
@@ -214,8 +216,9 @@ function ManageSection() {
         //await loadByContract(CONTRACT_ADDRESS_V2);
         await loadByDb();
       } else {
-        await loadByContract(ROOT_CONTRACT_ADDRESS);
-
+        const __nftjsons = await getAllNames(provider,connectedAccount);
+        setNftJsons(__nftjsons);
+        console.log(__nftjsons)
       }
 
       setLoaded(true);
@@ -242,7 +245,7 @@ function ManageSection() {
         try {
           //let r = await web3Name.getDomainRecord({name: nft});
           let _avatar = await web3Name.getDomainRecord({ name: nft, key: 'avatar' });
-          let _nftJson: BaseNftJson = { name: nft, avatar: _avatar ?? '', address: nft };
+          let _nftJson: BaseNftJson = { name: nft, avatar: _avatar ?? '', address: nft, init_time: 0,expire_time:0 };
           //_nftJson.ipfsData = _venomid;
           _nftJson.address = nft; //_nftJson.preview?.source;
           _nftJson.network = nft.slice(nft.indexOf('.') + 1); //_nftJson.preview?.source;
@@ -318,7 +321,7 @@ function ManageSection() {
                   my={notMobile ? 10 : 4}>
                   {network === 'venom' ? pathname.includes('old') ? t('yourOldVids') : t('yourVids') : t('yourSids')}
                 </Text>
-                {!pathname.includes('old') ? <Tooltip
+                {/* {!pathname.includes('old') ? <Tooltip
                         borderRadius={4}
                         label={
                           <Text p={2}>
@@ -348,7 +351,7 @@ function ManageSection() {
                   variant={'outline'}
                   gap={2}>
                   show main
-                </Button>}
+                </Button>} */}
                 <Button
                   aria-label="reload-nfts"
                   key={`reload-${network}-nfts`}
@@ -367,25 +370,20 @@ function ManageSection() {
             </Stack>
           )}
 
-          <Stack gap={2} width={'100%'}>
-            {nftjsons?.map((nft) => (
+          <Stack gap={2} width={'100%'} background={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
+                rounded={'2xl'}>
+            {nftjsons?.map((nft,i) => (
               <Flex
-                key={nft.name}
+                key={nft.name+'-manage-item'}
                 flexDirection={'row'}
                 gap={2}
                 minWidth={['100%', '420px', '580px', '800px']}
-                height={['64px','64px','72px']}
+                height={['72px','68px','80px']}
                 alignItems={'center'}
-                background={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
-                borderColor={
-                  nft?.name !== undefined && primaryName.name === nft?.name.slice(0, -4)
-                    ? 'grey'
-                    : 'blackAlpha.200'
-                }
-                borderWidth={1}
+                borderBottom={i === nftjsons.length -1 ? 'none' : '1px solid #77777755'}
                 p={2}
-                rounded={'full'}>
-                <Flex gap={3} flexGrow={1} w={'100%'}>
+                rounded={'none'}>
+                <Flex gap={3} w={'100%'} align={'center'}>
                   <Box width={['48px','48px','56px']} key={nft.name + '-box-name'}>
                     <Avatar
                       my={'0px'}
@@ -397,9 +395,14 @@ function ManageSection() {
                       shape="circle"
                     />
                   </Box>
-                  <HStack><Text flexGrow={1} fontWeight={'bold'} fontSize={['xl', 'xl', '2xl']}>
-                  {String(nft.name).toLowerCase()}
-                </Text></HStack>
+                  <Stack gap={0}>
+                    <Text flexGrow={1} fontWeight={'bold'} fontSize={['xl', 'xl', '2xl']}>
+                    {String(nft.name).toLowerCase()}
+                  </Text>
+                  <Text flexGrow={1} fontWeight={'normal'} fontSize={['md','lg']} opacity={.5}>
+                    registered on {String(nft.init_date).toLowerCase()}
+                  </Text>
+                  </Stack>
                 </Flex>
                   
 

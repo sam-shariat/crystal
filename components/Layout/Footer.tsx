@@ -2,6 +2,7 @@ import { Box, Container, Link, Text, useColorModeValue } from '@chakra-ui/react'
 import { Socials } from 'components/Profile';
 import { getIconColor } from 'core/utils';
 import {
+  DISCORD_URL,
   GITHUB_URL,
   MEDIUM_URL,
   SOCIAL_TWITTER,
@@ -13,7 +14,7 @@ import {
 } from 'core/utils/constants';
 export default function Footer() {
   return (
-    <Box as="footer" w="full" py={5} backgroundColor={'blackAlpha.200'}>
+    <Box as="footer" w="full" py={5}>
       <Container flexDirection={'column'} maxW="container.lg" alignItems={'center'} display="flex" justifyContent="space-between" gap={4}>
         <Socials
           key={`socials-footer-vid-${useColorModeValue(true, false)}`}
@@ -23,17 +24,17 @@ export default function Footer() {
           json={{
             lightMode: useColorModeValue(true, false),
             socials: {
+              discord: DISCORD_URL,
               twitter: TWITTER_URL + SOCIAL_TWITTER,
-              zealy: ZEALY_URL,
+              telegram: TELEGRAM_URL,
+              //zealy: ZEALY_URL,
               ylide: YLIDE_URL,
               medium: MEDIUM_URL,
               youtube: YOUTUBE_URL,
-              github: GITHUB_URL,
-              telegram: TELEGRAM_URL
+              //github: GITHUB_URL,
             },
           }}
         />
-        <Text>2023 © Venom ID</Text>
 
       </Container>
     </Box>

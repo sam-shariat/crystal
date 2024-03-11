@@ -22,7 +22,7 @@ import {
   TagLabel,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import { MINT_OPEN, ZERO_ADDRESS } from 'core/utils/constants';
+import { DOCS_URL, MINT_OPEN, ZERO_ADDRESS } from 'core/utils/constants';
 import {
   RiCodeSSlashLine,
   RiExternalLinkLine,
@@ -206,7 +206,7 @@ export default function NSSection() {
                 {t('nsDescription')}
               </Text>
               <Text fontSize={'lg'}>{t('apiDescription')}</Text>
-              <Link href={'/docs'} width={'100%'}>
+              <Link href={DOCS_URL} width={'100%'} target='_blank'>
                 <Button
                   height={'76px'}
                   flexDirection={'column'}

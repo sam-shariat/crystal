@@ -48,7 +48,7 @@ export default function LitepaperSection() {
   useEffect(() => {}, []);
 
   return (
-    <Box id="about" bgColor={useColorModeValue('whiteAlpha.100', 'var(--dark)')}>
+    <Box id="litepaper">
       <Container as="main" maxW="container.lg" display="grid" minH="85vh" py={10}>
         <>
           <Flex flexDirection="column" gap={20} maxW={'container.lg'}>

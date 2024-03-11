@@ -24,13 +24,16 @@ import {
   avatarAtom,
   avatarShapeAtom,
   bgColorAtom,
+  bioAtom,
   colorModeAtom,
   fontAtom,
   horizontalSocialAtom,
   isStyledAtom,
   lightModeAtom,
   mobileViewAtom,
+  nameAtom,
   socialButtonsAtom,
+  socialsArrayAtom,
   subtitleAtom,
   titleAtom,
   useLineIconsAtom,
@@ -66,15 +69,18 @@ const Preview = ({ json, onSave }: Props) => {
   const bgColor = useAtomValue(bgColorAtom);
   const setIsStyled = useSetAtom(isStyledAtom);
   const avatarShape = useAtomValue(avatarShapeAtom);
+  const socials = useAtomValue(socialsArrayAtom);
   const font = useAtomValue(fontAtom);
   const avatar = useAtomValue(avatarAtom);
   const title = useAtomValue(titleAtom);
+  const name = useAtomValue(nameAtom);
+  const bio = useAtomValue(bioAtom);
   const subtitle = useAtomValue(subtitleAtom);
   const lightMode = useAtomValue(lightModeAtom);
   const [colorM, setColorM] = useAtom(colorModeAtom);
   const mobileView = useAtomValue(mobileViewAtom);
   const { pathname } = useRouter();
-  console.log(pathname)
+  console.log(json)
 
   // useEffect(() => {
   //   // console.log(json)
@@ -114,8 +120,8 @@ const Preview = ({ json, onSave }: Props) => {
           bgColor={useColorModeValue('light.600', 'dark.600')}>
           
 
-          <Button as={Link} href={`https://venomid.link/${pathname.includes('old') ? `o/` : ''}${json.name}`} target='_blank' variant={'outline'} gap={2} display={'flex'}>
-          <RiExternalLinkLine /> venomid.link/{pathname.includes('old') ? `o/` : ''}{json.name}
+          <Button as={Link} href={`https://venomid.link/${pathname.includes('old') ? `o/` : ''}${name}`} target='_blank' variant={'outline'} gap={2} display={'flex'}>
+          <RiExternalLinkLine /> venomid.link/{pathname.includes('old') ? `o/` : ''}{name}
           </Button>
         </Center>
 
@@ -158,7 +164,7 @@ const Preview = ({ json, onSave }: Props) => {
                             key={'avatar-' + avatar}
                             maxH={notMobile && !mobileView ? '200' : '180'}
                             url={avatar}
-                            alt={json.name + 'avatar image'}
+                            alt={name + 'avatar image'}
                             shape={avatarShape}
                             shadow="none"
                           />
@@ -172,7 +178,7 @@ const Preview = ({ json, onSave }: Props) => {
                             {subtitle}
                           </Heading>
                           <Heading fontWeight="bold" fontSize="xl" fontFamily={font}>
-                            {json.name}
+                            {name}
                           </Heading>
                           {/* <Button
                             my={1}
@@ -184,7 +190,7 @@ const Preview = ({ json, onSave }: Props) => {
                         </Stack>
                       </Flex>
 
-                      {horizontalSocial && <Socials json={json} onlyIcons />}
+                      {horizontalSocial && <Socials json={json} onlyIcons  key={`social-icons-${socials.length}`}/>}
 
                       {walletButtons && (
                         <Wallets
@@ -198,13 +204,13 @@ const Preview = ({ json, onSave }: Props) => {
                       )}
 
                       <Stack width={'100%'} gap={2} pb={4}>
-                        {json.bio && json.bio.length > 0 && (
+                        {bio && bio.length > 0 && (
                           <Text
                             fontWeight="normal"
                             fontSize={notMobile ? 'xl' : 'lg'}
                             my={4}
                             textAlign={'center'}>
-                            {json.bio}
+                            {bio}
                           </Text>
                         )}
 
@@ -217,7 +223,7 @@ const Preview = ({ json, onSave }: Props) => {
                           }
                         />
 
-                        {socialButtons && <Socials json={json} />}
+                        {socialButtons && <Socials json={json} key={`social-buttons-${socials.length}`}/>}
                       </Stack>
                     </Box>
                   </Flex>

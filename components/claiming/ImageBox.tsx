@@ -35,7 +35,7 @@ const ImageBox = ({ srcUrl, size, animation, draggable, rounded, shadow }: Props
           ? 'none'
           : '0 0 3px #00000080'
       }
-      zIndex={99}
+      zIndex={draggable ? 99 : 'inherit'}
       rounded={rounded ?? 'none'}
       alt="venomid"
     />

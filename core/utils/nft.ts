@@ -3,34 +3,7 @@ import { Address, ProviderRpcClient } from 'everscale-inpage-provider';
 import nftAbi from 'abi/Nft.abi.json';
 import indexAbi from 'abi/Index.abi.json';
 import { CONTRACT_ADDRESS } from './constants';
-
-// TIP-4.2. standard (https://docs.venom.foundation/standards/TIP-4/2)
-export interface BaseNftJson {
-  name?: string;
-  tokenId?: string;
-  address?: string;
-  network?: string;
-  avatar?: string;
-  hash?: string;
-  target?: string;
-  manageUrl?: string;
-  description?: string;
-  preview?: {
-    source: string;
-    mimetype: string;
-  };
-  files?: Array<{
-    source: string;
-    mimetype: string;
-  }>;
-  attributes?: Array<{
-    trait_type: string;
-    value: string;
-  }>;
-  external_url?: string;
-  metadata?: any;
-  info?: any;
-}
+import { BaseNftJson } from './reverse';
 
 type IndexInfo = {
   collection: Address;

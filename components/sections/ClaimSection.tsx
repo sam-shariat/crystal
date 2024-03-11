@@ -43,6 +43,8 @@ import {
   rootContractAtom,
   pathAtom,
   signMessageAtom,
+  venomProviderAtom,
+  connectedAccountAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { addAsset, useConnect, useVenomProvider } from 'venom-react-hooks';
@@ -89,12 +91,12 @@ interface Fee {
   value0: number;
 }
 
-const ClaimSection = () => {
+const ClaimSection = () => {  
   let timer: any;
   const { t } = useTranslate();
-  const { isConnected, account } = useConnect();
   const connected = useAtomValue(isConnectedAtom);
-  const { provider } = useVenomProvider();
+  const connectedAccount = useAtomValue(connectedAccountAtom);
+  const provider = useAtomValue(venomProviderAtom);
   const signHash = useAtomValue(signHashAtom);
   const signDate = useAtomValue(signDateAtom);
   const setSignMessage = useSetAtom(signMessageAtom);
@@ -115,7 +117,6 @@ const ClaimSection = () => {
   const [nameExists, setNameExists] = useState(false);
   const [nameStatus, setNameStatus] = useState<number | null>();
   const [claimedName, setClaimedName] = useState('');
-  const { add } = addAsset(String(account?.address), CONTRACT_ADDRESS);
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   const [mintOpen, setMintOpen] = useAtom(mintOpenAtom);
   //const [venomContract, setVenomContract] = useState<any>(undefined);
@@ -146,7 +147,7 @@ const ClaimSection = () => {
       return;
     }
 
-    if (provider && provider?.isInitialized && rootContract && rootContract.methods !== undefined) {
+    if (provider && provider?.isInitialized && connected && rootContract && rootContract.methods !== undefined) {
       try {
         setFeeIsLoading(true);
         setTyping(false);
@@ -231,23 +232,23 @@ const ClaimSection = () => {
       //console.log('totalSupply')
       console.log(totalSupply)
     }
-    if (provider?.isInitialized && rootContract && rootContract.methods._active()) {
+    if (provider?.isInitialized && rootContract && rootContract.methods._active() && connected) {
       checkActive();
     }
   }, [provider, rootContract]);
 
   async function claimVid(e: string) {
-    if (!isConnected && path.length > 0) {
-      toast.closeAll();
-      toast({
-        status: 'info',
-        colorScheme: colorMode === 'dark' ? 'light' : 'dark',
-        title: t('connectWallet'),
-        description: t('venomWalletConnect'),
-        isClosable: true,
-      });
-      return;
-    }
+    // if (!connected && path.length > 0) {
+    //   toast.closeAll();
+    //   toast({
+    //     status: 'info',
+    //     colorScheme: colorMode === 'dark' ? 'light' : 'dark',
+    //     title: t('connectWallet'),
+    //     description: t('venomWalletConnect'),
+    //     isClosable: true,
+    //   });
+    //   return;
+    // }
 
     if (!isValidUsername(path)) {
       toast.closeAll();
@@ -282,7 +283,7 @@ const ClaimSection = () => {
       rootContract &&
       rootContract.methods !== undefined &&
       !nameExists &&
-      account?.address
+      connectedAccount.length > 60
     ) {
       setIsMinting(true);
       toast.closeAll();
@@ -298,11 +299,11 @@ const ClaimSection = () => {
       const mintTx = await rootContract.methods
         .betaReg({
           path: `${path}.vid`,
-          domainOwner: account?.address,
+          domainOwner: new Address(connectedAccount),
         })
         .send({
-          from: account?.address!,
-          amount: String(55e7),
+          from: new Address(connectedAccount),
+          amount: String((1e9)),
           bounce: true,
         })
         .catch((e: any) => {
@@ -369,6 +370,7 @@ const ClaimSection = () => {
             msg: t('mintSuccessMsg'),
             link: nftAddress,
           });
+          setPath('');
           if (primaryName?.name === '') {
             setPrimaryName({ name: `${path}.vid`, nftAddress: nftAddress });
           }
@@ -376,7 +378,6 @@ const ClaimSection = () => {
         setIsMinting(false);
         setIsConfirming(false);
         await sleep(1000);
-        setPath('');
       } else {
         toast.closeAll();
         toast({
@@ -394,14 +395,14 @@ const ClaimSection = () => {
   const [notMobile] = useMediaQuery('(min-width: 768px)');
 
   return (
-    <Box backgroundColor={colorMode === 'dark' ? 'blackAlpha.200' : 'auto'} id="claim">
+    <Box  id="claim">
       <Container
         as="main"
         maxW={['container.md', 'container.md', 'container.md', 'container.lg']}
         display="grid"
         placeContent="center"
         placeItems="center"
-        minH="90vh"
+        minH="100vh"
         py={6}>
         <Box gap={4} width={'100%'}>
           <SimpleGrid
@@ -415,7 +416,7 @@ const ClaimSection = () => {
               <Heading
                 textAlign={['center', 'center', locale === 'fa' ? 'right' : 'left']}
                 fontWeight="bold"
-                fontSize={['6xl', '6xl', '6xl', '6xl', '7xl']}>
+                fontSize={['5xl', '5xl', '6xl', '6xl', '7xl']}>
                 {t('title')}
               </Heading>
               <Heading
@@ -432,7 +433,7 @@ const ClaimSection = () => {
             <Box display="flex" flexDirection="column" alignItems={['center', 'center', 'end']}>
               <ImageBox
                 srcUrl="/logos/vidicon.svg"
-                size={['240px', '240px', '240px', '280px', '320px']}
+                size={['180px', '200px', '220px', '240px', '280px']}
               />
             </Box>
           </SimpleGrid>
@@ -558,7 +559,6 @@ const ClaimSection = () => {
                         color={nameExists ? 'var(--red)' : 'var(--venom1)'}
                         size={64}
                       />
-
                       <Stack gap={0}>
                         <Text
                           fontSize={'2xl'}

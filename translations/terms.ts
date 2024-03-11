@@ -92,16 +92,21 @@ const terms: Terms = {
     fa: ' توان مندی کاربران برای داشتن کنترل و استقلال در حضور آنلاین خود.',
   },
   wat: {
-    en: 'what exactly are <vids> ?',
+    en: 'what is venom id',
     fa: 'ونوم آی دی چیست ؟',
   },
   watis: {
-    en: 'vid(s) are domain names within the venom network empowering you to organize and exhibit your assets and links in a customizable web address.',
+    en:"Venom ID is a domain naming system for Venom blockchain which provide users the ability to assign human-readable names to venom addresses and other resources",
+    //en: 'vid(s) are domain names within the venom network empowering you to organize and exhibit your assets and links in a personalized landing page.',
     fa: 'یک پلتفرم غیرمتمرکز برای مدیریت و نمایش تمام لینک ها ، شبکه های اجتماعی و کیف پول های شما',
   },
+  wat2: {
+    en: 'Venom ID Profile',
+    fa: 'پروفایل ونوم آی دی',
+  },
   watis2: {
-    en: 'social media links',
-    fa: 'لینک ها ، شبکه های اجتماعی',
+    en: 'Create a personalized landing page with a unique web address, add your favorite links, nfts, assets & other resources and share it with the world!',
+    fa: '',
   },
   watis21: {
     en: 'wallet addresses',
@@ -132,8 +137,8 @@ const terms: Terms = {
     fa: 'مدیریت',
   },
   yourVids: {
-    en: 'Manage Venom IDs',
-    fa: 'ونوم آی دی های شما',
+    en: 'My Names',
+    fa: 'نام های شما',
   },
   yourOldVids: {
     en: 'Migrate Old Venom IDs',
@@ -156,8 +161,8 @@ const terms: Terms = {
     fa: 'شما مسئول طراحی های جذاب و متناسب با برند برای پلتفرم غیرمتمرکز ما خواهید بود. نقش شما شامل طراحی انواع مواد تبلیغاتی مانند عناصر برندینگ، گرافیک های شبکه های اجتماعی، تصاویر وبسایت و مواد تبلیغاتی است. شما به صورت نزدیک با تیم بازاریابی همکاری خواهید کرد تا مفاهیم بازاریابی را به تصاویری جذاب تبدیل کنید. چشم بینا و خلاقیت شما به بهبود هویت بصری و تجربه کاربری کلی Venom ID کمک خواهد کرد.'
   },
   InvestmentNFT: {
-    en: 'You will have the opportunity to support our vision and contribute to the development and growth of the platform. You will be given the opportunity to purchase and HOLD an Investment NFT, which entitles you to a significant portion of the VID token distribution. A total of 900 NFTs will be available, and the minting fee for each NFT is set at 0.1 ETH (approximately $200 USD).',
-    fa: 'شما فرصتی خواهید داشت تا به ارتقای چشم انداز ما کمک کنید و در توسعه و رشد پلتفرم سهام دار شوید. شما فرصت خواهید داشت تا یک NFT سرمایه گذاری را خریداری و نگه دارید که شما را به یک بخش قابل توجه از توزیع توکن VID واجد شرایط می کند. کلیه 900 NFT در دسترس خواهند بود و هزینه برای هر NFT را می تواند 0.1 ETH (حدود 200 دلار آمریکا) تنظیم شود.'
+    en: 'You will have the opportunity to support our vision and contribute to the development and growth of the platform. You will be given the opportunity to purchase and HOLD an Investment NFT, which entitles you to a significant portion of the VID token distribution. A total of 900 NFTs will be available, and the minting fee for each NFT is set at 0.1 ETH.',
+    fa: 'شما فرصتی خواهید داشت تا به ارتقای چشم انداز ما کمک کنید و در توسعه و رشد پلتفرم سهام دار شوید. شما فرصت خواهید داشت تا یک NFT سرمایه گذاری را خریداری و نگه دارید که شما را به یک بخش قابل توجه از توزیع توکن VID واجد شرایط می کند. کلیه 900 NFT در دسترس خواهند بود و هزینه برای هر NFT را می تواند 0.1 ETH تنظیم شود.'
   },
   UIUXDesigner: {
     en: 'You will be responsible for creating visually appealing and user-friendly designs for our decentralized platform. Your role will involve designing intuitive user interfaces, crafting engaging user experiences, and collaborating with the development team to ensure seamless integration of design elements.',
@@ -244,7 +249,7 @@ const terms: Terms = {
     fa: 'بخش مدیریت',
   },
   apiLinkButton: {
-    en: 'Venom ID API Docs (old)',
+    en: 'Venom ID Developer Docs',
     fa: 'مستندات API',
   },
   apiDescription: {

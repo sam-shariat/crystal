@@ -49,7 +49,7 @@ import {
   ZEALY_URL,
 } from 'core/utils/constants';
 import getNftsByAddress from 'core/utils/getNftsByAddress';
-import { BaseNftJson, getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
+import { getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
 import { getTwitterAuthUrl, refreshAccessToken } from 'core/utils/twitterUtils';
 import { getZealyByTwitterId } from 'core/utils/zealyUtils';
 import { useAtom, useAtomValue } from 'jotai';
@@ -57,6 +57,8 @@ import { useEffect, useState } from 'react';
 import { useConnect, useSendExternalMessage, useVenomProvider } from 'venom-react-hooks';
 import { Address, Transaction } from 'everscale-inpage-provider';
 import { sleep } from 'core/utils';
+import { BaseNftJson } from 'core/utils/reverse';
+import InfoModal from './InfoModal';
 
 export default function EarlyAdopters() {
   const { colorMode } = useColorMode();
@@ -602,8 +604,8 @@ export default function EarlyAdopters() {
     }
 
     if (
-      (ownVids === 3 && zealyVerified) ||
-      (zealyVerified && zealyUser.xp > 500 && zealyUser.rank < 101)
+      (ownVids > 2 && zealyVerified) ||
+      (zealyVerified && zealyUser.xp > 500 && zealyUser.rank < 201)
     ) {
       if (mintedStrings?.includes('Venom ID Maverick')) {
         console.log('Maverick already minted');
@@ -620,10 +622,10 @@ export default function EarlyAdopters() {
 
     if (
       twitterVerified &&
-      ownVids > 0 &&
+      ownVids > 1 &&
       zealyVerified &&
       zealyUser.xp > 1000 &&
-      zealyUser.rank < 11
+      zealyUser.rank < 50
     ) {
       if (mintedStrings?.includes('Venom ID Champion')) {
         console.log('Champion already minted');
@@ -1150,8 +1152,8 @@ export default function EarlyAdopters() {
                     </Flex>
                   )}
 
-                  {(ownVid && ownVid1 && ownVid2 && zealyVerified) ||
-                    (zealyVerified && zealyUser.xp > 500 && zealyUser.rank < 101 && (
+                  {(ownVids > 2 && zealyVerified) ||
+                    (zealyVerified && zealyUser.xp >= 500 && zealyUser.rank < 201 && (
                       <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
                       {mintedStrings?.includes('Venom ID Maverick') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
                         <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['maverick'].src} size={250} />
@@ -1193,7 +1195,7 @@ export default function EarlyAdopters() {
                         </Button>
                       </Flex>
                     ))}
-                  {twitterVerified && ownVids > 0 && zealyUser.xp > 1000 && zealyUser.rank < 11 && (
+                  {twitterVerified && ownVids > 1 && zealyUser.xp > 1500 && zealyUser.rank < 50 && (
                     <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
                       {mintedStrings?.includes('Venom ID Champion') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
                       <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['champion'].src} size={250} />
@@ -1237,28 +1239,7 @@ export default function EarlyAdopters() {
                 </SimpleGrid>
               </Flex>
             )}
-            {!isLoading && unMinteds && unMinteds.length > 1 && (
-              <Button
-                w={'100%'}
-                height={'100px'}
-                isDisabled={true}
-                isLoading={isMinting || isConfirming}
-                loadingText={
-                  isMinting ? 'Minting ...' : isConfirming ? 'Confirming ...' : 'Loading ...'
-                }
-                onClick={mintAllBadges}
-                rounded={'full'}
-                bgGradient={
-                  colorMode === 'light'
-                    ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                    : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                }>
-                <Stack>
-                  <Text>Mint All OATs</Text>
-                  <Badge>Soon</Badge>
-                </Stack>
-              </Button>
-            )}
+            <InfoModal />
           </Stack>
         </AccordionPanel>
       </AccordionItem>

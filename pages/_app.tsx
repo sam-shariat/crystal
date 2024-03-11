@@ -14,7 +14,7 @@ import {
   zerionWallet,
   rainbowWallet,
 } from '@thirdweb-dev/react';
-import { Analytics } from '@vercel/analytics/react';
+import { GoogleAnalytics } from '@next/third-parties/google'
 //import { SpeedInsights } from "@vercel/speed-insights/next"
 import '../styles/globals.css';
 import 'intro.js/introjs.css';
@@ -49,7 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           clientId={process.env.NEXT_PUBLIC_THIRDWEB_ID}>
           <Layout>
             <Component {...pageProps} />
-            <Analytics />
+            <GoogleAnalytics gaId={String(process.env.NEXT_PUBLIC_GA_ID)} />
           </Layout>
         </ThirdwebProvider>
       </VenomConfig>

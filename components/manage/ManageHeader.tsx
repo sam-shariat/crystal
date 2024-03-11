@@ -39,7 +39,6 @@ export default function ManageHeader() {
         {name}
       </Heading>
       </Button>
-      
     </Flex>
   );
 }

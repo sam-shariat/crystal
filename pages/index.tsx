@@ -1,18 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import ClaimSection from 'components/sections/ClaimSection';
-import RoadmapSection from 'components/sections/RoadmapSection';
-import AboutSection from 'components/sections/AboutSection';
 import {
   SITE_DESCRIPTION,
   SITE_URL,
   SITE_TITLE,
 } from 'core/utils/constants';
 import { Seo } from 'components/Layout/Seo';
-import IntroSection from 'components/sections/IntroSection';
-import FeaturesSection from 'components/sections/FeaturesSection';
-import NSSection from 'components/sections/NSSection';
-import EarlyAdopterSection from 'components/sections/EarlyAdopterSection';
 
 const Home: NextPage = () => {
   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
@@ -31,14 +25,14 @@ const Home: NextPage = () => {
       </Head>
       <ClaimSection />
       {/* <EarlyAdopterSection /> */}
-      <IntroSection />
-      <FeaturesSection />
+      {/* <IntroSection />
+      <FeaturesSection /> */}
       {/* <ParticipationSection />
       <ManageSection />
       <ProfileSection /> */}
-      <NSSection />
+      {/* <NSSection />
       <RoadmapSection />
-      <AboutSection />
+      <AboutSection /> */}
     </>
   );
 };

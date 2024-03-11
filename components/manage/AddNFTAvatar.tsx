@@ -45,7 +45,6 @@ import { capFirstLetter, getAvatarUrl, sleep, truncAddress } from 'core/utils';
 import { LinkIcon } from 'components/logos';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
 import {
-  BaseNftJson,
   getAddressesFromIndex,
   getNftByIndex,
   getNftsByIndexes,
@@ -70,6 +69,7 @@ import axios from 'axios';
 import NetworkModal from './NetworkModal';
 import { ThirdwebNftMedia } from '@thirdweb-dev/react';
 import ReactPlayer from 'react-player';
+import { BaseNftJson } from 'core/utils/reverse';
 
 interface Props {
   defaultType: string;

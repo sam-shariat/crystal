@@ -7,6 +7,7 @@ import { linksArrayAtom } from 'core/atoms';
 import { capFirstLetter } from 'core/utils';
 import { CustomLink } from 'types';
 import { IPFS_IMAGE_URI } from 'core/utils/constants';
+import { useRouter } from 'next/router';
 
 interface Props {
   json: any;
@@ -15,22 +16,26 @@ interface Props {
 
 export default function Links({ json, color }: Props) {
   const [linksArray, setLinksArray] = useAtom(linksArrayAtom);
+  const { pathname } = useRouter();
+  const what = pathname === '/what' ? true : false;
 
   useEffect(() => {
-    let _links: CustomLink[] = [];
-    if (json?.links) {
-      json?.links.map((link:CustomLink) => {
-        _links.push({
-          type: link.type,
-          title: link.title,
-          url: link.url,
-          image: link.image,
-          content: link.content,
-          styles: link.styles
+    if(what){
+      let _links: CustomLink[] = [];
+      if (json?.links) {
+        json?.links.map((link:CustomLink) => {
+          _links.push({
+            type: link.type,
+            title: link.title,
+            url: link.url,
+            image: link.image,
+            content: link.content,
+            styles: link.styles
+          });
         });
-      });
+      }
+      setLinksArray(_links);
     }
-    setLinksArray(_links);
   }, []);
 
   return (

@@ -613,7 +613,7 @@ const OldManagePage: NextPage = () => {
                     </Flex>
                     {isLoaded && json && notMobile && (
                       <Flex my={4} position={'fixed'} top={1} right={4}>
-                        <Preview json={json} onSave={uploadJson} />
+                        <Preview json={getJson()} onSave={uploadJson} />
                       </Flex>
                     )}
                   </Flex>
