@@ -31,11 +31,12 @@ import {
   editingAvatarFileAtom,
   nameAtom,
 } from 'core/atoms';
-import AvatarEditor from 'react-avatar-editor';
+
 import { RiAddLine, RiZoomInLine } from 'react-icons/ri';
 import { useStorageUpload } from '@thirdweb-dev/react';
 import { MAX_FILE_UPLOAD, SITE_URL, SITE_URL_SHORT } from 'core/utils/constants';
 import { Avatar } from 'components/Profile';
+import AvatarEditorJs from './AvatarEditorJs';
 
 export default function CropAvatar() {
   const [progress, setProgress] = useState({ progress: 0, total: 0 });
@@ -123,9 +124,9 @@ export default function CropAvatar() {
     onClose();
   };
 
-  const AvatarEditorComponent = (props): React.ReactElement => {
-    return <><AvatarEditor {...props}/></>
-  }
+  // const AvatarEditorComponent = (props): React.ReactElement => {
+  //   return <><AvatarEditor {...props}/></>
+  // }
 
   const sendproFileToIPFS = async (e: any) => {
     if (e) {
@@ -166,7 +167,7 @@ export default function CropAvatar() {
                 {!editingAvatarFile.type.includes('svg') &&
                 !editingAvatarFile.type.includes('gif') ? (
                   <>
-                    <AvatarEditorComponent
+                    <AvatarEditorJs
                       ref={cropRef}
                       crossOrigin="anonymous"
                       image={editingAvatar}
