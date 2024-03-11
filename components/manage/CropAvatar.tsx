@@ -123,6 +123,10 @@ export default function CropAvatar() {
     onClose();
   };
 
+  const AvatarEditorComponent = (props): React.ReactElement => {
+    return <><AvatarEditor {...props}/></>
+  }
+
   const sendproFileToIPFS = async (e: any) => {
     if (e) {
       if (e.size > MAX_FILE_UPLOAD) {
@@ -162,7 +166,7 @@ export default function CropAvatar() {
                 {!editingAvatarFile.type.includes('svg') &&
                 !editingAvatarFile.type.includes('gif') ? (
                   <>
-                    <AvatarEditor
+                    <AvatarEditorComponent
                       ref={cropRef}
                       crossOrigin="anonymous"
                       image={editingAvatar}

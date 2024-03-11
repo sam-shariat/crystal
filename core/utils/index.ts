@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { BaseNftJson } from './nft';
 import { truncAddress } from './stringUtils';
 import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from './constants';
+import { BaseNftJson } from './reverse';
 //import crypto from 'crypto';
 
 const sleep = async (ms: number) => new Promise((r) => setTimeout(r, ms));
