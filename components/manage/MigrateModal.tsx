@@ -81,9 +81,10 @@ import {
 import CropAvatar from 'components/manage/CropAvatar';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
 import { useStorageUpload } from '@thirdweb-dev/react';
-import { BaseNftJson, getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
+import { getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
 import ImageBox from 'components/claiming/ImageBox';
 import { isValidName } from 'ethers/lib/utils';
+import { BaseNftJson } from 'core/utils/reverse';
 
 type nftWithName = {
   name: string;

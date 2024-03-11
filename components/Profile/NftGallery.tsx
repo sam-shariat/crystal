@@ -34,7 +34,7 @@ import { ethAtom, lightModeAtom } from 'core/atoms';
 import { capFirstLetter, sleep, truncAddress } from 'core/utils';
 import { LinkIcon } from 'components/logos';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
-import { BaseNftJson, getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
+import { getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
 import {
   AVATAR_API_URL,
   ETHERSCAN_URLS,
@@ -48,6 +48,7 @@ import { Avatar } from 'components/Profile';
 import { RiCloseLine, RiExternalLinkLine, RiRestartLine } from 'react-icons/ri';
 import axios from 'axios';
 import { ThirdwebNftMedia } from '@thirdweb-dev/react';
+import { BaseNftJson } from 'core/utils/reverse';
 
 interface Props {
   defaultType: string;
