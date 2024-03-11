@@ -41,14 +41,7 @@ export function Seo({title = SITE_TITLE,description = SITE_DESCRIPTION}: Props) 
             width: 512,
             height: 512,
             secureUrl: SITE_URL + 'logos/vid.png',
-          },
-          {
-            url: `${SITE_URL}vidog.png`,
-            alt: `${SITE_TITLE} Open Graph Image`,
-            width: 1200,
-            height: 600,
-            secureUrl: SITE_URL + 'vidog.png',
-          },
+          }
         ],
       }}
       twitter={{
