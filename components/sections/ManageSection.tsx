@@ -115,9 +115,10 @@ function ManageSection() {
       return;
     }
     // Fetch all nfts
-    indexesAddresses.map(async (indexAddress) => {
+    const _nfts = await Promise.all(indexesAddresses.map(async (indexAddress) => {
       try {
         let _nftJson = await getNftByIndex(provider, indexAddress);
+        //console.log(_nftJson)
         if (_contractAddress !== ROOT_CONTRACT_ADDRESS) {
           const ipfsData = _nftJson.attributes?.find(
             (att: any) => att.trait_type === 'DATA'
@@ -146,6 +147,9 @@ function ManageSection() {
           }
         }
         if (_contractAddress === ROOT_CONTRACT_ADDRESS) {
+          const options = { year: 'numeric', month: 'short', day: 'numeric' };
+          _nftJson.init_date = new Date(Number(_nftJson.init_time) * 1000).toLocaleString('en-US', options as Intl.DateTimeFormatOptions);
+          _nftJson.expire_date = new Date(Number(_nftJson.expire_time) * 1000).toLocaleString();
           setNames((n) => [...(n ? n : []), String(_nftJson.name)])
           _nftJson.manageUrl = '/manage/' + _nftJson.address;
         } else {
@@ -153,12 +157,17 @@ function ManageSection() {
           _nftJson.external_url = `${SITE_PROFILE_URL}o/${_nftJson.name}` 
         }
         _nftJson.network = 'venom';
-        setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
+        return _nftJson;
 
       } catch (e: any) {
         // console.log('error getting venomid nft ', indexAddress);
+        return {};
       }
-    });
+    }));
+
+    setNftJsons(_nfts.filter((nft) => nft && nft.name && nft.name.length > 3));
+    //setNftJsons()
+
   };
 
   const loadByDb = async () => {
@@ -216,9 +225,11 @@ function ManageSection() {
         //await loadByContract(CONTRACT_ADDRESS_V2);
         await loadByDb();
       } else {
-        const __nftjsons = await getAllNames(provider,connectedAccount);
-        setNftJsons(__nftjsons);
-        console.log(__nftjsons)
+        await loadByContract(ROOT_CONTRACT_ADDRESS);
+
+        // const __nftjsons = await getAllNames(provider,connectedAccount,100);
+        // setNftJsons(__nftjsons);
+        // console.log(__nftjsons)
       }
 
       setLoaded(true);

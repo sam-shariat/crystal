@@ -594,7 +594,7 @@ export default function ConnectButton() {
                 )}
 
                 <MenuDivider />
-                {/* <Box px={5}>
+                <Box px={5}>
                   <Button
                     onClick={switchAccount}
                     borderColor={'gray.800'}
@@ -604,7 +604,7 @@ export default function ConnectButton() {
                     <RiShuffleLine size={22} />
                     Switch Account
                   </Button>
-                </Box> */}
+                </Box>
 
                 <LinkBox px={5}>
                   <LinkOverlay href={FAUCET_URL} target="_blank">
