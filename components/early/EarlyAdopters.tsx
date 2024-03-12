@@ -1152,8 +1152,8 @@ export default function EarlyAdopters() {
                     </Flex>
                   )}
 
-                  {(ownVids > 2 && zealyVerified) ||
-                    (zealyVerified && zealyUser.xp >= 500 && zealyUser.rank < 201 && (
+                  {((ownVids > 2 && zealyVerified) ||
+                    (zealyVerified && zealyUser.xp >= 500 && zealyUser.rank < 201)) && (
                       <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
                       {mintedStrings?.includes('Venom ID Maverick') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
                         <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['maverick'].src} size={250} />
@@ -1194,7 +1194,7 @@ export default function EarlyAdopters() {
                             : 'Mint'}
                         </Button>
                       </Flex>
-                    ))}
+                    )}
                   {twitterVerified && ownVids > 1 && zealyUser.xp > 1500 && zealyUser.rank < 50 && (
                     <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
                       {mintedStrings?.includes('Venom ID Champion') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}

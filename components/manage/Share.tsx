@@ -6,16 +6,17 @@ import { RiShareLine } from 'react-icons/ri';
 export default function ShareButton({
   name,
   type = 'blue',
-  url
+  url,
+  isDisabled = false
 }: {
   name: string;
   type: 'blue' | 'gray';
   url: string;
+  isDisabled?: boolean;
 }) {
   const shareProfile = async () => {
-    let hashtags = 'blockchain,profile';
-    let text =
-      '👋 Hey Folks%0a%0aCheck out my Venom ID profile on the venom blockchain%0a%0aclaim yours via @venomid_network%0a%0a';
+    let hashtags = 'VenomID,Venom';
+    let text = `🚀 Just claimed my personalized venom domain with Venom ID!!%0a%0a✅ check it out : ${name} %0a%0a🔥 Secure your unique venom domain and join the decentralized web revolution via @venomid_network!%0a%0a`;
     let href = `https://twitter.com/intent/tweet?original_referer=${SITE_URL}&text=${text}&hashtags=${hashtags}&url=${url}`;
     window.open(href);
   };
@@ -31,6 +32,7 @@ export default function ShareButton({
           height="72px"
           w={'100%'}
           className="share"
+          isDisabled={isDisabled}
           borderRadius={12}
           colorScheme="cyan"
           color={'white'}
