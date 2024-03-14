@@ -782,7 +782,7 @@ export default function EarlyAdopters() {
         </AccordionButton>
         <AccordionPanel py={4} minWidth="100%">
           <Stack gap={4} fontSize={['md', 'lg']}>
-            <Flex
+            {/* <Flex
               align={'center'}
               bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
               p={4}
@@ -971,9 +971,20 @@ export default function EarlyAdopters() {
                 onClick={_checkOwnVidVen}>
                 {ownVidVenChecked ? (ownVidVen ? 'Yes' : 'No') : 'Check'}
               </Button>
+            </Flex> */}
+
+            <Flex
+              align={'center'}
+              bg={colorMode === 'light' ? 'blackAlpha.100' : 'whiteAlpha.100'}
+              p={4}
+              gap={2}
+              rounded={'lg'}
+              fontSize={'xl'}>
+              📢 The Venom ID Early Adopter program is now closed. <br/>🎉 Congratulations to all our early adopters! 
+              <br/><br/>If you missed the chance, don't worry. There will be more opportunities coming your way. Remember, we are still in the early stages. Stay tuned for exciting updates!
             </Flex>
             {(twitterVerified || zealyVerified || ownVids || ownVidVen) && !isLoading && (
-              <Text>You are eligible to mint</Text>
+              <Text>Your OATS</Text>
             )}
             {!isLoading && (
               <Flex

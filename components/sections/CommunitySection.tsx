@@ -163,6 +163,7 @@ export default function CommunitySection() {
                 size={'lg'}
                 gap={6}
                 as={Link}
+                isDisabled={true}
                 href={ZEALY_URL}
                 style={{ textDecoration: 'none' }}
                 target="_blank"
@@ -176,7 +177,7 @@ export default function CommunitySection() {
                 </Flex>
                 <Flex flexDirection={'column'} align={['center', 'center', 'start']} gap={2}>
                   <Text display={['none', 'none', 'block']} fontSize={'xl'}>
-                    Zealy Community
+                    Zealy Community ( Soon )
                   </Text>
                   <Flex
                     fontWeight={'normal'}
@@ -184,9 +185,9 @@ export default function CommunitySection() {
                     gap={2}
                     align={['center', 'center', 'start']}>
                     <Text>Explore our simple Quests!</Text>
-                    <Text>Earn XPs as you go!</Text>
+                    <Text>We are temporarily closed!</Text>
                   </Flex>
-                  <Text fontWeight={'normal'}>Claim Your Rewards Later!</Text>
+                  <Text fontWeight={'normal'}>We'll be back soon!</Text>
                 </Flex>
               </Button>
             </Flex>
