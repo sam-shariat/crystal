@@ -419,7 +419,7 @@ export default function ConnectButton() {
             size={['md','lg']}
             color={'white'}
             colorScheme="venom"
-            w={['160px', '192px']}>
+            w={['168px', '192px']}>
             <Center gap={2}>
               {/* <LinkIcon type="venom" key={'connect-wallet-venom'} /> */}
               Connect Venom
@@ -431,7 +431,7 @@ export default function ConnectButton() {
               as={Button}
               size={'lg'}
               rounded={'full'}
-              w={['160px', '192px']}
+              w={['168px', '192px']}
               px={0}
               bgColor={colorMode === 'light' ? 'whiteAlpha.900' : 'var(--dark)'}
               variant={colorMode === 'light' ? 'solid' : 'outline'}>
