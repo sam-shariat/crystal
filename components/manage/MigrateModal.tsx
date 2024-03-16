@@ -521,7 +521,7 @@ export default function MigrateModal({ nft }: Props) {
       })
       .send({
         from: account?.address!,
-        amount: String(99e7),
+        amount: String(3e9),
         bounce: true,
       })
       .catch((e: any) => {

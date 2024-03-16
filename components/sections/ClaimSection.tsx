@@ -303,7 +303,7 @@ const ClaimSection = () => {
         })
         .send({
           from: new Address(connectedAccount),
-          amount: String((1e9)),
+          amount: String((3e9)),
           bounce: true,
         })
         .catch((e: any) => {
