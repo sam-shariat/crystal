@@ -468,7 +468,7 @@ export default function ConnectButton() {
                 <Text
                   fontWeight={'semibold'}
                   textAlign={'left'}
-                  fontSize="lg"
+                  fontSize={["md","lg"]}
                   bgGradient={
                     colorMode === 'light'
                       ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
@@ -477,7 +477,7 @@ export default function ConnectButton() {
                   bgClip="text"
                   my={'0 !important'}>
                   {primaryName?.name && primaryName?.name !== ''
-                    ? primaryName.name.length > (!small ? 7 : 12) ? primaryName.name?.slice(0,(!small ? 7 : 12)) + '...' : primaryName.name
+                    ? primaryName.name.length > (!small ? 8 : 12) ? primaryName.name?.slice(0,(!small ? 8 : 12)) + '...' : primaryName.name
                     : truncAddress(String(account?.address))}
                 </Text>
                 {/* </Stack> */}
