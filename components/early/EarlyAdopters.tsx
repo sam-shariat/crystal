@@ -742,7 +742,6 @@ export default function EarlyAdopters() {
     <Accordion
       allowToggle
       allowMultiple={false}
-      defaultIndex={[0]}
       className="bio"
       borderRadius={10}
       minWidth={'100%'}
@@ -755,23 +754,23 @@ export default function EarlyAdopters() {
           as={Button}
           color={'white'}
           justifyContent={'center'}
-          bgGradient={useColorModeValue(
-            'linear(to-r, var(--venom1), var(--bluevenom1))',
-            'linear(to-r, var(--venom2), var(--bluevenom2))'
-          )}
-          _expanded={{
-            bgGradient: useColorModeValue(
-              'linear(to-r, var(--venom1), var(--bluevenom1))',
-              'linear(to-r, var(--venom2), var(--bluevenom2))'
-            ),
-            borderBottomRadius: 0,
-          }}
-          _hover={{
-            bgGradient: useColorModeValue(
-              'linear(to-r, var(--venom0), var(--bluevenom0))',
-              'linear(to-r, var(--venom0), var(--bluevenom0))'
-            ),
-          }}
+          // bgGradient={useColorModeValue(
+          //   'linear(to-r, var(--venom1), var(--bluevenom1))',
+          //   'linear(to-r, var(--venom2), var(--bluevenom2))'
+          // )}
+          // _expanded={{
+          //   bgGradient: useColorModeValue(
+          //     'linear(to-r, var(--venom1), var(--bluevenom1))',
+          //     'linear(to-r, var(--venom2), var(--bluevenom2))'
+          //   ),
+          //   borderBottomRadius: 0,
+          // }}
+          // _hover={{
+          //   bgGradient: useColorModeValue(
+          //     'linear(to-r, var(--venom0), var(--bluevenom0))',
+          //     'linear(to-r, var(--venom0), var(--bluevenom0))'
+          //   ),
+          // }}
           h={'120px'}>
           <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
             <LinkIcon type="RiVerifiedBadgeLine" size={small ? '46' : '36'} />

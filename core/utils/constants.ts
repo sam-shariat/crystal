@@ -705,5 +705,6 @@ export const EARLY_ADOPTER_IMAGES: any = {
   maverick: {src : 'https://ipfs.io/ipfs/QmQt3CTiZEwDdrAW7ebSM7QX7ZLYts6nWfjfh36xB4iWM7/venomid-maverick.gif', type: 'image/gif'},
   champion: {src : 'https://ipfs.io/ipfs/QmSdjoBfigMQu2yGpMj5Fhd1xFQFYoTUVTLjUZjGcpnmee/venomid-champions.gif', type: 'image/gif'},
   earlier: {src : 'https://ipfs.io/ipfs/Qmb1huuaLMpA3JodFysEqpWc65vy4NkXfuix5mYkvaBkJE/earlier.svg', type: 'image/svg+xml'},
+  catalyst: {src : 'https://ipfs.io/ipfs/QmUYe2xS43JB9d7qNB4KyU9ptGCJ9KG5bJcPj7rkdmfqxg/venomid-countdown-catalyst_nft.jpg', type: 'image/jpeg'},
   
 };

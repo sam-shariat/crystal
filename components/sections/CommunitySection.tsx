@@ -38,6 +38,7 @@ import WaitlistMail from 'components/mail/Waitlist';
 import ImageBox from 'components/claiming/ImageBox';
 import EarlyAdopters from 'components/early/EarlyAdopters';
 import ContributionSection from 'components/contribution/ContributionSection';
+import MintNft from 'components/early/MintNft';
 
 export default function CommunitySection() {
   const { colorMode } = useColorMode();
@@ -90,6 +91,7 @@ export default function CommunitySection() {
             </Flex>
 
             <Flex flexDirection={'column'} w={'100%'} gap={6} my={12}>
+              <MintNft />
               <EarlyAdopters />
               <ContributionSection />
               <Button
