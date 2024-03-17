@@ -752,7 +752,6 @@ export default function EarlyAdopters() {
         <AccordionButton
           width={'100%'}
           as={Button}
-          color={'white'}
           justifyContent={'center'}
           // bgGradient={useColorModeValue(
           //   'linear(to-r, var(--venom1), var(--bluevenom1))',
@@ -1001,6 +1000,7 @@ export default function EarlyAdopters() {
                       <Text>Crypto Explorer OAT</Text>
                       <Button
                         w={'100%'}
+                        color={'white'}
                         isDisabled={isMinting || isConfirming}
                         isLoading={isMinting || isConfirming}
                         loadingText={
@@ -1042,6 +1042,7 @@ export default function EarlyAdopters() {
                       <Text>Venom ID Pioneer OAT</Text>
                       <Button
                         w={'100%'}
+                        color={'white'}
                         isDisabled={isMinting || isConfirming}
                         isLoading={isMinting || isConfirming}
                         loadingText={
@@ -1084,6 +1085,7 @@ export default function EarlyAdopters() {
                       <Text>Venom ID Identorian OAT</Text>
                       <Button
                         w={'100%'}
+                        color={'white'}
                         isDisabled={isMinting || isConfirming}
                         isLoading={isMinting || isConfirming}
                         loadingText={
@@ -1127,6 +1129,7 @@ export default function EarlyAdopters() {
                       <Text>Venom ID Family OAT</Text>
                       <Button
                         w={'100%'}
+                        color={'white'}
                         isDisabled={isMinting || isConfirming}
                         isLoading={isMinting || isConfirming}
                         loadingText={
@@ -1170,6 +1173,7 @@ export default function EarlyAdopters() {
                         <Text>Venom ID Maverick OAT</Text>
                         <Button
                           w={'100%'}
+                          color={'white'}
                           isDisabled={isMinting || isConfirming}
                           isLoading={isMinting || isConfirming}
                           loadingText={
@@ -1212,6 +1216,7 @@ export default function EarlyAdopters() {
                       <Text>Venom ID Champion OAT</Text>
                       <Button
                         w={'100%'}
+                        color={'white'}
                         isDisabled={isMinting || isConfirming}
                         isLoading={isMinting || isConfirming}
                         loadingText={

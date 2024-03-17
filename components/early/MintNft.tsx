@@ -365,8 +365,8 @@ import {
                   p={4}
                   rounded={'lg'}
                   justify={'center'}>
-                      <Flex justify={'center'} gap={4} align={'center'}>
-                        <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['catalyst'].src} size={250} rounded='md' />
+                      <Flex justify={'center'} gap={8} align={'center'} w={'100%'} flexDirection={['column','column','row']}>
+                        <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['catalyst'].src} size={[240]} rounded='lg' />
                         <Stack gap={4}>
                         <Text>Venom ID Countdown Catalyst NFT</Text>
                         {mintedStrings?.includes('Venom ID Countdown Catalyst NFT') && <Badge colorScheme='green' zIndex={1000} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
