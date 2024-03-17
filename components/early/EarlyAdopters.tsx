@@ -666,7 +666,7 @@ export default function EarlyAdopters() {
     const v0nfts = await loadByContract(ROOT_CONTRACT_ADDRESS);
     const v1nfts = await loadByContract(CONTRACT_ADDRESS);
     const v2nfts = await loadByContract(CONTRACT_ADDRESS_V1);
-    const v3nfts = await loadByDb();
+    //const v3nfts = await loadByDb();
 
     //console.log(v1nfts, v2nfts, v3nfts);
     let _no = 0;
@@ -687,14 +687,14 @@ export default function EarlyAdopters() {
       setOwnVid1(false);
     }
 
-    if (Number(v3nfts) > 0) {
-      setOwnVid2(true);
-      _no += 1;
-    } else {
-      setOwnVid2(false);
-    }
+    // if (Number(v3nfts) > 0) {
+    //   setOwnVid2(true);
+    //   _no += 1;
+    // } else {
+    //   setOwnVid2(false);
+    // }
 
-    console.log(v0nfts,v1nfts, v2nfts, v3nfts);
+    //console.log(v0nfts,v1nfts, v2nfts, v3nfts);
 
     setOwnVidChecked(true);
     setOwnVidLoading(false);
