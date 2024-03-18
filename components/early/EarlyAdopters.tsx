@@ -797,7 +797,7 @@ export default function EarlyAdopters() {
           </Flex>
         </AccordionButton>
         <AccordionPanel py={4} minWidth="100%">
-          <Stack gap={4} fontSize={['md', 'lg']}>
+          <Stack gap={6} fontSize={['md', 'lg']}>
             {/* <Flex
               align={'center'}
               bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
@@ -999,7 +999,7 @@ export default function EarlyAdopters() {
               📢 The Venom ID Early Adopter program is now closed. <br/>🎉 Congratulations to all our early adopters! 
               <br/><br/>If you missed the chance, don't worry. There will be more opportunities coming your way. Remember, we are still in the early stages. Stay tuned for exciting updates!
             </Flex>
-             <Text>Your OATS</Text>
+             <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>
             
             {!isLoading ? (
               <Flex
@@ -1302,7 +1302,7 @@ export default function EarlyAdopters() {
                 </SimpleGrid>
               </Flex>
             ) : (<Center minH={'100px'}><Spinner size={'lg'} /></Center>)}
-            <InfoModal />
+            {/* <InfoModal /> */}
           </Stack>
         </AccordionPanel>
       </AccordionItem>
