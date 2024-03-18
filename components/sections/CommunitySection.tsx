@@ -93,7 +93,6 @@ export default function CommunitySection() {
             <Flex flexDirection={'column'} w={'100%'} gap={6} my={12}>
               {/* <MintNft /> */}
               <EarlyAdopters />
-              <ContributionSection />
               <Button
                 w={'100%'}
                 h={['220px', '220px', '160px']}
@@ -192,6 +191,9 @@ export default function CommunitySection() {
                   <Text fontWeight={'normal'}>We'll be back soon!</Text>
                 </Flex>
               </Button>
+
+              {/* <ContributionSection /> */}
+
             </Flex>
           </Box>
         </Container>

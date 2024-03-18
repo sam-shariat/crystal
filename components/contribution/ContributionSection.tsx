@@ -181,13 +181,18 @@ export default function ContributionSection() {
           <AccordionButton
             width={'100%'}
             as={Button}
-            justifyContent={'center'}
-            h={'120px'}>
-            <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
-              <LinkIcon type="RiShakeHandsLine" size={small ? '46' : '36'} />
+            gap={6}
+            isDisabled={true}
+            justifyContent={'left'}
+            h={['220px', '220px', '160px']}>
+            <Flex gap={[4]} alignItems={'center'} justify={'center'}>
+              <LinkIcon type="RiShakeHandsLine" size={small ? '70' : '40'} />
+              <Stack>
               <Text fontWeight={'bold'} display={'flex'} flex={1} fontSize={['xl', '2xl']}>
                 Contributions Program
               </Text>
+              <Text fontWeight={'light'} textAlign={'left'}>Whitelisting Soon</Text>
+              </Stack>
             </Flex>
           </AccordionButton>
           <AccordionPanel py={4} minWidth="100%">

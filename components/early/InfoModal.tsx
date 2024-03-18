@@ -14,10 +14,10 @@ import {
   ModalCloseButton,
   useDisclosure,
   useColorModeValue,
-  HStack,
+  Link,
 } from '@chakra-ui/react';
 import { LinkIcon } from 'components/logos';
-import { EARLY_ADOPTER_IMAGES } from 'core/utils/constants';
+import { EARLY_ADOPTERS_CONTRACT_ADDRESS, EARLY_ADOPTER_IMAGES, ETHERSCAN_URLS } from 'core/utils/constants';
 import React, { useEffect, useState } from 'react';
 
 export default function InfoModal() {
@@ -26,6 +26,7 @@ export default function InfoModal() {
 
   return (
     <>
+      <Flex gap={4} direction={['column','column']}>
       <Button
         w={'100%'}
         height={'68px'}
@@ -39,13 +40,31 @@ export default function InfoModal() {
         }>
         <LinkIcon type="RiInformationLine" size={'28px'} />
         <Stack>
-          <Text>Eligibility Details</Text>
+          <Text>Details</Text>
         </Stack>
       </Button>
+      <Button
+        w={'100%'}
+        as={Link}
+        href={ETHERSCAN_URLS['venom']+EARLY_ADOPTERS_CONTRACT_ADDRESS} target='_blank'
+        height={'68px'}
+        gap={4}
+        rounded={'full'}
+        bgGradient={
+          colorMode === 'light'
+            ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
+            : 'linear(to-r, var(--venom2), var(--bluevenom2))'
+        }>
+        <LinkIcon type="venomscan" size={'28px'} />
+        <Stack>
+          <Text>Collection on VenomScan</Text>
+        </Stack>
+      </Button>
+      </Flex>
       <Modal isOpen={isOpen} onClose={onClose} size={['full','full','4xl']}>
         <ModalOverlay bg="blackAlpha.700" backdropFilter="auto" backdropBlur={'6px'} />
         <ModalContent bg={colorMode === 'dark' ? 'var(--dark1)' : 'var(--white)'}>
-          <ModalHeader display={'flex'} gap={3}><LinkIcon type="RiInformationLine" size={'28px'} /> Eligibility Details for Early Adopters Program</ModalHeader>
+          <ModalHeader display={'flex'} gap={3}><LinkIcon type="RiInformationLine" size={'28px'} /> Details of the Early Adopters Program</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack gap={2}>
@@ -88,6 +107,23 @@ export default function InfoModal() {
               <Stack gap={0}>
                 <Text fontWeight={'bold'}>Venom ID Identorian OAT</Text>
                 <Text>- You Own at least one Ventory x Venom ID NFT</Text>
+              </Stack>
+            </Flex>
+
+            <Flex
+              align={'center'}
+              bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+              p={4}
+              gap={4}
+              rounded={'lg'}>
+                <LinkIcon
+                  type={EARLY_ADOPTER_IMAGES['catalyst'].src}
+                  size={["lg","lg",'xl']}
+                  rounded='full'
+                />
+              <Stack gap={0}>
+                <Text fontWeight={'bold'}>Venom ID Countdown Catalyst NFT</Text>
+                <Text>- You Own the Venom ID Countdown Catalyst NFT</Text>
               </Stack>
             </Flex>
 

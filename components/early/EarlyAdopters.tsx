@@ -792,7 +792,7 @@ export default function EarlyAdopters() {
             <Text fontWeight={'bold'} display={'flex'} flex={1} fontSize={['xl', '2xl']}>
               Early Adopters Program
             </Text>
-            {totalSupply > 0 && <Link fontSize={'2xl'} textAlign={'left'} href={ETHERSCAN_URLS['venom']+EARLY_ADOPTERS_CONTRACT_ADDRESS} target='_blank'>{totalSupply} total mints</Link>}
+            {totalSupply > 0 && <Text fontSize={'2xl'} fontWeight={'light'} textAlign={'left'} >{totalSupply} total mints</Text>}
             </Stack>
           </Flex>
         </AccordionButton>
@@ -1302,7 +1302,7 @@ export default function EarlyAdopters() {
                 </SimpleGrid>
               </Flex>
             ) : (<Center minH={'100px'}><Spinner size={'lg'} /></Center>)}
-            {/* <InfoModal /> */}
+            <InfoModal />
           </Stack>
         </AccordionPanel>
       </AccordionItem>
