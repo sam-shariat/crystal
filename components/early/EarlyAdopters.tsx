@@ -999,7 +999,7 @@ export default function EarlyAdopters() {
               📢 The Venom ID Early Adopter program is now closed. <br/>🎉 Congratulations to all our early adopters! 
               <br/><br/>If you missed the chance, don't worry. There will be more opportunities coming your way. Remember, we are still in the early stages. Stay tuned for exciting updates!
             </Flex>
-             <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>
+             {minteds && minteds?.length > 0 && <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>}
             
             {!isLoading ? (
               <Flex
