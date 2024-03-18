@@ -246,6 +246,20 @@ export default function IntroSection() {
           <Flex gap={[4,6,8]}>
             {VARIATIONS_VIDS.map((vid)=> <DomainName name={vid.vid} avatar={vid.avatar} size={['md','lg','xl']} key={`VenomID-${vid.vid}`}/>)}
           </Flex>
+
+          
+        </Parallax>
+
+        <Parallax baseVelocity={+2}>
+          {/* <Flex gap={8}>
+            
+          {VARIATIONS.map((vid)=> <DomainName name={vid.vid} avatar={vid.avatar} size={['md','lg','xl']} key={`VenomID-${vid.vid}`}/>)}
+          </Flex> */}
+          <Flex gap={[4,6,8]}>
+            {VARIATIONS_VIDS.map((vid)=> <DomainName name={vid.vid} avatar={vid.avatar} size={['md','lg','xl']} key={`VenomID-${vid.vid}`}/>)}
+          </Flex>
+
+          
         </Parallax>
       </Flex>
       <Container

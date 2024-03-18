@@ -18,6 +18,9 @@ import {
   useToast,
   Badge,
   SimpleGrid,
+  Link,
+  Center,
+  Spinner,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import ImageBox from 'components/claiming/ImageBox';
@@ -67,12 +70,12 @@ export default function EarlyAdopters() {
   const [minteds, setMinteds] = useState<BaseNftJson[] | undefined>(undefined);
   const [unMinteds, setUnMinteds] = useState<BaseNftJson[] | undefined>(undefined);
   const [mintedStrings, setMintedStrings] = useState<string[] | undefined>(undefined);
-  const { onToggle, isOpen } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [twitterAuthUrl, setTwitterAuthUrl] = useState('');
   const connectedAccount = useAtomValue(connectedAccountAtom);
   const [twitterAuth, setTwitterAuth] = useAtom(twitterAuthAtom);
   const [twitterFollowed, setTwitterFollowed] = useAtom(twitterFollowedAtom);
-  const [twitterRetweeted, setTwitterRetweeted] = useAtom(twitterRetweetedAtom);
+  const [totalSupply, setTotalSupply] = useState<number>(0);
   const [twitterUser, setTwitterUser] = useState({ id: '', name: '', username: '' });
   const [twitterVerified, setTwitterVerified] = useState(false);
   const [twitterLoading, setTwitterLoading] = useState(false);
@@ -513,6 +516,8 @@ export default function EarlyAdopters() {
     if (!provider || !provider.isInitialized) return;
     setMinteds([]);
     setMintedStrings([]);
+    const { count } = await earlyAdopterContract.methods.totalSupply({answerId:0}).call();
+    setTotalSupply(count);
     const saltedCode = await saltCode(
       provider,
       String(connectedAccount),
@@ -732,9 +737,10 @@ export default function EarlyAdopters() {
 
     if (!provider || !provider.isInitialized) return;
     if (!connectedAccount || connectedAccount === '') return;
+    //if (!isOpen) return;
 
-    checkOwnVid();
-    checkOwnVidVen();
+    //checkOwnVid();
+    //checkOwnVidVen();
     checkMinteds();
   }, [provider, connectedAccount]);
 
@@ -742,6 +748,14 @@ export default function EarlyAdopters() {
     <Accordion
       allowToggle
       allowMultiple={false}
+      defaultIndex={[0]}
+      // onChange={(e) => {
+      //   if(e === 0){
+      //     onOpen();
+      //   } else {
+      //     onClose();
+      //   }
+      // }}
       className="bio"
       borderRadius={10}
       minWidth={'100%'}
@@ -753,29 +767,33 @@ export default function EarlyAdopters() {
           width={'100%'}
           as={Button}
           justifyContent={'center'}
-          // bgGradient={useColorModeValue(
-          //   'linear(to-r, var(--venom1), var(--bluevenom1))',
-          //   'linear(to-r, var(--venom2), var(--bluevenom2))'
-          // )}
-          // _expanded={{
-          //   bgGradient: useColorModeValue(
-          //     'linear(to-r, var(--venom1), var(--bluevenom1))',
-          //     'linear(to-r, var(--venom2), var(--bluevenom2))'
-          //   ),
-          //   borderBottomRadius: 0,
-          // }}
-          // _hover={{
-          //   bgGradient: useColorModeValue(
-          //     'linear(to-r, var(--venom0), var(--bluevenom0))',
-          //     'linear(to-r, var(--venom0), var(--bluevenom0))'
-          //   ),
-          // }}
+          bgGradient={useColorModeValue(
+            'linear(to-r, var(--venom1), var(--bluevenom1))',
+            'linear(to-r, var(--venom2), var(--bluevenom2))'
+          )}
+          _expanded={{
+            bgGradient: useColorModeValue(
+              'linear(to-r, var(--venom1), var(--bluevenom1))',
+              'linear(to-r, var(--venom2), var(--bluevenom2))'
+            ),
+            borderBottomRadius: 0,
+          }}
+          _hover={{
+            bgGradient: useColorModeValue(
+              'linear(to-r, var(--venom0), var(--bluevenom0))',
+              'linear(to-r, var(--venom0), var(--bluevenom0))'
+            ),
+          }}
+          color={'white'}
           h={'120px'}>
           <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
             <LinkIcon type="RiVerifiedBadgeLine" size={small ? '46' : '36'} />
+            <Stack gap={1} justify={'left'}>
             <Text fontWeight={'bold'} display={'flex'} flex={1} fontSize={['xl', '2xl']}>
               Early Adopters Program
             </Text>
+            {totalSupply > 0 && <Link fontSize={'2xl'} textAlign={'left'} href={ETHERSCAN_URLS['venom']+EARLY_ADOPTERS_CONTRACT_ADDRESS} target='_blank'>{totalSupply} total mints</Link>}
+            </Stack>
           </Flex>
         </AccordionButton>
         <AccordionPanel py={4} minWidth="100%">
@@ -981,18 +999,48 @@ export default function EarlyAdopters() {
               📢 The Venom ID Early Adopter program is now closed. <br/>🎉 Congratulations to all our early adopters! 
               <br/><br/>If you missed the chance, don't worry. There will be more opportunities coming your way. Remember, we are still in the early stages. Stay tuned for exciting updates!
             </Flex>
-            {(twitterVerified || zealyVerified || ownVids || ownVidVen) && !isLoading && (
-              <Text>Your OATS</Text>
-            )}
-            {!isLoading && (
+             <Text>Your OATS</Text>
+            
+            {!isLoading ? (
               <Flex
                 align={'center'}
                 //bg={useColorModeValue('blackAlpha.100', 'blackAlpha.100')}
                 p={4}
                 rounded={'lg'}
                 justify={'center'}>
-                <SimpleGrid gap={4} columns={[1, 1, 2, 3]}>
-                  {twitterVerified && (
+                <SimpleGrid gap={8} columns={[1, 1, 2, 3]} spacing={'32px'}>
+
+                  {minteds?.map((nft)  => <Flex key={nft.name+'-badge-flex'} flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
+                      
+                      <ImageBox srcUrl={String(nft.preview?.source)} size={200} rounded='full'/>
+                      <Text textAlign={'center'}>{nft.name}</Text>
+                      <Button
+                        w={'100%'}
+                        color={'white'}
+                        isDisabled={isMinting || isConfirming}
+                        isLoading={isMinting || isConfirming}
+                        loadingText={
+                          isMinting
+                            ? 'Minting ...'
+                            : isConfirming
+                            ? 'Confirming ...'
+                            : 'Loading ...'
+                        }
+                        onClick={()=> openWindow(
+                                ETHERSCAN_URLS['venom'] +
+                                  nft.address,
+                                null
+                              )
+                        }
+                        rounded={'full'}
+                        bgGradient={
+                          colorMode === 'light'
+                            ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
+                            : 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                        }>View on Explorer
+                      </Button>
+                    </Flex>)}
+                  {/* {twitterVerified && (
                     <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'}>
                       {mintedStrings?.includes('Crypto Explorer') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
                       
@@ -1250,10 +1298,10 @@ export default function EarlyAdopters() {
                           : 'Mint'}
                       </Button>
                     </Flex>
-                  )}
+                  )} */}
                 </SimpleGrid>
               </Flex>
-            )}
+            ) : (<Center minH={'100px'}><Spinner size={'lg'} /></Center>)}
             <InfoModal />
           </Stack>
         </AccordionPanel>
