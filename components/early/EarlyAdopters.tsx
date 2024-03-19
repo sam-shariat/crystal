@@ -1000,7 +1000,7 @@ export default function EarlyAdopters() {
               <br/><br/>If you missed the chance, don't worry. There will be more opportunities coming your way. Remember, we are still in the early stages. Stay tuned for exciting updates!
             </Flex>
              {minteds && minteds?.length > 0 && <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>}
-            
+            {earlyAdopterContract?.methods && <>
             {!isLoading ? (
               <Flex
                 align={'center'}
@@ -1299,9 +1299,11 @@ export default function EarlyAdopters() {
                       </Button>
                     </Flex>
                   )} */}
+                  
                 </SimpleGrid>
               </Flex>
             ) : (<Center minH={'100px'}><Spinner size={'lg'} /></Center>)}
+            </>}
             <InfoModal />
           </Stack>
         </AccordionPanel>
