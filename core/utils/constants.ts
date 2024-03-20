@@ -28,6 +28,7 @@ export const CONTRACT_ADDRESS_V1 =
 export const CONTRACT_ADDRESS_V2 =
   '0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
 
+//export const ROOT_CONTRACT_ADDRESS = '0:f856589d7cf8556428db15d8d280a2fdf1ca51a367ae6ed38365358fe0f36176'; 
 export const ROOT_CONTRACT_ADDRESS = '0:5475e9e7b9d178f4c35cd1136e83a100ca95e28b38c5c52d0689771372ba43ec';
 export const MAX_NAME_LENGTH = 63;
 export const MIN_NAME_LENGTH = 5;
@@ -706,5 +707,6 @@ export const EARLY_ADOPTER_IMAGES: any = {
   champion: {src : 'https://ipfs.io/ipfs/QmSdjoBfigMQu2yGpMj5Fhd1xFQFYoTUVTLjUZjGcpnmee/venomid-champions.gif', type: 'image/gif'},
   earlier: {src : 'https://ipfs.io/ipfs/Qmb1huuaLMpA3JodFysEqpWc65vy4NkXfuix5mYkvaBkJE/earlier.svg', type: 'image/svg+xml'},
   catalyst: {src : 'https://ipfs.io/ipfs/QmUYe2xS43JB9d7qNB4KyU9ptGCJ9KG5bJcPj7rkdmfqxg/venomid-countdown-catalyst_nft.jpg', type: 'image/jpeg'},
+  spring: {src : 'https://ipfs.io/ipfs/QmNt4zMpdSUtZ8p9ZQPWZy3U4anh9Pb6BxvUZzpFwkEWyk/venomid-springburst-nft.jpg', type: 'image/jpeg'},
   
 };

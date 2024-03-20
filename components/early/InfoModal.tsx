@@ -134,6 +134,23 @@ export default function InfoModal() {
               gap={4}
               rounded={'lg'}>
                 <LinkIcon
+                  type={EARLY_ADOPTER_IMAGES['spring'].src}
+                  size={["lg","lg",'xl']}
+                  rounded='full'
+                />
+              <Stack gap={0}>
+                <Text fontWeight={'bold'}>Venom ID Spring Burst NFT</Text>
+                <Text>- You Own the Venom ID Spring Burst NFT</Text>
+              </Stack>
+            </Flex>
+
+            <Flex
+              align={'center'}
+              bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+              p={4}
+              gap={4}
+              rounded={'lg'}>
+                <LinkIcon
                   type={EARLY_ADOPTER_IMAGES['family'].src}
                   size={["lg","lg",'xl']}
                 />

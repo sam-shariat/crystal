@@ -748,7 +748,7 @@ export default function EarlyAdopters() {
     <Accordion
       allowToggle
       allowMultiple={false}
-      defaultIndex={[0]}
+      //defaultIndex={[0]}
       // onChange={(e) => {
       //   if(e === 0){
       //     onOpen();
@@ -767,24 +767,24 @@ export default function EarlyAdopters() {
           width={'100%'}
           as={Button}
           justifyContent={'center'}
-          bgGradient={useColorModeValue(
-            'linear(to-r, var(--venom1), var(--bluevenom1))',
-            'linear(to-r, var(--venom2), var(--bluevenom2))'
-          )}
-          _expanded={{
-            bgGradient: useColorModeValue(
-              'linear(to-r, var(--venom1), var(--bluevenom1))',
-              'linear(to-r, var(--venom2), var(--bluevenom2))'
-            ),
-            borderBottomRadius: 0,
-          }}
-          _hover={{
-            bgGradient: useColorModeValue(
-              'linear(to-r, var(--venom0), var(--bluevenom0))',
-              'linear(to-r, var(--venom0), var(--bluevenom0))'
-            ),
-          }}
-          color={'white'}
+          // bgGradient={useColorModeValue(
+          //   'linear(to-r, var(--venom1), var(--bluevenom1))',
+          //   'linear(to-r, var(--venom2), var(--bluevenom2))'
+          // )}
+          // _expanded={{
+          //   bgGradient: useColorModeValue(
+          //     'linear(to-r, var(--venom1), var(--bluevenom1))',
+          //     'linear(to-r, var(--venom2), var(--bluevenom2))'
+          //   ),
+          //   borderBottomRadius: 0,
+          // }}
+          // _hover={{
+          //   bgGradient: useColorModeValue(
+          //     'linear(to-r, var(--venom0), var(--bluevenom0))',
+          //     'linear(to-r, var(--venom0), var(--bluevenom0))'
+          //   ),
+          // }}
+          // color={'white'}
           h={'120px'}>
           <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
             <LinkIcon type="RiVerifiedBadgeLine" size={small ? '46' : '36'} />
@@ -989,7 +989,7 @@ export default function EarlyAdopters() {
               </Button>
             </Flex> */}
 
-            <Flex
+            {/* <Flex
               align={'center'}
               bg={colorMode === 'light' ? 'blackAlpha.100' : 'whiteAlpha.100'}
               p={4}
@@ -998,7 +998,7 @@ export default function EarlyAdopters() {
               fontSize={'xl'}>
               📢 The Venom ID Early Adopter program is now closed. <br/>🎉 Congratulations to all our early adopters! 
               <br/><br/>If you missed the chance, don't worry. There will be more opportunities coming your way. Remember, we are still in the early stages. Stay tuned for exciting updates!
-            </Flex>
+            </Flex> */}
              {minteds && minteds?.length > 0 && <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>}
             {earlyAdopterContract?.methods && <>
             {!isLoading ? (

@@ -350,10 +350,15 @@ import {
             }}
             h={'120px'}>
             <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
-              <LinkIcon type="RiBox3Line" size={small ? '46' : '36'} />
+              <LinkIcon type="RiPlantLine" size={small ? '46' : '36'} />
+              <Stack gap={1}>
               <Text fontWeight={'bold'} display={'flex'} flex={1} fontSize={['xl', '2xl']}>
-              Countdown Catalyst NFT
+              Spring Burst NFT
               </Text>
+              <Text fontWeight={'light'} textAlign={'left'}>Live till March 21, 23:59 UTC</Text>
+
+              </Stack>
+              
             </Flex>
           </AccordionButton>
           <AccordionPanel py={4} minWidth="100%">
@@ -366,10 +371,10 @@ import {
                   rounded={'lg'}
                   justify={'center'}>
                       <Flex justify={'center'} gap={8} align={'center'} w={'100%'} flexDirection={['column','column','row']}>
-                        <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['catalyst'].src} size={[240]} rounded='full' />
+                        <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['spring'].src} size={[240]} rounded='lg' />
                         <Stack gap={4}>
-                        <Text>Venom ID Countdown Catalyst NFT</Text>
-                        {mintedStrings?.includes('Venom ID Countdown Catalyst NFT') && <Badge colorScheme='green' zIndex={1000} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
+                        <Text>Venom ID Spring Burst NFT</Text>
+                        {mintedStrings?.includes('Venom ID Spring Burst NFT') && <Badge colorScheme='green' zIndex={1000} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
                         <Button
                           w={'100%'}
                           isDisabled={isMinting || isConfirming}
@@ -382,16 +387,16 @@ import {
                               : 'Loading ...'
                           }
                           onClick={() =>
-                            mintedStrings?.includes('Venom ID Countdown Catalyst NFT')
+                            mintedStrings?.includes('Venom ID Spring Burst NFT')
                               ? openWindow(
                                   ETHERSCAN_URLS['venom'] +
-                                    minteds?.filter((m) => m.name === 'Venom ID Countdown Catalyst NFT')[0].address,
+                                    minteds?.filter((m) => m.name === 'Venom ID Spring Burst NFT')[0].address,
                                   null
                                 )
                               : mintBadge(
-                                  'Venom ID Countdown Catalyst NFT',
-                                  EARLY_ADOPTER_IMAGES['catalyst'].src,
-                                  EARLY_ADOPTER_IMAGES['catalyst'].type
+                                  'Venom ID Spring Burst NFT',
+                                  EARLY_ADOPTER_IMAGES['spring'].src,
+                                  EARLY_ADOPTER_IMAGES['spring'].type
                                 )
                           }
                           rounded={'full'}
@@ -400,7 +405,7 @@ import {
                               ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
                               : 'linear(to-r, var(--venom2), var(--bluevenom2))'
                           }>
-                          {mintedStrings?.includes('Venom ID Countdown Catalyst NFT')
+                          {mintedStrings?.includes('Venom ID Spring Burst NFT')
                             ? 'Minted. View on explorer'
                             : 'Mint'}
                         </Button>

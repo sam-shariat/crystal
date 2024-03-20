@@ -296,6 +296,50 @@ const arrayRemoveDuplicates = (arr: any) => {
   return unique;
 };
 
+
+const sumUint128 = (a:any, b:any)=> {
+  const maxSafeInteger = Number.MAX_SAFE_INTEGER;
+
+  // Convert the input numbers to arrays of digits
+  const digitsA = Array.from(String(a), Number);
+  const digitsB = Array.from(String(b), Number);
+
+  // Pad the shorter number with leading zeros
+  const maxLength = Math.max(digitsA.length, digitsB.length);
+  while (digitsA.length < maxLength) {
+    digitsA.unshift(0);
+  }
+  while (digitsB.length < maxLength) {
+    digitsB.unshift(0);
+  }
+
+  let carry = 0;
+  const sum = [];
+
+  // Perform the addition digit by digit
+  for (let i = maxLength - 1; i >= 0; i--) {
+    const digitSum = digitsA[i] + digitsB[i] + carry;
+    const digit = digitSum % 10;
+    carry = Math.floor(digitSum / 10);
+    sum.unshift(digit);
+  }
+
+  // Add the remaining carry if any
+  if (carry > 0) {
+    sum.unshift(carry);
+  }
+
+  // Convert the array of digits back to a string
+  const result = sum.join('');
+
+  // Check if the result exceeds the safe integer range
+  if (result.length > 15 || Number(result) > maxSafeInteger) {
+    throw new Error('Sum exceeds the safe integer range');
+  }
+
+  return Number(result);
+}
+
 export {
   withHttps,
   base64ToBlob,
@@ -315,4 +359,5 @@ export {
   isValidVenomAddress,
   isValidSignHash,
   openWindow,
+  sumUint128
 };

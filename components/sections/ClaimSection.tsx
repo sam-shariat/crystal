@@ -69,6 +69,7 @@ import {
   isValidSignHash,
   isValidUsername,
   sleep,
+  sumUint128,
 } from 'core/utils';
 import ClaimModal from 'components/claiming/ClaimModal';
 import TextCard from 'components/claiming/TextCard';
@@ -120,7 +121,7 @@ const ClaimSection = () => {
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   const [mintOpen, setMintOpen] = useAtom(mintOpenAtom);
   //const [venomContract, setVenomContract] = useState<any>(undefined);
-  const minFee = 330000000;
+  const minFee : number = 2000000000;
   const [name, setName] = useAtom(claimingNameAtom);
   const [path, setPath] = useAtom(pathAtom);
   //const [vidUrl, setVidUrl] = useState('');
@@ -152,14 +153,14 @@ const ClaimSection = () => {
         setFeeIsLoading(true);
         setTyping(false);
         toast.closeAll();
-        // @ts-ignore: Unreachable code error
-        // const { amount: _fee } = await rootContract.methods
-        //   .expectedRegisterAmount({
-        //     name: `${path}.vid`,
-        //     duration: 60 * 60 * 24 * 365,
-        //     answerId: 22,
-        //   })
-        //   .call({ responsible: true });
+        //@ts-ignore: Unreachable code error
+        const { amount: _fee } = await rootContract.methods
+          .expectedRegisterAmount({
+            name: `${path}`,
+            duration: 60 * 60 * 24 * 365,
+            answerId: 22,
+          })
+          .call({ responsible: true });
 
         // @ts-ignore: Unreachable code error
         const certificateAddr = await rootContract.methods
@@ -184,6 +185,8 @@ const ClaimSection = () => {
         }
 
         //setFee(_fee);
+        setFee(sumUint128(_fee ,minFee));
+        console.log(sumUint128(_fee ,minFee))
         setFeeIsLoading(false);
       } catch (er) {
         console.log(er);
@@ -229,8 +232,9 @@ const ClaimSection = () => {
   useEffect(() => {
     async function checkActive() {
       const totalSupply = await rootContract.methods.totalSupply({answerId:0}).call();
-      //console.log('totalSupply')
       console.log(totalSupply)
+      const active = await rootContract.methods._active().call();
+      console.log(active)
     }
     if (provider?.isInitialized && rootContract && rootContract.methods._active() && connected) {
       checkActive();
@@ -295,7 +299,38 @@ const ClaimSection = () => {
         duration: null,
       });
 
+      // const activate = await rootContract.methods.activate()
+      //   .send({
+      //     from: new Address(connectedAccount),
+      //     amount: String((2e9)),
+      //     bounce: true,
+      //   })
+
+      //   console.log(activate);
+      //   return;
+
+      // if(!fee) return;
+
+      // const { payload } = await rootContract.methods
+      //     .buildRegisterPayload({
+      //       name: `${path}`,
+      //       answerId: 22,
+      //     })
+      //     .call({ responsible: true });
+
+      //     console.log(payload);
+          
+
       // @ts-ignore: Unreachable code error
+      // const mintTx = await rootContract.methods
+      //   .register({
+      //     payload: payload
+      //   })
+      //   .send({
+      //     from: new Address(connectedAccount),
+      //     amount: String(fee),
+      //     bounce: true,
+      //   })
       const mintTx = await rootContract.methods
         .betaReg({
           path: `${path}.vid`,
@@ -305,8 +340,7 @@ const ClaimSection = () => {
           from: new Address(connectedAccount),
           amount: String((3e9)),
           bounce: true,
-        })
-        .catch((e: any) => {
+        }).catch((e: any) => {
           if (e.code === 3) {
             // rejected by a user
             setIsMinting(false);
