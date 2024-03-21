@@ -91,7 +91,7 @@ export default function CommunitySection() {
             </Flex>
 
             <Flex flexDirection={'column'} w={'100%'} gap={6} my={12}>
-              <MintNft />
+              {/* <MintNft /> */}
               <EarlyAdopters />
               <Button
                 w={'100%'}
