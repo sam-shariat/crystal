@@ -8,6 +8,7 @@ import {
     Flex,
     Stack,
     Textarea,
+    Link,
     Text,
     useColorMode,
     useMediaQuery,
@@ -363,6 +364,17 @@ import {
           </AccordionButton>
           <AccordionPanel py={4} minWidth="100%">
             {connectedAccount.length > 60 ? <Stack gap={4} fontSize={['md', 'lg']}>
+            {!notMobile && <Flex
+              align={'center'}
+              bg={colorMode === 'light' ? 'blackAlpha.100' : 'whiteAlpha.100'}
+              p={4}
+              direction={'column'}
+              gap={2}
+              rounded={'lg'}
+              fontSize={['lg','xl']}>
+              <Text>➡️ For an smooth experience during mint we recommend using a desktop 💻</Text><Text>If not possible, <Link href="https://oneart.digital/en" fontWeight={'bold'} target='_blank' color={colorMode === 'dark' ? 'venom.300' : 'venom.700'} >OneArt Wallet</Link> is the preferred option as it performs best in the process.</Text>
+
+            </Flex>}
               {!isLoading ? (
                 <Flex
                   align={'center'}
