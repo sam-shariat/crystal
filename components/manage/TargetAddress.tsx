@@ -89,10 +89,11 @@ export default function TargetAddress({ nftAddress }: Props) {
           <AccordionButton
             as={Button}
             size={'lg'}
-            bgGradient={
+            bgGradient={target === '' ?
               lightMode
                 ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
                 : 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                : 'none'
             }
             _expanded={{
               bgGradient: lightMode
@@ -106,10 +107,10 @@ export default function TargetAddress({ nftAddress }: Props) {
                 : 'linear(to-r, var(--venom0), var(--bluevenom0))',
             }}
             gap={4}
-            color={'white'}
+            color={target === '' ? 'white' : lightMode ? 'var(--dark)' : 'white'}
             variant="solid"
             width={'100%'}>
-            <LinkIcon type="venom" size={26} color="white" />
+            <LinkIcon type="venom" size={26} color={target === '' ? 'white' : lightMode ? 'black' : 'white'} />
             <Text fontSize={'lg'}>{target === '' ? 'Set Target Wallet Address' : 'Update Target Wallet Address'}</Text>
           </AccordionButton>
           <AccordionPanel

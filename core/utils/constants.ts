@@ -1,14 +1,16 @@
 import { BgColorItem, LinkType, BgImageItem } from 'types';
 
 export const MINT_OPEN = true;
-export const MINT_TOTAL_SUPPLY:number = 10000;
+export const MINT_TOTAL_SUPPLY: number = 10000;
+export const TLD = 'venom';
+export const DOMAIN_REGISTER_FEE = 1;
 export const MINT_DATE = 'Feb 03, 2024 18:00 UTC';
 export const MINT_MESSAGE = 'Final Phase of venom testnet minting will start on';
 export const SITE_URL = 'https://venomid.network/';
 export const SITE_URL_SHORT = 'venomid.network';
 export const VID_IMAGE_API = 'https://img.venomid.network/api/';
 export const SITE_TITLE = 'Venom ID';
-export const SITE_DESCRIPTION = 'Your entire virtual identity in the blockchain in one simple link';
+export const SITE_DESCRIPTION = 'Empower Your Digital Presence with one simple name';
 export const SITE_FULL_DESCRIPTION =
   'With VenomID, you can assign human-readable names to your blockchain and non-blockchain resources like Venom, BTC and ETH addresses, Links and more';
 export const NFT_IMAGE_URL = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
@@ -28,14 +30,18 @@ export const CONTRACT_ADDRESS_V1 =
 export const CONTRACT_ADDRESS_V2 =
   '0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
 
-//export const ROOT_CONTRACT_ADDRESS = '0:f856589d7cf8556428db15d8d280a2fdf1ca51a367ae6ed38365358fe0f36176'; 
-export const ROOT_CONTRACT_ADDRESS = '0:5475e9e7b9d178f4c35cd1136e83a100ca95e28b38c5c52d0689771372ba43ec';
+export const ROOT_CONTRACT_ADDRESS =
+  '0:72034dfba65f6d63b362e51add677c0549ff4e5a4e18c943acb54f953bb53660';
+//export const ROOT_CONTRACT_ADDRESS = '0:5475e9e7b9d178f4c35cd1136e83a100ca95e28b38c5c52d0689771372ba43ec';
 export const MAX_NAME_LENGTH = 63;
-export const MIN_NAME_LENGTH = 5;
+export const MIN_NAME_LENGTH = 2;
 export const MIN_FEE = 660000000;
-export const EARLY_ADOPTERS_CONTRACT_ADDRESS = '0:9e0ea0f0fe6229aee6580a96fd9c62aabf6f2430830877c5b1ad700680ac0486';
-export const WRAPPED_VENOM_ADDRESS = '0:2c3a2ff6443af741ce653ae4ef2c85c2d52a9df84944bbe14d702c3131da3f14';
-export const TOKEN_WALLET_ADDRESS = '0:2b5bbfe1d86e4df852a2ff33512495c7038c585f5c6c8c0a84f7af8997e2ff05';
+export const EARLY_ADOPTERS_CONTRACT_ADDRESS =
+  '0:9e0ea0f0fe6229aee6580a96fd9c62aabf6f2430830877c5b1ad700680ac0486';
+export const WRAPPED_VENOM_ADDRESS =
+  '0:2c3a2ff6443af741ce653ae4ef2c85c2d52a9df84944bbe14d702c3131da3f14';
+export const TOKEN_WALLET_ADDRESS =
+  '0:2b5bbfe1d86e4df852a2ff33512495c7038c585f5c6c8c0a84f7af8997e2ff05';
 export enum CertificateStatus {
   RESERVED,
   NEW,
@@ -43,10 +49,30 @@ export enum CertificateStatus {
   COMMON,
   EXPIRING,
   GRACE,
-  EXPIRED
+  EXPIRED,
 }
 
-export const CertificateStatusNames =[
+export const TARGET_RECORD_ID = 0;
+export const TARGET_ETH_RECORD_ID = 1;
+
+export const DISPLAY_RECORD_ID = 10;
+export const AVATAR_RECORD_ID = 11;
+export const HEADER_RECORD_ID = 12;
+export const LOCATION_RECORD_ID = 13;
+export const URL_RECORD_ID = 14;
+export const DESCRIPTION_RECORD_ID = 15;
+export const NOTICE_RECORD_ID = 15;
+export const COLOR_RECORD_ID = 16;
+export const BG_RECORD_ID = 17;
+export const TEXTCOLOR_RECORD_ID = 18;
+export const STYLES_RECORD_ID = 19;
+
+export const TWITTER_RECORD_ID = 20;
+
+export const LINKS_RECORD_ID = 30;
+export const IPFS_RECORD_ID = 33;
+
+export const CertificateStatusNames = [
   'RESERVED',
   'NEW',
   'IN AUCTION',
@@ -54,11 +80,13 @@ export const CertificateStatusNames =[
   'EXPIRING',
   'GRACE',
   'EXPIRED',
-  'AVAILABLE'
-]
+  'AVAILABLE',
+];
 
-export const VENTORY_NFT_V1_ADDRESS = '0:7df675a3c099ed318d36c54e62282b1185f78fb05c21d19292699d6e200b0bb6';
-export const VENTORY_NFT_V2_ADDRESS = '0:b248dc8f494e6e8f4ff355e9032cdfaf0108889b19b06e3f11861faa0780a06c';
+export const VENTORY_NFT_V1_ADDRESS =
+  '0:7df675a3c099ed318d36c54e62282b1185f78fb05c21d19292699d6e200b0bb6';
+export const VENTORY_NFT_V2_ADDRESS =
+  '0:b248dc8f494e6e8f4ff355e9032cdfaf0108889b19b06e3f11861faa0780a06c';
 
 export const ZERO_ADDRESS = '0:0000000000000000000000000000000000000000000000000000000000000000';
 
@@ -66,9 +94,10 @@ export const TWITTER_CALLBACK_URL = 'https://venomid.network/api/twitter/callbac
 //export const TWITTER_CALLBACK_URL = 'http://localhost:3000/api/twitter/callback';
 export const TWITTER_ME = 'https://api.twitter.com/2/users/me';
 export const TWITTER_SCOPES = ['tweet.read', 'users.read', 'offline.access'];
-export const TWITTER_FOLLOW_URL = "https://twitter.com/intent/user?screen_name=venomid_network";
-export const TWITTER_RETWEET_URL = "https://twitter.com/intent/retweet?tweet_id=1750574775158624742";
-export const ZEALY_USERS_API = 'https://api.zealy.io/communities/venomid/users'
+export const TWITTER_FOLLOW_URL = 'https://twitter.com/intent/user?screen_name=venomid_network';
+export const TWITTER_RETWEET_URL =
+  'https://twitter.com/intent/retweet?tweet_id=1750574775158624742';
+export const ZEALY_USERS_API = 'https://api.zealy.io/communities/venomid/users';
 export const IPFS_IO_URL = 'https://ipfs.io/ipfs/';
 
 export const SOCIAL_TWITTER = 'venomid_network';
@@ -129,7 +158,7 @@ export const IPFS_URLS = [
 ];
 
 export const SIGN_MESSAGE =
-  'Welcome to Venom ID. By signing this message, you agree with our terms and conditions.';
+  'Welcome to Venom ID. By signing this message, you agree with our terms and conditions. timestamp=';
 
 export const MAX_FILE_UPLOAD = 15728640;
 
@@ -333,7 +362,8 @@ export const FONTS = ['Poppins', 'Lato', 'Pixelify Sans', 'Space Mono', 'Playfai
 
 export const VARIATIONS = [
   {
-    avatar: 'https://ipfs.io/ipfs/QmQvTRLhNmUru9w1WT1JB9om9cjADHVwu2aVdmBWYN2qNA/_cc53c525-8cdd-45a2-865c-e0fc244ad96d.jpg',
+    avatar:
+      'https://ipfs.io/ipfs/QmQvTRLhNmUru9w1WT1JB9om9cjADHVwu2aVdmBWYN2qNA/_cc53c525-8cdd-45a2-865c-e0fc244ad96d.jpg',
     avatarShape: 'hex',
     bg: BG_IMAGES[7].bg,
     lightMode: BG_IMAGES[7].lightMode,
@@ -344,11 +374,10 @@ export const VARIATIONS = [
     title: 'Jonathan',
     WalletButtons: true,
     subtitle: 'Crypto Agent',
-    vid: 'jonathon.vid',
+    vid: 'jonathon.venom',
   },
   {
-    avatar:
-      'https://ipfs.io/ipfs/QmWhLFCef3k23F51h4y1bH4Nr38FmKcy959hBFuX7atngk/samoel.vid',
+    avatar: 'https://ipfs.io/ipfs/QmWhLFCef3k23F51h4y1bH4Nr38FmKcy959hBFuX7atngk/samoel.vid',
     avatarShape: 'circle',
     bg: BG_IMAGES[3].bg,
     lightMode: BG_IMAGES[3].lightMode,
@@ -358,10 +387,11 @@ export const VARIATIONS = [
     font: FONTS[3],
     WalletButtons: true,
     title: 'Crypto Explorer',
-    vid: 'samoel.vid',
+    vid: 'samoel.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmeEghR8KgWde6tELkTPLXVZdupRarPyYsb6yr74XrdA7Y/vid-avatar%20(1).jpg',
+    avatar:
+      'https://ipfs.io/ipfs/QmeEghR8KgWde6tELkTPLXVZdupRarPyYsb6yr74XrdA7Y/vid-avatar%20(1).jpg',
     avatarShape: 'circle',
     bg: BG_IMAGES[8].bg,
     lightMode: BG_IMAGES[8].lightMode,
@@ -372,10 +402,11 @@ export const VARIATIONS = [
     title: 'Community OAT',
     WalletButtons: true,
     subtitle: 'NFT Collection',
-    vid: 'passport.vid',
+    vid: 'passport.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmQJqujUTHNj28W4tHXEEQh54Mwi5YuWUVjJFFePowUR3n/_b69ba694-3bb6-4cea-99a7-16fceddfafc3.jpg',
+    avatar:
+      'https://ipfs.io/ipfs/QmQJqujUTHNj28W4tHXEEQh54Mwi5YuWUVjJFFePowUR3n/_b69ba694-3bb6-4cea-99a7-16fceddfafc3.jpg',
     avatarShape: 'hex',
     bg: BG_IMAGES[5].bg,
     lightMode: BG_IMAGES[5].lightMode,
@@ -387,10 +418,11 @@ export const VARIATIONS = [
     subtitle: 'Crypto Enthusiast',
     WalletButtons: false,
     socialButtons: false,
-    vid: 'walter.vid',
+    vid: 'walter.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmUkwpstMppjJDi6s8YLK7iGaaVYWJvrmv1yhvKHM8VpK5/05882773ea2030c4cc8ee5cabc7b7a4c.png',
+    avatar:
+      'https://ipfs.io/ipfs/QmUkwpstMppjJDi6s8YLK7iGaaVYWJvrmv1yhvKHM8VpK5/05882773ea2030c4cc8ee5cabc7b7a4c.png',
     avatarShape: 'round',
     bg: BG_COLORS[10].color,
     lightMode: BG_COLORS[10].lightMode,
@@ -400,11 +432,12 @@ export const VARIATIONS = [
     font: FONTS[2],
     title: 'Sam Walt',
     subtitle: 'Blockchain Dev',
-    vid: 'sam.vid',
+    vid: 'sam.venom',
     WalletButtons: false,
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmTNgHnxMXqcno1A85vG3qxpsJty91FJDfXh6Mfi7HwRyB/vidiconcircle%20(1).png',
+    avatar:
+      'https://ipfs.io/ipfs/QmTNgHnxMXqcno1A85vG3qxpsJty91FJDfXh6Mfi7HwRyB/vidiconcircle%20(1).png',
     avatarShape: 'round',
     bg: BG_IMAGES[4].bg,
     lightMode: BG_IMAGES[4].lightMode,
@@ -415,44 +448,44 @@ export const VARIATIONS = [
     title: 'Venom ID',
     subtitle: 'Domains on venom',
     WalletButtons: true,
-    vid: 'venomid.vid',
+    vid: 'venomid.venom',
   },
 ];
 
 export const VARIATIONS_VIDS = [
   {
     avatar: 'https://ipfs.io/ipfs/QmXTudZtDkgcKJEPrH7TwCpGSmWkD84jD221ad96CAX6Q3/aichar8.jpg',
-    vid: 'boo.vid',
+    vid: 'boo.venom',
   },
   {
     avatar: 'https://ipfs.io/ipfs/QmcG2ACTvtgtvW1MUV71S2ey6fXcFXtowSicxDE4bLb1Vs/aichar7.jpg',
-    vid: 'luc.vid',
+    vid: 'luc.venom',
   },
   {
     avatar: 'https://ipfs.io/ipfs/QmXfa45TwRkSRaaERMpTFQmFKHoAzqHqZj28H9Sk9jMC3k/aichar4.jpg',
-    vid: 'john.vid',
+    vid: 'john.venom',
   },
   {
     avatar: 'https://ipfs.io/ipfs/QmTJhU4AChpi59NEWzCDNu3tV6Wxbrwpc9mmTu4USe5n8f/aichar2.jpg',
-    vid: 'alice.vid',
+    vid: 'alice.venom',
   },
   {
     avatar: 'https://ipfs.io/ipfs/QmUhcvFsmos6HxdvUg2D2kuaeTJ3wpS76gUtNe8wdNgCt3/aichar3.jpg',
-    vid: 'alex.vid',
+    vid: 'alex.venom',
   },
   {
     avatar: 'https://ipfs.io/ipfs/QmRy2qg6MevBD99bEFxXiD1yQ7q3AQbsnwcccHHTshcfKQ/aichar1.jpg',
-    vid: 'sara.vid',
+    vid: 'sara.venom',
   },
   {
     avatar: 'https://ipfs.io/ipfs/QmR2QUrwXRAdXWUjMdDwzNKGtxynrTgLrub772GgtbdkLn/aichar6.jpg',
-    vid: 'mary.vid',
+    vid: 'mary.venom',
   },
   {
     avatar: 'https://ipfs.io/ipfs/QmcbmCyGL1x1JFa4mAAyZZ1CJDdTqdjYqKFWo7G4cx48cK/aichar5.jpg',
-    vid: 'joe.vid',
+    vid: 'joe.venom',
   },
-]
+];
 
 export const LINK_VARIATIONS = [
   [
@@ -472,7 +505,7 @@ export const LINK_VARIATIONS = [
       url: 'https://t.me/venomid_network',
       styles: {
         icon: 'RiTelegramFill',
-        size: 'md'
+        size: 'md',
       },
     },
   ],
@@ -491,7 +524,8 @@ export const LINK_VARIATIONS = [
       type: 'nft link',
       title: 'Venom ID Family OAT',
       url: 'https://testnet.ventory.gg/nft/0:e4244873c4ab215bbc8cec48ae4b35d427f1aeac33475795bce8efc76472ba14',
-      image: 'https://ipfs.io/ipfs/QmSoTZi3B6FXLRVBXhsTCwfYPnWMCUHpBc6HiVrGpuBU6o/venomid-family.gif',
+      image:
+        'https://ipfs.io/ipfs/QmSoTZi3B6FXLRVBXhsTCwfYPnWMCUHpBc6HiVrGpuBU6o/venomid-family.gif',
       content: '0:e4244873c4ab215bbc8cec48ae4b35d427f1aeac33475795bce8efc76472ba14',
       styles: {
         scanLink: false,
@@ -500,7 +534,6 @@ export const LINK_VARIATIONS = [
         type: 'normal',
       },
     },
-    
   ],
   [
     {
@@ -519,19 +552,20 @@ export const LINK_VARIATIONS = [
       url: 'https://www.youtube.com/@Venomid_network',
       styles: {
         icon: 'RiYoutubeFill',
-        size: 'md'
+        size: 'md',
       },
     },
   ],
   [
     {
-      content: "{\"address\":\"0xa342f5D851E866E18ff98F351f2c6637f4478dB5/55464657044963196816950587289035428064568320970692304673817341489687665059844\",\"metadata\":{\"name\":\"Bat Country Convertible\",\"sandbox\":{\"creator\":\"0x7a9fe22691c811ea339d9b73150e6911a5343dca\",\"creator_profile_url\":\"https://www.sandbox.game/en/users/sandboxgame/cfb94ffd-e3b9-4681-850c-95a4c3e65f2f/\",\"classification\":{\"type\":\"Entity\",\"theme\":\"None\",\"categories\":[\"Vehicle\",\"Monster\",\"Horror\"]},\"version\":2,\"voxel_model\":\"ipfs://bafybeihx2ovxcebflt7dp7x3kftwbzfscgivh33sfqrekudqsm3n3c22rq/bat-country-convertible.vxc\"},\"description\":\"He who makes a beast of himself gets rid of the pain of being a man.\",\"image\":\"ipfs://bafybeihx2ovxcebflt7dp7x3kftwbzfscgivh33sfqrekudqsm3n3c22rq/bat-country-convertible.png\",\"external_url\":\"https://www.sandbox.game/en/assets/bat-country-convertible/6ac21f68-db45-4e85-9e1c-26dfabd5d0fc/\",\"animation_url\":\"ipfs://bafybeihx2ovxcebflt7dp7x3kftwbzfscgivh33sfqrekudqsm3n3c22rq/bat-country-convertible.gltf\"}}",
-      image: "https://nft-cdn.alchemy.com/eth-mainnet/c4d71c82a77944cd4f82e39e88d2a2b7",
-      styles: {size: 'lg', network: 'ethereum', scanLink: false, type: 'complex'},
-      title: "Bat Country Convertible",
-      type: "nft link",
-      url:""
-    },    
+      content:
+        '{"address":"0xa342f5D851E866E18ff98F351f2c6637f4478dB5/55464657044963196816950587289035428064568320970692304673817341489687665059844","metadata":{"name":"Bat Country Convertible","sandbox":{"creator":"0x7a9fe22691c811ea339d9b73150e6911a5343dca","creator_profile_url":"https://www.sandbox.game/en/users/sandboxgame/cfb94ffd-e3b9-4681-850c-95a4c3e65f2f/","classification":{"type":"Entity","theme":"None","categories":["Vehicle","Monster","Horror"]},"version":2,"voxel_model":"ipfs://bafybeihx2ovxcebflt7dp7x3kftwbzfscgivh33sfqrekudqsm3n3c22rq/bat-country-convertible.vxc"},"description":"He who makes a beast of himself gets rid of the pain of being a man.","image":"ipfs://bafybeihx2ovxcebflt7dp7x3kftwbzfscgivh33sfqrekudqsm3n3c22rq/bat-country-convertible.png","external_url":"https://www.sandbox.game/en/assets/bat-country-convertible/6ac21f68-db45-4e85-9e1c-26dfabd5d0fc/","animation_url":"ipfs://bafybeihx2ovxcebflt7dp7x3kftwbzfscgivh33sfqrekudqsm3n3c22rq/bat-country-convertible.gltf"}}',
+      image: 'https://nft-cdn.alchemy.com/eth-mainnet/c4d71c82a77944cd4f82e39e88d2a2b7',
+      styles: { size: 'lg', network: 'ethereum', scanLink: false, type: 'complex' },
+      title: 'Bat Country Convertible',
+      type: 'nft link',
+      url: '',
+    },
   ],
   [
     {
@@ -541,7 +575,7 @@ export const LINK_VARIATIONS = [
       image: 'https://ipfs.io/ipfs/QmUeSvTQtZiBoa344JvfA8ekeKFH8pRMk8sY3tBjDEG3d9/CV.pdf',
       content: '',
       styles: {
-        size: 'sm'
+        size: 'sm',
       },
     },
     {
@@ -640,8 +674,7 @@ export const WALLETS_VARIATIONS = [
   {
     venom: '0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765',
   },
-  {
-  },
+  {},
   {
     venom: '0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765',
   },
@@ -696,17 +729,45 @@ export const TOUR_STEPS = [
   // ...
 ];
 
-
 export const EARLY_ADOPTER_IMAGES: any = {
-  explorer: {src : 'https://ipfs.io/ipfs/QmRdewFUw4jxTWnoVMSVLyQ7WmahWUMxDrCVYEwL7TuUDq/crypto-explorer.svg', type: 'image/svg+xml'},
-  pioneer: {src : 'https://ipfs.io/ipfs/QmQ98JMocRupVnixhGcVupmDdmuMxXdsq1ozPyNhskzqEh/venom-id-pioneer.svg', type: 'image/svg+xml'},
-  family: {src : 'https://ipfs.io/ipfs/QmSoTZi3B6FXLRVBXhsTCwfYPnWMCUHpBc6HiVrGpuBU6o/venomid-family.gif', type: 'image/gif'},
-  geek: {src : 'https://ipfs.io/ipfs/QmPgY5KJ25cBmG4H4HkF6DTgxQ4gaUtzfChS8wS8EXScgH/venomid-geek.gif', type: 'image/gif'},
-  identorian: {src : 'https://ipfs.io/ipfs/QmYK9CchybNS3HxrgvgxnKGHCzeRVwNZV1cmiLGf4qpx4m/identorian.svg', type: 'image/svg+xml'},
-  maverick: {src : 'https://ipfs.io/ipfs/QmQt3CTiZEwDdrAW7ebSM7QX7ZLYts6nWfjfh36xB4iWM7/venomid-maverick.gif', type: 'image/gif'},
-  champion: {src : 'https://ipfs.io/ipfs/QmSdjoBfigMQu2yGpMj5Fhd1xFQFYoTUVTLjUZjGcpnmee/venomid-champions.gif', type: 'image/gif'},
-  earlier: {src : 'https://ipfs.io/ipfs/Qmb1huuaLMpA3JodFysEqpWc65vy4NkXfuix5mYkvaBkJE/earlier.svg', type: 'image/svg+xml'},
-  catalyst: {src : 'https://ipfs.io/ipfs/QmUYe2xS43JB9d7qNB4KyU9ptGCJ9KG5bJcPj7rkdmfqxg/venomid-countdown-catalyst_nft.jpg', type: 'image/jpeg'},
-  spring: {src : 'https://ipfs.io/ipfs/QmNt4zMpdSUtZ8p9ZQPWZy3U4anh9Pb6BxvUZzpFwkEWyk/venomid-springburst-nft.jpg', type: 'image/jpeg'},
-  
+  explorer: {
+    src: 'https://ipfs.io/ipfs/QmRdewFUw4jxTWnoVMSVLyQ7WmahWUMxDrCVYEwL7TuUDq/crypto-explorer.svg',
+    type: 'image/svg+xml',
+  },
+  pioneer: {
+    src: 'https://ipfs.io/ipfs/QmQ98JMocRupVnixhGcVupmDdmuMxXdsq1ozPyNhskzqEh/venom-id-pioneer.svg',
+    type: 'image/svg+xml',
+  },
+  family: {
+    src: 'https://ipfs.io/ipfs/QmSoTZi3B6FXLRVBXhsTCwfYPnWMCUHpBc6HiVrGpuBU6o/venomid-family.gif',
+    type: 'image/gif',
+  },
+  geek: {
+    src: 'https://ipfs.io/ipfs/QmPgY5KJ25cBmG4H4HkF6DTgxQ4gaUtzfChS8wS8EXScgH/venomid-geek.gif',
+    type: 'image/gif',
+  },
+  identorian: {
+    src: 'https://ipfs.io/ipfs/QmYK9CchybNS3HxrgvgxnKGHCzeRVwNZV1cmiLGf4qpx4m/identorian.svg',
+    type: 'image/svg+xml',
+  },
+  maverick: {
+    src: 'https://ipfs.io/ipfs/QmQt3CTiZEwDdrAW7ebSM7QX7ZLYts6nWfjfh36xB4iWM7/venomid-maverick.gif',
+    type: 'image/gif',
+  },
+  champion: {
+    src: 'https://ipfs.io/ipfs/QmSdjoBfigMQu2yGpMj5Fhd1xFQFYoTUVTLjUZjGcpnmee/venomid-champions.gif',
+    type: 'image/gif',
+  },
+  earlier: {
+    src: 'https://ipfs.io/ipfs/Qmb1huuaLMpA3JodFysEqpWc65vy4NkXfuix5mYkvaBkJE/earlier.svg',
+    type: 'image/svg+xml',
+  },
+  catalyst: {
+    src: 'https://ipfs.io/ipfs/QmUYe2xS43JB9d7qNB4KyU9ptGCJ9KG5bJcPj7rkdmfqxg/venomid-countdown-catalyst_nft.jpg',
+    type: 'image/jpeg',
+  },
+  spring: {
+    src: 'https://ipfs.io/ipfs/QmNt4zMpdSUtZ8p9ZQPWZy3U4anh9Pb6BxvUZzpFwkEWyk/venomid-springburst-nft.jpg',
+    type: 'image/jpeg',
+  },
 };

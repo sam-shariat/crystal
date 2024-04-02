@@ -2327,16 +2327,6 @@
     semver "^7.3.8"
     superstruct "^1.0.3"
 
-"@motionone/animation@^10.13.1":
-  version "10.17.0"
-  resolved "https://registry.yarnpkg.com/@motionone/animation/-/animation-10.17.0.tgz#7633c6f684b5fee2b61c405881b8c24662c68fca"
-  integrity sha512-ANfIN9+iq1kGgsZxs+Nz96uiNcPLGTXwfNo2Xz/fcJXniPYpaz/Uyrfa+7I5BPLxCP82sh7quVDudf1GABqHbg==
-  dependencies:
-    "@motionone/easing" "^10.17.0"
-    "@motionone/types" "^10.17.0"
-    "@motionone/utils" "^10.17.0"
-    tslib "^2.3.1"
-
 "@motionone/animation@^10.15.1", "@motionone/animation@^10.16.3":
   version "10.16.3"
   resolved "https://registry.yarnpkg.com/@motionone/animation/-/animation-10.16.3.tgz#f5b71e27fd8b88b61f983adb0ed6c8e3e89281f9"
@@ -2345,18 +2335,6 @@
     "@motionone/easing" "^10.16.3"
     "@motionone/types" "^10.16.3"
     "@motionone/utils" "^10.16.3"
-    tslib "^2.3.1"
-
-"@motionone/dom@10.13.1":
-  version "10.13.1"
-  resolved "https://registry.yarnpkg.com/@motionone/dom/-/dom-10.13.1.tgz#fc29ea5d12538f21b211b3168e502cfc07a24882"
-  integrity sha512-zjfX+AGMIt/fIqd/SL1Lj93S6AiJsEA3oc5M9VkUr+Gz+juRmYN1vfvZd6MvEkSqEjwPQgcjN7rGZHrDB9APfQ==
-  dependencies:
-    "@motionone/animation" "^10.13.1"
-    "@motionone/generators" "^10.13.1"
-    "@motionone/types" "^10.13.0"
-    "@motionone/utils" "^10.13.1"
-    hey-listen "^1.0.8"
     tslib "^2.3.1"
 
 "@motionone/dom@^10.16.2", "@motionone/dom@^10.16.4":
@@ -2379,23 +2357,6 @@
     "@motionone/utils" "^10.16.3"
     tslib "^2.3.1"
 
-"@motionone/easing@^10.17.0":
-  version "10.17.0"
-  resolved "https://registry.yarnpkg.com/@motionone/easing/-/easing-10.17.0.tgz#d66cecf7e3ee30104ad00389fb3f0b2282d81aa9"
-  integrity sha512-Bxe2wSuLu/qxqW4rBFS5m9tMLOw+QBh8v5A7Z5k4Ul4sTj5jAOfZG5R0bn5ywmk+Fs92Ij1feZ5pmC4TeXA8Tg==
-  dependencies:
-    "@motionone/utils" "^10.17.0"
-    tslib "^2.3.1"
-
-"@motionone/generators@^10.13.1":
-  version "10.17.0"
-  resolved "https://registry.yarnpkg.com/@motionone/generators/-/generators-10.17.0.tgz#878d292539c41434c13310d5f863a87a94e6e689"
-  integrity sha512-T6Uo5bDHrZWhIfxG/2Aut7qyWQyJIWehk6OB4qNvr/jwA/SRmixwbd7SOrxZi1z5rH3LIeFFBKK1xHnSbGPZSQ==
-  dependencies:
-    "@motionone/types" "^10.17.0"
-    "@motionone/utils" "^10.17.0"
-    tslib "^2.3.1"
-
 "@motionone/generators@^10.16.4":
   version "10.16.4"
   resolved "https://registry.yarnpkg.com/@motionone/generators/-/generators-10.16.4.tgz#4a38708244bce733bfcebd4a26d19f4bbabd36af"
@@ -2413,11 +2374,6 @@
     "@motionone/dom" "^10.16.4"
     tslib "^2.3.1"
 
-"@motionone/types@^10.13.0", "@motionone/types@^10.17.0":
-  version "10.17.0"
-  resolved "https://registry.yarnpkg.com/@motionone/types/-/types-10.17.0.tgz#179571ce98851bac78e19a1c3974767227f08ba3"
-  integrity sha512-EgeeqOZVdRUTEHq95Z3t8Rsirc7chN5xFAPMYFobx8TPubkEfRSm5xihmMUkbaR2ErKJTUw3347QDPTHIW12IA==
-
 "@motionone/types@^10.15.1":
   version "10.15.1"
   resolved "https://registry.npmjs.org/@motionone/types/-/types-10.15.1.tgz"
@@ -2427,15 +2383,6 @@
   version "10.16.3"
   resolved "https://registry.yarnpkg.com/@motionone/types/-/types-10.16.3.tgz#9284ea8a52f6b32c51c54b617214f20e43ac6c59"
   integrity sha512-W4jkEGFifDq73DlaZs3HUfamV2t1wM35zN/zX7Q79LfZ2sc6C0R1baUHZmqc/K5F3vSw3PavgQ6HyHLd/MXcWg==
-
-"@motionone/utils@^10.13.1", "@motionone/utils@^10.17.0":
-  version "10.17.0"
-  resolved "https://registry.yarnpkg.com/@motionone/utils/-/utils-10.17.0.tgz#cc0ba8acdc6848ff48d8c1f2d0d3e7602f4f942e"
-  integrity sha512-bGwrki4896apMWIj9yp5rAS2m0xyhxblg6gTB/leWDPt+pb410W8lYWsxyurX+DH+gO1zsQsfx2su/c1/LtTpg==
-  dependencies:
-    "@motionone/types" "^10.17.0"
-    hey-listen "^1.0.8"
-    tslib "^2.3.1"
 
 "@motionone/utils@^10.15.1":
   version "10.15.1"
@@ -8719,17 +8666,12 @@ forwarded@0.2.0:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.2.0.tgz#2269936428aad4c15c7ebe9779a84bf0b2a81811"
   integrity sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==
 
-framer-motion@7.5.0:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-7.5.0.tgz#e61864f9423f8b24ee5d6539e77c5d6571ee5f31"
-  integrity sha512-uz42xPsO5VmoRrT0Q2I1UZBvQ+Px0Is2c+7mum2z/UhC9m2Q1/2DmSR82ncc5qRtO/4OerNEm473ktOEX3unRg==
+framer-motion@10.8.0:
+  version "10.8.0"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.8.0.tgz#96076ac47ae4886c7b8c4fa02c7e6703769310fe"
+  integrity sha512-czMSz3QLPltxxGp2Z6i5G4i4VVwOQ5w2TlpNWh9RvespqkXSr6CbE3rAMMvQULnkuvgI+N4c/gjJSUvGo31WQA==
   dependencies:
-    "@motionone/dom" "10.13.1"
-    framesync "6.1.2"
-    hey-listen "^1.0.8"
-    popmotion "11.0.5"
-    style-value-types "5.1.2"
-    tslib "2.4.0"
+    tslib "^2.4.0"
   optionalDependencies:
     "@emotion/is-prop-valid" "^0.8.2"
 
@@ -11971,16 +11913,6 @@ polished@^4.2.2:
   dependencies:
     "@babel/runtime" "^7.17.8"
 
-popmotion@11.0.5:
-  version "11.0.5"
-  resolved "https://registry.yarnpkg.com/popmotion/-/popmotion-11.0.5.tgz#8e3e014421a0ffa30ecd722564fd2558954e1f7d"
-  integrity sha512-la8gPM1WYeFznb/JqF4GiTkRRPZsfaj2+kCxqQgr2MJylMmIKUwBfWW8Wa5fml/8gmtlD5yI01MP1QCZPWmppA==
-  dependencies:
-    framesync "6.1.2"
-    hey-listen "^1.0.8"
-    style-value-types "5.1.2"
-    tslib "2.4.0"
-
 postcss-css-variables@0.18.0:
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/postcss-css-variables/-/postcss-css-variables-0.18.0.tgz#d97b6da19e86245eb817006e11117382f997bb93"
@@ -13753,14 +13685,6 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha512-4gB8na07fecVVkOI6Rs4e7T6NOTki5EmL7TUduTs6bu3EdnSycntVJ4re8kgZA+wx9IueI2Y11bfbgwtzuE0KQ==
-
-style-value-types@5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/style-value-types/-/style-value-types-5.1.2.tgz#6be66b237bd546048a764883528072ed95713b62"
-  integrity sha512-Vs9fNreYF9j6W2VvuDTP7kepALi7sk0xtk2Tu8Yxi9UoajJdEVpNpCov0HsLTqXvNGKX+Uv09pkozVITi1jf3Q==
-  dependencies:
-    hey-listen "^1.0.8"
-    tslib "2.4.0"
 
 styled-components@^5.3.5:
   version "5.3.11"

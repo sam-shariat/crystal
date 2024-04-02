@@ -1,3 +1,4 @@
+import { TLD } from "core/utils/constants";
 import * as React from "react"
 interface Props {
   name : string;
@@ -90,7 +91,7 @@ function VIDImage({name} : Props) {
           filter="url(#dropShadowText)"
           textAnchor="middle"
         >
-          {`${name}.vid`}
+          {`${name}.${TLD}`}
         </text>
         <text
           xmlns="http://www.w3.org/2000/svg"

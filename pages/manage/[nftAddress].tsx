@@ -80,6 +80,9 @@ import {
   FONTS,
   MIN_FEE,
   BG_IMAGES,
+  IPFS_RECORD_ID,
+  AVATAR_RECORD_ID,
+  DISPLAY_RECORD_ID,
 } from 'core/utils/constants';
 import { ConnectButton } from 'components/venomConnect';
 import { getNft } from 'core/utils/nft';
@@ -268,14 +271,45 @@ const ManagePage: NextPage = () => {
         duration: null,
         isClosable: true,
       });
+
+      
       const tvmCell = await provider.packIntoCell({
         data: { ipfsdata: String(_jsonHash) },
         structure: [{ name: 'ipfsdata', type: 'string' }] as const,
       });
-      console.log(tvmCell);
+      
+      // let _records = [];
+
+      // _records.push({key: IPFS_RECORD_ID, value: tvmCell.boc});
+
+      // //if(avatar !== ''){
+      //   const avatarCell = await provider.packIntoCell({
+      //     data: { avatar: String(avatar) },
+      //     structure: [{ name: 'avatar', type: 'string' }] as const,
+      //   });
+      //   _records.push({key: AVATAR_RECORD_ID, value: avatarCell.boc})
+      // //}
+
+      // if(title !== ''){
+      //   const displayCell = await provider.packIntoCell({
+      //     data: { display: String(title) },
+      //     structure: [{ name: 'display', type: 'string' }] as const,
+      //   });
+      //   _records.push({key: DISPLAY_RECORD_ID, value: displayCell.boc})
+      // }
+
+      // const records_ = new Map();
+
+      // _records.map((obj) => {
+      //   records_.set(obj.key, obj.value);
+      // });
+
+
       // @ts-ignore: Unreachable code error
-      const saveTx = await nftContract.methods
-        .setRecord({ key: 33, value: tvmCell.boc })
+      //const saveTx = await nftContract.methods.setRecords({ records: _records})
+      //const saveTx = await nftContract.methods.setRecord({ key: AVATAR_RECORD_ID, value: avatarCell.boc })
+
+      const saveTx = await nftContract.methods.setRecord({ key: IPFS_RECORD_ID, value: tvmCell.boc })
         .send({
           amount: String(MIN_FEE),
           bounce: true,

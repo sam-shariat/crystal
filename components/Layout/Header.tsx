@@ -70,16 +70,15 @@ export default function Header() {
 
   return (
     <>
-      {/* {pathname === '/' && (
-        <Center px={[4, 4, 0]} py={2} bgGradient={'linear(to-r, var(--venom), var(--bluevenom1))'} color={'white'}>
-          {t('testnetNotice')}
+      {pathname === '/' && (
+        <Center px={[4, 4, 0]} fontSize={'lg'} py={2} bgGradient={'linear(to-r, var(--venom), var(--bluevenom1))'} color={'white'}>
+          Venom ID is going live on Venom mainnet on April 3rd 20:00 UTC.
         </Center>
-      )} */}
-
+      )}
       <Box
         as="nav"
         position={home ? 'absolute' : 'relative'}
-        top={0}
+        top={pathname === '/' ? ['84px','84px','42px'] : 0}
         zIndex={1000}
         px={0}
         m={0}
@@ -134,7 +133,7 @@ export default function Header() {
                 </NextLink>
               )}
 
-              <Popover>
+              <Popover onClose={onClose} isOpen={isOpen} onOpen={onOpen}>
                 <PopoverTrigger>
                   <IconButton aria-label="venomid-mobile-menu" variant="ghost" mx={0} rounded={'full'} size={['md','lg']}>
                     <LinkIcon type="RiMenuLine" size={22} />
@@ -161,12 +160,12 @@ export default function Header() {
                       />
                     </PopoverHeader>
                     <PopoverBody>
-                    
                       <SimpleGrid columns={2} py={2} gap={2}>
                       <NextLink href={'/what'} passHref>
                           <Button
                             variant="ghost"
                             colorScheme={pathname === '/what' ? 'green' : 'gray'}
+                            onClick={onClose}
                             width="100%"
                             justifyContent="left">
                             {t('What & Why')}
@@ -174,6 +173,7 @@ export default function Header() {
                         </NextLink>
                         <NextLink href={'/usecase'} passHref>
                           <Button
+                            onClick={onClose}
                             variant="ghost"
                             colorScheme={pathname === '/usecase' ? 'green' : 'gray'}
                             width="100%"
@@ -183,6 +183,7 @@ export default function Header() {
                         </NextLink>
                         <NextLink href={'/community'} passHref>
                           <Button
+                            onClick={onClose}
                             variant="ghost"
                             colorScheme={pathname === '/community' ? 'green' : 'gray'}
                             width="100%"
@@ -192,6 +193,7 @@ export default function Header() {
                         </NextLink>
                         <NextLink href={'/litepaper'} passHref>
                           <Button
+                            onClick={onClose}
                             variant="ghost"
                             colorScheme={pathname === '/litepaper' ? 'green' : 'gray'}
                             width="100%"
@@ -236,6 +238,7 @@ export default function Header() {
 
                         <NextLink href={'/terms'} passHref>
                           <Button
+                            onClick={onClose}
                             variant="ghost"
                             colorScheme={pathname === '/terms' ? 'green' : 'gray'}
                             width="100%"
@@ -245,6 +248,7 @@ export default function Header() {
                         </NextLink>
                         <NextLink href={'/privacy'} passHref>
                           <Button
+                            onClick={onClose}
                             variant="ghost"
                             colorScheme={pathname === '/privacy' ? 'green' : 'gray'}
                             width="100%"

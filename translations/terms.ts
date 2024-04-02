@@ -225,11 +225,11 @@ const terms: Terms = {
     fa: 'مشاهده',
   },
   description: {
-    en: 'Empower Your Digital Presence with a Name',
-    fa: 'هویت مجازی شما در بلاک‌چین با یک نام',
+    en: 'Empower Your Digital Presence',
+    fa: 'هویت مجازی شما در بلاک‌چین',
   },
   claimDescription: {
-    en: 'your entire virtual identity in the blockchain through one simple link',
+    en: 'Uniting Crypto Addresses and Personalized Websites in One Seamless Experience',
     fa: 'هویت مجازی شما در بلاکچین به وسیله یک لینک ساده با ونوم آیدی',
   },
   claimButton: {

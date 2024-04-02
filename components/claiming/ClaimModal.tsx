@@ -27,7 +27,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { capFirstLetter, truncAddress } from 'core/utils';
-import {  MIN_FEE, VENOMSCAN_NFT, VID_IMAGE_API } from 'core/utils/constants';
+import {  MIN_FEE, TLD, VENOMSCAN_NFT, VID_IMAGE_API } from 'core/utils/constants';
 import { LinkIcon, VenomScanIcon } from 'components/logos';
 import { Address, Transaction } from 'everscale-inpage-provider';
 
@@ -66,6 +66,8 @@ import {
 import CropAvatar from 'components/manage/CropAvatar';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
 import { useStorageUpload } from '@thirdweb-dev/react';
+import { getNft } from 'core/utils/nft';
+import { BaseNftJson } from 'core/utils/reverse';
 
 interface Props {
   message: any;
@@ -87,6 +89,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
   const [title,setTitle] = useAtom(titleAtom);
   const [subtitle,setSubtitle] = useAtom(subtitleAtom);
   const nftAddress = message.link;
+  const [nftData,setNftData] = useState<BaseNftJson | null>(null);
   const { provider } = useVenomProvider();
   const toast = useToast();
   const { mutateAsync: upload } = useStorageUpload();
@@ -242,22 +245,35 @@ export default function ClaimModal({ message, claimedName }: Props) {
 
 
   useEffect(() => {
+    async function getNftData() {
+      if(!provider || !isOpen) return;
+      const _nftData = await getNft(provider, message.link);
+      setNftData(_nftData);
+      console.log(_nftData)
+    }
+
+
     if (message.msg.length > 0 && message.type == 'success' && !isOpen) {
       onOpen();
       setAvatar('');
       setTitle('');
       setSubtitle('');
     }
-  }, [message]);
+
+    
+    getNftData();
+    
+
+  }, [message,provider]);
 
 
   return (
     <>
       {message.type === 'success' && (
-        <Modal isOpen={isOpen} onClose={onClose} isCentered size={'full'} scrollBehavior="outside">
+        <Modal isOpen={isOpen} onClose={onClose} isCentered size={['full','full','2xl']} scrollBehavior="outside">
           <ModalOverlay bg="blackAlpha.700" backdropFilter="auto" backdropBlur={'6px'} />
           <ModalContent bg={lightMode ? 'var(--white)' : 'var(--dark1)'}>
-            <ModalHeader textAlign={'center'}>🎉 {message.title}</ModalHeader>
+            <ModalHeader textAlign={'center'} display={'flex'} gap={2} justifyContent={'center'}><LinkIcon type={'RiCheckboxCircleFill'} color={'var(--venom1)'} size={'32px'} /> {message.title}</ModalHeader>
             <ModalBody
               display={'flex'}
               justifyContent={'center'}
@@ -265,19 +281,16 @@ export default function ClaimModal({ message, claimedName }: Props) {
               w={'100%'}>
               <Flex
                 direction={'column'}
-                maxW={'container.md'}
+                maxW={'100%'}
                 justify={'center'}
                 align={'center'}
                 gap={8}>
                 {/* <Text fontSize={'lg'}>{message.msg}</Text> */}
-                {avatar !== '' ? 
-                <ImageBox srcUrl={avatar} key={claimedName} size={'250px'} rounded='lg' shadow='none'/>
-                                      :
-                <LinkIcon type={'RiCheckboxCircleFill'} color={'var(--venom1)'} size={120} />}
-                <Flex align={'center'} width={'100%'} minW={['xs','sm','md','lg']} gap={4}>
+                
+                <Flex align={'center'} width={'100%'} minW={['xs','md','lg','xl']} gap={4}>
                   <Flex gap={1} flexDirection={'column'} w={'100%'}>
                     <Text fontSize={['xl']} fontWeight={'bold'}>
-                      {claimedName}.vid
+                      {claimedName}.{TLD}
                     </Text>
                     <Text fontSize={'lg'} fontWeight={'normal'}>
                       {' '}
@@ -317,6 +330,9 @@ export default function ClaimModal({ message, claimedName }: Props) {
                     </Tooltip>
                   </Flex>
                 </Flex>
+                {nftData && <Stack gap={4} w={'100%'}>
+                  <Text fontSize={'lg'} textAlign={'left'}>Expires On {new Date(Number(nftData.expire_time) * 1000).toLocaleString()}</Text>
+                </Stack>}
                 
                     <TargetAddress nftAddress={nftAddress} />
                     {/* {target !== '' && <EditAvatar />}
@@ -357,7 +373,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
               </Flex>
             </ModalBody>
             <ModalFooter p={6} justifyContent={'center'} w={'100%'}>
-              <Flex justifyContent={'space-between'} w={['100%', '100%', 'md', 'lg']}>
+              <Flex justifyContent={'space-between'} w={['100%', '100%', 'lg', 'xl']}>
                 <Button onClick={onClose}>Close</Button>
                 <Link
                   href={'manage/' + message.link}
@@ -375,7 +391,7 @@ export default function ClaimModal({ message, claimedName }: Props) {
                       ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
                       : 'linear(to-r, var(--venom0), var(--bluevenom0))',
                   }}>
-                  Continue Customizing
+                  {target.length < 60 && 'Skip & '}Continue Customizing
                 </Button></Link>
               </Flex>
             </ModalFooter>

@@ -1,6 +1,8 @@
 import { VenomConnect } from 'venom-connect';
 import { ProviderRpcClient } from 'everscale-inpage-provider';
 import { EverscaleStandaloneClient } from 'everscale-standalone-client';
+import { useAtom } from 'jotai';
+import { networkIdAtom } from 'core/atoms';
 
 const standaloneFallback = () =>
   EverscaleStandaloneClient.create({
@@ -14,7 +16,7 @@ const standaloneFallback = () =>
     },
   });
 
-export const initVenomConnect = async () => {
+export const initVenomConnect = async () => {  
   return new VenomConnect({
     theme: 'dark',
     checkNetworkId: 1000,

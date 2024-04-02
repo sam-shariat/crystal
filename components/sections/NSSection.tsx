@@ -35,8 +35,9 @@ import { useAtomValue } from 'jotai';
 import { useSendMessage, useVenomProvider, useConnect } from 'venom-react-hooks';
 import { rootContractAtom, venomContractAddressAtom } from 'core/atoms';
 import { Address } from 'everscale-inpage-provider';
-import { lookupAddress } from 'vid-sdk';
+//import {  } from 'vid-sdk';
 import { lookupNames } from 'core/utils/reverse';
+import { lookupAddress } from 'core/utils/lookUp';
 
 export default function NSSection() {
   const { t } = useTranslate();
@@ -157,7 +158,7 @@ export default function NSSection() {
 
   useEffect(() => {
     if (!loaded) {
-      if (address.includes('.vid')) {
+      if (address.includes('.venom')) {
         getAddress();
       } else if (isValidVenomAddress(address)) {
         getName();
@@ -166,7 +167,7 @@ export default function NSSection() {
         setSearchedNames([]);
       }
     } else {
-      if (!String(address).includes('.vid') && !isValidVenomAddress(address)) {
+      if (!String(address).includes('.venom') && !isValidVenomAddress(address)) {
         setSearchedName('');
         setLoaded(false);
       }
@@ -244,12 +245,12 @@ export default function NSSection() {
                 use case
               </Text>
               <Text fontSize={['md', 'lg', 'xl', 'xl']} color={'gray'}>
-                Enter a domain name e.g. faucet.vid or venom wallet address e.g. 0:32...4323
+                Enter a domain name e.g. faucet.venom or venom wallet address e.g. 0:32...4323
               </Text>
               <InputGroup>
                 <Input
                   height={'58px'}
-                  placeholder="e.g. faucet.vid"
+                  placeholder="e.g. faucet.venom"
                   value={address}
                   _focus={{
                     borderColor: 'white',

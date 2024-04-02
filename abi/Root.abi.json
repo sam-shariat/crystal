@@ -138,13 +138,8 @@
 			]
 		},
 		{
-			"name": "onAcceptTokensTransfer",
+			"name": "register",
 			"inputs": [
-				{"name":"value0","type":"address"},
-				{"name":"amount","type":"uint128"},
-				{"name":"sender","type":"address"},
-				{"name":"value3","type":"address"},
-				{"name":"value4","type":"address"},
 				{"name":"payload","type":"cell"}
 			],
 			"outputs": [
@@ -203,24 +198,6 @@
 			]
 		},
 		{
-			"name": "betaReg",
-			"inputs": [
-				{"name":"path","type":"string"},
-				{"name":"domainOwner","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "migrate",
-			"inputs": [
-				{"name":"paths","type":"string[]"},
-				{"name":"domainOwner","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
 			"name": "unreserve",
 			"inputs": [
 				{"name":"path","type":"string"},
@@ -242,21 +219,6 @@
 		},
 		{
 			"name": "deactivate",
-			"inputs": [
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "burnBalance",
-			"inputs": [
-				{"name":"amount","type":"uint128"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "syncBalance",
 			"inputs": [
 			],
 			"outputs": [
@@ -398,49 +360,6 @@
 			],
 			"outputs": [
 				{"components":[{"name":"hash","type":"uint256"},{"name":"active","type":"bool"}],"name":"data","type":"tuple"}
-			]
-		},
-		{
-			"name": "onWalletDeployed",
-			"inputs": [
-				{"name":"wallet","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "getToken",
-			"inputs": [
-				{"name":"answerId","type":"uint32"}
-			],
-			"outputs": [
-				{"name":"token","type":"address"}
-			]
-		},
-		{
-			"name": "getWallet",
-			"inputs": [
-				{"name":"answerId","type":"uint32"}
-			],
-			"outputs": [
-				{"name":"wallet","type":"address"}
-			]
-		},
-		{
-			"name": "getBalance",
-			"inputs": [
-				{"name":"answerId","type":"uint32"}
-			],
-			"outputs": [
-				{"name":"balance","type":"uint128"}
-			]
-		},
-		{
-			"name": "onReceiveBalance",
-			"inputs": [
-				{"name":"balance","type":"uint128"}
-			],
-			"outputs": [
 			]
 		},
 		{
@@ -615,30 +534,6 @@
 			]
 		},
 		{
-			"name": "_token",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_token","type":"address"}
-			]
-		},
-		{
-			"name": "_wallet",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_wallet","type":"address"}
-			]
-		},
-		{
-			"name": "_balance",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"_balance","type":"uint128"}
-			]
-		},
-		{
 			"name": "_randomNonce",
 			"inputs": [
 			],
@@ -754,10 +649,18 @@
 			]
 		},
 		{
-			"name": "Registered",
+			"name": "CreatedPrimary",
 			"inputs": [
-				{"name":"path","type":"string"},
-				{"name":"owner","type":"address"}
+				{"name":"primary","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ChangedPrimary",
+			"inputs": [
+				{"name":"oldPrimary","type":"address"},
+				{"name":"newPrimary","type":"address"}
 			],
 			"outputs": [
 			]
@@ -840,9 +743,6 @@
 		{"name":"_indexBasisCode","type":"cell"},
 		{"name":"_indexCode","type":"cell"},
 		{"name":"_json","type":"string"},
-		{"name":"_token","type":"address"},
-		{"name":"_wallet","type":"address"},
-		{"name":"_balance","type":"uint128"},
 		{"name":"_slaves","type":"optional(cell)"},
 		{"name":"_randomNonce","type":"uint256"},
 		{"name":"_tld","type":"string"},

@@ -340,8 +340,35 @@ const sumUint128 = (a:any, b:any)=> {
   return Number(result);
 }
 
+const getCurrentDateUnix = () => Math.floor(Date.now() / 1000);
+
+const formatDateDifference = (unix: number): string => {
+  const now = new Date();
+  const diff = (unix*1000) - now.getTime();
+
+  const units: { label: string; duration: number }[] = [
+    { label: 'year', duration: 1000 * 60 * 60 * 24 * 365 },
+    { label: 'month', duration: 1000 * 60 * 60 * 24 * 30 },
+    { label: 'day', duration: 1000 * 60 * 60 * 24 },
+    { label: 'hour', duration: 1000 * 60 * 60 },
+    { label: 'minute', duration: 1000 * 60 },
+  ];
+
+  for (const unit of units) {
+    const value = Math.floor(diff / unit.duration);
+    if (value > 0) {
+      return value > 1 ? `${value} ${unit.label}s` : `about a ${unit.label}`;
+    }
+  }
+
+  return 'just now';
+};
+
+
 export {
+  formatDateDifference,
   withHttps,
+  getCurrentDateUnix,
   base64ToBlob,
   truncAddress,
   sleep,

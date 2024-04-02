@@ -225,7 +225,7 @@ export default function IntroSection() {
             rounded={'2xl'}
             border={'1px solid #77777750'}>
             <Flex gap={[3,4,6]} justify={'center'} align={'center'} p={6}>
-              <DomainName name={'sam.vid'} avatar={VARIATIONS[4].avatar} size={['md','lg']}/>
+              <DomainName name={'sam.venom'} avatar={VARIATIONS[4].avatar} size={['md','lg']}/>
               <LinkIcon type="RiArrowLeftRightLine" size={24} />
               <AccountAddress address="0:4bc6 ... 3765" chain="venom" size={['md','lg']}/>
             </Flex>

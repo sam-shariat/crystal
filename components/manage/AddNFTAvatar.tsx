@@ -119,28 +119,12 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
     if (!nftjsons) return;
     let nft = nftjsons[index];
     if (!nft) return;
-    let avatarURL;
-    if (String(nft.name).slice(-4).toLowerCase() === '.vid') {
-      const ipfsData = nft.attributes?.find((att) => att.trait_type === 'DATA')?.value;
-      if (ipfsData === '') {
-        avatarURL = String(nft.preview?.source);
-      } else {
-        const res = await axios.get('https://ipfs.io/ipfs/' + ipfsData);
-        if (res) {
-          avatarURL = res.data.avatar
-            ? res.data.avatar
-            : nft.files
-            ? nft?.files[0]?.source
-            : nft.preview?.source;
-        }
-      }
-    } else {
-      avatarURL = nft.files
+    let avatarURL = nft.files
         ? !nft?.files[0]?.mimetype.includes('metadata') || !nft?.files[0]?.mimetype.includes('json')
           ? nft.files[0].source
           : nft.preview?.source
         : nft.preview?.source;
-    }
+    
 
     setEditingAvatar(String(avatarURL));
     setEditingAvatarFile(undefined);
@@ -152,28 +136,12 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
     if (!nftjsons) return;
     let nft = nftjsons[index];
     if (!nft) return;
-    let avatarURL;
-    if (String(nft.name).slice(-4).toLowerCase() === '.vid') {
-      const ipfsData = nft.attributes?.find((att) => att.trait_type === 'DATA')?.value;
-      if (ipfsData === '') {
-        avatarURL = String(nft.preview?.source);
-      } else {
-        const res = await axios.get('https://ipfs.io/ipfs/' + ipfsData);
-        if (res) {
-          avatarURL = res.data.avatar
-            ? res.data.avatar
-            : nft.files
-            ? nft.files[0].source
-            : nft.preview?.source;
-        }
-      }
-    } else {
-      avatarURL = nft.files
+    let avatarURL = nft.files
         ? !nft?.files[0]?.mimetype.includes('metadata') || !nft?.files[0]?.mimetype.includes('json')
           ? nft.files[0].source
           : nft.preview?.source
         : nft.preview?.source;
-    }
+    
 
     let _styleType;
 
@@ -525,14 +493,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
                             nodrag
                             shape={type === 'avatar' ? avatarShape : 'round'}
                             shadow="none"
-                            url={
-                              String(nft.name).slice(-4).toLowerCase() === '.vid'
-                                ? ''
-                                : String(nft.preview?.source)
-                            }
-                            nft={
-                              String(nft.name).slice(-4).toLowerCase() === '.vid' ? nft : undefined
-                            }
+                            url={String(nft.preview?.source)}
                           />
                         )}
                       </Box>

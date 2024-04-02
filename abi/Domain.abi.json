@@ -219,6 +219,15 @@
 			]
 		},
 		{
+			"name": "getAvatar",
+			"inputs": [
+				{"name":"answerId","type":"uint32"}
+			],
+			"outputs": [
+				{"name":"avatar","type":"string"}
+			]
+		},
+		{
 			"name": "query",
 			"inputs": [
 				{"name":"answerId","type":"uint32"},
@@ -249,6 +258,14 @@
 			"name": "setIpfs",
 			"inputs": [
 				{"name":"hash","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setAvatar",
+			"inputs": [
+				{"name":"avatar","type":"string"}
 			],
 			"outputs": [
 			]
@@ -478,11 +495,75 @@
 			]
 		},
 		{
+			"name": "_eth",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_eth","type":"string"}
+			]
+		},
+		{
 			"name": "_ipfs",
 			"inputs": [
 			],
 			"outputs": [
 				{"name":"_ipfs","type":"string"}
+			]
+		},
+		{
+			"name": "_avatar",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_avatar","type":"string"}
+			]
+		},
+		{
+			"name": "_header",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_header","type":"string"}
+			]
+		},
+		{
+			"name": "_location",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_location","type":"string"}
+			]
+		},
+		{
+			"name": "_display",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_display","type":"string"}
+			]
+		},
+		{
+			"name": "_description",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_description","type":"string"}
+			]
+		},
+		{
+			"name": "_notice",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_notice","type":"string"}
+			]
+		},
+		{
+			"name": "_styles",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_styles","type":"string"}
 			]
 		},
 		{
@@ -604,10 +685,82 @@
 			]
 		},
 		{
+			"name": "ChangedEth",
+			"inputs": [
+				{"name":"oldEth","type":"string"},
+				{"name":"newEth","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ChangedAvatar",
+			"inputs": [
+				{"name":"oldAvatar","type":"string"},
+				{"name":"newAvatar","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "ChangedIpfs",
 			"inputs": [
 				{"name":"oldHash","type":"string"},
 				{"name":"newHash","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ChangedHeader",
+			"inputs": [
+				{"name":"oldHeader","type":"string"},
+				{"name":"newAHeader","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ChangedLocation",
+			"inputs": [
+				{"name":"oldLocation","type":"string"},
+				{"name":"newALocation","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ChangedDisplay",
+			"inputs": [
+				{"name":"oldDisplay","type":"string"},
+				{"name":"newDisplay","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ChangedDescription",
+			"inputs": [
+				{"name":"oldDescription","type":"string"},
+				{"name":"newDescription","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ChangedNotice",
+			"inputs": [
+				{"name":"oldNotice","type":"string"},
+				{"name":"newNotice","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "ChangedStyles",
+			"inputs": [
+				{"name":"oldStyles","type":"string"},
+				{"name":"newStyles","type":"string"}
 			],
 			"outputs": [
 			]
@@ -696,7 +849,15 @@
 		{"name":"_initTime","type":"uint32"},
 		{"name":"_expireTime","type":"uint32"},
 		{"name":"_target","type":"address"},
+		{"name":"_eth","type":"string"},
 		{"name":"_ipfs","type":"string"},
+		{"name":"_avatar","type":"string"},
+		{"name":"_header","type":"string"},
+		{"name":"_location","type":"string"},
+		{"name":"_display","type":"string"},
+		{"name":"_description","type":"string"},
+		{"name":"_notice","type":"string"},
+		{"name":"_styles","type":"string"},
 		{"name":"_records","type":"map(uint32,cell)"},
 		{"components":[{"name":"startZeroAuction","type":"uint32"},{"name":"expiring","type":"uint32"},{"name":"grace","type":"uint32"}],"name":"_durationConfig","type":"tuple"},
 		{"components":[{"name":"maxDuration","type":"uint32"},{"name":"graceFinePercent","type":"uint128"}],"name":"_config","type":"tuple"},

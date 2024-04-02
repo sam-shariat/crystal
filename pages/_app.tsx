@@ -14,11 +14,12 @@ import {
   zerionWallet,
   rainbowWallet,
 } from '@thirdweb-dev/react';
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google';
 //import { SpeedInsights } from "@vercel/speed-insights/next"
 import '../styles/globals.css';
 import 'intro.js/introjs.css';
 import { Ethereum, Polygon, Arbitrum, Binance, Goerli, ZksyncEra } from '@thirdweb-dev/chains';
+import { motion } from 'framer-motion';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useDirectionSetter();
@@ -44,11 +45,16 @@ function MyApp({ Component, pageProps }: AppProps) {
           ]}
           authConfig={{
             authUrl: '/api/auth',
-            domain: process.env.NEXT_PUBLIC_SITE_URL || "localhost:3000",
+            domain: process.env.NEXT_PUBLIC_SITE_URL || 'localhost:3000',
           }}
           clientId={process.env.NEXT_PUBLIC_THIRDWEB_ID}>
           <Layout>
-            <Component {...pageProps} />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}>
+              <Component {...pageProps} />
+            </motion.div>
             <GoogleAnalytics gaId={String(process.env.NEXT_PUBLIC_GA_ID)} />
           </Layout>
         </ThirdwebProvider>

@@ -20,6 +20,8 @@ import {
   Icon,
   MenuDivider,
 } from '@chakra-ui/react';
+import NextLink from 'next/link';
+
 import { LinkIcon, VenomFoundation, VenomScanIcon } from 'components/logos';
 import {
   AVATAR_API_URL,
@@ -35,7 +37,7 @@ import {
   SITE_URL,
   VENOMSCAN_NFT,
 } from 'core/utils/constants';
-import { sleep, truncAddress, capFirstLetter, isValidSignHash } from 'core/utils';
+import { sleep, truncAddress, capFirstLetter, isValidSignHash, getCurrentDateUnix } from 'core/utils';
 import { useConnect, useSignMessage, useVenomProvider } from 'venom-react-hooks';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { Address } from 'everscale-inpage-provider';
@@ -70,44 +72,45 @@ import {
   venomContractAtomV2,
   venomProviderAtom,
 } from 'core/atoms';
-import {
-  ConnectWallet,
-  useAddress,
-  useBalance,
-  useChain,
-  useConnectionStatus,
-  useSwitchChain,
-} from '@thirdweb-dev/react';
+// import {
+//   ConnectWallet,
+//   useAddress,
+//   useBalance,
+//   useChain,
+//   useConnectionStatus,
+//   useSwitchChain,
+// } from '@thirdweb-dev/react';
 import getVid from 'core/utils/getVid';
-import { createWeb3Name } from '@web3-name-sdk/core';
+//import { createWeb3Name } from '@web3-name-sdk/core';
 import { getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
 import Link from 'next/link';
+import { getAllNames } from 'core/utils/reverse';
 //import { lookupName } from 'vid-sdk';
 
 export default function ConnectButton() {
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const [small] = useMediaQuery('(min-width: 480px)');
   const { login, disconnect, isConnected, account } = useConnect();
-  const web3Name = createWeb3Name();
+  //const web3Name = createWeb3Name();
   const { provider } = useVenomProvider();
   const [network, setNetwork] = useAtom(networkAtom);
   //const ethAddress = useAtomValue(ethAtom);
-  const ethAddress = useAddress();
-  const _status = useConnectionStatus();
-  const ethBalance = useBalance();
+  //const ethAddress = useAddress();
+  //const _status = useConnectionStatus();
+  //const ethBalance = useBalance();
   const symbol = network === 'venom' ? 'VENOM' : 'BNB'; //ethBalance.data?.symbol;
-  const chain = useChain();
-  const switchChain = useSwitchChain();
+ // const chain = useChain();
+  //const switchChain = useSwitchChain();
   const currentChain = 'BNB';
   const { colorMode } = useColorMode();
   const address =
-    network === 'venom'
-      ? account?.address !== undefined
+    //network === 'venom'
+       account?.address !== undefined
         ? account?.address.toString()
         : ''
-      : ethAddress !== undefined
-      ? ethAddress
-      : '';
+      //: ethAddress !== undefined
+      //? ethAddress
+      //: '';
   // const balance =
   //   network === 'venom'
   //     ? account?.balance !== undefined
@@ -181,6 +184,7 @@ export default function ConnectButton() {
 
       if (
         !_venomContract?.methods ||
+        !_earlyAdopterContract?.methods ||
         !_venomContractV1?.methods ||
         !_venomContractV2?.methods ||
         !_rootContract?.methods
@@ -196,7 +200,7 @@ export default function ConnectButton() {
         return;
       }
       // Fetch all Indexes by hash
-      const indexesAddresses = await getAddressesFromIndex(codeHash, provider, 5);
+      const indexesAddresses = await getAddressesFromIndex(codeHash, provider, 10);
       if (!indexesAddresses || !indexesAddresses.length) {
         //setIsLoading(false);
         return;
@@ -218,42 +222,10 @@ export default function ConnectButton() {
           // console.log('error getting venomid nft ', indexAddress);
         }
       });
-
-      // @ts-ignore: Unreachable code error
-      // const { value0: name1 }: any = await _venomContract?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
-      //   .call();
-
-      // if (name1?.name !== '' && !primaryName?.nftAddress) {
-      //   setPrimaryName(name1);
-      //   setSignMessage(`Hey there ${name1.name}.vid ,${SIGN_MESSAGE}`);
-      // } else {
-      //   console.log('cheking second ...');
-      //   // @ts-ignore: Unreachable code error
-      //   const { value0: namev1 }: any = await _venomContractV1?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
-      //     .call();
-      //   console.log(namev1);
-      //   if (namev1?.name !== '') {
-      //     setPrimaryName(namev1);
-      //     setSignMessage(`Hey there ${namev1.name}.vid ,${SIGN_MESSAGE}`);
-      //   } else {
-      //     console.log('cheking third ...');
-      //     // @ts-ignore: Unreachable code error
-      //     const { value0: namev2 }: any = await _venomContractV2?.methods.getPrimaryName({ _owner: new Address(String(account.address)) })
-      //       .call();
-      //     console.log(namev2);
-      //     if (namev2?.naame !== '') {
-      //       setPrimaryName(namev2);
-      //       setSignMessage(`Hey there ${namev2.name}.vid ,${SIGN_MESSAGE}`);
-      //     } else {
-      //       setPrimaryName({ name: '', nftAddress: undefined });
-      //       setSignMessage(SIGN_MESSAGE);
-      //     }
-      //   }
-      // }
-
-      if (_status !== 'connected' && _status !== 'connecting') {
-        switchNetwork('venom');
-      }
+      
+      //if (_status !== 'connected' && _status !== 'connecting') {
+      //  switchNetwork('venom');
+      //}
       //}
     } catch {
       (e: any) => {
@@ -265,20 +237,20 @@ export default function ConnectButton() {
     //console.log('primary loaded')
   }
 
-  async function getEthPrimary() {
-    if (!ethAddress) return;
-    //console.log(ethAddress);
-    try {
-      const _name = await web3Name.getDomainName({ address: ethAddress });
-      setEthPrimaryName({ name: _name ?? '', nftAddress: '' });
-    } catch {
-      (e: any) => {
-        console.log('error in eth primary', e);
-      };
-    }
+  // async function getEthPrimary() {
+  //   if (!ethAddress) return;
+  //   //console.log(ethAddress);
+  //   try {
+  //     const _name = await web3Name.getDomainName({ address: ethAddress });
+  //     setEthPrimaryName({ name: _name ?? '', nftAddress: '' });
+  //   } catch {
+  //     (e: any) => {
+  //       console.log('error in eth primary', e);
+  //     };
+  //   }
 
-    setEthPrimaryLoaded(true);
-  }
+  //   setEthPrimaryLoaded(true);
+  // }
 
   useEffect(() => {
     //console.log(network,signMessage,isValidSignHash(signHash, signDate))
@@ -300,10 +272,10 @@ export default function ConnectButton() {
   const logout = async () => {
     await disconnect();
     setIsConnected(false);
-    if (_status !== 'connected') {
-      switchNetwork('');
-    }
-    console.log(_status);
+    // if (_status !== 'connected') {
+    switchNetwork('');
+    // }
+    // console.log(_status);
     setConnectedAccount('');
     setPrimaryName({ name: '', nftAddress: '' });
   };
@@ -323,9 +295,9 @@ export default function ConnectButton() {
   useEffect(() => {
     async function checkPrimary() {
       try {
-        if (!ethPrimaryLoaded || address !== ethAddress) {
-          getEthPrimary();
-        }
+        // if (!ethPrimaryLoaded || address !== ethAddress) {
+        //   getEthPrimary();
+        // }
 
         if (account && isConnected && provider) {
           if (!provider?.isInitialized) {
@@ -348,7 +320,7 @@ export default function ConnectButton() {
     }
 
     checkPrimary();
-  }, [primaryName, account, network, ethAddress]);
+  }, [primaryName, account, network]); // ethAddress
 
   return (
     <>
@@ -422,7 +394,7 @@ export default function ConnectButton() {
             w={['168px', '192px']}>
             <Center gap={2}>
               {/* <LinkIcon type="venom" key={'connect-wallet-venom'} /> */}
-              Connect Venom
+              {network ? 'Loading ...' : 'Connect Venom'}
             </Center>
           </Button>
         ) : (
@@ -477,7 +449,7 @@ export default function ConnectButton() {
                   bgClip="text"
                   my={'0 !important'}>
                   {primaryName?.name && primaryName?.name !== ''
-                    ? primaryName.name.length > (!small ? 8 : 12) ? primaryName.name?.slice(0,(!small ? 8 : 12)) + '...' : primaryName.name
+                    ? primaryName.name.length > (!small ? 11 : 12) ? primaryName.name?.slice(0,(!small ? 11 : 12)) + '...' : primaryName.name
                     : truncAddress(String(account?.address))}
                 </Text>
                 {/* </Stack> */}
@@ -565,6 +537,7 @@ export default function ConnectButton() {
                   primaryName?.nftAddress?.toString().length > 60 && (
                     <LinkBox px={5}>
                       <Link href={'manage/' + primaryName?.nftAddress?.toString()} passHref>
+                      
                         <Button
                           borderColor={'gray.800'}
                           gap={2}
@@ -574,12 +547,13 @@ export default function ConnectButton() {
                           <LinkIcon type="RiUserLine" size={22} />
                           Profile
                         </Button>
+                        
                       </Link>
                     </LinkBox>
                   )}
                 {isConnected && (
                   <LinkBox px={5}>
-                    <LinkOverlay href={'/settings'}>
+                    <Link href={'/settings'} passHref>
                       <Button
                         borderColor={'gray.800'}
                         gap={2}
@@ -589,11 +563,11 @@ export default function ConnectButton() {
                         <LinkIcon type="RiSettings4Line" size={22} />
                         Settings
                       </Button>
-                    </LinkOverlay>
+                    </Link>
                   </LinkBox>
                 )}
 
-                <MenuDivider />
+                {/* <MenuDivider />
                 <Box px={5}>
                   <Button
                     onClick={switchAccount}
@@ -618,7 +592,7 @@ export default function ConnectButton() {
                       Request Testnet Funds
                     </Button>
                   </LinkOverlay>
-                </LinkBox>
+                </LinkBox> */}
               </Stack>
             </MenuList>
           </Menu>
