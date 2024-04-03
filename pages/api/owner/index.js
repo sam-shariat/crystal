@@ -49,7 +49,7 @@ export default async function handler(req, res) {
 
     
     const codeHash_ = _codeHash.decoded.output.codeHash;
-    console.log(codeHash_);
+    //console.log(codeHash_);
     const codeHash = BigInt(_codeHash.decoded.output.codeHash).toString(16).padStart(64, '0')
 
     const query = `
