@@ -410,7 +410,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
           _setOpen(true);
           onOpen();
         }}>
-        {defaultType === 'avatar' ? 'Pick NFT Avatar' : 'Pick NFT'}
+        {defaultType === 'avatar' ? 'Pick Avatar' : 'Pick NFT'}
       </Button>
       <Drawer key={key} onClose={onClose} isOpen={_open} size={'full'} placement="bottom">
         <DrawerOverlay />

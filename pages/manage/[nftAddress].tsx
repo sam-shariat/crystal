@@ -367,6 +367,114 @@ const ManagePage: NextPage = () => {
     }
   }
 
+
+  async function saveAvatar() {
+    if (!isConnected) {
+      toast({
+        status: 'info',
+        title: 'connect wallet',
+        description: 'please connect your venom wallet',
+        isClosable: true,
+      });
+      return;
+    }
+    if (!provider) {
+      toast({
+        status: 'info',
+        title: 'Provider Not Ready',
+        description:
+          'Please wait a few seconds and try again, Your Wallet Provider is not ready, yet',
+      });
+      return;
+    }
+
+    if (provider.isInitialized) {
+      setIsSaving(true);
+      toast({
+        status: 'loading',
+        title: 'saving avatar to your domain on the blockchain',
+        description: 'Please confirm the transaction in your wallet',
+        duration: null,
+        isClosable: true,
+      });
+
+      
+      
+      if(avatar === ''){
+        toast({
+          status: 'loading',
+          title: 'saving venom id profile to the blockchain',
+          description: 'Please confirm the transaction in your wallet',
+          duration: null,
+          isClosable: true,
+        });
+        return;
+      }
+        const avatarCell = await provider.packIntoCell({
+          data: { avatar: String(avatar) },
+          structure: [{ name: 'avatar', type: 'string' }] as const,
+        });
+
+
+      // @ts-ignore: Unreachable code error
+      const saveTx = await nftContract.methods.setRecord({ key: AVATAR_RECORD_ID, value: avatarCell.boc })
+        .send({
+          amount: String(MIN_FEE),
+          bounce: true,
+          from: account?.address,
+        })
+        .catch((e: any) => {
+          if (e.code === 3) {
+            // rejected by a user
+            setIsSaving(false);
+            toast.closeAll();
+            return Promise.resolve(null);
+          } else {
+            setIsSaving(false);
+            toast.closeAll();
+            // console.log(e);
+            return Promise.reject(e);
+          }
+        });
+
+      if (saveTx) {
+        setIsConfirming(true);
+        toast.closeAll();
+        toast({
+          status: 'loading',
+          title: 'confirming changes on the blockchain',
+          description: 'Please wait a few moments while your changes are saved',
+          duration: null,
+          isClosable: true,
+        });
+        let receiptTx: Transaction | undefined;
+        const subscriber = provider && new provider.Subscriber();
+        if (subscriber)
+          await subscriber
+            .trace(saveTx)
+            .tap((tx_in_tree: any) => {
+              console.log(tx_in_tree);
+              if (tx_in_tree.account.equals(nftAddress)) {
+                toast.closeAll();
+                toast({
+                  status: 'success',
+                  title: 'Save Successful',
+                  description:'Avatar Saved Successfuly to your Domain!',
+                  duration: null,
+                  isClosable: true,
+                });
+              }
+            })
+            .finished();
+
+        setIsSaving(false);
+        setIsConfirming(false);
+      }
+    }
+  }
+
+
+
   useEffect(() => {
     async function getProfileJson() {
       if (connectedAccount && isConnected && provider) {
@@ -605,7 +713,9 @@ const ManagePage: NextPage = () => {
                             rounded={'lg'}>
                             <ProfileCompletion />
                             <TargetAddress nftAddress={nftAddress} />
-                            <EditAvatar />
+                            <Flex>
+                            <EditAvatar onClick={saveAvatar} />
+                            </Flex>
                             <CropAvatar />
                             {/* <VenomAddressButton venomAddress={json.venomAddress} /> */}
                             {/* <BtcAddressInput />

@@ -12,6 +12,7 @@ import {
   useColorMode,
   Text,
   Badge,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { Avatar } from 'components/Profile';
 import { avatarAtom, avatarNftAtom, avatarShapeAtom, editingAvatarAtom, editingAvatarFileAtom, jsonAtom, nameAtom, nftJsonAtom } from 'core/atoms';
@@ -19,7 +20,11 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useState } from 'react';
 import AddNFTAvatar from './AddNFTAvatar';
 
-export default function EditAvatar() {
+interface Props {
+    onClick: () => void;
+}
+
+export default function EditAvatar({ onClick } : Props) {
   const [avatarUploading, setAvatarUploading] = useState(false);
   const { colorMode } = useColorMode();
   const name = useAtomValue(nameAtom);
@@ -66,8 +71,8 @@ export default function EditAvatar() {
   const imageFileSelect = buildFileSelector();
 
   return (
-    <Flex gap={[6]} px={[6]} alignItems={['center']} className='avatar' backgroundColor={colorMode === 'dark' ? 'whiteAlpha.200' : 'gray.100'} rounded={'lg'} justify={'center'} w={'100%'}>
-      <Box w={'104px'} key={avatar}>
+    <Flex gap={[3,4,6]} px={[6]} alignItems={['center']} className='avatar' backgroundColor={colorMode === 'dark' ? 'whiteAlpha.200' : 'gray.100'} rounded={'lg'} justify={'center'} w={'100%'}>
+      <Box w={['92px','104px']} key={avatar}>
         <Avatar maxH={'104'} url={avatar} shape={avatarShape} nodrag noanimate />
       </Box>
       <Stack gap={3}>
@@ -77,10 +82,21 @@ export default function EditAvatar() {
               variant={'outline'}
               colorScheme={colorMode === 'light' ? 'dark' : 'light'}
               onClick={() => imageFileSelect !== undefined && imageFileSelect.click()}>
-              Upload Avatar
+              Upload
             </Button>
       </Stack>
-      <Button isDisabled display={['none','flex']} variant={'outline'} flexDirection={'column'} gap={2} height={'88px'}><Text>Generate</Text><Text>AI Avatar</Text><Badge p={1} px={2} position={'absolute'} top={'-12px'}  colorScheme='green'>Soon</Badge></Button>
+      <Button onClick={onClick} bgGradient={useColorModeValue(
+            'linear(to-r, var(--venom1), var(--bluevenom1))',
+            'linear(to-r, var(--venom2), var(--bluevenom2))'
+          )}
+          
+          _hover={{
+            bgGradient: useColorModeValue(
+              'linear(to-r, var(--venom0), var(--bluevenom0))',
+              'linear(to-r, var(--venom0), var(--bluevenom0))'
+            ),
+          }}
+          color={'white'} isDisabled={avatar === ''} display={['flex','flex']} variant={'outline'} flexDirection={'column'} gap={2} height={'88px'}><Text>Save</Text><Text>Avatar</Text></Button>
     </Flex>
   );
 }

@@ -18,9 +18,9 @@ export const SITE_MANAGE_URL = 'https://venomid.tools/';
 export const SITE_PROFILE_URL = 'https://venomid.link/';
 export const ZEALY_URL = 'https://zealy.io/c/venomid/';
 export const AVATAR_API_URL = 'https://venomid.link/api/avatar?name=';
-export const VENOMSCAN_NFT = 'https://testnet.venomscan.com/accounts/';
-export const VENTORY_NFT = 'https://testnet.ventory.gg/nft/';
-export const VENOMART_NFT = 'https://testnet.venomart.io/nft/';
+export const VENOMSCAN_NFT = 'https://venomscan.com/accounts/';
+export const VENTORY_NFT = 'https://ventory.gg/nft/';
+export const VENOMART_NFT = 'https://venomart.io/nft/';
 export const BTCSCAN_ADDRESS = 'https://blockchair.com/bitcoin/';
 export const ETHERSCAN_ADDRESS = 'https://etherscan.io/address/';
 export const CONTRACT_ADDRESS =
@@ -30,9 +30,9 @@ export const CONTRACT_ADDRESS_V1 =
 export const CONTRACT_ADDRESS_V2 =
   '0:2787ba200fd3e45c1a4854768f69310fe4e9566383761f27936aff61ad79c8ab';
 
-export const ROOT_CONTRACT_ADDRESS =
-  '0:72034dfba65f6d63b362e51add677c0549ff4e5a4e18c943acb54f953bb53660';
-//export const ROOT_CONTRACT_ADDRESS = '0:5475e9e7b9d178f4c35cd1136e83a100ca95e28b38c5c52d0689771372ba43ec';
+export const ROOT_CONTRACT_ADDRESS = '0:2b353a0c36c4c86a48b0392c69017a109c8941066ed1747708fc63b1ac79e408';
+export const TESTNET_ROOT_CONTRACT_ADDRESS = '0:72034dfba65f6d63b362e51add677c0549ff4e5a4e18c943acb54f953bb53660';
+export const OLD_TESTNET_ROOT_CONTRACT_ADDRESS = '0:5475e9e7b9d178f4c35cd1136e83a100ca95e28b38c5c52d0689771372ba43ec';
 export const MAX_NAME_LENGTH = 63;
 export const MIN_NAME_LENGTH = 2;
 export const MIN_FEE = 660000000;
@@ -134,8 +134,8 @@ export const MARKETPLACE_URLS: any = {
 };
 
 export const ETHERSCAN_URLS: any = {
-  venomtestnet: 'https://testnet.venomscan.com/accounts/',
-  venom: 'https://testnet.venomscan.com/accounts/',
+  venomtestnet: 'https://venomscan.com/accounts/',
+  venom: 'https://venomscan.com/accounts/',
   bitcoin: 'https://blockchair.com/bitcoin/address/',
   tron: 'https://tronscan.org/#/address/',
   avalanche: 'https://snowtrace.io/address/',

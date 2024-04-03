@@ -244,121 +244,6 @@ export default function EarlyAdopters() {
     }
   };
 
-  const mintAllBadges = async () => {
-    if (
-      !connectedAccount ||
-      connectedAccount === '' ||
-      !provider ||
-      !provider.isInitialized ||
-      !unMinteds
-    ) {
-      toast({
-        status: 'info',
-        title: t('connectWallet'),
-        description: t('venomWalletConnect'),
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-
-    setIsMinting(true);
-    toast.closeAll();
-    toast({
-      status: 'loading',
-      title: t('minting'),
-      description: t('confirmInWallet'),
-      duration: null,
-    });
-
-    const _unMiteds = unMinteds.map((item) => JSON.stringify(item));
-
-    // @ts-ignore: Unreachable code error
-    const mintTx = await earlyAdopterContract?.methods
-      .mintBadges({
-        _jsons: _unMiteds,
-        _owner: new Address(connectedAccount),
-      })
-      .send({
-        amount: String(1660000000 * unMinteds?.length),
-        bounce: true,
-        from: connectedAccount,
-      })
-      .catch((e: any) => {
-        if (e.code === 3) {
-          // rejected by a user
-          setIsMinting(false);
-          toast.closeAll();
-          return Promise.resolve(null);
-        } else {
-          setIsMinting(false);
-          // console.log(e);
-          toast.closeAll();
-          return Promise.reject(e);
-        }
-      });
-
-    if (mintTx) {
-      toast.closeAll();
-      toast({
-        status: 'loading',
-        title: t('confirming'),
-        description: t('confirmingTx'),
-        duration: null,
-      });
-
-      //// console.log('mint tx : ', mintTx);
-      setIsConfirming(true);
-      let receiptTx: Transaction | undefined;
-      const subscriber = provider && new provider.Subscriber();
-      if (subscriber)
-        await subscriber
-          .trace(mintTx)
-          .tap((tx_in_tree: any) => {
-            //// console.log('tx_in_tree : ', tx_in_tree);
-            if (tx_in_tree.account.equals(EARLY_ADOPTERS_CONTRACT_ADDRESS)) {
-              receiptTx = tx_in_tree;
-            }
-          })
-          .finished();
-
-      // Decode events by using abi
-      // we are looking for event Game(address player, uint8 bet, uint8 result, uint128 prize);
-
-      let events = await earlyAdopterContract.decodeTransactionEvents({
-        transaction: receiptTx as Transaction,
-      });
-      console.log(events);
-
-      if (events.length !== 1 || events[0].event !== 'NftCreated') {
-        toast.closeAll();
-        toast({
-          status: 'error',
-          title: t('error'),
-          description: t('commonErrorMsg'),
-          isClosable: true,
-        });
-      } else {
-        console.log(events);
-        // @ts-ignore: Unreachable code error
-        const nftAddress = String(events[0].data?.nft && events[0].data?.nft?._address);
-        setReload(true);
-        toast.closeAll();
-      }
-      setIsMinting(false);
-      setIsConfirming(false);
-    } else {
-      toast.closeAll();
-      toast({
-        status: 'error',
-        title: t('error'),
-        description: t('commonErrorMsg'),
-        isClosable: true,
-      });
-      setIsMinting(false);
-      setIsConfirming(false);
-    }
-  };
 
   const openWindow = (url: string, e: any) => {
     window.open(url, 'newwindow', 'width=420,height=800');
@@ -999,7 +884,7 @@ export default function EarlyAdopters() {
               📢 The Venom ID Early Adopter program is closed on venom testnet. <br/>🎉 Congratulations to all our early adopters! 
               <br/><br/>If you missed the chance, don't worry. There will be more opportunities coming your way on mainnet. Remember, we are still in the early stages. Stay tuned for exciting updates!
             </Flex>
-             {minteds && minteds?.length > 0 && <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>}
+             {/* {minteds && minteds?.length > 0 && <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>}
             {earlyAdopterContract?.methods && <>
             {!isLoading ? (
               <Flex
@@ -1039,7 +924,7 @@ export default function EarlyAdopters() {
                             : 'linear(to-r, var(--venom2), var(--bluevenom2))'
                         }>View on Explorer
                       </Button>
-                    </Flex>)}
+                    </Flex>)} */}
                   {/* {twitterVerified && (
                     <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'}>
                       {mintedStrings?.includes('Crypto Explorer') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
@@ -1299,11 +1184,13 @@ export default function EarlyAdopters() {
                       </Button>
                     </Flex>
                   )} */}
-                  
+{/*                   
+
+
                 </SimpleGrid>
               </Flex>
-            ) : (<Center minH={'100px'}><Spinner size={'lg'} /></Center>)}
-            </>}
+            ) : (<Center minH={'100px'}><Spinner size={'lg'} /></Center>)} */}
+            
             <InfoModal />
           </Stack>
         </AccordionPanel>

@@ -71,6 +71,7 @@ import {
   motion,
 } from 'framer-motion';
 import DomainName from 'components/features/DomainName';
+import getEarly from 'core/utils/getEarly';
 
 interface Message {
   type: any;
@@ -87,6 +88,7 @@ const ClaimSection = () => {
   let timer: any;
   const { t } = useTranslate();
   const connected = useAtomValue(isConnectedAtom);
+  const connectedAccount = useAtomValue(connectedAccountAtom);
   const provider = useAtomValue(venomProviderAtom);
   const { colorMode } = useColorMode();
   const lightMode = colorMode === 'light';
@@ -95,6 +97,8 @@ const ClaimSection = () => {
   const [fee, setFee] = useState<number | null>();
   //const [totalSupply, setTotalSupply] = useState<number | null>(0);
   const [typing, setTyping] = useState<boolean>(false);
+  const [mintedOnTestnet, setMintedOnTestnet] = useState(0);
+  const [earlyLoading, setEarlyLoading] = useState(true);
   const [nameExists, setNameExists] = useState(false);
   const [nameStatus, setNameStatus] = useState<number | null>();
   const [claimedName, setClaimedName] = useState('');
@@ -107,7 +111,9 @@ const ClaimSection = () => {
   const [path, setPath] = useAtom(pathAtom);
   //const [vidUrl, setVidUrl] = useState('');
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
-  const toast = useToast();
+  const toast = useToast({containerStyle : {
+    gap : 2,
+  }});
 
   async function inputChange() {
     if (path === '') return;
@@ -210,18 +216,62 @@ const ClaimSection = () => {
 
   useEffect(() => {
     async function checkActive() {
+      
       const totalSupply = await rootContract.methods.totalSupply({ answerId: 0 }).call();
       console.log(totalSupply);
       const active = await rootContract.methods._active().call();
       console.log(active);
+      if(earlyLoading){
+        toast.closeAll();
+        toast({
+          status: 'loading',
+          //colorScheme: colorMode === 'dark' ? 'light' : 'dark',
+          title: 'Checking Early Adopter Eligibility',
+          description: 'Please wait for a moment ...',
+          duration: null,
+          isClosable: true,
+        });
+        const early = await getEarly(connectedAccount);
+        if(early.status === 200){
+          let _mintedOnTestnet = early.data.count;
+          setEarlyLoading(false);
+          setMintedOnTestnet(_mintedOnTestnet);
+          console.log(early);
+          toast.closeAll();
+          toast({
+            status: early.data.isEarly === true ? 'success' : 'warning',
+            size:'lg',
+            icon: <LinkIcon type={early.data.isEarly === true ? 'RiShieldCheckLine' : 'RiInformationLine'}/>,
+            //colorScheme: colorMode === 'dark' ? 'light' : 'dark',
+            title: early.data.isEarly === true ? `Congratulations` : `You ${_mintedOnTestnet > 0 ? 'ARE' : 'ARE NOT'} Among the Early Adopters`,
+            description: _mintedOnTestnet > 0 ? `You have registered ${_mintedOnTestnet === 20 ? 'More than ' + _mintedOnTestnet : _mintedOnTestnet} domains on the venom testnet. You ARE Among the Early Adopters` : ' Public Mint : April 4th 08:00 UTC',
+            duration: null,
+            isClosable: true,
+          });
+        } else {
+          toast.closeAll();
+          toast({
+            status: 'warning',
+            title: 'Error in uploading to IPFS',
+            description:
+              'check your network and Try Again, If the problem presists, please send a message to venomidapp@gmail.com',
+            isClosable: true,
+          });
+        }
+      }
     }
-    if (provider?.isInitialized && rootContract && rootContract.methods._active() && connected) {
+    if (
+      provider?.isInitialized &&
+      rootContract &&
+      rootContract.methods._active() &&
+      connected &&
+      connectedAccount
+    ) {
       checkActive();
     }
-  }, [provider, rootContract]);
+  }, [provider, rootContract, connectedAccount, path]);
 
   const [notMobile] = useMediaQuery('(min-width: 992px)');
-
 
   return (
     <Box id="claim">
@@ -246,20 +296,20 @@ const ClaimSection = () => {
               <AnimateOpacity delay={0}>
                 <Center gap={4} alignItems={'flex-start'}>
                   {notMobile && <LogoIcon />}
-                <Heading
-                  h={'2'}
-                  textAlign={['center', 'center']}
-                  fontWeight="bold"
-                  fontSize={['4xl']}
-                  height={[98, 98, 54]}
-                  bgGradient={
-                    lightMode
-                      ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                      : 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                  }
-                  bgClip="text">
-                  {t('description')}
-                </Heading>
+                  <Heading
+                    h={'2'}
+                    textAlign={['center', 'center']}
+                    fontWeight="bold"
+                    fontSize={['4xl']}
+                    height={[98, 98, 54]}
+                    bgGradient={
+                      lightMode
+                        ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
+                        : 'linear(to-r, var(--venom1), var(--bluevenom1))'
+                    }
+                    bgClip="text">
+                    {t('description')}
+                  </Heading>
                 </Center>
               </AnimateOpacity>
               <AnimateOpacity delay={0.3}>
@@ -315,6 +365,7 @@ const ClaimSection = () => {
               )}
             </Stack>
           </AnimateOpacity>
+
           {/* ) : (
             <Center width={'100%'} gap={8} height={160} bg={colorMode === 'light' ? 'var(--venom1)':'var(--venom)'} rounded={'xl'}>
               
@@ -401,7 +452,9 @@ const ClaimSection = () => {
                                 : 'linear(to-r, var(--venom0), var(--bluevenom0))',
                           }}
                           height={['66px']}
-                          isDisabled={!isValidName(path) || nameExists || typing}
+                          isDisabled={
+                            !isValidName(path) || nameExists || typing || mintedOnTestnet === 0
+                          }
                           //onClick={(e) => claimVid(e.currentTarget.value)}>
                           onClick={(e) => setOpenRegister(true)}>
                           {!typing && nameStatus !== -1 ? (

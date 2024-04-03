@@ -72,13 +72,13 @@ export default function Header() {
     <>
       {pathname === '/' && (
         <Center px={[4, 4, 0]} fontSize={'lg'} py={2} bgGradient={'linear(to-r, var(--venom), var(--bluevenom1))'} color={'white'}>
-          Venom ID is going live on Venom mainnet on April 3rd 20:00 UTC.
+          Venom ID is live on Venom mainnet!
         </Center>
       )}
       <Box
         as="nav"
         position={home ? 'absolute' : 'relative'}
-        top={pathname === '/' ? ['84px','84px','42px'] : 0}
+        top={pathname === '/' ? ['42px','42px','42px'] : 0}
         zIndex={1000}
         px={0}
         m={0}

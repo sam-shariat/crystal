@@ -8,7 +8,7 @@ const standaloneFallback = () =>
   EverscaleStandaloneClient.create({
     connection: {
       id: 1000,
-      group: 'venom_testnet',
+      group: 'venom_mainnet',
       type: 'jrpc',
       data: {
         endpoint: 'https://jrpc.venom.foundation/rpc',
@@ -19,7 +19,7 @@ const standaloneFallback = () =>
 export const initVenomConnect = async () => {  
   return new VenomConnect({
     theme: 'dark',
-    checkNetworkId: 1000,
+    checkNetworkId: 1,
     providersOptions: {
       venomwallet: {
         walletWaysToConnect: [

@@ -56,6 +56,8 @@ import {
   ROOT_CONTRACT_ADDRESS,
   SITE_PROFILE_URL,
   SITE_URL,
+  VENOMART_NFT,
+  VENOMSCAN_NFT,
   ZERO_ADDRESS,
 } from 'core/utils/constants';
 import {
@@ -480,26 +482,28 @@ function ManageSection() {
                         View {nft.network === 'venom' ? 'Profile' : 'Space ID Link'}
                       </MenuItem>
 
-                      <MenuItem
-                        size={'lg'}
-                        as={Link}
-                        height={'48px'}
-                        bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
-                        isDisabled
-                        sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
-                        
-                        icon={<LinkIcon type='RiExpandRightLine' size={24}/>}>
-                        Extend
-                      </MenuItem>
+                      
                       {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
                         <MenuItem
                         size={'lg'}
                         as={Link}
                         height={'48px'}
                         bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
-                        isDisabled
                         sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
-                        href={nft.address}
+                        href={VENOMSCAN_NFT + nft.address}
+                        target="_blank"
+                        icon={<LinkIcon type='venomscan' size={24}/>}>
+                        View on VenomScan
+                      </MenuItem>)}
+
+                      {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
+                        <MenuItem
+                        size={'lg'}
+                        as={Link}
+                        height={'48px'}
+                        bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
+                        sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
+                        href={VENOMART_NFT + nft.address}
                         target="_blank"
                         icon={<LinkIcon type='https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg' size={'sm'}/>}>
                         Sell on VenomArt
@@ -518,6 +522,17 @@ function ManageSection() {
                         icon={<LinkIcon type='https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg' size={'sm'}/>}>
                         Sell on Oasis Gallery
                       </MenuItem>)}
+                      <MenuItem
+                        size={'lg'}
+                        as={Link}
+                        height={'48px'}
+                        bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
+                        isDisabled
+                        sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
+                        
+                        icon={<LinkIcon type='RiExpandRightLine' size={24}/>}>
+                        Extend
+                      </MenuItem>
                     </MenuList>
                   </Menu>}
                   </Flex>

@@ -1,9 +1,12 @@
-import { CONTRACT_ADDRESS, CONTRACT_ADDRESS_V1, CONTRACT_ADDRESS_V2 } from 'core/utils/constants';
-import { sql } from '@vercel/postgres';
+import {
+  TLD,
+  ROOT_CONTRACT_ADDRESS,
+} from 'core/utils/constants';
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
-const { CollectionContract } = require('abi/CollectionContract');
+const { RootContract } = require('abi/RootContract');
+const { DomainContract } = require('abi/DomainContract');
 const { NftContract } = require('abi/NftContract');
 import axios from 'axios';
 
@@ -31,55 +34,66 @@ export default async function handler(req, res) {
     }
 
     const withDetails = req.query.withDetails ? true : false;
-    const name = String(req.query.name).toLowerCase() + '.VID';
-    const _name = String(req.query.name).toLowerCase();
+
+    const name = String(req.query.name).toLowerCase().includes('.venom') ? String(req.query.name).toLowerCase().replace('.venom', '') : String(req.query.name).toLowerCase();
+    const name_ = String(name).includes('.vid') ? String(name).replace('.vid', '') : String(name);
+    const _name = String(name_).toLowerCase();
 
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
 
-    const collection = new Account(CollectionContract, {
-      signer: signerKeys(keys),
-      client,
-      address: CONTRACT_ADDRESS,
-    });
-
-    const collectionv1 = new Account(CollectionContract, {
-      signer: signerKeys(keys),
-      client,
-      address: CONTRACT_ADDRESS_V1,
-    });
-
-    // const collectionv2 = new Account(CollectionContract, {
+    // const collection = new Account(CollectionContract, {
     //   signer: signerKeys(keys),
     //   client,
-    //   address: CONTRACT_ADDRESS_V2,
+    //   address: CONTRACT_ADDRESS,
     // });
 
-    const { rows } = await sql`SELECT * FROM vids WHERE name = ${name};`;
-    //console.log(rows[0]);
-    let nftAddress;
-    let owner;
-    if (rows.length > 0) {
-      nftAddress = String(rows[0].address)
-      owner = String(rows[0].owner);
-    } else {
-      let response = await collection.runLocal('getInfoByName', {
-        name: String(_name),
+    // const collectionv1 = new Account(CollectionContract, {
+    //   signer: signerKeys(keys),
+    //   client,
+    //   address: CONTRACT_ADDRESS_V1,
+    // });
+
+    const root = new Account(RootContract, {
+      signer: signerKeys(keys),
+      client,
+      address: ROOT_CONTRACT_ADDRESS,
+    });
+
+    let certificateAddr = await root.runLocal('resolve', {
+      path: String(_name) + '.' + TLD,
+      answerId: 0,
+    });
+
+    console.log(String(_name) + '.' + TLD)
+    console.log(certificateAddr)
+
+    const domainContract = new Account(DomainContract, {
+      signer: signerKeys(keys),
+      client,
+      address: String(certificateAddr.decoded.output.certificate),
+    });
+
+    //console.log(certificateAddr.decoded.output.certificate)
+
+    let nftAddress = '';
+    let owner = '';
+    let type = 'nft';
+
+    try {
+      // @ts-ignore: Unreachable code error
+      let status = await domainContract.runLocal('getStatus', {
+        answerId: 0,
       });
-      if (response.decoded.output.value0.name !== 'notfound') {
-        nftAddress = response.decoded.output.value0.nftAddress;
-        owner = response.decoded.output.value0.owner;
-      } else {
-        let responsev1 = await collectionv1.runLocal('getInfoByName', {
-          name: String(_name),
-        });
-        nftAddress = responsev1.decoded.output.value0.nftAddress;
-        owner = responsev1.decoded.output.value0.owner;
+      if (String(status.decoded.output.status)) {
+        nftAddress = String(certificateAddr.decoded.output.certificate);
+        type = 'domain';
       }
-    }
+    } catch (e) {}
+
+    
 
     //console.log('address : ',nftAddress);
-
 
     const nft = new Account(NftContract, {
       signer: signerKeys(keys),
@@ -89,28 +103,30 @@ export default async function handler(req, res) {
 
     let responseJson = await nft.runLocal('getJson', { answerId: 0 });
     let json = JSON.parse(responseJson.decoded.output.json);
-    let jsonUrl = json.attributes?.find((att) => att.trait_type === 'DATA')?.value;
+    let jsonUrl ;
+
+    jsonUrl =  json.hash;    
 
     //res.status(200).json({json:json,jsonUrl:jsonUrl});
 
     if (withDetails) {
-      if (jsonUrl) {
+      if (jsonUrl && jsonUrl.indexOf('not set') < 0) {
         const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
         res.status(200).json({
           owner: owner,
-          nftJson: JSON.parse(responseJson.decoded.output.json),
+          nftJson: json,
           nftDetails: result.data,
         });
       } else {
         res.status(200).json({
           owner: owner,
-          nftJson: JSON.parse(responseJson.decoded.output.json),
+          nftJson: json,
         });
       }
     } else {
       res.status(200).json({
         owner: owner,
-        nftJson: JSON.parse(responseJson.decoded.output.json),
+        nftJson: json,
       });
     }
   } catch (err) {

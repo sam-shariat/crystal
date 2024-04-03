@@ -1,8 +1,8 @@
-import { CONTRACT_ADDRESS } from 'core/utils/constants';
+import { OLD_TESTNET_ROOT_CONTRACT_ADDRESS } from 'core/utils/constants';
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
-const { CollectionContract } = require('abi/CollectionContract');
+const { RootContract } = require('abi/RootContract');
 const { NftContract } = require('abi/NftContract');
 import axios from 'axios';
 
@@ -30,43 +30,86 @@ export default async function handler(req, res) {
     };
 
     const ownerAddress = req.query.ownerAddress;
-    const withDetails = req.query.withDetails ? true : false ;
 
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
 
-    const collection = new Account(CollectionContract, {
+
+    const root = new Account(RootContract, {
       signer: signerKeys(keys),
       client,
-      address: CONTRACT_ADDRESS,
+      address: OLD_TESTNET_ROOT_CONTRACT_ADDRESS,
     });
 
-    let response = await collection.runLocal('getPrimaryName', { _owner: ownerAddress });
-    
-    const nft = new Account(NftContract, {
-      signer: signerKeys(keys),
-      client,
-      address: response.decoded.output.value0.nftAddress,
+    let _codeHash = await root.runLocal('expectedCertificateCodeHash', {
+      target: ownerAddress,
+      sid: 1,
+      answerId: 0,
     });
 
-    let responseJson = await nft.runLocal('getJson', { answerId: 0 });
-    let json = JSON.parse(responseJson.decoded.output.json);
-    let jsonUrl = json.attributes?.find((att) => att.trait_type === 'DATA')?.value;
-
-    //res.status(200).json({json:json,jsonUrl:jsonUrl});
-
     
-    if(withDetails){
-        if (jsonUrl) {
-            const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl)); 
-            res.status(200).json({nftData: response.decoded.output.value0, nftJson: JSON.parse(responseJson.decoded.output.json), nftDetails: result.data });
-        } else {
-            res.status(200).json({nftData: response.decoded.output.value0, nftJson: JSON.parse(responseJson.decoded.output.json) });
-            
-        }
-    } else {
-        res.status(200).json({nftData: response.decoded.output.value0, nftJson: JSON.parse(responseJson.decoded.output.json) });
-    }
+    const codeHash_ = _codeHash.decoded.output.codeHash;
+    console.log(codeHash_);
+    const codeHash = BigInt(_codeHash.decoded.output.codeHash).toString(16).padStart(64, '0')
+
+    const query = `
+            query {
+              accounts(
+                filter:{
+                  workchain_id:{
+                    eq:0
+                  },
+                  code_hash:{
+                    eq:"${codeHash}"
+                  }
+                  last_paid:{
+                    ge:1688684221
+                  }
+                }
+                orderBy:[
+                  {path:"last_paid", direction:ASC}      
+                  {path:"id", direction:ASC}
+                ]
+              ){
+                id
+                balance(format:DEC)
+                last_paid
+              }
+            }`
+        const result  = (await client.net.query({query})).result;
+
+        //console.log(`Account 1 balance is ${result.data.blockchain.account.info.balance}\n`);
+
+
+    // console.log(addresses);
+    // if (!addresses.accounts || addresses.accounts.length === 0) {
+    //   return [];
+    // }
+
+    // const nfts = await Promise.all(addresses.accounts.map(async (indexAddress) => {
+    //   try {
+    //     console.log(indexAddress)
+    //     const nftContract = new provider.Contract(nftAbi, indexAddress);
+    //     const getJsonAnswer = (await nftContract.methods.getJson({ answerId: 0 } as never).call()) as { json: string };
+    //     const _nftJson = JSON.parse(getJsonAnswer.json ?? "{}") as BaseNftJson;
+    //     if (address === _nftJson.target) {
+    //       return String(_nftJson.name);
+    //     } else {
+    //       return '';
+    //     }
+    //   } catch (e) {
+    //     return '';
+    //   }
+    // }));
+    let isEarly = false;
+    let count = 0;
+    if(result.data.accounts.length > 0){
+      isEarly = true;
+      count = result.data.accounts.length;
+    };
+    
+    res.status(200).json({isEarly , count });
+    
     
   } catch (err) {
     console.error(err);
