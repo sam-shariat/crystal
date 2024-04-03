@@ -221,44 +221,44 @@ const ClaimSection = () => {
       console.log(totalSupply);
       const active = await rootContract.methods._active().call();
       console.log(active);
-      if(earlyLoading){
-        toast.closeAll();
-        toast({
-          status: 'loading',
-          //colorScheme: colorMode === 'dark' ? 'light' : 'dark',
-          title: 'Checking Early Adopter Eligibility',
-          description: 'Please wait for a moment ...',
-          duration: null,
-          isClosable: true,
-        });
-        const early = await getEarly(connectedAccount);
-        if(early.status === 200){
-          let _mintedOnTestnet = early.data.count;
-          setEarlyLoading(false);
-          setMintedOnTestnet(_mintedOnTestnet);
-          console.log(early);
-          toast.closeAll();
-          toast({
-            status: early.data.isEarly === true ? 'success' : 'warning',
-            size:'lg',
-            icon: <LinkIcon type={early.data.isEarly === true ? 'RiShieldCheckLine' : 'RiInformationLine'}/>,
-            //colorScheme: colorMode === 'dark' ? 'light' : 'dark',
-            title: early.data.isEarly === true ? `Congratulations` : `You ${_mintedOnTestnet > 0 ? 'ARE' : 'ARE NOT'} Among the Early Adopters`,
-            description: _mintedOnTestnet > 0 ? `You have registered ${_mintedOnTestnet === 20 ? 'More than ' + _mintedOnTestnet : _mintedOnTestnet} domains on the venom testnet. You ARE Among the Early Adopters` : ' Public Mint : April 4th 08:00 UTC',
-            duration: null,
-            isClosable: true,
-          });
-        } else {
-          toast.closeAll();
-          toast({
-            status: 'warning',
-            title: 'Error in uploading to IPFS',
-            description:
-              'check your network and Try Again, If the problem presists, please send a message to venomidapp@gmail.com',
-            isClosable: true,
-          });
-        }
-      }
+      // if(earlyLoading){
+      //   toast.closeAll();
+      //   toast({
+      //     status: 'loading',
+      //     //colorScheme: colorMode === 'dark' ? 'light' : 'dark',
+      //     title: 'Checking Early Adopter Eligibility',
+      //     description: 'Please wait for a moment ...',
+      //     duration: null,
+      //     isClosable: true,
+      //   });
+      //   const early = await getEarly(connectedAccount);
+      //   if(early.status === 200){
+      //     let _mintedOnTestnet = early.data.count;
+      //     setEarlyLoading(false);
+      //     setMintedOnTestnet(_mintedOnTestnet);
+      //     console.log(early);
+      //     toast.closeAll();
+      //     toast({
+      //       status: early.data.isEarly === true ? 'success' : 'warning',
+      //       size:'lg',
+      //       icon: <LinkIcon type={early.data.isEarly === true ? 'RiShieldCheckLine' : 'RiInformationLine'}/>,
+      //       //colorScheme: colorMode === 'dark' ? 'light' : 'dark',
+      //       title: early.data.isEarly === true ? `Congratulations` : `You ${_mintedOnTestnet > 0 ? 'ARE' : 'ARE NOT'} Among the Early Adopters`,
+      //       description: _mintedOnTestnet > 0 ? `You have registered ${_mintedOnTestnet === 20 ? 'More than ' + _mintedOnTestnet : _mintedOnTestnet} domains on the venom testnet. You ARE Among the Early Adopters` : ' Public Mint : April 4th 08:00 UTC',
+      //       duration: null,
+      //       isClosable: true,
+      //     });
+      //   } else {
+      //     toast.closeAll();
+      //     toast({
+      //       status: 'warning',
+      //       title: 'Error in uploading to IPFS',
+      //       description:
+      //         'check your network and Try Again, If the problem presists, please send a message to venomidapp@gmail.com',
+      //       isClosable: true,
+      //     });
+      //   }
+      //}
     }
     if (
       provider?.isInitialized &&
@@ -453,7 +453,7 @@ const ClaimSection = () => {
                           }}
                           height={['66px']}
                           isDisabled={
-                            !isValidName(path) || nameExists || typing || mintedOnTestnet === 0
+                            !isValidName(path) || nameExists || typing //|| mintedOnTestnet === 0
                           }
                           //onClick={(e) => claimVid(e.currentTarget.value)}>
                           onClick={(e) => setOpenRegister(true)}>
