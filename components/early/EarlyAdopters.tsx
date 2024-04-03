@@ -1191,7 +1191,7 @@ export default function EarlyAdopters() {
               </Flex>
             ) : (<Center minH={'100px'}><Spinner size={'lg'} /></Center>)} */}
             
-            <InfoModal />
+            {/* <InfoModal /> */}
           </Stack>
         </AccordionPanel>
       </AccordionItem>

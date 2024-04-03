@@ -147,7 +147,7 @@ export default function Header() {
                     bg={lightMode ? 'var(--white)' : 'var(--dark)'}>
                     <PopoverHeader justifyContent={'space-between'} display={'flex'} alignItems={'center'} p={4} px={6}>
                       <Flex gap={3}><VenomFoundation />
-                      <Text fontWeight={'bold'} cursor={'default'}>Venom Testnet</Text>
+                      <Text fontWeight={'bold'} cursor={'default'}>Venom Mainnet</Text>
                       </Flex>
                       <IconButton
                         variant="ghost"
