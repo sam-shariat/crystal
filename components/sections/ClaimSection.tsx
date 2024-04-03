@@ -453,7 +453,7 @@ const ClaimSection = () => {
                           }}
                           height={['66px']}
                           isDisabled={
-                            !isValidName(path) || nameExists || typing || mintedOnTestnet === 0
+                            !isValidName(path) || nameExists || typing //|| mintedOnTestnet === 0
                           }
                           //onClick={(e) => claimVid(e.currentTarget.value)}>
                           onClick={(e) => setOpenRegister(true)}>
