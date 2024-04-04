@@ -48,7 +48,7 @@ function isValidUsername(name: string) {
 function invalidUsernameMessage(name: string) {
   var length = Buffer.byteLength(name);
   if (length <= MIN_NAME_LENGTH || length > MAX_NAME_LENGTH) {
-    return 'Domain name should be more than 5 characters on testnet. all names will be available on Mainnet!';
+    return 'Domain name must contain more than 2 letters!';
   }
   var nameAsBytes = Buffer.from(name);
   if (nameAsBytes[0] === 0x2d || nameAsBytes[length - 1] === 0x2d) {
