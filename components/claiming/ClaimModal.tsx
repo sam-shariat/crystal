@@ -34,38 +34,14 @@ import { Address, Transaction } from 'everscale-inpage-provider';
 import {
   RiCheckDoubleFill,
   RiFileCopyLine,
-  RiSettings3Line,
-  RiShieldCheckFill,
 } from 'react-icons/ri';
 import { useTranslate } from 'core/lib/hooks/use-translate';
-import { Avatar } from 'components/Profile';
-import VIDImage from './VIDImage';
-import { renderToStaticMarkup } from 'react-dom/server';
-import ImageBox from './ImageBox';
 import TargetAddress from 'components/manage/TargetAddress';
-import DomainAbi from 'abi/Domain.abi.json';
 import { useAtom, useAtomValue } from 'jotai';
 import {
-  avatarAtom,
-  bioAtom,
-  linksArrayAtom,
-  socialsArrayAtom,
-  subtitleAtom,
   targetAtom,
-  titleAtom,
-  walletsArrayAtom,
 } from 'core/atoms';
-import {
-  BioTextInput,
-  EditAvatar,
-  ManageLinks,
-  ManageSocials,
-  ManageWallets,
-  TitleInput,
-} from 'components/manage';
-import CropAvatar from 'components/manage/CropAvatar';
-import { useConnect, useVenomProvider } from 'venom-react-hooks';
-import { useStorageUpload } from '@thirdweb-dev/react';
+import { useVenomProvider } from 'venom-react-hooks';
 import { getNft } from 'core/utils/nft';
 import { BaseNftJson } from 'core/utils/reverse';
 
@@ -81,167 +57,9 @@ export default function ClaimModal({ message, claimedName }: Props) {
   const { t } = useTranslate();
   const { onCopy, hasCopied } = useClipboard(String(message.link));
   //const [step, setStep] = useState(0);
-  const [isSaving,setIsSaving] = useState(false);
-  const [isConfirming,setIsConfirming] = useState(false);
-  const [jsonUploading,setJsonUploading] = useState(false);
-  const [jsonHash,setJsonHash] = useState('');
-  const [avatar,setAvatar] = useAtom(avatarAtom);
-  const [title,setTitle] = useAtom(titleAtom);
-  const [subtitle,setSubtitle] = useAtom(subtitleAtom);
   const nftAddress = message.link;
   const [nftData,setNftData] = useState<BaseNftJson | null>(null);
   const { provider } = useVenomProvider();
-  const toast = useToast();
-  const { mutateAsync: upload } = useStorageUpload();
-  const { account } = useConnect();
-
-
-  const handleSave = async () => {
-    if(jsonHash === ''){
-      uploadJson();
-    } ;
-  };
-
-  // const vidimage = renderToStaticMarkup(<VIDImage name={claimedName} key={claimedName}/>);
-  // const vidbase64 = "data:image/svg+xml;base64," + btoa(vidimage);
-
-  const getJson = () => {
-    
-
-    const data = {
-      name: name,
-      title: title,
-      subtitle: subtitle,
-      avatar: avatar,
-      avatarShape: 'round',
-      venomAddress: target,
-      // btcAddress: btc,
-      // ethAddress: eth,
-    };
-
-    return data;
-  };
-
-  const uploadJson = async () => {
-    const data = JSON.stringify(getJson());
-
-    // console.log(data);
-
-    try {
-      setJsonUploading(true);
-      toast({
-        status: 'loading',
-        title: 'Preparing',
-        description: 'Wrapping Profile to save to the blockchain',
-        isClosable: true,
-      });
-      const uris = await upload({ data: [data] });
-      setJsonUploading(false);
-      saveVid(uris[0].slice(7));
-      //Take a look at your Pinata Pinned section, you will see a new file added to you list.
-    } catch (error) {
-      setJsonUploading(false);
-      toast.closeAll();
-      toast({
-        status: 'warning',
-        title: 'Error in uploading to IPFS',
-        description:
-          'check your network and Try Again, If the problem presists, please send a message to venomidapp@gmail.com',
-        isClosable: true,
-      });
-
-      // console.log(error);
-      return;
-    }
-  };
-
-  async function saveVid(_jsonHash: string) {
-
-    if (!provider) {
-      toast({
-        status: 'info',
-        title: 'Provider Not Ready',
-        description:
-          'Please wait a few seconds and try again, Your Wallet Provider is not ready, yet',
-      });
-      return;
-    }
-
-    if (provider.isInitialized && account) {
-      setIsSaving(true);
-      toast({
-        status: 'loading',
-        title: 'saving venom id profile to the blockchain',
-        description: 'Please confirm the transaction in your wallet',
-        duration: null,
-        isClosable: true,
-      });
-      const tvmCell = await provider.packIntoCell({
-        data : {ipfsdata : String(_jsonHash)},
-        structure : [{ name: 'ipfsdata', type: 'string' }] as const
-      });
-      console.log(tvmCell);
-
-      const nftContract = new provider.Contract(DomainAbi, new Address(nftAddress));
-
-      // @ts-ignore: Unreachable code error
-      const saveTx = await nftContract.methods.setRecord({ key: 33, value: tvmCell.boc }).send({
-          amount: String(MIN_FEE),
-          bounce: true,
-          from: account?.address,
-        })
-        .catch((e: any) => {
-          if (e.code === 3) {
-            // rejected by a user
-            setIsSaving(false);
-            toast.closeAll();
-            return Promise.resolve(null);
-          } else {
-            setIsSaving(false);
-            toast.closeAll();
-            // console.log(e);
-            return Promise.reject(e);
-          }
-        });
-
-      if (saveTx) {
-        setIsConfirming(true);
-        toast.closeAll();
-        toast({
-          status: 'loading',
-          title: 'confirming changes on the blockchain',
-          description: 'Please wait a few moments while your changes are saved',
-          duration: null,
-          isClosable: true,
-        });
-        let receiptTx: Transaction | undefined;
-        const subscriber = provider && new provider.Subscriber();
-        if (subscriber)
-          await subscriber
-            .trace(saveTx)
-            .tap((tx_in_tree: any) => {
-              console.log(tx_in_tree);
-              if (tx_in_tree.account.equals(nftAddress)) {
-                toast.closeAll();
-                toast({
-                  status: 'success',
-                  title: 'Save Successful',
-                  description:
-                    name +
-                    ' Profile Saved Successfuly',
-                  duration: 10000,
-                  isClosable: true,
-                });
-                setJsonHash(_jsonHash);
-              }
-            })
-            .finished();
-
-        setIsSaving(false);
-        setIsConfirming(false);
-      }
-    }
-  }
 
 
   useEffect(() => {
@@ -255,9 +73,6 @@ export default function ClaimModal({ message, claimedName }: Props) {
 
     if (message.msg.length > 0 && message.type == 'success' && !isOpen) {
       onOpen();
-      setAvatar('');
-      setTitle('');
-      setSubtitle('');
     }
 
     

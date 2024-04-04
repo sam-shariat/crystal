@@ -7,7 +7,7 @@ import { networkIdAtom } from 'core/atoms';
 const standaloneFallback = () =>
   EverscaleStandaloneClient.create({
     connection: {
-      id: 1000,
+      id: 1,
       group: 'venom_mainnet',
       type: 'jrpc',
       data: {

@@ -83,7 +83,7 @@ function ManageSection() {
   const { provider } = useVenomProvider();
   const { isConnected, account } = useConnect();
   const connectedAccount = useAtomValue(connectedAccountAtom);
-  const ethAddress = useAddress();
+  const ethAddress = '';//useAddress();
   const [_ethAddress, _setEthAddress] = useState(ethAddress);
   const [listIsEmpty, setListIsEmpty] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
