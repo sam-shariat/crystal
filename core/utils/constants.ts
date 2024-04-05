@@ -23,6 +23,7 @@ export const VENTORY_NFT = 'https://ventory.gg/nft/';
 export const VENOMART_NFT = 'https://venomart.io/nft/';
 export const VENOMART_COLLECTION = 'https://venomart.io/collection/';
 export const OASIS_COLLECTION = 'https://oasis.gallery/collection/';
+export const OASIS_NFT = 'https://oasis.gallery/nft/';
 export const BTCSCAN_ADDRESS = 'https://blockchair.com/bitcoin/';
 export const ETHERSCAN_ADDRESS = 'https://etherscan.io/address/';
 export const CONTRACT_ADDRESS =

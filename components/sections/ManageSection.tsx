@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  getAddressesFromIndex,
-  getNft,
-  getNftByIndex,
-  saltCode,
-} from 'core/utils/nft';
+import { getAddressesFromIndex, getNft, getNftByIndex, saltCode } from 'core/utils/nft';
 import NextLink from 'next/link';
 import { Avatar } from 'components/Profile';
 import {
@@ -53,6 +48,7 @@ import {
   CONTRACT_ADDRESS,
   CONTRACT_ADDRESS_V1,
   CONTRACT_ADDRESS_V2,
+  OASIS_NFT,
   ROOT_CONTRACT_ADDRESS,
   SITE_PROFILE_URL,
   SITE_URL,
@@ -83,7 +79,7 @@ function ManageSection() {
   const { provider } = useVenomProvider();
   const { isConnected, account } = useConnect();
   const connectedAccount = useAtomValue(connectedAccountAtom);
-  const ethAddress = '';//useAddress();
+  const ethAddress = ''; //useAddress();
   const [_ethAddress, _setEthAddress] = useState(ethAddress);
   const [listIsEmpty, setListIsEmpty] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -118,59 +114,46 @@ function ManageSection() {
       return;
     }
     // Fetch all nfts
-    const _nfts = await Promise.all(indexesAddresses.map(async (indexAddress) => {
-      try {
-        let _nftJson = await getNftByIndex(provider, indexAddress);
-        //console.log(_nftJson)
-        if (_contractAddress !== ROOT_CONTRACT_ADDRESS) {
-          const ipfsData = _nftJson.attributes?.find(
-            (att: any) => att.trait_type === 'DATA'
-          )?.value;
-          if (ipfsData !== '' && ipfsData) {
-            const res = await axios.get(ipfsGateway + ipfsData);
-            if (res) {
-              _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
-            } else {
-              _nftJson.avatar = ''; //_nftJson.preview?.source;
-            }
-          } else {
-            _nftJson.avatar = ''; //_nftJson.preview?.source;
-          }
-        } else {
-          const ipfsData = _nftJson.hash;
-          if (!ipfsData?.includes('not set') && ipfsData) {
-            const res = await axios.get(ipfsGateway + ipfsData);
-            if (res) {
-              _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
-            } else {
-              _nftJson.avatar = ''; //_nftJson.preview?.source;
-            }
-          } else {
-            _nftJson.avatar = ''; //_nftJson.preview?.source;
-          }
-        }
-        if (_contractAddress === ROOT_CONTRACT_ADDRESS) {
-          const options = { year: 'numeric', month: 'short', day: 'numeric' };
-          _nftJson.init_date = new Date(Number(_nftJson.init_time) * 1000).toLocaleString('en-US', options as Intl.DateTimeFormatOptions);
-          _nftJson.expire_date = new Date(Number(_nftJson.expire_time) * 1000).toLocaleString();
-          setNames((n) => [...(n ? n : []), String(_nftJson.name)])
-          _nftJson.manageUrl = '/manage/' + _nftJson.address;
-        } else {
-          _nftJson.manageUrl = '/oldManage/' + _nftJson.address;
-          _nftJson.external_url = `${SITE_PROFILE_URL}o/${_nftJson.name}` 
-        }
-        _nftJson.network = 'venom';
-        return _nftJson;
+    const _nfts = await Promise.all(
+      indexesAddresses.map(async (indexAddress) => {
+        try {
+          let _nftJson = await getNftByIndex(provider, indexAddress);
+          //console.log(_nftJson)
 
-      } catch (e: any) {
-        // console.log('error getting venomid nft ', indexAddress);
-        return {};
-      }
-    }));
+          if(_nftJson.avatar === 'not set') {
+            const ipfsData = _nftJson.hash;
+            if (!ipfsData?.includes('not set') && ipfsData) {
+              const res = await axios.get(ipfsGateway + ipfsData);
+              if (res) {
+                _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
+              } else {
+                _nftJson.avatar = ''; //_nftJson.preview?.source;
+              }
+            } else {
+              _nftJson.avatar = ''; //_nftJson.preview?.source;
+            }
+          };
+
+          const options = { year: 'numeric', month: 'short', day: 'numeric' };
+          _nftJson.init_date = new Date(Number(_nftJson.init_time) * 1000).toLocaleString(
+            'en-US',
+            options as Intl.DateTimeFormatOptions
+          );
+          _nftJson.expire_date = new Date(Number(_nftJson.expire_time) * 1000).toLocaleString();
+          setNames((n) => [...(n ? n : []), String(_nftJson.name)]);
+          _nftJson.manageUrl = '/manage/' + _nftJson.address;
+
+          _nftJson.network = 'venom';
+          return _nftJson;
+        } catch (e: any) {
+          // console.log('error getting venomid nft ', indexAddress);
+          return {};
+        }
+      })
+    );
 
     setNftJsons(_nfts.filter((nft) => nft && nft.name && nft.name.length > 3));
     //setNftJsons()
-
   };
 
   const loadByDb = async () => {
@@ -202,7 +185,7 @@ function ManageSection() {
             _nftJson.avatar = ''; //_nftJson.preview?.source;
           }
           _nftJson.manageUrl = '/oldManage/' + _nftJson.address;
-          _nftJson.external_url = `${SITE_PROFILE_URL}o/${_nftJson.name}` 
+          _nftJson.external_url = `${SITE_PROFILE_URL}o/${_nftJson.name}`;
           _nftJson.network = 'venom';
           setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
         } catch (e: any) {
@@ -222,7 +205,7 @@ function ManageSection() {
       setNftJsons([]);
       setIsLoading(true);
       setListIsEmpty(false);
-      if(pathname.includes('old')){
+      if (pathname.includes('old')) {
         await loadByContract(CONTRACT_ADDRESS);
         await loadByContract(CONTRACT_ADDRESS_V1);
         //await loadByContract(CONTRACT_ADDRESS_V2);
@@ -259,7 +242,13 @@ function ManageSection() {
         try {
           //let r = await web3Name.getDomainRecord({name: nft});
           let _avatar = await web3Name.getDomainRecord({ name: nft, key: 'avatar' });
-          let _nftJson: BaseNftJson = { name: nft, avatar: _avatar ?? '', address: nft, init_time: 0,expire_time:0 };
+          let _nftJson: BaseNftJson = {
+            name: nft,
+            avatar: _avatar ?? '',
+            address: nft,
+            init_time: 0,
+            expire_time: 0,
+          };
           //_nftJson.ipfsData = _venomid;
           _nftJson.address = nft; //_nftJson.preview?.source;
           _nftJson.network = nft.slice(nft.indexOf('.') + 1); //_nftJson.preview?.source;
@@ -327,13 +316,21 @@ function ManageSection() {
         <Box py={6} gap={2} width={'100%'} pb={12}>
           {isConnected && (
             <Stack gap={10} width={'100%'} my={4}>
-              <Flex minWidth={['350px', '420px', '580px', '800px']} align={'center'} height={'64px'} gap={3}>
+              <Flex
+                minWidth={['350px', '420px', '580px', '800px']}
+                align={'center'}
+                height={'64px'}
+                gap={3}>
                 <Text
                   flexGrow={1}
                   fontWeight="bold"
                   fontSize={notMobile ? '4xl' : '2xl'}
                   my={notMobile ? 10 : 4}>
-                  {network === 'venom' ? pathname.includes('old') ? t('yourOldVids') : t('yourVids') : t('yourSids')}
+                  {network === 'venom'
+                    ? pathname.includes('old')
+                      ? t('yourOldVids')
+                      : t('yourVids')
+                    : t('yourSids')}
                 </Text>
                 {/* {!pathname.includes('old') ? <Tooltip
                         borderRadius={4}
@@ -384,21 +381,24 @@ function ManageSection() {
             </Stack>
           )}
 
-          <Stack gap={2} width={'100%'} background={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
-                rounded={'2xl'}>
-            {nftjsons?.map((nft,i) => (
+          <Stack
+            gap={2}
+            width={'100%'}
+            background={colorMode === 'dark' ? 'blackAlpha.300' : 'white'}
+            rounded={'2xl'}>
+            {nftjsons?.map((nft, i) => (
               <Flex
-                key={nft.name+'-manage-item'}
+                key={nft.name + '-manage-item'}
                 flexDirection={'row'}
                 gap={2}
                 minWidth={['100%', '420px', '580px', '800px']}
-                height={['72px','68px','80px']}
+                height={['72px', '68px', '80px']}
                 alignItems={'center'}
-                borderBottom={i === nftjsons.length -1 ? 'none' : '1px solid #77777755'}
+                borderBottom={i === nftjsons.length - 1 ? 'none' : '1px solid #77777755'}
                 p={2}
                 rounded={'none'}>
                 <Flex gap={3} w={'100%'} align={'center'}>
-                  <Box width={['48px','48px','56px']} key={nft.name + '-box-name'}>
+                  <Box width={['48px', '48px', '56px']} key={nft.name + '-box-name'}>
                     <Avatar
                       my={'0px'}
                       noanimate
@@ -411,26 +411,32 @@ function ManageSection() {
                   </Box>
                   <Stack gap={0}>
                     <Text flexGrow={1} fontWeight={'bold'} fontSize={['xl', 'xl', '2xl']}>
-                    {String(nft.name).toLowerCase()}
-                  </Text>
-                  <Text flexGrow={1} fontWeight={'normal'} fontSize={['md','lg']} opacity={.5}>
-                    expires on {String(nft.expire_date).toLowerCase()}
-                  </Text>
+                      {String(nft.name).toLowerCase()}
+                    </Text>
+                    <Text flexGrow={1} fontWeight={'normal'} fontSize={['md', 'lg']} opacity={0.5}>
+                      expires on {String(nft.expire_date).toLowerCase()}
+                    </Text>
                   </Stack>
                 </Flex>
-                  
 
-                
+                <Flex gap={2} align={'center'}>
+                  {nft.manageUrl?.includes('old') && nft.name && nft.address && !isLoading && (
+                    <MigrateModal nft={nft} />
+                  )}
 
-                
-                  <Flex gap={2} align={'center'}>{nft.manageUrl?.includes('old') && nft.name && nft.address && !isLoading && <MigrateModal nft={nft} />}
-                  
-                  {!nft.manageUrl?.includes('old') && <Menu>
-                    <IconButton size={'lg'} rounded={'full'} as={MenuButton} aria-label="more-settings" variant={'ghost'} p={2}>
-                      <RiMoreFill size={32} />
-                    </IconButton>
-                    <MenuList p={0} bgColor={colorMode === 'light' ? 'white' : 'var(--dark)'}>
-                      {/* {nft.network === 'venom' && <Button
+                  {!nft.manageUrl?.includes('old') && (
+                    <Menu>
+                      <IconButton
+                        size={'lg'}
+                        rounded={'full'}
+                        as={MenuButton}
+                        aria-label="more-settings"
+                        variant={'ghost'}
+                        p={2}>
+                        <RiMoreFill size={32} />
+                      </IconButton>
+                      <MenuList p={0} bgColor={colorMode === 'light' ? 'white' : 'var(--dark)'}>
+                        {/* {nft.network === 'venom' && <Button
                           as={MenuItem}
                           colorScheme="green"
                           isLoading={isSaving || isConfirming}
@@ -454,96 +460,145 @@ function ManageSection() {
                             ? 'Primary VID'
                             : 'Set Primary'}
                         </Button>} */}
-                      {nft.network === 'venom' && !nft.manageUrl?.includes('old') &&(
+                        {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
                           <MenuItem
                             height={'48px'}
                             bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
-                            sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
+                            sx={{
+                              textDecoration: 'none',
+                              _hover: {
+                                textDecoration: 'none',
+                                bgColor:
+                                  colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300',
+                              },
+                            }}
                             as={Link}
-                            target='_blank' 
-                            href={String(nft.manageUrl)} 
-                            
+                            target="_blank"
+                            href={String(nft.manageUrl)}
                             gap={2}
                             borderBottomRadius={0}>
-                            <LinkIcon type='RiSettings4Line' size={24}/> Customize
+                            <LinkIcon type="RiSettings4Line" size={24} /> Customize
                           </MenuItem>
-                       
-                      )}
-                      <MenuItem
-                        size={'lg'}
-                        as={Link}
-                        height={'48px'}
-                        bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
-                            
-                        sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
-                        href={nft.external_url}
-                        target="_blank"
-                        icon={<MdOutlineVisibility size={24} />}>
-                        View {nft.network === 'venom' ? 'Profile' : 'Space ID Link'}
-                      </MenuItem>
-
-                      
-                      {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
+                        )}
                         <MenuItem
-                        size={'lg'}
-                        as={Link}
-                        height={'48px'}
-                        bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
-                        sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
-                        href={VENOMSCAN_NFT + nft.address}
-                        target="_blank"
-                        icon={<LinkIcon type='venomscan' size={24}/>}>
-                        View on VenomScan
-                      </MenuItem>)}
+                          size={'lg'}
+                          as={Link}
+                          height={'48px'}
+                          bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
+                          sx={{
+                            textDecoration: 'none',
+                            _hover: {
+                              textDecoration: 'none',
+                              bgColor: colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300',
+                            },
+                          }}
+                          href={nft.external_url}
+                          target="_blank"
+                          icon={<MdOutlineVisibility size={24} />}>
+                          View {nft.network === 'venom' ? 'Profile' : 'Space ID Link'}
+                        </MenuItem>
 
-                      {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
-                        <MenuItem
-                        size={'lg'}
-                        as={Link}
-                        height={'48px'}
-                        bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
-                        sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
-                        href={VENOMART_NFT + nft.address}
-                        target="_blank"
-                        icon={<LinkIcon type='https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg' size={'sm'}/>}>
-                        Sell on VenomArt
-                      </MenuItem>)}
+                        {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
+                          <MenuItem
+                            size={'lg'}
+                            as={Link}
+                            height={'48px'}
+                            bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
+                            sx={{
+                              textDecoration: 'none',
+                              _hover: {
+                                textDecoration: 'none',
+                                bgColor:
+                                  colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300',
+                              },
+                            }}
+                            href={VENOMSCAN_NFT + nft.address}
+                            target="_blank"
+                            icon={<LinkIcon type="venomscan" size={24} />}>
+                            View on VenomScan
+                          </MenuItem>
+                        )}
 
-                      {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
+                        {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
+                          <MenuItem
+                            size={'lg'}
+                            as={Link}
+                            height={'48px'}
+                            bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
+                            sx={{
+                              textDecoration: 'none',
+                              _hover: {
+                                textDecoration: 'none',
+                                bgColor:
+                                  colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300',
+                              },
+                            }}
+                            href={VENOMART_NFT + nft.address}
+                            target="_blank"
+                            icon={
+                              <LinkIcon
+                                type="https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg"
+                                size={'sm'}
+                              />
+                            }>
+                            Sell on VenomArt
+                          </MenuItem>
+                        )}
+
+                        {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
+                          <MenuItem
+                            size={'lg'}
+                            as={Link}
+                            height={'48px'}
+                            bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
+                            sx={{
+                              textDecoration: 'none',
+                              _hover: {
+                                textDecoration: 'none',
+                                bgColor:
+                                  colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300',
+                              },
+                            }}
+                            href={OASIS_NFT + nft.address}
+                            target="_blank"
+                            icon={
+                              <LinkIcon
+                                type="https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg"
+                                size={'sm'}
+                              />
+                            }>
+                            Sell on Oasis Gallery
+                          </MenuItem>
+                        )}
                         <MenuItem
-                        size={'lg'}
-                        as={Link}
-                        height={'48px'}
-                        bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
-                        isDisabled
-                        sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
-                        href={nft.address}
-                        target="_blank"
-                        icon={<LinkIcon type='https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg' size={'sm'}/>}>
-                        Sell on Oasis Gallery
-                      </MenuItem>)}
-                      <MenuItem
-                        size={'lg'}
-                        as={Link}
-                        height={'48px'}
-                        bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
-                        isDisabled
-                        sx={{ textDecoration: 'none', _hover: { textDecoration: 'none', bgColor : colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300' } }}
-                        
-                        icon={<LinkIcon type='RiExpandRightLine' size={24}/>}>
-                        Extend
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>}
-                  </Flex>
-                
+                          size={'lg'}
+                          as={Link}
+                          height={'48px'}
+                          bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
+                          isDisabled
+                          sx={{
+                            textDecoration: 'none',
+                            _hover: {
+                              textDecoration: 'none',
+                              bgColor: colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300',
+                            },
+                          }}
+                          icon={<LinkIcon type="RiExpandRightLine" size={24} />}>
+                          Extend
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  )}
+                </Flex>
               </Flex>
             ))}
           </Stack>
 
           {listIsEmpty && !isLoading && (
             <Center display="flex" flexDirection="column" gap={4} minH={'75%'}>
-              <Text fontSize="xl">You don't own any {pathname.includes('old') ? ' old ' : ''} Venom IDs</Text>
+              <Text fontSize="xl">
+                You don't own any {pathname.includes('old') ? ' old ' : ''} Venom IDs
+              </Text>
               <NextLink href={'/'} passHref>
                 <Button
                   variant="outline"
