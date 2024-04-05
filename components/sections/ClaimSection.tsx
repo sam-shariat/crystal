@@ -505,7 +505,7 @@ const ClaimSection = () => {
             </AnimateOpacity>
           )}
 
-          <Flex gap={4} justify={'center'} direction={['column','column','row']} pt={[8,8,24]}>
+          <Flex gap={[4,4,2,6]} justify={'center'} direction={['column','column','row']} pt={[8,8,24]}>
             <AnimateScale delay={1}>
               <Button p={4} rounded={'2xl'} h={'100px'} display={'flex'} flexDir={'column'} gap={2} w={['100%','100%','auto']} onClick={()=> setReload((r)=> !r)}>
                 <Text>Registered Domains</Text>
