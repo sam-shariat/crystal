@@ -514,12 +514,12 @@ const ClaimSection = () => {
             </AnimateScale>
             <AnimateScale delay={1.3}>
             <Button as={Link} target='_blank' href={VENOMART_COLLECTION + ROOT_CONTRACT_ADDRESS} p={4} rounded={'2xl'} h={'100px'} display={'flex'} flexDir={'column'} gap={2} w={['100%','100%','auto']}>
-                <Flex gap={4} align={'center'}><LinkIcon type={!lightMode ? 'https://ipfs.io/ipfs/QmXd1mZJerqR8SbgwLpBkFeMPwRx2DWP67EGX4TYXHg1Dx/S5ZuI6i9_400x400.jpg' : 'https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg'} size={'lg'}/><Stack gap={0}><Text textAlign={'left'}>Collection On</Text><Text fontSize={['2xl','2xl','2xl','3xl']} fontWeight={'light'}><strong>VENOM</strong> ART</Text></Stack></Flex>
+                <Flex gap={4} align={'center'}><LinkIcon type={!lightMode ? 'https://ipfs.io/ipfs/QmXd1mZJerqR8SbgwLpBkFeMPwRx2DWP67EGX4TYXHg1Dx/S5ZuI6i9_400x400.jpg' : 'https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg'} size={'lg'}/><Stack gap={0}><Text textAlign={'left'}>Collection On</Text><Text fontSize={['2xl','2xl','2xl']} fontWeight={'light'}><strong>VENOM</strong> ART</Text></Stack></Flex>
               </Button>
             </AnimateScale>
             <AnimateScale delay={1.6}>
             <Button as={Link} target='_blank' href={OASIS_COLLECTION + ROOT_CONTRACT_ADDRESS} p={4} rounded={'2xl'} h={'100px'} display={'flex'} flexDir={'column'} gap={2} w={['100%','100%','auto']}>
-                <Flex gap={4} align={'center'}><LinkIcon type={'https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg'} size={'lg'}/><Stack gap={0}><Text textAlign={'left'}>Collection On</Text><Text fontSize={['2xl','2xl','2xl','3xl']} fontWeight={'light'}>Oasis Gallery</Text></Stack></Flex>
+                <Flex gap={4} align={'center'}><LinkIcon type={'https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg'} size={'lg'}/><Stack gap={0}><Text textAlign={'left'}>Collection On</Text><Text fontSize={['2xl','2xl','2xl']} fontWeight={'light'}>Oasis Gallery</Text></Stack></Flex>
               </Button>
             </AnimateScale>
           </Flex>
