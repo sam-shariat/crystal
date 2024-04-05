@@ -50,9 +50,12 @@ import {
   MINT_DATE,
   MINT_MESSAGE,
   MIN_NAME_LENGTH,
+  OASIS_COLLECTION,
+  ROOT_CONTRACT_ADDRESS,
   SIGN_MESSAGE,
   TLD,
   VARIATIONS_VIDS,
+  VENOMART_COLLECTION,
 } from 'core/utils/constants';
 import { invalidUsernameMessage, isValidUsername } from 'core/utils';
 import { LinkIcon, Logo, LogoIcon } from 'components/logos';
@@ -72,6 +75,7 @@ import {
 } from 'framer-motion';
 import DomainName from 'components/features/DomainName';
 import getEarly from 'core/utils/getEarly';
+import AnimateScale from 'components/animate/AnimateScale';
 
 interface Message {
   type: any;
@@ -95,13 +99,13 @@ const ClaimSection = () => {
   const rootContract = useAtomValue(rootContractAtom);
   const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [fee, setFee] = useState<number | null>();
-  //const [totalSupply, setTotalSupply] = useState<number | null>(0);
   const [typing, setTyping] = useState<boolean>(false);
   const [mintedOnTestnet, setMintedOnTestnet] = useState(0);
   const [earlyLoading, setEarlyLoading] = useState(true);
   const [nameExists, setNameExists] = useState(false);
   const [nameStatus, setNameStatus] = useState<number | null>();
-  const [claimedName, setClaimedName] = useState('');
+  const [reload, setReload] = useState(false);
+  const [totalSupply, setTotalSupply] = useState<number | null>(null);
   const VenomContractAddress = useAtomValue(venomContractAddressAtom);
   const [mintOpen, setMintOpen] = useAtom(mintOpenAtom);
   //const [venomContract, setVenomContract] = useState<any>(undefined);
@@ -216,11 +220,12 @@ const ClaimSection = () => {
 
   useEffect(() => {
     async function checkActive() {
-      
+      setTotalSupply(null);
+      console.log('loading total registered')
       const totalSupply = await rootContract.methods.totalSupply({ answerId: 0 }).call();
-      console.log(totalSupply);
-      const active = await rootContract.methods._active().call();
-      console.log(active);
+      setTotalSupply(totalSupply.count);
+      // const active = await rootContract.methods._active().call();
+      // console.log(active);
       // if(earlyLoading){
       //   toast.closeAll();
       //   toast({
@@ -269,7 +274,7 @@ const ClaimSection = () => {
     ) {
       checkActive();
     }
-  }, [provider, rootContract, connectedAccount, path]);
+  }, [provider, rootContract, connectedAccount, path, reload]);
 
   const [notMobile] = useMediaQuery('(min-width: 992px)');
 
@@ -499,6 +504,25 @@ const ClaimSection = () => {
               </Flex>
             </AnimateOpacity>
           )}
+
+          <Flex gap={4} justify={'center'} direction={['column','column','row']} pt={[8,8,24]}>
+            <AnimateScale delay={1}>
+              <Button p={4} rounded={'2xl'} h={'100px'} display={'flex'} flexDir={'column'} gap={2} w={['100%','100%','auto']} onClick={()=> setReload((r)=> !r)}>
+                <Text>Registered Domains</Text>
+                <Text fontSize={['2xl','2xl','2xl','4xl']}>{totalSupply ?? 'loading ..'}</Text>
+              </Button>
+            </AnimateScale>
+            <AnimateScale delay={1.3}>
+            <Button as={Link} target='_blank' href={VENOMART_COLLECTION + ROOT_CONTRACT_ADDRESS} p={4} rounded={'2xl'} h={'100px'} display={'flex'} flexDir={'column'} gap={2} w={['100%','100%','auto']}>
+                <Flex gap={4} align={'center'}><LinkIcon type={!lightMode ? 'https://ipfs.io/ipfs/QmXd1mZJerqR8SbgwLpBkFeMPwRx2DWP67EGX4TYXHg1Dx/S5ZuI6i9_400x400.jpg' : 'https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg'} size={'lg'}/><Stack gap={0}><Text textAlign={'left'}>Collection On</Text><Text fontSize={['2xl','2xl','2xl','3xl']} fontWeight={'light'}><strong>VENOM</strong> ART</Text></Stack></Flex>
+              </Button>
+            </AnimateScale>
+            <AnimateScale delay={1.6}>
+            <Button as={Link} target='_blank' href={OASIS_COLLECTION + ROOT_CONTRACT_ADDRESS} p={4} rounded={'2xl'} h={'100px'} display={'flex'} flexDir={'column'} gap={2} w={['100%','100%','auto']}>
+                <Flex gap={4} align={'center'}><LinkIcon type={'https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg'} size={'lg'}/><Stack gap={0}><Text textAlign={'left'}>Collection On</Text><Text fontSize={['2xl','2xl','2xl','3xl']} fontWeight={'light'}>Oasis Gallery</Text></Stack></Flex>
+              </Button>
+            </AnimateScale>
+          </Flex>
 
           <RegisterModal />
           {/* <Text fontWeight="light" fontSize={'xl'} py={6}>

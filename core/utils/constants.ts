@@ -21,6 +21,8 @@ export const AVATAR_API_URL = 'https://venomid.link/api/avatar?name=';
 export const VENOMSCAN_NFT = 'https://venomscan.com/accounts/';
 export const VENTORY_NFT = 'https://ventory.gg/nft/';
 export const VENOMART_NFT = 'https://venomart.io/nft/';
+export const VENOMART_COLLECTION = 'https://venomart.io/collection/';
+export const OASIS_COLLECTION = 'https://oasis.gallery/collection/';
 export const BTCSCAN_ADDRESS = 'https://blockchair.com/bitcoin/';
 export const ETHERSCAN_ADDRESS = 'https://etherscan.io/address/';
 export const CONTRACT_ADDRESS =
