@@ -509,7 +509,7 @@ const ClaimSection = () => {
             <AnimateScale delay={1}>
               <Button p={4} rounded={'2xl'} h={'100px'} display={'flex'} flexDir={'column'} gap={2} w={['100%','100%','auto']} onClick={()=> setReload((r)=> !r)}>
                 <Text>Registered Domains</Text>
-                <Text fontSize={['2xl','2xl','2xl','4xl']}>{totalSupply ?? 'loading ..'}</Text>
+                {totalSupply ? <Text fontSize={['2xl','2xl','2xl','4xl']}>{totalSupply}</Text> : <Center minH={'44px'}><Spinner size={'md'}/></Center>}
               </Button>
             </AnimateScale>
             <AnimateScale delay={1.3}>

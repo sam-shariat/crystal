@@ -165,28 +165,9 @@ export default function ConnectButton() {
 
     try {
       const _rootContract = new provider.Contract(RootAbi, new Address(ROOT_CONTRACT_ADDRESS));
-      setRootContract(_rootContract);
-
-      const _earlyAdopterContract = new provider.Contract(
-        OATCollectionABI,
-        new Address(EARLY_ADOPTERS_CONTRACT_ADDRESS)
-      );
-      setEarlyAdopterContract(_earlyAdopterContract);
-
-      const _venomContract = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS));
-      setVenomContract(_venomContract);
-
-      const _venomContractV1 = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS_V1));
-      setVenomContractV1(_venomContractV1);
-
-      const _venomContractV2 = new provider.Contract(VenomAbi, new Address(CONTRACT_ADDRESS_V2));
-      setVenomContractV2(_venomContractV2);
+      setRootContract(_rootContract);      
 
       if (
-        !_venomContract?.methods ||
-        !_earlyAdopterContract?.methods ||
-        !_venomContractV1?.methods ||
-        !_venomContractV2?.methods ||
         !_rootContract?.methods
       ) {
         return;
