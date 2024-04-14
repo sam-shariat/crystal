@@ -44,12 +44,7 @@ import {
 import { capFirstLetter, getAvatarUrl, sleep, truncAddress } from 'core/utils';
 import { LinkIcon } from 'components/logos';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
-import {
-  getAddressesFromIndex,
-  getNftByIndex,
-  getNftsByIndexes,
-  saltCode,
-} from 'core/utils/nft';
+import { getAddressesFromIndex, getNftByIndex, getNftsByIndexes, saltCode } from 'core/utils/nft';
 import {
   AVATAR_API_URL,
   OPENSEA_URL,
@@ -104,6 +99,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
   const avatarShape = useAtomValue(avatarShapeAtom);
 
   const eth = useAtomValue(ethAtom);
+  const [avatar, setAvatar] = useAtom(avatarAtom);
 
   useEffect(() => {
     if (_open) {
@@ -120,14 +116,13 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
     let nft = nftjsons[index];
     if (!nft) return;
     let avatarURL = nft.files
-        ? !nft?.files[0]?.mimetype.includes('metadata') || !nft?.files[0]?.mimetype.includes('json')
-          ? nft.files[0].source
-          : nft.preview?.source
-        : nft.preview?.source;
-    
+      ? !nft?.files[0]?.mimetype.includes('metadata') || !nft?.files[0]?.mimetype.includes('json')
+        ? nft.files[0].source
+        : nft.preview?.source
+      : nft.preview?.source;
 
-    setEditingAvatar(String(avatarURL));
-    setEditingAvatarFile(undefined);
+    setAvatar(String(avatarURL));
+    //setEditingAvatarFile(undefined);
     setAvatarNft(String(nft.address));
     onClose();
   }
@@ -137,11 +132,10 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
     let nft = nftjsons[index];
     if (!nft) return;
     let avatarURL = nft.files
-        ? !nft?.files[0]?.mimetype.includes('metadata') || !nft?.files[0]?.mimetype.includes('json')
-          ? nft.files[0].source
-          : nft.preview?.source
-        : nft.preview?.source;
-    
+      ? !nft?.files[0]?.mimetype.includes('metadata') || !nft?.files[0]?.mimetype.includes('json')
+        ? nft.files[0].source
+        : nft.preview?.source
+      : nft.preview?.source;
 
     let _styleType;
 
@@ -418,6 +412,22 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
           <DrawerHeader gap={3} display={'flex'} flexDirection={notMobile ? 'row' : 'column'}>
             <HStack gap={2} flexGrow={1}>
               <Text flexGrow={1}>Pick {type === 'avatar' ? 'Avatar' : 'NFT'}</Text>
+              {type === 'avatar' && (
+                <Button
+                  aria-label="venom-punks-nfts"
+                  onClick={() => {
+                    setAvatar(String("https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png"));
+                    //setEditingAvatarFile(undefined);
+                    onClose();
+                  }}
+                  gap={2}>
+                  {notMobile ? 'Venom-Punks.Com Avatar' : ''}{' '}
+                  <LinkIcon
+                    type="https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png"
+                    size={'md'}
+                  />
+                </Button>
+              )}
               <Button aria-label="change-view" onClick={() => setListView(!listView)} gap={2}>
                 {notMobile ? (listView ? 'Bigger' : 'Smaller') : ''}{' '}
                 {listView ? <RiLayoutGridLine size={'24'} /> : <RiGridLine size={'24'} />}
@@ -485,7 +495,14 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
                             />
                           </Center>
                         ) : String(nft.preview?.mimetype).includes('mp4') ? (
-                          <ReactPlayer url={nft?.preview?.source} width={'100%'} loop muted playing height={230}/>
+                          <ReactPlayer
+                            url={nft?.preview?.source}
+                            width={'100%'}
+                            loop
+                            muted
+                            playing
+                            height={230}
+                          />
                         ) : (
                           <Avatar
                             noanimate
