@@ -31,7 +31,7 @@ export const getNft = async (provider: ProviderRpcClient, nftAddress: Address): 
     const getInfoAnswer = (await nftContract.methods.getInfo({ answerId: 0 } as never).call()) as any;
     const json = JSON.parse(getJsonAnswer.json ?? '{}') as BaseNftJson;
     json.address = nftAddress.toString();
-    json.network = "venom testnet";
+    json.network = "venom";
     json.info = getInfoAnswer ;
     return json;
   };

@@ -32,7 +32,7 @@ export default function NetworkModal() {
 
   useEffect(() => {
     if (!eth) {
-      setNetwork('venom testnet');
+      setNetwork('venom');
     }
   }, [eth]);
 
@@ -61,12 +61,12 @@ export default function NetworkModal() {
                 gap={2}
                 height={'80px'}
                 size={'lg'}
-                onClick={() => setNetwork('venom testnet')}
+                onClick={() => setNetwork('venom')}
                 rightIcon={network.includes('venom') ? <RiCheckLine /> : undefined}
                 variant={network.includes('venom') ? 'outline' : 'solid'}>
                 <VenomFoundation />
                 <Stack textAlign={'left'} gap={0}>
-                  <Text> Venom Testnet</Text>
+                  <Text> Venom</Text>
                   <Text fontSize={'sm'} color={'gray'}>{`NFTs of ${truncAddress(venom)}`}</Text>
                 </Stack>
               </Button>

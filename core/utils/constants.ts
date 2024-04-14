@@ -533,7 +533,7 @@ export const LINK_VARIATIONS = [
       styles: {
         scanLink: false,
         size: 'sm',
-        network: 'venom testnet',
+        network: 'venom',
         type: 'normal',
       },
     },
