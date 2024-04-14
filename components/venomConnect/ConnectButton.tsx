@@ -430,7 +430,7 @@ export default function ConnectButton() {
                   bgClip="text"
                   my={'0 !important'}>
                   {primaryName?.name && primaryName?.name !== ''
-                    ? primaryName.name.length > (!small ? 11 : 12) ? primaryName.name?.slice(0,(!small ? 11 : 12)) + '...' : primaryName.name
+                    ? primaryName.name.length > (!small ? 8 : 10) ? primaryName.name?.slice(0,(!small ? 8 : 10)) + '...' : primaryName.name
                     : truncAddress(String(account?.address))}
                 </Text>
                 {/* </Stack> */}
