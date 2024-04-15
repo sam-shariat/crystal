@@ -6,6 +6,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'ipfscdn.io',
+        port: '',
+        pathname: '*',
+      },
+      {
+        protocol: 'https',
         hostname: 'ipfs.io',
         port: '',
         pathname: '*',

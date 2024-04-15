@@ -153,6 +153,7 @@ export const ETHERSCAN_URLS: any = {
 export const IPFS_IMAGE_URI = 'https://ipfs';
 
 export const IPFS_URLS = [
+  `https://${process.env.NEXT_PUBLIC_THIRDWEB_ID}.ipfscdn.io/ipfs/`,
   'https://cf-ipfs.com/ipfs/',
   'https://gateway.ipfs.io/',
   'https://gateway.pinata.cloud/ipfs/',
@@ -172,13 +173,22 @@ export const DONATE_VALUES: any = {
   paypal: ['1 USD', '10 USD', '50 USD'],
 };
 
+// export const LINK_VALIDATION_REGEX =
+//   '^(https?:\\/\\/)?' + // protocol
+//   '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+//   '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+//   '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+//   '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+//   '(\\#[-a-z\\d_]*)?$';
+
 export const LINK_VALIDATION_REGEX =
   '^(https?:\\/\\/)?' + // protocol
-  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-  '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-  '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-  '(\\#[-a-z\\d_]*)?$';
+  '([a-zA-Z\\d]([a-zA-Z\\d-]*[a-zA-Z\\d])*)' + // subdomain and domain name
+  '(\\.[a-zA-Z]{2,})+' + // top-level domain
+  '(\\:\\d+)?' + // port
+  '(\\/[\\-a-zA-Z\\d%_.~+:]*)*' + // path (updated to include colon)
+  '(\\?[;&a-zA-Z\\d%_.~+=-]*)?' + // query string
+  '(\\#[-a-zA-Z\\d_]*)?$'; // fragment identifier
 
 export const YOUTUBE_LINK_VALIDATION_REGEX =
   /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;

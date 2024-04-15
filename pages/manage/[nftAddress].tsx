@@ -621,8 +621,8 @@ const ManagePage: NextPage = () => {
                 duration: 3000,
                 status: 'warning',
               });
-              await sleep(4000);
-              getProfileJson();
+              //await sleep(4000);
+              //getProfileJson();
             } else {
               toast({
                 title: 'network error',
