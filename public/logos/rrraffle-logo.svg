@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 752.93 94.12">
+  <rect width="752.93" height="94.12" style="fill: #feffff; stroke-width: 0px;"/>
+  <g>
+    <g>
+      <rect y="0" width="94.11" height="94.12" style="fill: rgba(51, 39, 39, 0); stroke-width: 0px;"/>
+      <path d="M0,94.12h11.76V.08H0v94.04ZM35.29,94.04h13.81l-13.81-13.8v13.8ZM83.36,0h-48.06v.06h17.65V0c16.23-.29,29.62,12.63,29.91,28.86.29,16.23-12.63,29.62-28.86,29.91-.35,0-.7,0-1.05,0h-5.82l35.23,35.24h11.76V29.33c-.13-10.72-3.92-21.07-10.76-29.33Z" style="fill: #df559e; stroke-width: 0px;"/>
+      <path d="M64.7,29.43c0-6.49-5.27-11.75-11.76-11.75h-23.53v23.53h23.53c6.5,0,11.76-5.27,11.76-11.76,0,0,0,0,0,0ZM35.29,23.53h17.65c3.25-.13,5.98,2.4,6.11,5.64s-2.4,5.98-5.64,6.11c-.16,0-.31,0-.47,0h-17.65v-11.75Z" style="fill: #6b53bb; stroke-width: 0px;"/>
+      <path d="M52.94,35.31c3.25.13,5.98-2.4,6.11-5.64s-2.4-5.98-5.64-6.11c-.16,0-.31,0-.47,0h-17.65v11.75h17.65Z" style="fill: #751967; stroke-width: 0px;"/>
+      <path d="M83.36,0c6.83,8.26,10.63,18.61,10.76,29.33V0h-10.76Z" style="fill: #15516f; stroke-width: 0px;"/>
+    </g>
+    <g>
+      <rect x="94.11" y="0" width="94.11" height="94.12" style="fill: rgba(51, 39, 39, 0); stroke-width: 0px;"/>
+      <path d="M94.11,94.12h11.76V.08h-11.76v94.04ZM129.41,94.04h13.81l-13.81-13.8v13.8ZM177.47,0h-48.06v.06h17.65V0c16.23-.29,29.62,12.63,29.91,28.86.29,16.23-12.63,29.62-28.86,29.91-.35,0-.7,0-1.05,0h-5.82l35.23,35.24h11.76V29.33c-.13-10.72-3.92-21.07-10.76-29.33Z" style="fill: #df559e; stroke-width: 0px;"/>
+      <path d="M158.82,29.43c0-6.49-5.27-11.75-11.76-11.75h-23.53v23.53h23.53c6.5,0,11.76-5.27,11.76-11.76,0,0,0,0,0,0ZM129.41,23.53h17.65c3.25-.13,5.98,2.4,6.11,5.64s-2.4,5.98-5.64,6.11c-.16,0-.31,0-.47,0h-17.65v-11.75Z" style="fill: #6b53bb; stroke-width: 0px;"/>
+      <path d="M147.05,35.31c3.25.13,5.98-2.4,6.11-5.64s-2.4-5.98-5.64-6.11c-.16,0-.31,0-.47,0h-17.65v11.75h17.65Z" style="fill: #751967; stroke-width: 0px;"/>
+      <path d="M177.47,0c6.83,8.26,10.63,18.61,10.76,29.33V0h-10.76Z" style="fill: #15516f; stroke-width: 0px;"/>
+    </g>
+    <g>
+      <rect x="188.23" y="0" width="94.11" height="94.12" style="fill: rgba(51, 39, 39, 0); stroke-width: 0px;"/>
+      <path d="M188.23,94.12h11.76V.08h-11.76v94.04ZM223.52,94.04h13.81l-13.81-13.8v13.8ZM271.58,0h-48.06v.06h17.65V0c16.23-.29,29.62,12.63,29.91,28.86.29,16.23-12.63,29.62-28.86,29.91-.35,0-.7,0-1.05,0h-5.82l35.23,35.24h11.76V29.33c-.13-10.72-3.92-21.07-10.76-29.33Z" style="fill: #df559e; stroke-width: 0px;"/>
+      <path d="M252.93,29.43c0-6.49-5.27-11.75-11.76-11.75h-23.53v23.53h23.53c6.5,0,11.76-5.27,11.76-11.76,0,0,0,0,0,0ZM223.52,23.53h17.65c3.25-.13,5.98,2.4,6.11,5.64s-2.4,5.98-5.64,6.11c-.16,0-.31,0-.47,0h-17.65v-11.75Z" style="fill: #6b53bb; stroke-width: 0px;"/>
+      <path d="M241.16,35.31c3.25.13,5.98-2.4,6.11-5.64s-2.4-5.98-5.64-6.11c-.16,0-.31,0-.47,0h-17.65v11.75h17.65Z" style="fill: #751967; stroke-width: 0px;"/>
+      <path d="M271.58,0c6.83,8.26,10.63,18.61,10.76,29.33V0h-10.76Z" style="fill: #15516f; stroke-width: 0px;"/>
+    </g>
+    <g>
+      <rect x="282.34" y="0" width="94.12" height="94.12" style="fill: rgba(51, 39, 39, 0); stroke-width: 0px;"/>
+      <path d="M334.19,45.73h1.59l-6.38-23.84-6.38,23.84h1.56l4.8-17.96,4.81,17.96Z" style="fill: #d4569f; stroke-width: 0px;"/>
+      <path d="M335.77,51.62l-1.58-5.88h-9.61l-1.58,5.88h12.77Z" style="fill: #f89a2a; stroke-width: 0px;"/>
+      <path d="M329.38,27.78l-4.8,17.96h9.61l-4.81-17.96Z" style="fill: #cc7a5c; stroke-width: 0px;"/>
+      <path d="M282.34,0h5.88v94.12h-5.88V0Z" style="fill: #d4569f; stroke-width: 0px;"/>
+      <path d="M316.93,0l-25.18,94.01v.1h5.88v-.1L322.81,0h-5.88Z" style="fill: #44c1f8; stroke-width: 0px;"/>
+      <path d="M316.93,0h-28.71v94.12h3.53v-.1L316.93,0Z" style="fill: #3e45ad; stroke-width: 0px;"/>
+      <path d="M323.07,68.99l-6.73,25.13h26.08l-6.73-25.13h-12.62ZM341.84,0l25.2,94.12h9.41V0h-34.62Z" style="fill: #d4569f; stroke-width: 0px;"/>
+    </g>
+    <g>
+      <rect x="376.46" y="0" width="94.12" height="94.12" style="fill: rgba(51, 39, 39, 0); stroke-width: 0px;"/>
+      <path d="M376.46,94.12h17.65V0h-17.65v94.12ZM464.69.02v23.53h-47.06v11.75h18v-6.04h11.76v35.61h-11.76v-6.04h-18v35.29h52.94V0l-5.88.02Z" style="fill: #6b53bb; stroke-width: 0px;"/>
+      <path d="M435.64,35.3h5.52v23.53h-5.52v-23.53Z" style="fill: #00ab9f; stroke-width: 0px;"/>
+      <path d="M447.4,64.87V29.25h-11.76v6.04h5.52v23.53h-5.52v6.04s11.76,0,11.76,0Z" style="fill: #144d74; stroke-width: 0px;"/>
+    </g>
+    <g>
+      <rect x="470.57" y="0" width="94.12" height="94.12" style="fill: rgba(51, 39, 39, 0); stroke-width: 0px;"/>
+      <path d="M470.57,94.12h17.65V0h-17.65v94.12ZM558.81.02v23.53h-47.06v11.75h18v-6.04h11.76v35.61h-11.76v-6.04h-18v35.29h52.94V0l-5.88.02Z" style="fill: #6b53bb; stroke-width: 0px;"/>
+      <path d="M529.76,35.3h5.52v23.53h-5.52v-23.53Z" style="fill: #00ab9f; stroke-width: 0px;"/>
+      <path d="M541.52,64.87V29.25h-11.76v6.04h5.52v23.53h-5.52v6.04s11.76,0,11.76,0Z" style="fill: #144d74; stroke-width: 0px;"/>
+    </g>
+    <g>
+      <rect x="564.69" y="0" width="94.12" height="94.12" style="fill: rgba(51, 39, 39, 0); stroke-width: 0px;"/>
+      <path d="M599.99,0v11.76h5.88v47.06h-5.88v11.76h47.06v23.53h11.76V0h-58.82ZM564.69,94.12h11.76V0h-11.76v94.12Z" style="fill: #ef63ef; stroke-width: 0px;"/>
+      <path d="M594.1,11.77h5.88v47.06h-5.88V11.77Z" style="fill: #f89a2a; stroke-width: 0px;"/>
+      <path d="M599.99,11.77h5.88v47.06h-5.88V11.77Z" style="fill: #db5929; stroke-width: 0px;"/>
+    </g>
+    <g>
+      <rect x="658.81" y="0" width="94.12" height="94.12" style="fill: rgba(51, 39, 39, 0); stroke-width: 0px;"/>
+      <path d="M658.81,94.12h11.81V0h-11.81v94.12ZM741.12.02v23.53h-47.27v11.75h.06v-6.16h29.41v11.76h-5.84v12.08h5.84v11.76h-29.41v-5.91h-.06v11.76h47.27v23.53h11.81V0l-11.81.02Z" style="fill: #e42d84; stroke-width: 0px;"/>
+      <path d="M693.91,35.3h23.58v5.6h-23.58v-5.6Z" style="fill: #2a78c5; stroke-width: 0px;"/>
+      <path d="M723.32,29.13h-29.41v6.16h23.58v5.6h5.84v-11.76Z" style="fill: #30166f; stroke-width: 0px;"/>
+      <path d="M693.91,52.97h23.58v5.85h-23.58v-5.85Z" style="fill: #2a78c5; stroke-width: 0px;"/>
+      <path d="M723.32,64.74v-11.76h-5.84v5.85h-23.58v5.91h29.41Z" style="fill: #30166f; stroke-width: 0px;"/>
+    </g>
+  </g>
+</svg>

@@ -38,11 +38,18 @@ import {
 import { useAtom, useSetAtom } from 'jotai';
 import {
   BG_COLORS,
+  DISCORD_URL,
   LINK_VARIATIONS,
+  MEDIUM_URL,
   SOCIALS_VARIATIONS,
+  SOCIAL_TWITTER,
+  TELEGRAM_URL,
+  TWITTER_URL,
   VARIATIONS,
   VARIATIONS_VIDS,
   WALLETS_VARIATIONS,
+  YLIDE_URL,
+  YOUTUBE_URL,
 } from 'core/utils/constants';
 import { getIconColor, getRandomNumber, sleep } from 'core/utils';
 import { RiArrowRightCircleFill, RiLinksLine } from 'react-icons/ri';
@@ -64,6 +71,7 @@ import AccountAddress from 'components/features/AccountAddress';
 import { wrap } from '@motionone/utils';
 import Prize from 'components/features/Prize';
 import RRRItem from 'components/features/RRRItem';
+import ImageBox from 'components/claiming/ImageBox';
 
 export default function RRRSection() {
   let changeTimer: any;
@@ -101,8 +109,8 @@ export default function RRRSection() {
     scrollYProgress,
     [0, 1],
     [
-      colorMode === 'light' ? '#13131300' : '#dbdbdb00',
-      colorMode === 'light' ? '#131313ff' : '#dbdbdbff',
+      colorMode === 'light' ? '#13131300' : '#2bb67300',
+      colorMode === 'light' ? '#239960ff' : '#2bb673ff',
     ]
   );
   useAnimationFrame((_t, delta) => {
@@ -218,8 +226,9 @@ export default function RRRSection() {
                 fontWeight="bold"
                 fontSize={['4xl', '4xl', '5xl', '5xl', '6xl']}
                 textAlign={['center']}>
-                Welcome to the Radiant Riddle Raffle
+                the Radiant Riddle Raffle
               </Heading>
+              <ImageBox srcUrl='/logos/rrraffle-logo.svg' />
               <Button
               as={Link}
               href='https://tokenforge.gg/'
@@ -245,7 +254,7 @@ export default function RRRSection() {
                   Presented for the TokenForge Hackathon
                 </Button>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center']}>
                 A Lottery NFT Collection featuring{' '}
@@ -276,55 +285,81 @@ export default function RRRSection() {
                 </Parallax>
               </Flex>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center']}>
                 Items from this collection can be used as wallpaper images on the Venom ID platform
-              </Text>
-             
-              <Text
-                fontWeight="normal"
-                fontSize={['2xl']}
-                textAlign={['center']}>
-                Each NFT Offers an exciting opportunity
               </Text>
             </Stack>
           </GridItem>
           <GridItem
             display={'flex'}
             justifyContent={'center'}
-            bg={colorMode === 'light' ? 'white' : 'blackAlpha.200'}
+            bg={colorMode === 'light' ? 'whiteAlpha.800' : 'blackAlpha.600'}
             rounded={'2xl'}
             border={'1px solid #77777750'}>
-            <Stack px={[4, 4, 6, 10]} py={6} textAlign={'center'}>
+            <Stack px={[4, 4, 6, 10]} py={12} textAlign={'center'} gap={6}>
+            <Text
+                fontWeight="bold"
+                fontSize={['2xl']}
+                textAlign={['center']}>
+                Each NFT Offers an exciting opportunity
+              </Text>
               <Text
                 fontWeight="bold"
-                fontSize={['4xl', '4xl', '5xl', '5xl', '6xl']}
+                fontSize={['4xl','5xl']}
                 color={colorMode === 'light' ? 'black' : 'white'}>
                 🎁 To Win 🎁 
               </Text>
-              <SimpleGrid columns={[1, 1, 2]} gap={6} py={6}>
+              <Text
+                fontWeight="bold"
+                fontSize={['2xl','3xl']}
+                textAlign={['center']}>
+                1 Prize from The Pool
+              </Text>
+
+              <Text
+                fontWeight="bold"
+                fontSize={['5xl','6xl']}
+                bgGradient={'linear(to-r, var(--venom1), var(--bluevenom1))'}
+                bgClip={'text'}
+                textAlign={['center']}>
+                EVERYDAY
+              </Text>
+              <Text
+                fontWeight="bold"
+                fontSize={['4xl','5xl']}
+                textAlign={['center']}>
+                FOR 30 DAYS
+              </Text>
+              <SimpleGrid columns={[1, 1, 1, 2]} gap={6} py={6}>
                 <Prize
-                  name={'3-letter .venom Domains ($80)'}
+                  name={'3-letter .venom domains'} value='~$2400'
                   icon={<Logo w={notMobile ? '76px' : '38px'} h={notMobile ? '60px' : '30px'} />}
                   number={30}
                 />
                 <Prize
-                  name={'4-letter .venom Domains ($40)'}
+                  name={'4-letter .venom domains'} value='~$2400'
                   icon={<Logo w={notMobile ? '76px' : '38px'} h={notMobile ? '60px' : '30px'} />}
                   number={60}
                 />
                 <Prize
-                  name={'5-letter .venom Domains ($4)'}
+                  name={'5-letter .venom domains'} value='~$400'
                   icon={<Logo w={notMobile ? '76px' : '38px'} h={notMobile ? '60px' : '30px'} />}
-                  number={100}
+                  number={90}
                 />
                 <Prize
-                  name={'$40 VENOM Tokens'}
+                  name={'40 $VENOM Tokens'} value='~$600'
                   icon={<LinkIcon type="venom" size={notMobile ? 76 : 38} />}
                   number={30}
                 />
               </SimpleGrid>
+              <Text
+                fontWeight="bold"
+                fontSize={['xl','3xl']}
+                textAlign={['center']}>
+                🪙 Total Prize Pool Value: ~$6,000 🪙
+              </Text>
             </Stack>
           </GridItem>
         </SimpleGrid>
@@ -356,25 +391,25 @@ export default function RRRSection() {
                 Utility
               </Heading>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 Daily raffles with mentioned prizes for 30 days to random NFT holders
               </Text>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 Usage of NFTs as wallpaper images on the Venom ID platform
               </Text>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 Get Whitelisted for our 1:1 Art NFT collection revealing soon
               </Text>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 Be A Part of Venom ID Early Adopters And Enjoy future perks and Rewards!
@@ -394,25 +429,25 @@ export default function RRRSection() {
                 FAQ
               </Heading>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 Free For Venom ID Owners!
               </Text>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 1 VENOM For Public Minting
               </Text>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 Mint Starts on 17th April ~ Soon
               </Text>
               <Text
-                fontWeight="normal"
+                fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 Stay tuned for more details as we provide updates!
@@ -420,7 +455,9 @@ export default function RRRSection() {
               </Stack>
           </GridItem>
         </Grid>
+        
       </Container>
+      
     </motion.div>
   );
 }
