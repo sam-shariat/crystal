@@ -76,7 +76,7 @@ export default function Header() {
           <motion.div
                   animate={{ scale: [1, 1.1, 1] }} // Scale animation
                   transition={{ duration: 1.5, repeat: Infinity }} // Animation duration and loop
-                ><NextLink href="/rrr" passHref>
+                ><NextLink href="/rrraffle" passHref>
                   <Button
                     variant="outline"
                     rounded={'full'}
