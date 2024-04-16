@@ -70,15 +70,37 @@ export default function Header() {
 
   return (
     <>
-      {/* {pathname === '/' && (
+      {!notMobile && (
         <Center px={[4, 4, 0]} fontSize={'lg'} py={2} bgGradient={'linear(to-r, var(--venom), var(--bluevenom1))'} color={'white'}>
-          Venom ID 
+          <motion.div
+                  animate={{ scale: [1, 1.1, 1] }} // Scale animation
+                  transition={{ duration: 1.5, repeat: Infinity }} // Animation duration and loop
+                ><NextLink href="/rrr" passHref>
+                  <Button
+                    variant="outline"
+                    rounded={'full'}
+                    gap={2}
+                    isActive={pathname === '/rrr'}
+                    size={'lg'}>
+                    <LinkIcon
+                      type="nft"
+                      size={24}
+                      
+                    />
+                    
+                      <Text >
+                        {t('RRRaffle NFT Collection')}
+                      </Text>
+                    
+                  </Button></NextLink>
+                </motion.div>
+              
         </Center>
-      )} */}
+      )}
       <Box
         as="nav"
-        position={home ? 'absolute' : 'relative'}
-        top={pathname === '/' ? ['42px', '42px', '42px'] : 0}
+        position={'relative'}
+        top={['0px']}
         zIndex={1000}
         px={0}
         m={0}
@@ -126,7 +148,7 @@ export default function Header() {
                 
                   <motion.div
                     animate={{ scale: [1, 1.1, 1] }} // Scale animation
-                    transition={{ duration: 1.5, repeat: pathname === '/rrr' ? 0 : Infinity }} // Animation duration and loop
+                    transition={{ duration: 1.5, repeat: Infinity }} // Animation duration and loop
                   ><NextLink href="/rrr" passHref>
                     <Button
                       variant="outline"
@@ -141,7 +163,7 @@ export default function Header() {
                       />
                       {notMobile && (
                         <Text color={pathname === '/rrr' ? 'var(--venom1)' : 'default'}>
-                          {t('RRRaffle')}
+                          {t('RRRaffle NFT Collection')}
                         </Text>
                       )}
                     </Button></NextLink>
