@@ -46,7 +46,7 @@ import { LinkIcon, Logo, VenomFoundation } from 'components/logos';
 import Footer from './Footer';
 import LogoLink from './LogoLink';
 import { DOCS_URL, GRINDING_URL, GUIDES_URL, ROADMAP_URL } from 'core/utils/constants';
-
+import { motion } from 'framer-motion';
 export default function Header() {
   const [colorM, setColorM] = useAtom(colorModeAtom);
   const { colorMode, toggleColorMode } = useColorMode();
@@ -70,15 +70,15 @@ export default function Header() {
 
   return (
     <>
-      {pathname === '/' && (
+      {/* {pathname === '/' && (
         <Center px={[4, 4, 0]} fontSize={'lg'} py={2} bgGradient={'linear(to-r, var(--venom), var(--bluevenom1))'} color={'white'}>
-          Venom ID is live on Venom mainnet!
+          Venom ID 
         </Center>
-      )}
+      )} */}
       <Box
         as="nav"
         position={home ? 'absolute' : 'relative'}
-        top={pathname === '/' ? ['42px','42px','42px'] : 0}
+        top={pathname === '/' ? ['42px', '42px', '42px'] : 0}
         zIndex={1000}
         px={0}
         m={0}
@@ -94,7 +94,7 @@ export default function Header() {
         <Container maxW="100%" p={[3, 4, 4, 4, 8]}>
           <Flex justifyContent="space-between">
             <LogoLink />
-             {/*<HStack gap={1}>
+            {/*<HStack gap={1}>
               
               {notMobile && (
                 <NextLink href={home ? '#w&w' : '/#w&w'} passHref>
@@ -122,20 +122,56 @@ export default function Header() {
               )} 
             </HStack>*/}
             <HStack dir="ltr">
+              {notMobile && (
+                
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }} // Scale animation
+                    transition={{ duration: 1.5, repeat: pathname === '/rrr' ? 0 : Infinity }} // Animation duration and loop
+                  ><NextLink href="/rrr" passHref>
+                    <Button
+                      variant="outline"
+                      rounded={'full'}
+                      gap={2}
+                      isActive={pathname === '/rrr'}
+                      size={'lg'}>
+                      <LinkIcon
+                        type="nft"
+                        size={24}
+                        color={pathname === '/rrr' ? 'var(--venom1)' : undefined}
+                      />
+                      {notMobile && (
+                        <Text color={pathname === '/rrr' ? 'var(--venom1)' : 'default'}>
+                          {t('RRRaffle')}
+                        </Text>
+                      )}
+                    </Button></NextLink>
+                  </motion.div>
+                
+              )}
+
               {isConnected && (
                 <NextLink href="/manage" passHref>
                   <Button variant="ghost" rounded={'full'} gap={2} isActive={dashboard}>
-                    <LinkIcon type="RiApps2Line" size={24} color={dashboard ? 'var(--venom1)' : 'inherit'}/>
-                    {notMobile && <Text color={dashboard ? 'var(--venom1)' : 'default'}>
-                    {t('My Names')}
-                    </Text>}
+                    <LinkIcon
+                      type="RiApps2Line"
+                      size={24}
+                      color={dashboard ? 'var(--venom1)' : 'inherit'}
+                    />
+                    {notMobile && (
+                      <Text color={dashboard ? 'var(--venom1)' : 'default'}>{t('My Names')}</Text>
+                    )}
                   </Button>
                 </NextLink>
               )}
 
               <Popover onClose={onClose} isOpen={isOpen} onOpen={onOpen}>
                 <PopoverTrigger>
-                  <IconButton aria-label="venomid-mobile-menu" variant="ghost" mx={0} rounded={'full'} size={['md','lg']}>
+                  <IconButton
+                    aria-label="venomid-mobile-menu"
+                    variant="ghost"
+                    mx={0}
+                    rounded={'full'}
+                    size={['md', 'lg']}>
                     <LinkIcon type="RiMenuLine" size={22} />
                   </IconButton>
                 </PopoverTrigger>
@@ -145,9 +181,17 @@ export default function Header() {
                     zIndex={10000}
                     mt={2}
                     bg={lightMode ? 'var(--white)' : 'var(--dark)'}>
-                    <PopoverHeader justifyContent={'space-between'} display={'flex'} alignItems={'center'} p={4} px={6}>
-                      <Flex gap={3}><VenomFoundation />
-                      <Text fontWeight={'bold'} cursor={'default'}>Venom Mainnet</Text>
+                    <PopoverHeader
+                      justifyContent={'space-between'}
+                      display={'flex'}
+                      alignItems={'center'}
+                      p={4}
+                      px={6}>
+                      <Flex gap={3}>
+                        <VenomFoundation />
+                        <Text fontWeight={'bold'} cursor={'default'}>
+                          Venom Mainnet
+                        </Text>
                       </Flex>
                       <IconButton
                         variant="ghost"
@@ -161,7 +205,7 @@ export default function Header() {
                     </PopoverHeader>
                     <PopoverBody>
                       <SimpleGrid columns={2} py={2} gap={2}>
-                      <NextLink href={'/what'} passHref>
+                        <NextLink href={'/what'} passHref>
                           <Button
                             variant="ghost"
                             colorScheme={pathname === '/what' ? 'green' : 'gray'}
@@ -201,37 +245,24 @@ export default function Header() {
                             {t('Litepaper')}
                           </Button>
                         </NextLink>
-                        
 
-                        <Link href={ROADMAP_URL} target='_blank'>
-                          <Button
-                            variant="ghost"
-                            width="100%"
-                            justifyContent="left">
+                        <Link href={ROADMAP_URL} target="_blank">
+                          <Button variant="ghost" width="100%" justifyContent="left">
                             {t('RoadMap')}
                           </Button>
                         </Link>
-                        <Link href={GUIDES_URL} target='_blank'>
-                          <Button
-                            variant="ghost"
-                            width="100%"
-                            justifyContent="left">
+                        <Link href={GUIDES_URL} target="_blank">
+                          <Button variant="ghost" width="100%" justifyContent="left">
                             {t('Guides')}
                           </Button>
                         </Link>
-                        <Link href={DOCS_URL} target='_blank'>
-                          <Button
-                            variant="ghost"
-                            width="100%"
-                            justifyContent="left">
+                        <Link href={DOCS_URL} target="_blank">
+                          <Button variant="ghost" width="100%" justifyContent="left">
                             {t('Developers')}
                           </Button>
                         </Link>
-                        <Link href={GRINDING_URL} target='_blank'>
-                          <Button
-                            variant="ghost"
-                            width="100%"
-                            justifyContent="left">
+                        <Link href={GRINDING_URL} target="_blank">
+                          <Button variant="ghost" width="100%" justifyContent="left">
                             {t('Reveiw Us')}
                           </Button>
                         </Link>
@@ -264,7 +295,6 @@ export default function Header() {
                   </PopoverContent>
                 </Portal>
               </Popover>
-              
 
               <ConnectButton />
               {/* {notMobile && (
@@ -295,7 +325,6 @@ export default function Header() {
             </HStack>
           </Flex>
         </Container>
-        
       </Box>
     </>
   );

@@ -1,9 +1,14 @@
 import * as React from 'react';
 import { Box } from '@chakra-ui/react';
-function Logo() {
+
+interface Props {
+  w?: number | string;
+  h?: number | string;
+}
+function Logo({w,h} : Props) {
   return (
-    <Box width={'38px'} height={'30px'}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1348 1088" width={38} height={30}>
+    <Box width={w ?? '38px'} height={h ?? '30px'}>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1348 1088" width={w} height={h}>
         <defs>
           <linearGradient
             id="a"

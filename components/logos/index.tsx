@@ -313,7 +313,8 @@ const LinkIcon = ({ type, line, color, size = '28px', rounded}: LinkIconProps) =
         <RiSoundcloudFill size={size} color={color ? color : undefined} />
       );
     case 'nft link':
-      return line ? <NftLine /> : <NftFill />;
+      case 'nft':
+      return line ? <NftLine color={color ? color : undefined} /> : <NftFill color={color ? color : undefined} />;
     case 'simple link':
       return line ? <RiLinksLine size={size} /> : <RiLinksFill size={size} />;
     case 'image link':
@@ -345,7 +346,7 @@ const LinkIcon = ({ type, line, color, size = '28px', rounded}: LinkIconProps) =
     case 'venom testnet':
     case 'venom':
     case 'venomtestnet':
-      return <VenomFoundation color={color ? color : undefined} />;
+      return <VenomFoundation color={color ? color : undefined} size={size}/>;
     case 'venomid':
       return <Logo />;
     case 'venomidicon':
