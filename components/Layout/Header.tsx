@@ -47,6 +47,7 @@ import Footer from './Footer';
 import LogoLink from './LogoLink';
 import { DOCS_URL, GRINDING_URL, GUIDES_URL, ROADMAP_URL } from 'core/utils/constants';
 import { motion } from 'framer-motion';
+import ImageBox from 'components/claiming/ImageBox';
 export default function Header() {
   const [colorM, setColorM] = useAtom(colorModeAtom);
   const { colorMode, toggleColorMode } = useColorMode();
@@ -80,17 +81,9 @@ export default function Header() {
                     variant="outline"
                     rounded={'full'}
                     gap={2}
-                    isActive={pathname === '/rrr'}
+                    isActive={pathname === '/rrraffle'}
                     size={'lg'}>
-                    <LinkIcon
-                      type="nft"
-                      size={24}
-                      
-                    />
-                    
-                      <Text >
-                        {t('RRRaffle NFT Collection')}
-                      </Text>
+                    <ImageBox srcUrl='/logos/rrraffle.svg' size={'200px'} />
                     
                   </Button></NextLink>
                 </motion.div>
@@ -149,23 +142,16 @@ export default function Header() {
                   <motion.div
                     animate={{ scale: [1, 1.1, 1] }} // Scale animation
                     transition={{ duration: 1.5, repeat: Infinity }} // Animation duration and loop
-                  ><NextLink href="/rrr" passHref>
+                  ><NextLink href="/rrraffle" passHref>
                     <Button
                       variant="outline"
                       rounded={'full'}
                       gap={2}
-                      isActive={pathname === '/rrr'}
+                      mx={4}
+                      w={'200px'}
+                      isActive={pathname === '/rrraffle'}
                       size={'lg'}>
-                      <LinkIcon
-                        type="nft"
-                        size={24}
-                        color={pathname === '/rrr' ? 'var(--venom1)' : undefined}
-                      />
-                      {notMobile && (
-                        <Text color={pathname === '/rrr' ? 'var(--venom1)' : 'default'}>
-                          {t('RRRaffle NFT Collection')}
-                        </Text>
-                      )}
+                      <ImageBox srcUrl='/logos/rrraffle.svg' size={'180px'} />
                     </Button></NextLink>
                   </motion.div>
                 

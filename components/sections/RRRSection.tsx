@@ -228,7 +228,7 @@ export default function RRRSection() {
                 textAlign={['center']}>
                 the Radiant Riddle Raffle
               </Heading>
-              <ImageBox srcUrl='/logos/rrraffle-logo.svg' />
+              <ImageBox srcUrl='/logos/rrraffle.svg' />
               <Button
               as={Link}
               href='https://tokenforge.gg/'
