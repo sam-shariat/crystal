@@ -334,22 +334,22 @@ export default function RRRSection() {
               </Text>
               <SimpleGrid columns={[1, 1, 1, 2]} gap={6} py={6}>
                 <Prize
-                  name={'3-letter .venom domains'} value='~$2400'
+                  name={'3-letter .venom domains'} value='$2400'
                   icon={<Logo w={notMobile ? '76px' : '38px'} h={notMobile ? '60px' : '30px'} />}
                   number={30}
                 />
                 <Prize
-                  name={'4-letter .venom domains'} value='~$2400'
+                  name={'4-letter .venom domains'} value='$2400'
                   icon={<Logo w={notMobile ? '76px' : '38px'} h={notMobile ? '60px' : '30px'} />}
                   number={60}
                 />
                 <Prize
-                  name={'5-letter .venom domains'} value='~$400'
+                  name={'5-letter .venom domains'} value='$400'
                   icon={<Logo w={notMobile ? '76px' : '38px'} h={notMobile ? '60px' : '30px'} />}
                   number={90}
                 />
                 <Prize
-                  name={'40 $VENOM Tokens'} value='~$600'
+                  name={'40 $VENOM Tokens'} value='$600'
                   icon={<LinkIcon type="venom" size={notMobile ? 76 : 38} />}
                   number={30}
                 />
@@ -381,76 +381,80 @@ export default function RRRSection() {
           <GridItem colSpan={[3, 3]}>
             <Stack
               px={[4, 4, 6, 10]}
-              gap={8}
+              gap={[6,]}
               color={colorMode === 'light' ? 'white' : 'var(--dark)'}>
               <Heading
                 as={'h3'}
                 fontWeight="bold"
+                borderBottom={'2px solid'}
                 fontSize={['4xl', '4xl', '5xl', '5xl', '6xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
                 Utility
               </Heading>
               <Text
-                fontWeight="bold"
+                fontWeight="normal"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                Daily raffles with mentioned prizes for 30 days to random NFT holders
+                textAlign={['left']}><li>
+                Daily raffles with mentioned prizes for 30 days to random NFT holders</li>
               </Text>
               <Text
-                fontWeight="bold"
+                fontWeight="normal"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                Usage of NFTs as wallpaper images on the Venom ID platform
+                textAlign={['left']}><li>
+                Usage of NFTs as wallpaper images on the Venom ID platform</li>
               </Text>
               <Text
-                fontWeight="bold"
+                fontWeight="normal"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                Get Whitelisted for our 1:1 Art NFT collection revealing soon
+                textAlign={['left']}><li>
+                Get Whitelisted for our 1:1 Art NFT collection revealing soon</li>
               </Text>
               <Text
-                fontWeight="bold"
+                fontWeight="normal"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                Be A Part of Venom ID Early Adopters And Enjoy future perks and Rewards!
+                textAlign={['left']}><li>
+                Be A Part of Venom ID Early Adopters And Enjoy future perks and Rewards!</li>
               </Text>
             </Stack>
           </GridItem>
           <GridItem colSpan={[3, 3]}>
             <Stack
               px={[4, 4, 6, 10]}
-              gap={12}
+              gap={[6,8]}
               color={colorMode === 'light' ? 'white' : 'var(--dark)'}>
               <Heading
                 as={'h3'}
                 fontWeight="bold"
+                borderBottom={'2px solid'}
                 fontSize={['4xl', '4xl', '5xl', '5xl', '6xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
+                textAlign={['center', 'center', 'center','left']}>
                 FAQ
               </Heading>
+              
               <Text
-                fontWeight="bold"
+                fontWeight="normal"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                Free For Venom ID Owners!
+                textAlign={['left']}><li>
+                Free For Venom ID Owners!</li>
+              </Text>
+              
+              <Text
+                fontWeight="normal"
+                fontSize={['xl', 'xl', '2xl', '2xl']}
+                textAlign={['left']}><li>
+                1 VENOM For Public Minting, 1 Per Wallet</li>
               </Text>
               <Text
-                fontWeight="bold"
+                fontWeight="normal"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                1 VENOM For Public Minting, 1 Per Wallet
+                textAlign={['left']}><li>
+                Mint Starts on 17th April ~ 07:00 UTC </li>
               </Text>
               <Text
-                fontWeight="bold"
+                fontWeight="normal"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                Mint Starts on 17th April ~ 07:00 UTC 
-              </Text>
-              <Text
-                fontWeight="bold"
-                fontSize={['xl', 'xl', '2xl', '2xl']}
-                textAlign={['center', 'center', 'center', 'left']}>
-                Stay tuned for more details as we provide updates!
+                textAlign={['left']}><li>
+                Stay tuned for more details as we provide updates!</li>
               </Text>
               </Stack>
           </GridItem>

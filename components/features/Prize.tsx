@@ -33,7 +33,7 @@ import { LinkIcon } from 'components/logos';
             display={'block'}
             maxW={'100%'}
             cursor={'default'}
-            pr={5}
+            pr={[2,3,4,5]}
             flexGrow={1}
             fontSize={['md','lg','xl']}>
               {name}
