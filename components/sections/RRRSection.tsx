@@ -438,13 +438,13 @@ export default function RRRSection() {
                 fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
-                1 VENOM For Public Minting
+                1 VENOM For Public Minting, 1 Per Wallet
               </Text>
               <Text
                 fontWeight="bold"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
-                Mint Starts on 17th April ~ Soon
+                Mint Starts on 17th April ~ 07:00 UTC 
               </Text>
               <Text
                 fontWeight="bold"
