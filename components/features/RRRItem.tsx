@@ -15,8 +15,8 @@ import { LinkIcon } from 'components/logos';
   export default function RRRItem({ color, light }: Props) {
     const { colorMode } = useColorMode();
     return (
-        <Center gap={3} border={'none'} rounded={'md'} bg={color} minH={500} minW={250}>
-            <LinkIcon type='RiQuestionFill' size={'60px'} color={light ? 'black' : 'white'}/>
+        <Center gap={3} border={'none'} rounded={'md'} bg={color} minW={300} minH={160}>
+            <LinkIcon type='RiQuestionFill' size={'60px'} color={light ? '#121212' : 'white'}/>
         </Center>
     );
   }

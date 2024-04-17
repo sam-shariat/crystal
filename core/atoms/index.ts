@@ -70,6 +70,7 @@ export const venomContractAtom = atom<any>(undefined);
 export const venomContractAtomV1 = atom<any>(undefined);
 export const venomContractAtomV2 = atom<any>(undefined);
 export const earlyAdopterContractAtom = atom<any>(undefined);
+export const raffleContractAtom = atom<any>(undefined);
 export const nftContractAtom = atom<any>(undefined);
 export const isConnectedAtom = atom(false);
 export const connectedAccountAtom = atom('');
