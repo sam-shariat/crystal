@@ -448,7 +448,7 @@ export default function RRRSection() {
                 fontWeight="normal"
                 fontSize={['xl', 'xl', '2xl', '2xl']}
                 textAlign={['left']}><li>
-                Mint Starts on 17th April ~ 07:00 UTC </li>
+                Mint Starts on 17th April ~ 17:00 UTC </li>
               </Text>
               <Text
                 fontWeight="normal"
