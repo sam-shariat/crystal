@@ -482,7 +482,7 @@ export default function RRRSection() {
                     </Text>
                   </Flex>
                   <Flex gap={3} justify={'space-between'} fontSize={['lg', 'lg', 'xl', '2xl']}>
-                    <Button
+                    {notMobile ? <Button
                       color={'white'}
                       bgGradient={'linear(to-r, var(--venom1), var(--bluevenom1))'}
                       _hover={{
@@ -497,7 +497,7 @@ export default function RRRSection() {
                       isLoading={isMinting || isConfirming}
                       onClick={mintRaffle}>
                       Mint RRRaffle
-                    </Button>
+                    </Button> : <Text>💻 Please Use Desktop/PC 💻</Text>}
                   </Flex>
 
                   {idMints !== null && (
