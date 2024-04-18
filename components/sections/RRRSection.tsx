@@ -262,7 +262,7 @@ export default function RRRSection() {
 
     if (mints > 2) {
       toast({
-        status: 'info',
+        status: 'warning',
         title: t('Max Minted'),
         description: t('You Already Have Minted 3 NFTs'),
         duration: 3000,
@@ -297,8 +297,9 @@ export default function RRRSection() {
     console.log('id : ', count);
 
     if (count >= maxSupply) {
+      toast.closeAll();
       toast({
-        status: 'info',
+        status: 'warning',
         title: t('Sold Out'),
         description: t('All Items are minted! See you next time!'),
         duration: 3000,
