@@ -260,11 +260,11 @@ export default function RRRSection() {
       return;
     }
 
-    if (mints > 2) {
+    if (mints > 1) {
       toast({
         status: 'warning',
         title: t('Max Minted'),
-        description: t('You Already Have Minted 3 NFTs'),
+        description: t('You Already Have Minted Max Number of NFTs'),
         duration: 3000,
         isClosable: true,
       });
@@ -512,7 +512,7 @@ export default function RRRSection() {
                       }}
                       w={'xs'}
                       size={'lg'}
-                      isDisabled={mints > 2 || isMinting || isConfirming || totalSupply >= maxSupply}
+                      isDisabled={mints > 1 || isMinting || isConfirming || totalSupply >= maxSupply}
                       isLoading={isMinting || isConfirming}
                       onClick={mintRaffle}>
                       {totalSupply < maxSupply ? 'Mint RRRaffle' : 'Sold Out'}
@@ -535,7 +535,7 @@ export default function RRRSection() {
 
                   {mints > 0 && (
                     <Flex gap={3} fontSize={['lg', 'lg', 'xl', '2xl']} p={3} border={'1px solid'} rounded={'lg'}>
-                      You own {mints}/3 RRRaffle(s)!
+                      You own {mints}/2 RRRaffle(s)!
                     </Flex>
                   )}
                 </Center>
