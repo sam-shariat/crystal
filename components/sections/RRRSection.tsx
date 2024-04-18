@@ -487,7 +487,7 @@ export default function RRRSection() {
                     </Text>
                   </Flex>
                   <Flex gap={3} justify={'space-between'} fontSize={['lg', 'lg', 'xl', '2xl']}>
-                    {!notMobile ? <Button
+                    {notMobile ? <Button
                       color={'white'}
                       bgGradient={'linear(to-r, var(--venom1), var(--bluevenom1))'}
                       _hover={{

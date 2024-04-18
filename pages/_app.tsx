@@ -18,7 +18,6 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 //import { SpeedInsights } from "@vercel/speed-insights/next"
 import '../styles/globals.css';
 import 'intro.js/introjs.css';
-import { Ethereum, Polygon, Arbitrum, Binance, Goerli, ZksyncEra } from '@thirdweb-dev/chains';
 import { motion } from 'framer-motion';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -28,8 +27,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider>
       <VenomConfig initVenomConnect={initVenomConnect as any}>
         <ThirdwebProvider
-          supportedChains={[Binance]}
-          activeChain={'binance'}
+          //supportedChains={[Binance]}
+          //activeChain={'binance'}
           supportedWallets={[
             embeddedWallet({
               auth: {
