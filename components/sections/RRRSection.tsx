@@ -687,7 +687,7 @@ export default function RRRSection() {
               </Text>
 
               <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
-                <li>1 VENOM For Public Minting, 1 Per Wallet</li>
+                <li>1 VENOM For Public Minting, 2 Per Wallet</li>
               </Text>
               <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
                 <li>Rewards will be distributed after all Items are minted </li>
