@@ -535,7 +535,7 @@ export default function RRRSection() {
 
                   {mints > 0 && (
                     <Flex gap={3} fontSize={['lg', 'lg', 'xl', '2xl']} p={3} border={'1px solid'} rounded={'lg'}>
-                      You own {mints}/2 RRRaffle(s)!
+                      You own {mints} RRRaffle(s)!
                     </Flex>
                   )}
                 </Center>
