@@ -295,6 +295,19 @@ export default function RRRSection() {
 
     const { count } = await raffleContract.methods.totalSupply({ answerId: 0 }).call();
     console.log('id : ', count);
+
+    if (count >= maxSupply) {
+      toast({
+        status: 'info',
+        title: t('Sold Out'),
+        description: t('All Items are minted! See you next time!'),
+        duration: 3000,
+        isClosable: true,
+      });
+      setIsMinting(false);
+      return;
+    }
+
     const imageNumber = getImageNumber(Number(count === 0 ? 1 : count));
     const randomNumber = getRandomFixedNumber(11111, 22222);
     const name = 'RRRaffle Wallpaper NFT #' + randomNumber;
@@ -501,7 +514,7 @@ export default function RRRSection() {
                       isDisabled={mints > 2 || isMinting || isConfirming || totalSupply >= maxSupply}
                       isLoading={isMinting || isConfirming}
                       onClick={mintRaffle}>
-                      {totalSupply >= maxSupply ? 'Mint RRRaffle' : 'Sold Out'}
+                      {totalSupply < maxSupply ? 'Mint RRRaffle' : 'Sold Out'}
                     </Button> : <Text>💻 Please Use Desktop/PC 💻</Text>}
                   </Flex>
 
