@@ -498,10 +498,10 @@ export default function RRRSection() {
                       }}
                       w={'xs'}
                       size={'lg'}
-                      isDisabled={mints > 2 || isMinting || isConfirming}
+                      isDisabled={mints > 2 || isMinting || isConfirming || totalSupply >= maxSupply}
                       isLoading={isMinting || isConfirming}
                       onClick={mintRaffle}>
-                      Mint RRRaffle
+                      {totalSupply >= maxSupply ? 'Mint RRRaffle' : 'Sold Out'}
                     </Button> : <Text>💻 Please Use Desktop/PC 💻</Text>}
                   </Flex>
 
