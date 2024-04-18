@@ -9,14 +9,14 @@ import ImageBox from 'components/claiming/ImageBox';
 import { LinkIcon } from 'components/logos';
   
   interface Props {
-    color: string;
-    light: boolean;
+    image: string;
+    
   }
-  export default function RRRItem({ color, light }: Props) {
+  export default function RRRItem({ image }: Props) {
     const { colorMode } = useColorMode();
     return (
-        <Center gap={3} border={'none'} rounded={'md'} bg={color} minW={300} minH={160}>
-            <LinkIcon type='RiQuestionFill' size={'60px'} color={light ? '#121212' : 'white'}/>
+        <Center gap={3} border={'none'} rounded={'md'} minW={300} minH={160}>
+            <ImageBox srcUrl={image} rounded='lg' />
         </Center>
     );
   }

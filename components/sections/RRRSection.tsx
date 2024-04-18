@@ -38,6 +38,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
   BG_COLORS,
   RAFFLE_CONTRACT_ADDRESS,
+  RAFFLE_IMAGES,
   ROOT_CONTRACT_ADDRESS,
   SITE_URL,
   TESTNET_ROOT_CONTRACT_ADDRESS,
@@ -187,6 +188,7 @@ export default function RRRSection() {
   const loadByContract = async (_contractAddress: string) => {
     if (!provider || !provider.isInitialized) return 0;
     const saltedCode = await saltCode(provider, String(connectedAccount), _contractAddress);
+    console.log(saltedCode);
     // Hash it
     const codeHash = await provider.getBocHash(String(saltedCode));
     // Fetch all Indexes by hash
@@ -216,9 +218,13 @@ export default function RRRSection() {
 
     const _mints = await loadByContract(RAFFLE_CONTRACT_ADDRESS);
     const _idMints = await loadByContract(ROOT_CONTRACT_ADDRESS);
+    const _venomazzMints = await loadByContract('0:62932d87cd4f78f7732d7dae2d89501a330ab8becbb9a6b384039917bc3133de');
+    const _staxidMints = await loadByContract('0:cb5ea03dc5704baab86d9af572b23fb3c46f245cead72d2a2f8a4a1cc426fb9c');
 
+    const _count: number = _venomazzMints + _staxidMints + _idMints;
+    
     setMints(_mints);
-    setIdMints(_idMints);
+    setIdMints(_count);
 
     console.log('ids : ', _idMints);
 
@@ -454,12 +460,11 @@ export default function RRRSection() {
                 opacity={0.7}>
                 <Parallax baseVelocity={-0.5}>
                   <Flex gap={[4, 6, 8]} pr={[2, 3, 4]}>
-                    {BG_COLORS.map(
+                    {RAFFLE_IMAGES.map(
                       (bg, i) =>
                         i > 5 && (
                           <RRRItem
-                            color={bg.color}
-                            light={bg.lightMode}
+                            image={bg}
                             key={`VenomID-RRR-${i}-item`}
                           />
                         )
@@ -482,7 +487,7 @@ export default function RRRSection() {
                     </Text>
                   </Flex>
                   <Flex gap={3} justify={'space-between'} fontSize={['lg', 'lg', 'xl', '2xl']}>
-                    {notMobile ? <Button
+                    {!notMobile ? <Button
                       color={'white'}
                       bgGradient={'linear(to-r, var(--venom1), var(--bluevenom1))'}
                       _hover={{
@@ -515,8 +520,8 @@ export default function RRRSection() {
                   )}
 
                   {mints > 0 && (
-                    <Flex gap={3} fontSize={['lg', 'lg', 'xl', '2xl']}>
-                      You own {mints} RRRaffle(s)!
+                    <Flex gap={3} fontSize={['lg', 'lg', 'xl', '2xl']} p={3} border={'1px solid'} rounded={'lg'}>
+                      You own {mints}/3 RRRaffle(s)!
                     </Flex>
                   )}
                 </Center>
@@ -671,7 +676,10 @@ export default function RRRSection() {
                 <li>1 VENOM For Public Minting, 1 Per Wallet</li>
               </Text>
               <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
-                <li>Mint Starts on 17th April ~ 17:00 UTC </li>
+                <li>Rewards will be distributed after all Items are minted </li>
+              </Text>
+              <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
+                <li>Winners will be selected publicly and visible in this page everyday </li>
               </Text>
               <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
                 <li>Stay tuned for more details as we provide updates!</li>

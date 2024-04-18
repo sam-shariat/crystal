@@ -375,7 +375,7 @@ export default function ConnectButton() {
             w={['168px', '192px']}>
             <Center gap={2}>
               {/* <LinkIcon type="venom" key={'connect-wallet-venom'} /> */}
-              {network ? 'Loading ...' : 'Connect Venom'}
+            Connect Venom
             </Center>
           </Button>
         ) : (

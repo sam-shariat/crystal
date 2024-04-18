@@ -112,7 +112,7 @@ export const getNftsByIndexes = async (provider: ProviderRpcClient, indexAddress
         data: {
           collection: new Address(contractAddress),
           owner: new Address(userAddress),
-          type: btoa('nft'),
+          type: Buffer.from('nft').toString('base64'),
         },
       },
     });
