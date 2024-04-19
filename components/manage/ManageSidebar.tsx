@@ -52,7 +52,7 @@ export default function ManageSidebar({ onSave }: Props) {
   const [horizontalSocial, setHorizontalSocial] = useAtom(horizontalSocialAtom);
   const [socialButtons, setSocialButtons] = useAtom(socialButtonsAtom);
   const [walletButtons, setWalletButtons] = useAtom(walletButtonsAtom);
-  const lightMode = useAtomValue(lightModeAtom);
+  const [lightMode, setLightMode] = useAtom(lightModeAtom);
   const name = useAtomValue(nameAtom);
   const setIsStyled = useSetAtom(isStyledAtom);
   const { pathname } = useRouter();
@@ -84,7 +84,11 @@ export default function ManageSidebar({ onSave }: Props) {
         backgroundColor={colorMode === 'light' ? 'white' : 'blackAlpha.600'}>
         <Flex
           flexDir="column"
-          h={notMobileH ? ['93vh', '93vh', 'auto', 'auto', '93vh'] : ['92vh', '92vh', 'auto', 'auto', '92vh']}
+          h={
+            notMobileH
+              ? ['93vh', '93vh', 'auto', 'auto', '93vh']
+              : ['92vh', '92vh', 'auto', 'auto', '92vh']
+          }
           overflow={['auto', 'auto', 'hidden', 'hidden', 'auto']}
           gap={4}
           rounded={'lg'}>
@@ -139,11 +143,18 @@ export default function ManageSidebar({ onSave }: Props) {
           </Text>
           <Box gap={2}>
             <SettingsButton
+              title="Light Mode"
+              value={lightMode}
+              setValue={setLightMode}
+              top
+            />
+
+            <SettingsButton
               title="Use Line Icons"
               value={useLineIcons}
               setValue={setUseLineIcons}
-              top
             />
+
             <SettingsButton
               title="Social Icons"
               value={horizontalSocial}
