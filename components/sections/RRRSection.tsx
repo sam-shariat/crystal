@@ -188,7 +188,7 @@ export default function RRRSection() {
   const loadByContract = async (_contractAddress: string) => {
     if (!provider || !provider.isInitialized) return 0;
     const saltedCode = await saltCode(provider, String(connectedAccount), _contractAddress);
-    console.log(saltedCode);
+    //console.log(saltedCode);
     // Hash it
     const codeHash = await provider.getBocHash(String(saltedCode));
     // Fetch all Indexes by hash
@@ -220,8 +220,11 @@ export default function RRRSection() {
     const _idMints = await loadByContract(ROOT_CONTRACT_ADDRESS);
     const _venomazzMints = await loadByContract('0:62932d87cd4f78f7732d7dae2d89501a330ab8becbb9a6b384039917bc3133de');
     const _staxidMints = await loadByContract('0:cb5ea03dc5704baab86d9af572b23fb3c46f245cead72d2a2f8a4a1cc426fb9c');
+    const _punkMints = await loadByContract('0:f283ba1b50a520b591f241a8e56ee4b3207d36a7ded0abef0e0f17c8a44ab3fc');
 
-    const _count: number = _venomazzMints + _staxidMints + _idMints;
+    console.log("_punkMints : ",_punkMints)
+
+    const _count: number = _venomazzMints + _staxidMints + _idMints + _punkMints;
     
     setMints(_mints);
     setIdMints(_count);
