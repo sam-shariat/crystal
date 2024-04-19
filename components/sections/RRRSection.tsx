@@ -221,10 +221,11 @@ export default function RRRSection() {
     const _venomazzMints = await loadByContract('0:62932d87cd4f78f7732d7dae2d89501a330ab8becbb9a6b384039917bc3133de');
     const _staxidMints = await loadByContract('0:cb5ea03dc5704baab86d9af572b23fb3c46f245cead72d2a2f8a4a1cc426fb9c');
     const _punkMints = await loadByContract('0:f283ba1b50a520b591f241a8e56ee4b3207d36a7ded0abef0e0f17c8a44ab3fc');
+    const _orphMints = await loadByContract('0:63edc56ef6a0d37e28ec6a9b59be62cc491ebcfdb4d448eff80c88d04f6079c6');
+  
+    //console.log("_punkMints : ",_punkMints)
 
-    console.log("_punkMints : ",_punkMints)
-
-    const _count: number = _venomazzMints + _staxidMints + _idMints + _punkMints;
+    const _count: number = _venomazzMints + _staxidMints + _idMints + _punkMints + _orphMints;
     
     setMints(_mints);
     setIdMints(_count);
