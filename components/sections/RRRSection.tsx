@@ -535,7 +535,7 @@ export default function RRRSection() {
                     </Flex>
                   ) : (
                     <Flex gap={3} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']}>
-                      <Text>Prize distribution will start on April 21th</Text>
+                      <Text>Prize distribution will start on April 22rd</Text>
                       <Button
                         as={Link}
                         target="_blank"
