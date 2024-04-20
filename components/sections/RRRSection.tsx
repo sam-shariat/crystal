@@ -37,11 +37,13 @@ import {
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
   BG_COLORS,
+  OASIS_COLLECTION,
   RAFFLE_CONTRACT_ADDRESS,
   RAFFLE_IMAGES,
   ROOT_CONTRACT_ADDRESS,
   SITE_URL,
   TESTNET_ROOT_CONTRACT_ADDRESS,
+  VENOMART_COLLECTION,
 } from 'core/utils/constants';
 import {
   motion,
@@ -218,15 +220,23 @@ export default function RRRSection() {
 
     const _mints = await loadByContract(RAFFLE_CONTRACT_ADDRESS);
     const _idMints = await loadByContract(ROOT_CONTRACT_ADDRESS);
-    const _venomazzMints = await loadByContract('0:62932d87cd4f78f7732d7dae2d89501a330ab8becbb9a6b384039917bc3133de');
-    const _staxidMints = await loadByContract('0:cb5ea03dc5704baab86d9af572b23fb3c46f245cead72d2a2f8a4a1cc426fb9c');
-    const _punkMints = await loadByContract('0:f283ba1b50a520b591f241a8e56ee4b3207d36a7ded0abef0e0f17c8a44ab3fc');
-    const _orphMints = await loadByContract('0:63edc56ef6a0d37e28ec6a9b59be62cc491ebcfdb4d448eff80c88d04f6079c6');
-  
+    const _venomazzMints = await loadByContract(
+      '0:62932d87cd4f78f7732d7dae2d89501a330ab8becbb9a6b384039917bc3133de'
+    );
+    const _staxidMints = await loadByContract(
+      '0:cb5ea03dc5704baab86d9af572b23fb3c46f245cead72d2a2f8a4a1cc426fb9c'
+    );
+    const _punkMints = await loadByContract(
+      '0:f283ba1b50a520b591f241a8e56ee4b3207d36a7ded0abef0e0f17c8a44ab3fc'
+    );
+    const _orphMints = await loadByContract(
+      '0:63edc56ef6a0d37e28ec6a9b59be62cc491ebcfdb4d448eff80c88d04f6079c6'
+    );
+
     //console.log("_punkMints : ",_punkMints)
 
     const _count: number = _venomazzMints + _staxidMints + _idMints + _punkMints + _orphMints;
-    
+
     setMints(_mints);
     setIdMints(_count);
 
@@ -479,13 +489,7 @@ export default function RRRSection() {
                 <Parallax baseVelocity={-0.5}>
                   <Flex gap={[4, 6, 8]} pr={[2, 3, 4]}>
                     {RAFFLE_IMAGES.map(
-                      (bg, i) =>
-                        i > 5 && (
-                          <RRRItem
-                            image={bg}
-                            key={`VenomID-RRR-${i}-item`}
-                          />
-                        )
+                      (bg, i) => i > 5 && <RRRItem image={bg} key={`VenomID-RRR-${i}-item`} />
                     )}
                   </Flex>
                 </Parallax>
@@ -493,7 +497,7 @@ export default function RRRSection() {
               {mints !== null ? (
                 <Center
                   flexDirection={'column'}
-                  w={['100%', 'sm', 'md']}
+                  w={['100%', 'sm', 'md', 'lg', 'xl', '2xl']}
                   gap={4}
                   minH={'200px'}
                   pb={8}>
@@ -504,26 +508,95 @@ export default function RRRSection() {
                       )
                     </Text>
                   </Flex>
-                  <Flex gap={3} justify={'space-between'} fontSize={['lg', 'lg', 'xl', '2xl']}>
-                    {notMobile ? <Button
-                      color={'white'}
-                      bgGradient={'linear(to-r, var(--venom1), var(--bluevenom1))'}
-                      _hover={{
-                        bgGradient:
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                            : 'linear(to-r, var(--venom0), var(--bluevenom0))',
-                      }}
-                      w={'xs'}
-                      size={'lg'}
-                      isDisabled={mints > 1 || isMinting || isConfirming || totalSupply >= maxSupply}
-                      isLoading={isMinting || isConfirming}
-                      onClick={mintRaffle}>
-                      {totalSupply < maxSupply ? 'Mint RRRaffle' : 'Sold Out'}
-                    </Button> : <Text>💻 Please Use Desktop/PC 💻</Text>}
-                  </Flex>
+                  {totalSupply < maxSupply ? (
+                    <Flex gap={3} justify={'space-between'} fontSize={['lg', 'lg', 'xl', '2xl']}>
+                      {notMobile ? (
+                        <Button
+                          color={'white'}
+                          bgGradient={'linear(to-r, var(--venom1), var(--bluevenom1))'}
+                          _hover={{
+                            bgGradient:
+                              colorMode === 'light'
+                                ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                                : 'linear(to-r, var(--venom0), var(--bluevenom0))',
+                          }}
+                          w={'xs'}
+                          size={'lg'}
+                          isDisabled={
+                            mints > 1 || isMinting || isConfirming || totalSupply >= maxSupply
+                          }
+                          isLoading={isMinting || isConfirming}
+                          onClick={mintRaffle}>
+                          {totalSupply < maxSupply ? 'Mint RRRaffle' : 'Sold Out'}
+                        </Button>
+                      ) : (
+                        <Text>💻 Please Use Desktop/PC 💻</Text>
+                      )}
+                    </Flex>
+                  ) : (
+                    <Flex gap={3} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']}>
+                      <Text>Prize distribution will start on April 22th</Text>
+                      <Button
+                        as={Link}
+                        target="_blank"
+                        href={OASIS_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
+                        p={4}
+                        style={{ textDecoration: 'none' }}
+                        rounded={'2xl'}
+                        h={'100px'}
+                        display={'flex'}
+                        flexDir={'column'}
+                        gap={2}
+                        alignItems={'space-between'}
+                        w={['100%', '100%', 'md']}>
+                        <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
+                          <LinkIcon
+                            type={
+                              'https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg'
+                            }
+                            size={'lg'}
+                          />
+                          <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
+                            <Text >Collection On</Text>
+                            <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
+                              Oasis Gallery
+                            </Text>
+                          </Stack>
+                        </Flex>
+                      </Button>
+                      <Button
+                        as={Link}
+                        target="_blank"
+                        href={VENOMART_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
+                        p={4}
+                        style={{ textDecoration: 'none' }}
+                        rounded={'2xl'}
+                        h={'100px'}
+                        display={'flex'}
+                        flexDir={'column'}
+                        alignItems={'space-between'}
+                        gap={2}
+                        w={['100%', '100%', 'md']}>
+                        <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
+                          <LinkIcon
+                            type={
+                            'https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg'
+                            }
+                            size={'lg'}
+                          />
+                          <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
+                            <Text >Collection On</Text>
+                            <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
+                              <strong>VENOM</strong> ART
+                            </Text>
+                          </Stack>
+                        </Flex>
+                      </Button>
+                      
+                    </Flex>
+                  )}
 
-                  {idMints !== null && (
+                  {idMints !== null && totalSupply < maxSupply && (
                     <>
                       {idMints > 0 ? (
                         <Flex gap={3} fontSize={['lg', 'lg', 'xl', '2xl']}>
@@ -538,7 +611,13 @@ export default function RRRSection() {
                   )}
 
                   {mints > 0 && (
-                    <Flex gap={3} fontSize={['lg', 'lg', 'xl', '2xl']} p={3} border={'1px solid'} rounded={'lg'}>
+                    <Flex
+                      gap={3}
+                      w={['100%', '100%', 'md']}
+                      fontSize={['lg', 'lg', 'xl', '2xl']}
+                      p={3}
+                      border={'1px solid'}
+                      rounded={'lg'}>
                       You own {mints} RRRaffle(s)!
                     </Flex>
                   )}
