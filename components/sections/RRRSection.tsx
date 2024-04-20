@@ -616,6 +616,8 @@ export default function RRRSection() {
                       w={['100%', '100%', 'md']}
                       fontSize={['lg', 'lg', 'xl', '2xl']}
                       p={3}
+                      justify={'center'}
+                      textAlign={'center'}
                       border={'1px solid'}
                       rounded={'lg'}>
                       You own {mints} RRRaffle(s)!
