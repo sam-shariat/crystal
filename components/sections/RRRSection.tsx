@@ -23,6 +23,15 @@ import {
   useToast,
   Spinner,
   useDisclosure,
+  TableContainer,
+  Table,
+  TableCaption,
+  Thead,
+  Tr,
+  Tbody,
+  Tfoot,
+  Th,
+  Td,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import RaffleAbi from 'abi/RaffleCollection.abi.json';
@@ -55,7 +64,7 @@ import {
   useTransform,
   useVelocity,
 } from 'framer-motion';
-import { LinkIcon, Logo } from 'components/logos';
+import { LinkIcon, Logo, LogoIcon } from 'components/logos';
 import { wrap } from '@motionone/utils';
 import Prize from 'components/features/Prize';
 import RRRItem from 'components/features/RRRItem';
@@ -494,7 +503,7 @@ export default function RRRSection() {
                   </Flex>
                 </Parallax>
               </Flex>
-              {mints !== null ? (
+              {/* {mints !== null ? (
                 <Center
                   flexDirection={'column'}
                   w={['100%', 'sm', 'md', 'lg', 'xl', '2xl']}
@@ -508,7 +517,7 @@ export default function RRRSection() {
                       )
                     </Text>
                   </Flex>
-                  {totalSupply < maxSupply ? (
+                  {/* {totalSupply < maxSupply ? (
                     <Flex gap={3} justify={'space-between'} fontSize={['lg', 'lg', 'xl', '2xl']}>
                       {notMobile ? (
                         <Button
@@ -533,70 +542,11 @@ export default function RRRSection() {
                         <Text>💻 Please Use Desktop/PC 💻</Text>
                       )}
                     </Flex>
-                  ) : (
-                    <Flex gap={3} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']}>
-                      <Text>Prize distribution will start on April 22rd</Text>
-                      <Button
-                        as={Link}
-                        target="_blank"
-                        href={OASIS_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
-                        p={4}
-                        style={{ textDecoration: 'none' }}
-                        rounded={'2xl'}
-                        h={'100px'}
-                        display={'flex'}
-                        flexDir={'column'}
-                        gap={2}
-                        alignItems={'space-between'}
-                        w={['100%', '100%', 'md']}>
-                        <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
-                          <LinkIcon
-                            type={
-                              'https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg'
-                            }
-                            size={'lg'}
-                          />
-                          <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
-                            <Text >Collection On</Text>
-                            <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
-                              Oasis Gallery
-                            </Text>
-                          </Stack>
-                        </Flex>
-                      </Button>
-                      <Button
-                        as={Link}
-                        target="_blank"
-                        href={VENOMART_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
-                        p={4}
-                        style={{ textDecoration: 'none' }}
-                        rounded={'2xl'}
-                        h={'100px'}
-                        display={'flex'}
-                        flexDir={'column'}
-                        alignItems={'space-between'}
-                        gap={2}
-                        w={['100%', '100%', 'md']}>
-                        <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
-                          <LinkIcon
-                            type={
-                            'https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg'
-                            }
-                            size={'lg'}
-                          />
-                          <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
-                            <Text >Collection On</Text>
-                            <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
-                              <strong>VENOM</strong> ART
-                            </Text>
-                          </Stack>
-                        </Flex>
-                      </Button>
-                      
-                    </Flex>
-                  )}
+                  ) : ( */}
 
-                  {idMints !== null && totalSupply < maxSupply && (
+              {/* )} */}
+
+              {/* {idMints !== null && totalSupply < maxSupply && (
                     <>
                       {idMints > 0 ? (
                         <Flex gap={3} fontSize={['lg', 'lg', 'xl', '2xl']}>
@@ -608,29 +558,154 @@ export default function RRRSection() {
                         </Flex>
                       )}
                     </>
-                  )}
+                  )} 
 
-                  {mints > 0 && (
-                    <Flex
-                      gap={3}
-                      w={['100%', '100%', 'md']}
-                      fontSize={['lg', 'lg', 'xl', '2xl']}
-                      p={3}
-                      justify={'center'}
-                      textAlign={'center'}
-                      border={'1px solid'}
-                      rounded={'lg'}>
-                      You own {mints} RRRaffle(s)!
-                    </Flex>
-                  )}
+                  
                 </Center>
               ) : (
                 <Center flexDirection={'column'} w={['100%', 'sm', 'md']} minH={'200px'} gap={8}>
                   {connectedAccount ? <Spinner /> : <ConnectButton />}
                 </Center>
-              )}
+              )} */}
             </Stack>
           </GridItem>
+        </SimpleGrid>
+      </Container>
+
+      <Container
+        maxW="container.xl"
+        display="grid"
+        placeContent="center"
+        placeItems="center"
+        py={16}>
+        <SimpleGrid columns={[1, 1, 1, 2]} gap={[10]}>
+          <Flex gap={3} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']}>
+            <Text>Next Raffle</Text>
+            <Text fontSize={'3xl'} fontWeight={'bold'}>
+              April 22nd 23:59 UTC{' '}
+            </Text>
+            <Button
+              as={Link}
+              target="_blank"
+              href={OASIS_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
+              p={4}
+              style={{ textDecoration: 'none' }}
+              rounded={'2xl'}
+              h={'100px'}
+              display={'flex'}
+              flexDir={'column'}
+              gap={2}
+              alignItems={'space-between'}
+              w={['100%', '100%', '100%']}>
+              <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
+                <LinkIcon
+                  type={
+                    'https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg'
+                  }
+                  size={'lg'}
+                />
+                <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
+                  <Text>Collection On</Text>
+                  <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
+                    Oasis Gallery
+                  </Text>
+                </Stack>
+              </Flex>
+            </Button>
+            <Button
+              as={Link}
+              target="_blank"
+              href={VENOMART_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
+              p={4}
+              style={{ textDecoration: 'none' }}
+              rounded={'2xl'}
+              h={'100px'}
+              display={'flex'}
+              flexDir={'column'}
+              alignItems={'space-between'}
+              gap={2}
+              w={['100%']}>
+              <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
+                <LinkIcon
+                  type={
+                    'https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg'
+                  }
+                  size={'lg'}
+                />
+                <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
+                  <Text>Collection On</Text>
+                  <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
+                    <strong>VENOM</strong> ART
+                  </Text>
+                </Stack>
+              </Flex>
+            </Button>
+            {mints !== null && mints > 0 && (
+              <Flex
+                gap={3}
+                w={['100%', '100%']}
+                fontSize={['lg', 'lg', 'xl', '2xl']}
+                p={3}
+                h={'80px'}
+                justify={'center'}
+                align={'center'}
+                textAlign={'center'}
+                bgColor={colorMode === 'light' ? 'white' : 'whiteAlpha.200'}
+                rounded={'lg'}>
+                You own {mints} RRRaffle(s)!
+              </Flex>
+            )}
+            <Text fontSize={'3xl'} fontWeight={'bold'}>
+            0 out of 30 
+            </Text>
+            <Text fontSize={'xl'}>
+              Prize distributions have been completed
+            </Text>
+          </Flex>
+          <Flex gap={3} direction={'column'}>
+            <Text fontSize={'2xl'}>Winners of todays prizes</Text>
+            <Table variant="simple" bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'} fontSize={['lg', 'lg', 'xl']} rounded={'xl'} p={6} w={'100%'}>
+              <Thead>
+                <Tr>
+                  <Th>🎁 Prize</Th>
+                  <Th>Wallet Address</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                <Tr>
+                  <Td isNumeric display={'flex'} alignItems='center' gap={2}><LinkIcon type='venom' color='#2bb673'/> 40 VENOM TOKENS</Td>
+                  <Td>0:xxxxxxxxx</Td>
+                </Tr>
+                <Tr>
+                  <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} /> 3-char domain</Td>
+                  <Td>0:xxxxxxxxx</Td>
+                </Tr>
+                <Tr>
+                  <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />4-char domain</Td>
+                  <Td>0:xxxxxxxxx</Td>
+                </Tr>
+                <Tr>
+                  <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />4-char domain</Td>
+                  <Td>0:xxxxxxxxx</Td>
+                </Tr>
+                <Tr>
+                <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />5-char domain</Td>
+                  <Td>0:xxxxxxxxx</Td>
+                </Tr>
+                <Tr>
+                <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />5-char domain</Td>
+                  <Td>0:xxxxxxxxx</Td>
+                </Tr>
+                <Tr>
+                <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />5-char domain</Td>
+                  <Td>0:xxxxxxxxx</Td>
+                </Tr>
+              </Tbody>
+              <Tfoot>
+                
+              </Tfoot>
+            </Table>
+          </Flex>
         </SimpleGrid>
         {mintedNft && (
           <MintSuccessModal
@@ -642,6 +717,7 @@ export default function RRRSection() {
           />
         )}
       </Container>
+
       <Container
         maxW="container.xl"
         display="grid"
