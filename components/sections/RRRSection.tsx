@@ -818,7 +818,7 @@ export default function RRRSection() {
         </SimpleGrid>
         <Stack gap={6} py={10} maxW={'container.xl'}>
         <Text fontSize={'xl'} p={4} rounded={'2xl'} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
-              <strong>Note : </strong>Domain Winners will be able to choose their preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be updated )
+              <strong>Note : </strong>Domain Winners of first round will be able to choose their preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be updated )
             </Text>
             <Text fontSize={'xl'} p={4} rounded={'2xl'} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
               Winners of each daily raffle will be updated on this table and list of all winners will be available for all 30 days.
