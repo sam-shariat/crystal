@@ -807,17 +807,22 @@ export const RAFFLE_IMAGES = [
   'https://ipfs.io/ipfs/QmYroF6MGX8NfABN4Um4VZWwSD9FZRY12ujXHF7VqeJN3d/raffle%20(260).png',
 ];
 
+
 export const RAFFLE_WINNERS = [
   {
     date: 'April 22nd',
+    day: 1,
+    txs :[
+      '01292907552163a26a02f8181d4146b8faca18941f03a6c56688a386ff9ffa51'
+    ],
     winners: [
-      '0:f25ad30d0389bf5cd8b15dbc4b29c816226832095d9ea55fa04fbf8063b112d3',
-      '0:be7b8f4fed809c72aba75f4c0a6e282354c7d5f8d9e9de82ec64eb6706d7a99a',
-      '0:36e661787e4019445567f4daaf01abe319d47234305defb3b1cbba88e3396ec4',
-      '0:9191121b39eb43bb08a6cba8b3cbe264766cfd7db8d5c83a1e9cfe42efcce91d',
-      '0:8f500a081d6fd947d2c3b5ea6ea525eff81e56129d65364f2d01ed7eaecc934d',
-      '0:e4c0bb703e64873086cb468a9d7324ca23fcaacd790763c2849fe45d7ab0e84e',
-      '0:533f216d8581e78131c2bdba43d66d5f7a7d867a8027774d974df6aa15541b6c',
+      {owner : '0:f25ad30d0389bf5cd8b15dbc4b29c816226832095d9ea55fa04fbf8063b112d3', prize: '40 VENOMS'},
+      {owner : '0:be7b8f4fed809c72aba75f4c0a6e282354c7d5f8d9e9de82ec64eb6706d7a99a', prize: '3-char domain'},
+      {owner : '0:36e661787e4019445567f4daaf01abe319d47234305defb3b1cbba88e3396ec4', prize: '4-char domain'},
+      {owner : '0:9191121b39eb43bb08a6cba8b3cbe264766cfd7db8d5c83a1e9cfe42efcce91d', prize: '4-char domain'},
+      {owner : '0:8f500a081d6fd947d2c3b5ea6ea525eff81e56129d65364f2d01ed7eaecc934d', prize: '5-char domain'},
+      {owner : '0:e4c0bb703e64873086cb468a9d7324ca23fcaacd790763c2849fe45d7ab0e84e', prize: '5-char domain'},
+      {owner : '0:533f216d8581e78131c2bdba43d66d5f7a7d867a8027774d974df6aa15541b6c', prize: '5-char domain'}
     ],
   },
 ];

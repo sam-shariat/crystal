@@ -34,6 +34,11 @@ import {
   Td,
   Tag,
   Tooltip,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import RaffleAbi from 'abi/RaffleCollection.abi.json';
@@ -51,6 +56,7 @@ import {
   OASIS_COLLECTION,
   RAFFLE_CONTRACT_ADDRESS,
   RAFFLE_IMAGES,
+  RAFFLE_WINNERS,
   ROOT_CONTRACT_ADDRESS,
   SITE_URL,
   TESTNET_ROOT_CONTRACT_ADDRESS,
@@ -78,6 +84,7 @@ import { saltCode } from 'core/utils/nft';
 import { sleep, truncAddress } from 'core/utils';
 import { ConnectButton } from 'components/venomConnect';
 import MintSuccessModal from 'components/claiming/MintSuccessModal';
+import Winner from 'components/raffle/Winner';
 
 export default function RRRSection() {
   const { t } = useTranslate();
@@ -582,7 +589,7 @@ export default function RRRSection() {
         placeContent="center"
         placeItems="center"
         py={16}>
-        <SimpleGrid columns={[1, 1, 1, 2]} gap={[16,12,10,8]}>
+        <SimpleGrid columns={[1, 1, 1, 2]} gap={[16, 12, 10, 8]}>
           <Flex gap={3} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']}>
             <Text>Next Raffle</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'}>
@@ -660,170 +667,85 @@ export default function RRRSection() {
               </Flex>
             )}
             <Text fontSize={'3xl'} fontWeight={'bold'}>
-            0 out of 30 
+              0 out of 30
             </Text>
-            <Text fontSize={'xl'}>
-              Prize distributions have been completed
-            </Text>
-           
+            <Text fontSize={'xl'}>Prize distributions have been completed</Text>
+            <Text
+            fontSize={'xl'}
+            p={4}
+            rounded={'2xl'}
+            bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
+            <strong>Note : </strong>Domain Winners of first round will be able to choose their
+            preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be updated
+            )
+          </Text>
           </Flex>
           <Flex gap={3} direction={'column'}>
-            <Text fontSize={'2xl'}>Winners of April 22nd prizes</Text>
-            <Table variant="simple" bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'} fontSize={['lg', 'lg', 'xl']} rounded={'xl'} p={6} w={'100%'}>
-            <TableCaption>
-              40 VENOMs prize has been sent to the winner <Link style={{textDecoration:'underline'}} href={VENOMSCAN_TX + '01292907552163a26a02f8181d4146b8faca18941f03a6c56688a386ff9ffa51'} target='_blank'> TX Hash </Link>
-            </TableCaption>
-              <Thead>
-                <Tr>
-                  <Th>🎁 Prize</Th>
-                  <Th>Wallet Address</Th>
-                </Tr>
-              </Thead>
+            <Tabs colorScheme='venom' rounded={'2xl'}>
+              <TabList>
+                {RAFFLE_WINNERS.map((day, i) => (
+                  <Tab fontWeight={'bold'} key={'tab-prize-' + day.date + '-' + i}>{day.date}</Tab>
+                ))}
+              </TabList>
 
-              <Tbody>
-                <Tr>
-                  <Td isNumeric gap={2} display={'flex'} alignItems='center' ><LinkIcon type='venom' color='#2bb673'/> 40 VENOMS</Td>
-                  <Td>
-                    <Tooltip hasArrow
-                        color="white"
-                        bgColor={'black'} p={4} rounded={'2xl'} label="0:f25ad30d0389bf5cd8b15dbc4b29c816226832095d9ea55fa04fbf8063b112d3" aria-label="A tooltip">
-                    <Tag
-                      px={3} py={1}
-                      rounded={'full'}
-                      textAlign={'center'}
-                      fontSize={'xl'}
-                      fontWeight={'bold'}>
-                      <Text
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                            : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                        }
-                        bgClip="text">
-                        friend.venom
-                      </Text>
-                    </Tag></Tooltip></Td>
-                </Tr>
-                <Tr>
-                  <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} /> 3-char domain</Td>
-                  <Td><Tooltip hasArrow
-                        color="white"
-                        bgColor={'black'} p={4} rounded={'2xl'} label="0:be7b8f4fed809c72aba75f4c0a6e282354c7d5f8d9e9de82ec64eb6706d7a99a" aria-label="A tooltip">
-                    
-                      <Text
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                            : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                        }
-                        bgClip="text">
-                        {truncAddress('0:be7b8f4fed809c72aba75f4c0a6e282354c7d5f8d9e9de82ec64eb6706d7a99a')}
-                      </Text></Tooltip></Td>
-                </Tr>
-                <Tr>
-                  <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />4-char domain</Td>
-                  
-                      <Td>
-                    <Tooltip hasArrow
-                        color="white"
-                        bgColor={'black'} p={4} rounded={'2xl'} label="0:36e661787e4019445567f4daaf01abe319d47234305defb3b1cbba88e3396ec4" aria-label="A tooltip">
-                    <Tag
-                      px={3} py={1}
-                      rounded={'full'}
-                      textAlign={'center'}
-                      fontSize={'md'}
-                      fontWeight={'bold'}>
-                      <Text
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                            : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                        }
-                        bgClip="text">
-                        cryptococain.venom
-                      </Text>
-                    </Tag></Tooltip></Td>
-                </Tr>
-                <Tr>
-                  <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />4-char domain</Td>
-                  <Td><Tooltip hasArrow
-                        color="white"
-                        bgColor={'black'} p={4} rounded={'2xl'} label="0:9191121b39eb43bb08a6cba8b3cbe264766cfd7db8d5c83a1e9cfe42efcce91d" aria-label="A tooltip">
-                    
-                      <Text
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                            : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                        }
-                        bgClip="text">
-                        {truncAddress('0:9191121b39eb43bb08a6cba8b3cbe264766cfd7db8d5c83a1e9cfe42efcce91d')}
-                      </Text></Tooltip></Td>
-                </Tr>
-                <Tr>
-                <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />5-char domain</Td>
-                <Td><Tooltip hasArrow
-                        color="white"
-                        bgColor={'black'} p={4} rounded={'2xl'} label="0:8f500a081d6fd947d2c3b5ea6ea525eff81e56129d65364f2d01ed7eaecc934d" aria-label="A tooltip">
-                    
-                      <Text
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                            : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                        }
-                        bgClip="text">
-                        {truncAddress('0:8f500a081d6fd947d2c3b5ea6ea525eff81e56129d65364f2d01ed7eaecc934d')}
-                      </Text></Tooltip></Td>
-                </Tr>
-                <Tr>
-                <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />5-char domain</Td>
-                <Td><Tooltip hasArrow
-                        color="white"
-                        bgColor={'black'} p={4} rounded={'2xl'} label="0:e4c0bb703e64873086cb468a9d7324ca23fcaacd790763c2849fe45d7ab0e84e" aria-label="A tooltip">
-                    
-                      <Text
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                            : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                        }
-                        bgClip="text">
-                        {truncAddress('0:e4c0bb703e64873086cb468a9d7324ca23fcaacd790763c2849fe45d7ab0e84e')}
-                      </Text></Tooltip></Td>
-                </Tr>
-                <Tr>
-                <Td display={'flex'} alignItems='center' gap={2}><Logo w={'35px'} h={'26px'} />5-char domain</Td>
-                <Td><Tooltip hasArrow
-                        color="white"
-                        bgColor={'black'} p={4} rounded={'2xl'} label="0:533f216d8581e78131c2bdba43d66d5f7a7d867a8027774d974df6aa15541b6c" aria-label="A tooltip">
-                    
-                      <Text
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                            : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                        }
-                        bgClip="text">
-                        {truncAddress('0:533f216d8581e78131c2bdba43d66d5f7a7d867a8027774d974df6aa15541b6c')}
-                      </Text></Tooltip></Td>
-                </Tr>
-              </Tbody>
-              <Tfoot>
-                
-              </Tfoot>
-            </Table>
-            
+              <TabPanels>
+                {RAFFLE_WINNERS.map((day, i) => (
+                  <TabPanel key={'tab-panel-prize-' + day.date + '-' + i}>
+                    <Text fontSize={'2xl'} py={4}>Winners of {day.date} prizes</Text>
+                    <Table
+                      variant="simple"
+                      bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}
+                      fontSize={['lg', 'lg', 'xl']}
+                      rounded={'xl'}
+                      p={6}
+                      w={'100%'}>
+                      {day.txs.length > 0 && (
+                        <TableCaption>
+                          40 VENOMs prize has been sent to the winner{' '}
+                          <Link
+                            style={{ textDecoration: 'underline' }}
+                            href={VENOMSCAN_TX + day.txs[0]}
+                            target="_blank">
+                            {' '}
+                            TX Hash{' '}
+                          </Link>
+                        </TableCaption>
+                      )}
+                      <Thead h={'60px'}>
+                        <Tr >
+                          <Th>🎁 Prize</Th>
+                          <Th>Wallet Address</Th>
+                        </Tr>
+                      </Thead>
+
+                      <Tbody>
+                        {day.winners.map((winner, i) => (
+                          <Winner
+                            owner={winner.owner}
+                            prize={winner.prize}
+                            key={`winner-${winner.owner}-${i}`}
+                          />
+                        ))}
+                      </Tbody>
+                      <Tfoot></Tfoot>
+                    </Table>
+                  </TabPanel>
+                ))}
+              </TabPanels>
+            </Tabs>
           </Flex>
         </SimpleGrid>
         <Stack gap={6} py={10} maxW={'container.xl'}>
-        <Text fontSize={'xl'} p={4} rounded={'2xl'} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
-              <strong>Note : </strong>Domain Winners of first round will be able to choose their preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be updated )
-            </Text>
-            <Text fontSize={'xl'} p={4} rounded={'2xl'} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
-              Winners of each daily raffle will be updated on this table and list of all winners will be available for all 30 days.
-            </Text>
-            </Stack>
+          
+          <Text
+            fontSize={'xl'}
+            p={4}
+            rounded={'2xl'}
+            bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
+            Winners of each daily raffle will be updated on this table and list of all winners will
+            be available for all 30 days.
+          </Text>
+        </Stack>
         {mintedNft && (
           <MintSuccessModal
             address={String(mintedNft?.address)}
