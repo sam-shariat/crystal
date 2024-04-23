@@ -19,6 +19,7 @@ export const SITE_PROFILE_URL = 'https://venomid.link/';
 export const ZEALY_URL = 'https://zealy.io/c/venomid/';
 export const AVATAR_API_URL = 'https://venomid.link/api/avatar?name=';
 export const VENOMSCAN_NFT = 'https://venomscan.com/accounts/';
+export const VENOMSCAN_TX = 'https://venomscan.com/transactions/';
 export const VENTORY_NFT = 'https://ventory.gg/nft/';
 export const VENOMART_NFT = 'https://venomart.io/nft/';
 export const VENOMART_COLLECTION = 'https://venomart.io/collection/';

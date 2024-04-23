@@ -55,6 +55,8 @@ import {
   SITE_URL,
   TESTNET_ROOT_CONTRACT_ADDRESS,
   VENOMART_COLLECTION,
+  VENOMSCAN_NFT,
+  VENOMSCAN_TX,
 } from 'core/utils/constants';
 import {
   motion,
@@ -580,7 +582,7 @@ export default function RRRSection() {
         placeContent="center"
         placeItems="center"
         py={16}>
-        <SimpleGrid columns={[1, 1, 1, 2]} gap={[10]}>
+        <SimpleGrid columns={[1, 1, 1, 2]} gap={[16,12,10,8]}>
           <Flex gap={3} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']}>
             <Text>Next Raffle</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'}>
@@ -663,13 +665,14 @@ export default function RRRSection() {
             <Text fontSize={'xl'}>
               Prize distributions have been completed
             </Text>
-            <Text fontSize={'xl'} borderTop={'1px'} pt={2}>
-              Winners of Domain Names can choose their desired domain name to get their prize after 24 hours in this page!
-            </Text>
+           
           </Flex>
           <Flex gap={3} direction={'column'}>
             <Text fontSize={'2xl'}>Winners of April 22nd prizes</Text>
             <Table variant="simple" bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'} fontSize={['lg', 'lg', 'xl']} rounded={'xl'} p={6} w={'100%'}>
+            <TableCaption>
+              40 VENOMs prize has been sent to the winner <Link style={{textDecoration:'underline'}} href={VENOMSCAN_TX + '01292907552163a26a02f8181d4146b8faca18941f03a6c56688a386ff9ffa51'} target='_blank'> TX Hash </Link>
+            </TableCaption>
               <Thead>
                 <Tr>
                   <Th>🎁 Prize</Th>
@@ -728,7 +731,7 @@ export default function RRRSection() {
                       px={3} py={1}
                       rounded={'full'}
                       textAlign={'center'}
-                      fontSize={'xl'}
+                      fontSize={'md'}
                       fontWeight={'bold'}>
                       <Text
                         bgGradient={
@@ -810,11 +813,17 @@ export default function RRRSection() {
                 
               </Tfoot>
             </Table>
-            <Text fontSize={'xl'}>
-              40 VENOMs prize has been distributed to the winner
-            </Text>
+            
           </Flex>
         </SimpleGrid>
+        <Stack gap={6} py={10} maxW={'container.xl'}>
+        <Text fontSize={'xl'} p={4} rounded={'2xl'} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
+              <strong>Note : </strong>Domain Winners will be able to choose their preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be updated )
+            </Text>
+            <Text fontSize={'xl'} p={4} rounded={'2xl'} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
+              Winners of each daily raffle will be updated on this table and list of all winners will be available for all 30 days.
+            </Text>
+            </Stack>
         {mintedNft && (
           <MintSuccessModal
             address={String(mintedNft?.address)}
