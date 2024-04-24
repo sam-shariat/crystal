@@ -97,11 +97,11 @@ const ClaimSection = () => {
   const { colorMode } = useColorMode();
   const lightMode = colorMode === 'light';
   const rootContract = useAtomValue(rootContractAtom);
-  const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [fee, setFee] = useState<number | null>();
   const [typing, setTyping] = useState<boolean>(false);
   const [mintedOnTestnet, setMintedOnTestnet] = useState(0);
   const [earlyLoading, setEarlyLoading] = useState(true);
+  const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [nameExists, setNameExists] = useState(false);
   const [nameStatus, setNameStatus] = useState<number | null>();
   const [reload, setReload] = useState(false);

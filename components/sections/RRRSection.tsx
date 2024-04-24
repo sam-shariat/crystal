@@ -39,6 +39,7 @@ import {
   Tab,
   TabPanels,
   TabPanel,
+  Input,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import RaffleAbi from 'abi/RaffleCollection.abi.json';
@@ -48,6 +49,7 @@ import {
   connectedAccountAtom,
   openModalAtom,
   raffleContractAtom,
+  rootContractAtom,
   venomProviderAtom,
 } from 'core/atoms';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -60,6 +62,7 @@ import {
   ROOT_CONTRACT_ADDRESS,
   SITE_URL,
   TESTNET_ROOT_CONTRACT_ADDRESS,
+  TLD,
   VENOMART_COLLECTION,
   VENOMSCAN_NFT,
   VENOMSCAN_TX,
@@ -74,6 +77,7 @@ import {
   useTransform,
   useVelocity,
 } from 'framer-motion';
+import DomainAbi from 'abi/Domain.abi.json';
 import { LinkIcon, Logo, LogoIcon } from 'components/logos';
 import { wrap } from '@motionone/utils';
 import Prize from 'components/features/Prize';
@@ -81,12 +85,15 @@ import RRRItem from 'components/features/RRRItem';
 import ImageBox from 'components/claiming/ImageBox';
 import { BaseNftJson, getAddressesFromIndex, getNftByIndex } from 'core/utils/reverse';
 import { saltCode } from 'core/utils/nft';
-import { sleep, truncAddress } from 'core/utils';
+import { invalidUsernameMessage, isValidUsername, sleep, truncAddress } from 'core/utils';
 import { ConnectButton } from 'components/venomConnect';
 import MintSuccessModal from 'components/claiming/MintSuccessModal';
 import Winner from 'components/raffle/Winner';
+import { isValidName } from 'ethers/lib/utils';
+import { checkPrize } from 'core/utils/prize';
 
 export default function RRRSection() {
+  let timer: any;
   const { t } = useTranslate();
   const [notMobile] = useMediaQuery('(min-width: 769px)');
   const { colorMode } = useColorMode();
@@ -96,13 +103,20 @@ export default function RRRSection() {
   const provider = useAtomValue(venomProviderAtom);
   const [isLoading, setIsLoading] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [typing, setTyping] = useState<boolean>(false);
   const [isMinting, setIsMinting] = useState(false);
   const [totalSupply, setTotalSupply] = useState<number>(0);
   const [isConfirming, setIsConfirming] = useState(false);
+  const [path, setPath] = useState<string>('');
+  const [feeIsLoading, setFeeIsLoading] = useState(false);
+  const [nameExists, setNameExists] = useState(false);
+  const [won, setWon] = useState<any>();
+  const [prizeRequest, setPrizeRequest] = useState<any>();
   const [minted, setMinted] = useState(false);
   const [mints, setMints] = useState<number | null>(null);
   const [idMints, setIdMints] = useState<number | null>(null);
   const [mintedNft, setMintedNft] = useState<BaseNftJson | null>();
+  const rootContract = useAtomValue(rootContractAtom);
   const win = useRef(null);
   const toast = useToast();
   const maxSupply = 2222;
@@ -239,28 +253,27 @@ export default function RRRSection() {
     setTotalSupply(count);
 
     const _mints = await loadByContract(RAFFLE_CONTRACT_ADDRESS);
-    const _idMints = await loadByContract(ROOT_CONTRACT_ADDRESS);
-    const _venomazzMints = await loadByContract(
-      '0:62932d87cd4f78f7732d7dae2d89501a330ab8becbb9a6b384039917bc3133de'
-    );
-    const _staxidMints = await loadByContract(
-      '0:cb5ea03dc5704baab86d9af572b23fb3c46f245cead72d2a2f8a4a1cc426fb9c'
-    );
-    const _punkMints = await loadByContract(
-      '0:f283ba1b50a520b591f241a8e56ee4b3207d36a7ded0abef0e0f17c8a44ab3fc'
-    );
-    const _orphMints = await loadByContract(
-      '0:63edc56ef6a0d37e28ec6a9b59be62cc491ebcfdb4d448eff80c88d04f6079c6'
-    );
+    // const _idMints = await loadByContract(ROOT_CONTRACT_ADDRESS);
+    // const _venomazzMints = await loadByContract(
+    //   '0:62932d87cd4f78f7732d7dae2d89501a330ab8becbb9a6b384039917bc3133de'
+    // );
+    // const _staxidMints = await loadByContract(
+    //   '0:cb5ea03dc5704baab86d9af572b23fb3c46f245cead72d2a2f8a4a1cc426fb9c'
+    // );
+    // const _punkMints = await loadByContract(
+    //   '0:f283ba1b50a520b591f241a8e56ee4b3207d36a7ded0abef0e0f17c8a44ab3fc'
+    // );
+    // const _orphMints = await loadByContract(
+    //   '0:63edc56ef6a0d37e28ec6a9b59be62cc491ebcfdb4d448eff80c88d04f6079c6'
+    // );
 
     //console.log("_punkMints : ",_punkMints)
 
-    const _count: number = _venomazzMints + _staxidMints + _idMints + _punkMints + _orphMints;
+    const _count: number = 0;
 
     setMints(_mints);
     setIdMints(_count);
 
-    console.log('ids : ', _idMints);
 
     await sleep(1000);
     setIsLoading(false);
@@ -275,6 +288,17 @@ export default function RRRSection() {
     if (!connectedAccount || connectedAccount === '') return;
     //if (!isOpen) return;
 
+    RAFFLE_WINNERS.map((w) => {
+      w.winners.map((wallet) => {
+        if (wallet.owner === connectedAccount) {
+          let _wallet: any = wallet;
+          _wallet.day = w.day;
+          _wallet.date = w.date;
+          setWon(_wallet);
+        }
+      });
+    });
+
     //checkOwnVid();
     //checkOwnVidVen();
     if (!raffleContract?.methods) {
@@ -288,6 +312,100 @@ export default function RRRSection() {
 
     checkMinteds();
   }, [provider, connectedAccount, raffleContract, minted]);
+
+
+  const checkOwnerPrize = async ()=> {
+    const details = await checkPrize(won.owner);
+    if(details.status === 200){
+      setPrizeRequest(details.data[0]);
+    } 
+  }
+
+  useEffect(()=>{
+
+    if(won){
+      if(won.owner === connectedAccount){
+        checkOwnerPrize();
+      }
+    }
+
+    },[won])
+
+  async function inputChange() {
+    if (!path) return;
+    window.clearTimeout(timer);
+    clearTimeout(timer);
+
+    if (!isValidUsername(path)) {
+      toast.closeAll();
+      toast({
+        status: 'info',
+        colorScheme: colorMode === 'dark' ? 'light' : 'dark',
+        title: t('invalidName'),
+        description: invalidUsernameMessage(path),
+        isClosable: true,
+        duration: 6000,
+      });
+      return;
+    }
+
+    if (provider && provider?.isInitialized && rootContract && rootContract.methods !== undefined) {
+      try {
+        setFeeIsLoading(true);
+        setTyping(false);
+        toast.closeAll();
+        //@ts-ignore: Unreachable code error
+        const certificateAddr = await rootContract.methods
+          .resolve({ path: `${path}.${TLD}`, answerId: 0 })
+          .call({ responsible: true });
+        console.log(certificateAddr);
+
+        const domainContract = new provider.Contract(DomainAbi, certificateAddr.certificate);
+        console.log(domainContract);
+        try {
+          // @ts-ignore: Unreachable code error
+          let result: { status: string | number } = await domainContract.methods
+            .getStatus({ answerId: 0 })
+            .call();
+          if (result && result?.status) {
+            console.log(result);
+          }
+          setNameExists(result ? true : false);
+        } catch (e) {
+          setNameExists(false);
+        }
+
+        //setFee(_fee);
+        //setFee(sumUint128(_fee ,minFee));
+        //console.log(sumUint128(_fee ,minFee))
+        setFeeIsLoading(false);
+      } catch (er) {
+        console.log(er);
+        return;
+      }
+    } else if (rootContract?.methods === undefined) {
+      toast({
+        status: 'warning',
+        title: t('contractConnection'),
+        description: t('contractConnectionMsg'),
+        isClosable: true,
+      });
+      return;
+    }
+  }
+
+  useEffect(() => {
+    window.clearTimeout(timer);
+    clearTimeout(timer);
+    setTyping(true);
+    timer = window.setTimeout(inputChange, 1400);
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [path]);
 
   const mintRaffle = async () => {
     if (mints === null || idMints === null) {
@@ -500,6 +618,64 @@ export default function RRRSection() {
                   2,222 items{' '}
                 </Text>
               </Text>
+              <Stack gap={4} align={'center'} w={'md'}>
+                <Button
+                  as={Link}
+                  target="_blank"
+                  href={OASIS_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
+                  p={4}
+                  style={{ textDecoration: 'none' }}
+                  rounded={'2xl'}
+                  h={'100px'}
+                  display={'flex'}
+                  flexDir={'column'}
+                  gap={2}
+                  alignItems={'space-between'}
+                  w={['100%', '100%', '100%']}>
+                  <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
+                    <LinkIcon
+                      type={
+                        'https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg'
+                      }
+                      size={'lg'}
+                    />
+                    <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
+                      <Text>Collection On</Text>
+                      <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
+                        Oasis Gallery
+                      </Text>
+                    </Stack>
+                  </Flex>
+                </Button>
+                <Button
+                  as={Link}
+                  target="_blank"
+                  href={VENOMART_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
+                  p={4}
+                  style={{ textDecoration: 'none' }}
+                  rounded={'2xl'}
+                  h={'100px'}
+                  display={'flex'}
+                  flexDir={'column'}
+                  alignItems={'space-between'}
+                  gap={2}
+                  w={['100%']}>
+                  <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
+                    <LinkIcon
+                      type={
+                        'https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg'
+                      }
+                      size={'lg'}
+                    />
+                    <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
+                      <Text>Collection On</Text>
+                      <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
+                        <strong>VENOM</strong> ART
+                      </Text>
+                    </Stack>
+                  </Flex>
+                </Button>
+              </Stack>
               <Flex
                 minW={'100%'}
                 width={'100%'}
@@ -589,68 +765,20 @@ export default function RRRSection() {
         placeContent="center"
         placeItems="center"
         py={16}>
-        <SimpleGrid columns={[1, 1, 1, 2]} gap={[16, 12, 10, 8]}>
-          <Flex gap={3} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']}>
+        <SimpleGrid columns={[1, 1, 1, 2]} gap={[16, 12, 10]}>
+          <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']}>
             <Text>Next Raffle</Text>
-            <Text fontSize={'3xl'} fontWeight={'bold'}>
-              April 23rd 23:59 UTC{' '}
+            <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'}>
+              April 24th 23:59 UTC{' '}
             </Text>
-            <Button
-              as={Link}
-              target="_blank"
-              href={OASIS_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
+            <Text
+              fontSize={'xl'}
               p={4}
-              style={{ textDecoration: 'none' }}
               rounded={'2xl'}
-              h={'100px'}
-              display={'flex'}
-              flexDir={'column'}
-              gap={2}
-              alignItems={'space-between'}
-              w={['100%', '100%', '100%']}>
-              <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
-                <LinkIcon
-                  type={
-                    'https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg'
-                  }
-                  size={'lg'}
-                />
-                <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
-                  <Text>Collection On</Text>
-                  <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
-                    Oasis Gallery
-                  </Text>
-                </Stack>
-              </Flex>
-            </Button>
-            <Button
-              as={Link}
-              target="_blank"
-              href={VENOMART_COLLECTION + RAFFLE_CONTRACT_ADDRESS}
-              p={4}
-              style={{ textDecoration: 'none' }}
-              rounded={'2xl'}
-              h={'100px'}
-              display={'flex'}
-              flexDir={'column'}
-              alignItems={'space-between'}
-              gap={2}
-              w={['100%']}>
-              <Flex gap={4} align={'center'} justify={'space-between'} w={'100%'}>
-                <LinkIcon
-                  type={
-                    'https://ipfs.io/ipfs/QmVBqPuqcH8VKwFVwoSGFHXUdG6ePqjmhEoNaQMsfd2xau/venomart.jpg'
-                  }
-                  size={'lg'}
-                />
-                <Stack gap={0} w={'100%'} align={'center'} justify={'center'}>
-                  <Text>Collection On</Text>
-                  <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'light'}>
-                    <strong>VENOM</strong> ART
-                  </Text>
-                </Stack>
-              </Flex>
-            </Button>
+              bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
+              Winners of each daily raffle will be updated on this table and will be available for
+              all 30 days.
+            </Text>
             {mints !== null && mints > 0 && (
               <Flex
                 gap={3}
@@ -666,32 +794,93 @@ export default function RRRSection() {
                 You own {mints} RRRaffle(s)!
               </Flex>
             )}
-            <Text fontSize={'3xl'} fontWeight={'bold'}>
-              0 out of 30
-            </Text>
-            <Text fontSize={'xl'}>Prize distributions have been completed</Text>
-            <Text
-            fontSize={'xl'}
-            p={4}
-            rounded={'2xl'}
-            bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
-            <strong>Note : </strong>Domain Winners of first round will be able to choose their
-            preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be updated
-            )
-          </Text>
+
+            
+            {/* <Text
+              fontSize={'xl'}
+              p={4}
+              rounded={'2xl'}
+              bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
+              <strong>Note : </strong>Domain Winners of first round will be able to choose their
+              preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be
+              updated )
+            </Text> */}
+
+            {won && (
+              <Flex
+                gap={3}
+                w={['100%', '100%']}
+                fontSize={['lg', 'lg', 'xl', '2xl']}
+                p={4}
+                justify={'center'}
+                align={'center'}
+                direction={'column'}
+                textAlign={'center'}
+                bgColor={colorMode === 'light' ? 'white' : 'whiteAlpha.200'}
+                rounded={'lg'}>
+                <Text>
+                  🎁 You have won a <strong>{won.prize}</strong> from the{' '}
+                  <strong>{won.date}</strong> Raffle 🎁
+                </Text>
+                <Input
+                  height={['80px']}
+                  placeholder={`Enter ${won.prize} Name`}
+                  variant={'filled'}
+                  value={path}
+                  fontSize={['2xl']}
+                  borderWidth="1px"
+                  borderColor={colorMode === 'dark' ? 'whiteAlpha.500' : 'blackAlpha.500'}
+                  rounded={'2xl'}
+                  px={[6]}
+                  onChange={(e) => setPath(e.target.value.toLowerCase())}
+                  bg={colorMode === 'dark' ? 'blackAlpha.300' : 'whiteAlpha.700'}
+                />
+                {!typing && <Button
+                  minWidth={['100%', '100%', 'fit-content']}
+                  colorScheme="green"
+                  size="lg"
+                  gap={2}
+                  fontSize={'xl'}
+                  rounded={'full'}
+                  bgGradient={
+                    colorMode === 'light'
+                      ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
+                      : 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                  }
+                  _hover={{
+                    bgGradient:
+                      colorMode === 'light'
+                        ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                        : 'linear(to-r, var(--venom0), var(--bluevenom0))',
+                  }}
+                  height={['66px']}
+                  isDisabled={true
+                    //!isValidName(path) || nameExists || feeIsLoading || typing //|| mintedOnTestnet === 0
+                  }
+                  isLoading={feeIsLoading || typing}
+                  >
+                  {path}.venom is {nameExists ? 'not available' : 'available. Pick Name'}
+                </Button>}
+                <Text>section updating in 2 hours</Text>
+              </Flex>
+            )}
           </Flex>
           <Flex gap={3} direction={'column'}>
-            <Tabs colorScheme='venom' rounded={'2xl'}>
+            <Tabs colorScheme="venom" rounded={'2xl'} defaultIndex={RAFFLE_WINNERS.length-1}>
               <TabList>
                 {RAFFLE_WINNERS.map((day, i) => (
-                  <Tab fontWeight={'bold'} key={'tab-prize-' + day.date + '-' + i}>{day.date}</Tab>
+                  <Tab fontWeight={'bold'} key={'tab-prize-' + day.date + '-' + i}>
+                    {day.date}
+                  </Tab>
                 ))}
               </TabList>
 
               <TabPanels>
                 {RAFFLE_WINNERS.map((day, i) => (
                   <TabPanel key={'tab-panel-prize-' + day.date + '-' + i}>
-                    <Text fontSize={'2xl'} py={4}>Winners of {day.date} prizes</Text>
+                    <Text fontSize={'2xl'} py={4}>
+                      Winners of {day.date} prizes
+                    </Text>
                     <Table
                       variant="simple"
                       bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}
@@ -699,7 +888,7 @@ export default function RRRSection() {
                       rounded={'xl'}
                       p={6}
                       w={'100%'}>
-                      {day.txs.length > 0 && (
+                      {/* {day.txs.length > 0 && (
                         <TableCaption>
                           40 VENOMs prize has been sent to the winner{' '}
                           <Link
@@ -710,9 +899,9 @@ export default function RRRSection() {
                             TX Hash{' '}
                           </Link>
                         </TableCaption>
-                      )}
+                      )} */}
                       <Thead h={'60px'}>
-                        <Tr >
+                        <Tr>
                           <Th>🎁 Prize</Th>
                           <Th>Wallet Address</Th>
                         </Tr>
@@ -723,6 +912,7 @@ export default function RRRSection() {
                           <Winner
                             owner={winner.owner}
                             prize={winner.prize}
+                            tx={winner.tx}
                             key={`winner-${winner.owner}-${i}`}
                           />
                         ))}
@@ -735,17 +925,7 @@ export default function RRRSection() {
             </Tabs>
           </Flex>
         </SimpleGrid>
-        <Stack gap={6} py={10} maxW={'container.xl'}>
-          
-          <Text
-            fontSize={'xl'}
-            p={4}
-            rounded={'2xl'}
-            bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
-            Winners of each daily raffle will be updated on this table and list of all winners will
-            be available for all 30 days.
-          </Text>
-        </Stack>
+
         {mintedNft && (
           <MintSuccessModal
             address={String(mintedNft?.address)}
