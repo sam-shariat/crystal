@@ -817,7 +817,7 @@ export const RAFFLE_WINNERS = [
     ],
     winners: [
       {owner : '0:f25ad30d0389bf5cd8b15dbc4b29c816226832095d9ea55fa04fbf8063b112d3', prize: '40 VENOMS', tx: '01292907552163a26a02f8181d4146b8faca18941f03a6c56688a386ff9ffa51'},
-      {owner : '0:4bc69a8c3889adee39f6f1e3b2353c86f960c9b835e93397a2015a62a4823765', prize: '3-char domain', tx: ''},
+      {owner : '0:be7b8f4fed809c72aba75f4c0a6e282354c7d5f8d9e9de82ec64eb6706d7a99a', prize: '3-char domain', tx: ''},
       {owner : '0:36e661787e4019445567f4daaf01abe319d47234305defb3b1cbba88e3396ec4', prize: '4-char domain', tx: ''},
       {owner : '0:9191121b39eb43bb08a6cba8b3cbe264766cfd7db8d5c83a1e9cfe42efcce91d', prize: '4-char domain', tx: ''},
       {owner : '0:8f500a081d6fd947d2c3b5ea6ea525eff81e56129d65364f2d01ed7eaecc934d', prize: '5-char domain', tx: ''},
