@@ -317,7 +317,7 @@ export default function RRRSection() {
   const checkOwnerPrize = async ()=> {
     const details = await checkPrize(won.owner);
     if(details.status === 200){
-      setPrizeRequest(details.data[0]);
+      setPrizeRequest(details.data.nfts);
     } 
   }
 
@@ -618,7 +618,7 @@ export default function RRRSection() {
                   2,222 items{' '}
                 </Text>
               </Text>
-              <Stack gap={4} align={'center'} w={'md'}>
+              <Stack gap={4} align={'center'} w={['100%','100%','md']}>
                 <Button
                   as={Link}
                   target="_blank"
@@ -819,15 +819,16 @@ export default function RRRSection() {
                 bgColor={colorMode === 'light' ? 'white' : 'whiteAlpha.200'}
                 rounded={'lg'}>
                 <Text>
-                  🎁 You have won a <strong>{won.prize}</strong> from the{' '}
-                  <strong>{won.date}</strong> Raffle 🎁
+                  🎁 You have won 🎁 </Text><Text><strong>{won.prize}</strong> from the{' '}
+                  <strong>{won.date}</strong> Raffle 
                 </Text>
+                {prizeRequest && <Stack gap={4} w={'100%'}>
                 <Input
-                  height={['80px']}
                   placeholder={`Enter ${won.prize} Name`}
+                  size={'lg'}
                   variant={'filled'}
                   value={path}
-                  fontSize={['2xl']}
+                  fontSize={['lg']}
                   borderWidth="1px"
                   borderColor={colorMode === 'dark' ? 'whiteAlpha.500' : 'blackAlpha.500'}
                   rounded={'2xl'}
@@ -838,9 +839,8 @@ export default function RRRSection() {
                 {!typing && <Button
                   minWidth={['100%', '100%', 'fit-content']}
                   colorScheme="green"
-                  size="lg"
+                  size={['md',"lg"]}
                   gap={2}
-                  fontSize={'xl'}
                   rounded={'full'}
                   bgGradient={
                     colorMode === 'light'
@@ -859,9 +859,10 @@ export default function RRRSection() {
                   }
                   isLoading={feeIsLoading || typing}
                   >
-                  {path}.venom is {nameExists ? 'not available' : 'available. Pick Name'}
+                  {path}.venom {nameExists ? 'not available' : 'available. Get Name'}
                 </Button>}
-                <Text>section updating in 2 hours</Text>
+                <Text>be patient please, updating soon</Text>
+                </Stack>}
               </Flex>
             )}
           </Flex>

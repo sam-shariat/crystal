@@ -1,4 +1,4 @@
-import { Tag, Td, Tr, Text, Link, Tooltip, useColorMode, Stack } from '@chakra-ui/react';
+import { Tag, Td, Tr, Text, Link, Tooltip, useColorMode, Stack, useMediaQuery, useDisclosure } from '@chakra-ui/react';
 import { LinkIcon, Logo } from 'components/logos';
 import { connectedAccountAtom, venomProviderAtom } from 'core/atoms';
 import { truncAddress } from 'core/utils';
@@ -17,6 +17,8 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
   const lightMode = useColorMode().colorMode === 'light';
   const provider = useAtomValue(venomProviderAtom);
   const connectedAccount = useAtomValue(connectedAccountAtom);
+  const { isOpen, onToggle } = useDisclosure();
+  const [notMobile] = useMediaQuery('(min-width: 769px)');
   const [name, setName] = useState(owner);
 
   const getOwnerName = async () => {
@@ -34,11 +36,13 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
   return (
     <Tr>
       <Td gap={3} display={'flex'} alignItems="center">
+        {notMobile && <>
         {prize.includes('VENOM') ? (
           <LinkIcon type="venom" color="#2bb673" />
         ) : (
           <Logo w={'35px'} h={'26px'} />
         )}
+        </>}
         <Stack gap={2} justify={'right'} w={'100%'} textAlign={'right'}>
           <Text>{prize}</Text>
           {tx !== '' && (
@@ -55,6 +59,7 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
           bgColor={'black'}
           p={4}
           rounded={'2xl'}
+          isOpen={isOpen}
           label={owner}
           aria-label={`winner-${prize}-tooltip`}>
           <Tag
@@ -62,7 +67,8 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
             py={1}
             rounded={'full'}
             textAlign={'center'}
-            fontSize={'xl'}
+            fontSize={['lg','xl']}
+            onClick={onToggle}
             fontWeight={'bold'}>
             <Text
               bgGradient={
@@ -71,7 +77,7 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
                   : 'linear(to-r, var(--venom0), var(--bluevenom0))'
               }
               bgClip="text">
-              {name.includes('.venom') ? name : truncAddress(owner)}
+              {name.includes('.venom') ? notMobile ? name : name.length > 13 ? name.slice(0,12) + '...' : name : truncAddress(owner)}
             </Text>
           </Tag>
         </Tooltip>
