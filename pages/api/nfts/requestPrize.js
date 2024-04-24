@@ -11,17 +11,19 @@ export default async function handler(req, res) {
 
     const _owner = String(req.query.ownerAddress).toLowerCase();
     const _name = String(req.query.name).toLowerCase();
+    const _prize = String(req.query.prize).toLowerCase();
     const _pdate = String(req.query.pdate).toLowerCase();
 
     const winner = {
         winner_wallet: _owner,
         winner_name: _name,
+        prize: _prize,
         prize_date: _pdate
       };
   
       await sql`
-        INSERT INTO winners (owner, winner_name, prize_date, request_date)
-        VALUES (${winner.winner_wallet}, ${winner.winner_name}, ${winner.prize_date}, ${new Date().toISOString().split('T')[0]});`;
+        INSERT INTO winners (owner, winner_name, prize, prize_date, request_date)
+        VALUES (${winner.winner_wallet}, ${winner.winner_name}, ${winner.prize} , ${winner.prize_date}, ${new Date().toISOString().split('T')[0]});`;
     //console.log(rows[0]);
       res.status(200).json({
         status: 'ok'

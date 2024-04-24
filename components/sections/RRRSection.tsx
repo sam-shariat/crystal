@@ -58,6 +58,7 @@ import {
   OASIS_COLLECTION,
   RAFFLE_CONTRACT_ADDRESS,
   RAFFLE_IMAGES,
+  RAFFLE_IMAGES2,
   RAFFLE_WINNERS,
   ROOT_CONTRACT_ADDRESS,
   SITE_URL,
@@ -90,7 +91,7 @@ import { ConnectButton } from 'components/venomConnect';
 import MintSuccessModal from 'components/claiming/MintSuccessModal';
 import Winner from 'components/raffle/Winner';
 import { isValidName } from 'ethers/lib/utils';
-import { checkPrize } from 'core/utils/prize';
+import { checkPrize, reqPrize } from 'core/utils/prize';
 
 export default function RRRSection() {
   let timer: any;
@@ -111,7 +112,7 @@ export default function RRRSection() {
   const [feeIsLoading, setFeeIsLoading] = useState(false);
   const [nameExists, setNameExists] = useState(false);
   const [won, setWon] = useState<any>();
-  const [prizeRequest, setPrizeRequest] = useState<any>();
+  const [prizeRequest, setPrizeRequest] = useState<any[]>();
   const [minted, setMinted] = useState(false);
   const [mints, setMints] = useState<number | null>(null);
   const [idMints, setIdMints] = useState<number | null>(null);
@@ -318,7 +319,22 @@ export default function RRRSection() {
     const details = await checkPrize(won.owner);
     if(details.status === 200){
       setPrizeRequest(details.data.nfts);
+      console.log("prize request")
+      console.log(details.data.nfts)
     } 
+  }
+
+  const reqName = async ()=> {
+    setIsLoading(true);
+    const details = await reqPrize(won.owner,path+'.venom',won.prize,won.date);
+    if(details.status === 200){
+      console.log(details)
+      await checkOwnerPrize();
+    } else {
+      console.log('ERROR Requesting');
+      console.log(details);
+    };
+    setIsLoading(false);
   }
 
   useEffect(()=>{
@@ -613,7 +629,7 @@ export default function RRRSection() {
               </Button>
               <Text fontWeight="bold" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['center']}>
                 A Lottery NFT Collection featuring{' '}
-                <Text fontWeight={'bold'} color={'var(--venom0)'}>
+                <Text fontWeight={'bold'} color={colorMode === 'light' ? 'var(--venom3)' : 'var(--venom0)'}>
                   {' '}
                   2,222 items{' '}
                 </Text>
@@ -676,15 +692,33 @@ export default function RRRSection() {
                   </Flex>
                 </Button>
               </Stack>
+              </Stack></GridItem></SimpleGrid></Container>
+              <Container
+        ref={win}
+        maxW="100%"
+        px={0}
+        display="grid"
+        placeContent="center"
+        placeItems="center"
+        py={16}>
+        <SimpleGrid columns={[1]} gap={10} px={0}>
+          <GridItem>
+            <Stack px={0} gap={12} align={'center'}>
               <Flex
                 minW={'100%'}
                 width={'100%'}
                 flexDirection={'column'}
-                gap={[8, 12, 16]}
-                opacity={0.7}>
+                gap={[8]}>
                 <Parallax baseVelocity={-0.5}>
                   <Flex gap={[4, 6, 8]} pr={[2, 3, 4]}>
                     {RAFFLE_IMAGES.map(
+                      (bg, i) => i > 5 && <RRRItem image={bg} key={`VenomID-RRR-${i}-item`} />
+                    )}
+                  </Flex>
+                </Parallax>
+                <Parallax baseVelocity={0.5}>
+                  <Flex gap={[4, 6, 8]} pr={[2, 3, 4]}>
+                    {RAFFLE_IMAGES2.map(
                       (bg, i) => i > 5 && <RRRItem image={bg} key={`VenomID-RRR-${i}-item`} />
                     )}
                   </Flex>
@@ -765,13 +799,14 @@ export default function RRRSection() {
         placeContent="center"
         placeItems="center"
         py={16}>
-        <SimpleGrid columns={[1, 1, 1, 2]} gap={[16, 12, 10]}>
-          <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']}>
+        <Flex direction={'column'} gap={[16, 12, 10]} w={'100%'}>
+          <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
             <Text>Next Raffle</Text>
-            <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'}>
+            <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
               April 24th 23:59 UTC{' '}
             </Text>
             <Text
+              w={'100%'}
               fontSize={'xl'}
               p={4}
               rounded={'2xl'}
@@ -806,11 +841,13 @@ export default function RRRSection() {
               updated )
             </Text> */}
 
+            
+
             {won && (
               <Flex
                 gap={3}
                 w={['100%', '100%']}
-                fontSize={['lg', 'lg', 'xl', '2xl']}
+                fontSize={['lg', 'lg', 'xl']}
                 p={4}
                 justify={'center'}
                 align={'center'}
@@ -822,20 +859,22 @@ export default function RRRSection() {
                   🎁 You have won 🎁 </Text><Text><strong>{won.prize}</strong> from the{' '}
                   <strong>{won.date}</strong> Raffle 
                 </Text>
-                {prizeRequest && <Stack gap={4} w={'100%'}>
-                <Input
+                {prizeRequest && prizeRequest.length === 0 ? <Stack gap={4} w={'100%'}>
+
+                {won.prize.includes('domain') && <Input
                   placeholder={`Enter ${won.prize} Name`}
                   size={'lg'}
                   variant={'filled'}
                   value={path}
                   fontSize={['lg']}
+                  isDisabled={isLoading}
                   borderWidth="1px"
                   borderColor={colorMode === 'dark' ? 'whiteAlpha.500' : 'blackAlpha.500'}
                   rounded={'2xl'}
                   px={[6]}
                   onChange={(e) => setPath(e.target.value.toLowerCase())}
                   bg={colorMode === 'dark' ? 'blackAlpha.300' : 'whiteAlpha.700'}
-                />
+                />}
                 {!typing && <Button
                   minWidth={['100%', '100%', 'fit-content']}
                   colorScheme="green"
@@ -853,21 +892,41 @@ export default function RRRSection() {
                         ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
                         : 'linear(to-r, var(--venom0), var(--bluevenom0))',
                   }}
+                  color={'white'}
                   height={['66px']}
-                  isDisabled={true
-                    //!isValidName(path) || nameExists || feeIsLoading || typing //|| mintedOnTestnet === 0
+                  isDisabled={
+                    !isValidName(path) || nameExists || feeIsLoading || typing || (path.length < won.prize.slice(0,1)) || isLoading//|| mintedOnTestnet === 0
                   }
-                  isLoading={feeIsLoading || typing}
+                  onClick={reqName}
+                  isLoading={feeIsLoading || typing || isLoading}
                   >
                   {path}.venom {nameExists ? 'not available' : 'available. Get Name'}
                 </Button>}
-                <Text>be patient please, updating soon</Text>
+                </Stack> : <Stack><Text bgGradient={
+                colorMode === 'light'
+                  ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                  : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+              }
+              bgClip="text" fontSize={'3xl'}>
+                  {prizeRequest && prizeRequest[0].winner_name}</Text>
+                  <Text>{prizeRequest && prizeRequest[0].completed_tx ? 'has been sent to your wallet ✅' : 'is being sent to your wallet 🔃'}
+                </Text>
+                {prizeRequest && prizeRequest[0].completed_tx && <Link
+                            style={{ textDecoration: 'underline' }}
+                            href={(prizeRequest[0].prize.includes('VENOM') ? VENOMSCAN_TX : VENOMSCAN_NFT) + prizeRequest[0].completed_tx}
+                            target="_blank">
+                            {' '}
+                            TX Hash{' '}
+                          </Link>}
+                
+                
                 </Stack>}
               </Flex>
             )}
           </Flex>
-          <Flex gap={3} direction={'column'}>
-            <Tabs colorScheme="venom" rounded={'2xl'} defaultIndex={RAFFLE_WINNERS.length-1}>
+          <Text fontSize={'2xl'}>Previous Raffles</Text>
+          <Flex gap={3} direction={'column'} w={'100%'}>
+            <Tabs colorScheme="green" rounded={'2xl'} defaultIndex={RAFFLE_WINNERS.length-1} variant={'solid-rounded'} size={'lg'} w={'100%'}>
               <TabList>
                 {RAFFLE_WINNERS.map((day, i) => (
                   <Tab fontWeight={'bold'} key={'tab-prize-' + day.date + '-' + i}>
@@ -925,7 +984,7 @@ export default function RRRSection() {
               </TabPanels>
             </Tabs>
           </Flex>
-        </SimpleGrid>
+        </Flex>
 
         {mintedNft && (
           <MintSuccessModal

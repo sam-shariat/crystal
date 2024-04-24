@@ -35,7 +35,7 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
 
   return (
     <Tr>
-      <Td gap={3} display={'flex'} alignItems="center">
+      <Td gap={3} display={'flex'} alignItems="center" minH={'54px'}>
         {notMobile && <>
         {prize.includes('VENOM') ? (
           <LinkIcon type="venom" color="#2bb673" />
@@ -43,7 +43,7 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
           <Logo w={'35px'} h={'26px'} />
         )}
         </>}
-        <Stack gap={2} justify={'right'} w={'100%'} textAlign={'right'}>
+        <Stack gap={2} justify={'left'} minH={'54px'} justifyContent={'center'}>
           <Text>{prize}</Text>
           {tx !== '' && (
             <Link style={{ textDecoration: 'underline' }} href={VENOMSCAN_TX + tx} target="_blank">

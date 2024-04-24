@@ -7,10 +7,10 @@ const checkPrize = async (owner:string) => {
   });
 };
 
-const reqPrize = async (owner:string,name:string,pdate:string) => {
+const reqPrize = async (owner:string,name:string,prize:string,pdate:string) => {
     return axios({
       method: 'get',
-      url: '/api/nfts/requestPrize?ownerAddress='+owner+'&name='+name+'&pdate='+pdate
+      url: '/api/nfts/requestPrize?ownerAddress='+owner+'&name='+name+'&prize='+prize+'&pdate='+pdate
     });
   };
 
