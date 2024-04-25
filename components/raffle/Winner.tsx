@@ -1,8 +1,19 @@
-import { Tag, Td, Tr, Text, Link, Tooltip, useColorMode, Stack, useMediaQuery, useDisclosure } from '@chakra-ui/react';
+import {
+  Tag,
+  Td,
+  Tr,
+  Text,
+  Link,
+  Tooltip,
+  useColorMode,
+  Stack,
+  useMediaQuery,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { LinkIcon, Logo } from 'components/logos';
 import { connectedAccountAtom, venomProviderAtom } from 'core/atoms';
 import { truncAddress } from 'core/utils';
-import { VENOMSCAN_TX } from 'core/utils/constants';
+import { VENOMSCAN_NFT, VENOMSCAN_TX } from 'core/utils/constants';
 import { lookupNames } from 'core/utils/reverse';
 import { useAtomValue } from 'jotai';
 import React, { useEffect, useState } from 'react';
@@ -11,15 +22,16 @@ interface WinnerProps {
   owner: string;
   prize: string;
   tx: string;
+  name: string;
 }
 
-const Winner = ({ owner, prize, tx }: WinnerProps) => {
+const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
   const lightMode = useColorMode().colorMode === 'light';
   const provider = useAtomValue(venomProviderAtom);
   const connectedAccount = useAtomValue(connectedAccountAtom);
   const { isOpen, onToggle } = useDisclosure();
   const [notMobile] = useMediaQuery('(min-width: 769px)');
-  const [name, setName] = useState(owner);
+  const [_name, setName] = useState(owner);
 
   const getOwnerName = async () => {
     const _name = await lookupNames(provider, owner);
@@ -36,18 +48,45 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
   return (
     <Tr>
       <Td gap={3} display={'flex'} alignItems="center" minH={'54px'}>
-        {notMobile && <>
-        {prize.includes('VENOM') ? (
-          <LinkIcon type="venom" color="#2bb673" />
-        ) : (
-          <Logo w={'35px'} h={'26px'} />
+        {notMobile && (
+          <>
+            {prize.includes('VENOM') ? (
+              <LinkIcon type="venom" color="#2bb673" />
+            ) : (
+              <Logo w={'35px'} h={'26px'} />
+            )}
+          </>
         )}
-        </>}
         <Stack gap={2} justify={'left'} minH={'54px'} justifyContent={'center'}>
           <Text>{prize}</Text>
-          {tx !== '' && (
+          {tx !== '' && prize.includes('VENOM') && (
             <Link style={{ textDecoration: 'underline' }} href={VENOMSCAN_TX + tx} target="_blank">
-              TX Hash
+              <Tag
+                px={3}
+                colorScheme='yellow'
+                py={1}
+                rounded={'full'}
+                textAlign={'center'}
+                fontSize={['lg', 'xl']}
+                onClick={onToggle}
+                fontWeight={'bold'}>
+                transaction
+              </Tag>
+            </Link>
+          )}
+          {tx !== '' && prize.includes('domain') && (
+            <Link style={{ textDecoration: 'underline' }} href={VENOMSCAN_NFT + tx} target="_blank">
+              <Tag
+                px={3}
+                colorScheme='yellow'
+                py={1}
+                rounded={'full'}
+                textAlign={'center'}
+                fontSize={['lg', 'xl']}
+                onClick={onToggle}
+                fontWeight={'bold'}>
+                {name}
+              </Tag>
             </Link>
           )}
         </Stack>
@@ -67,7 +106,7 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
             py={1}
             rounded={'full'}
             textAlign={'center'}
-            fontSize={['lg','xl']}
+            fontSize={['lg', 'xl']}
             onClick={onToggle}
             fontWeight={'bold'}>
             <Text
@@ -77,7 +116,13 @@ const Winner = ({ owner, prize, tx }: WinnerProps) => {
                   : 'linear(to-r, var(--venom0), var(--bluevenom0))'
               }
               bgClip="text">
-              {name.includes('.venom') ? notMobile ? name : name.length > 13 ? name.slice(0,12) + '...' : name : truncAddress(owner)}
+              {_name.includes('.venom')
+                ? notMobile
+                  ? _name
+                  : _name.length > 13
+                  ? _name.slice(0, 12) + '...'
+                  : _name
+                : truncAddress(owner)}
             </Text>
           </Tag>
         </Tooltip>

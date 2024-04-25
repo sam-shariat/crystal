@@ -973,6 +973,7 @@ export default function RRRSection() {
                             owner={winner.owner}
                             prize={winner.prize}
                             tx={winner.tx}
+                            name={winner.name}
                             key={`winner-${winner.owner}-${i}`}
                           />
                         ))}

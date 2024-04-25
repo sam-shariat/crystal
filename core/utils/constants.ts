@@ -832,13 +832,13 @@ export const RAFFLE_WINNERS = [
       '01292907552163a26a02f8181d4146b8faca18941f03a6c56688a386ff9ffa51'
     ],
     winners: [
-      {owner : '0:f25ad30d0389bf5cd8b15dbc4b29c816226832095d9ea55fa04fbf8063b112d3', prize: '40 VENOMS', tx: '01292907552163a26a02f8181d4146b8faca18941f03a6c56688a386ff9ffa51'},
-      {owner : '0:be7b8f4fed809c72aba75f4c0a6e282354c7d5f8d9e9de82ec64eb6706d7a99a', prize: '3-char domain', tx: ''},
-      {owner : '0:36e661787e4019445567f4daaf01abe319d47234305defb3b1cbba88e3396ec4', prize: '4-char domain', tx: ''},
-      {owner : '0:9191121b39eb43bb08a6cba8b3cbe264766cfd7db8d5c83a1e9cfe42efcce91d', prize: '4-char domain', tx: ''},
-      {owner : '0:8f500a081d6fd947d2c3b5ea6ea525eff81e56129d65364f2d01ed7eaecc934d', prize: '5-char domain', tx: ''},
-      {owner : '0:e4c0bb703e64873086cb468a9d7324ca23fcaacd790763c2849fe45d7ab0e84e', prize: '5-char domain', tx: ''},
-      {owner : '0:533f216d8581e78131c2bdba43d66d5f7a7d867a8027774d974df6aa15541b6c', prize: '5-char domain', tx: ''}
+      {owner : '0:f25ad30d0389bf5cd8b15dbc4b29c816226832095d9ea55fa04fbf8063b112d3', prize: '40 VENOMS', tx: '01292907552163a26a02f8181d4146b8faca18941f03a6c56688a386ff9ffa51', name:''},
+      {owner : '0:be7b8f4fed809c72aba75f4c0a6e282354c7d5f8d9e9de82ec64eb6706d7a99a', prize: '3-char domain', tx: '', name: ''},
+      {owner : '0:36e661787e4019445567f4daaf01abe319d47234305defb3b1cbba88e3396ec4', prize: '4-char domain', tx: '', name: ''},
+      {owner : '0:9191121b39eb43bb08a6cba8b3cbe264766cfd7db8d5c83a1e9cfe42efcce91d', prize: '4-char domain', tx: '0:3cfa67e3ff25021900590753b931f6b0a4e0a6fd5597af1cedd303b89ceca1b2', name: 'cucu.venom'},
+      {owner : '0:8f500a081d6fd947d2c3b5ea6ea525eff81e56129d65364f2d01ed7eaecc934d', prize: '5-char domain', tx: '', name: ''},
+      {owner : '0:e4c0bb703e64873086cb468a9d7324ca23fcaacd790763c2849fe45d7ab0e84e', prize: '5-char domain', tx: '', name: ''},
+      {owner : '0:533f216d8581e78131c2bdba43d66d5f7a7d867a8027774d974df6aa15541b6c', prize: '5-char domain', tx: '', name: ''}
     ],
   },
  
@@ -849,13 +849,13 @@ export const RAFFLE_WINNERS = [
       '075bdab5e43024a897647613d5ada1683814ef3d6bb10d1eb6e6812e90f2b8c4'
     ],
     winners: [
-      {owner : '0:14d7aae23c0b9abd969f3104840d6b35271925a54e9ea91b7f16939e5f055b83', prize: '40 VENOMS', tx: '075bdab5e43024a897647613d5ada1683814ef3d6bb10d1eb6e6812e90f2b8c4'},
-      {owner : '0:d087d630d89efa48ddf71e6bf552136404f167ac5dd01d8c9591f0561ab4a081', prize: '3-char domain', tx: ''},
-      {owner : '0:d98457456ea54b39d1691d2b0525cc9625260d818678d3d1e2a426eca93cedd8', prize: '4-char domain', tx: ''},
-      {owner : '0:733d008614af9c8b341f088931ea6d40a1067fd4949b35f07a940945f702cf23', prize: '4-char domain', tx: ''},
-      {owner : '0:a5f58c82b766b9cc97c609ca6b5096a15bd29b235ff98904039dfd93a0a35888', prize: '5-char domain', tx: ''},
-      {owner : '0:bb729d97156ec8ffcedf2823ffe0d50763f326b00c91a434d321d323c7c054ad', prize: '5-char domain', tx: ''},
-      {owner : '0:5dde0d725fc9f839992d12c04a7903070688106d91c922cd299333c0fbf8906f', prize: '5-char domain', tx: ''}
+      {owner : '0:14d7aae23c0b9abd969f3104840d6b35271925a54e9ea91b7f16939e5f055b83', prize: '40 VENOMS', tx: '075bdab5e43024a897647613d5ada1683814ef3d6bb10d1eb6e6812e90f2b8c4', name:''},
+      {owner : '0:d087d630d89efa48ddf71e6bf552136404f167ac5dd01d8c9591f0561ab4a081', prize: '3-char domain', tx: '', name: ''},
+      {owner : '0:d98457456ea54b39d1691d2b0525cc9625260d818678d3d1e2a426eca93cedd8', prize: '4-char domain', tx: '0:4a7e14dd8c5f88c62a198911a46cb26301a3cdbdce602d1220f6fc0d9300f888', name: 'rune.venom'},
+      {owner : '0:733d008614af9c8b341f088931ea6d40a1067fd4949b35f07a940945f702cf23', prize: '4-char domain', tx: '', name: ''},
+      {owner : '0:a5f58c82b766b9cc97c609ca6b5096a15bd29b235ff98904039dfd93a0a35888', prize: '5-char domain', tx: '0:77f4f98125ac412dc08459f2f1dd932c907ede4f0be00c9d58cc766f4c2f1d20', name: 'veres.venom'},
+      {owner : '0:bb729d97156ec8ffcedf2823ffe0d50763f326b00c91a434d321d323c7c054ad', prize: '5-char domain', tx: '', name: ''},
+      {owner : '0:5dde0d725fc9f839992d12c04a7903070688106d91c922cd299333c0fbf8906f', prize: '5-char domain', tx: '', name: ''}
     ],
   },
   {
@@ -865,13 +865,13 @@ export const RAFFLE_WINNERS = [
       '647bc797158b0590bf3d8d32fe40190b1da323d5baa64bfd76ec01b625834254'
     ],
     winners: [
-      {owner : '0:81c6954e467897cba30b77ef708f58c234275ae8903fdc163d975cb1f854e0a8', prize: '40 VENOMS', tx: '647bc797158b0590bf3d8d32fe40190b1da323d5baa64bfd76ec01b625834254'},
-      {owner : '0:6a003cc55aa6c4bba516dcff83385b55a5f4a0b4fafee92812678988052583fe', prize: '3-char domain', tx: ''},
-      {owner : '0:cd8b606d1f0f0ca96cba7ca666c164b19a40155402c77fa86187ea4a883e8b73', prize: '4-char domain', tx: ''},
-      {owner : '0:a05dfa01da9c6fbda761f7462ad37666c1de3af9d54ec5e6ad28d5e9d9f8a319', prize: '4-char domain', tx: ''},
-      {owner : '0:17826b649611f907b02163b36f33f16a79ce9afd29ffb6b9768ff9cad38bde5a', prize: '5-char domain', tx: ''},
-      {owner : '0:00d6d867baf113a9fb580a37f77d0fcd444cff2e203438626b290a27702e97c6', prize: '5-char domain', tx: ''},
-      {owner : '0:ab5e2796764d83cf9a08bc4cf341b38ad05a0703332846c9ddfa9dbfa067fbf2', prize: '5-char domain', tx: ''}
+      {owner : '0:81c6954e467897cba30b77ef708f58c234275ae8903fdc163d975cb1f854e0a8', prize: '40 VENOMS', tx: '647bc797158b0590bf3d8d32fe40190b1da323d5baa64bfd76ec01b625834254', name:''},
+      {owner : '0:6a003cc55aa6c4bba516dcff83385b55a5f4a0b4fafee92812678988052583fe', prize: '3-char domain', tx: '', name: ''},
+      {owner : '0:cd8b606d1f0f0ca96cba7ca666c164b19a40155402c77fa86187ea4a883e8b73', prize: '4-char domain', tx: '', name: ''},
+      {owner : '0:a05dfa01da9c6fbda761f7462ad37666c1de3af9d54ec5e6ad28d5e9d9f8a319', prize: '4-char domain', tx: '', name: ''},
+      {owner : '0:17826b649611f907b02163b36f33f16a79ce9afd29ffb6b9768ff9cad38bde5a', prize: '5-char domain', tx: '', name: ''},
+      {owner : '0:00d6d867baf113a9fb580a37f77d0fcd444cff2e203438626b290a27702e97c6', prize: '5-char domain', tx: '', name: ''},
+      {owner : '0:ab5e2796764d83cf9a08bc4cf341b38ad05a0703332846c9ddfa9dbfa067fbf2', prize: '5-char domain', tx: '', name: ''}
     ],
   },
 ];
