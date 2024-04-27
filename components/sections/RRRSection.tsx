@@ -275,7 +275,6 @@ export default function RRRSection() {
     setMints(_mints);
     setIdMints(_count);
 
-
     await sleep(1000);
     setIsLoading(false);
   };
@@ -314,38 +313,35 @@ export default function RRRSection() {
     checkMinteds();
   }, [provider, connectedAccount, raffleContract, minted]);
 
-
-  const checkOwnerPrize = async ()=> {
+  const checkOwnerPrize = async () => {
     const details = await checkPrize(won.owner);
-    if(details.status === 200){
+    if (details.status === 200) {
       setPrizeRequest(details.data.nfts);
-      console.log("prize request")
-      console.log(details.data.nfts)
-    } 
-  }
+      console.log('prize request');
+      console.log(details.data.nfts);
+    }
+  };
 
-  const reqName = async ()=> {
+  const reqName = async () => {
     setIsLoading(true);
-    const details = await reqPrize(won.owner,path+'.venom',won.prize,won.date);
-    if(details.status === 200){
-      console.log(details)
+    const details = await reqPrize(won.owner, path + '.venom', won.prize, won.date);
+    if (details.status === 200) {
+      console.log(details);
       await checkOwnerPrize();
     } else {
       console.log('ERROR Requesting');
       console.log(details);
-    };
+    }
     setIsLoading(false);
-  }
+  };
 
-  useEffect(()=>{
-
-    if(won){
-      if(won.owner === connectedAccount){
+  useEffect(() => {
+    if (won) {
+      if (won.owner === connectedAccount) {
         checkOwnerPrize();
       }
     }
-
-    },[won])
+  }, [won]);
 
   async function inputChange() {
     if (!path) return;
@@ -629,12 +625,14 @@ export default function RRRSection() {
               </Button>
               <Text fontWeight="bold" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['center']}>
                 A Lottery NFT Collection featuring{' '}
-                <Text fontWeight={'bold'} color={colorMode === 'light' ? 'var(--venom3)' : 'var(--venom0)'}>
+                <Text
+                  fontWeight={'bold'}
+                  color={colorMode === 'light' ? 'var(--venom3)' : 'var(--venom0)'}>
                   {' '}
                   2,222 items{' '}
                 </Text>
               </Text>
-              <Stack gap={4} align={'center'} w={['100%','100%','md']}>
+              <Stack gap={4} align={'center'} w={['100%', '100%', 'md']}>
                 <Button
                   as={Link}
                   target="_blank"
@@ -692,8 +690,11 @@ export default function RRRSection() {
                   </Flex>
                 </Button>
               </Stack>
-              </Stack></GridItem></SimpleGrid></Container>
-              <Container
+            </Stack>
+          </GridItem>
+        </SimpleGrid>
+      </Container>
+      <Container
         ref={win}
         maxW="100%"
         px={0}
@@ -704,11 +705,7 @@ export default function RRRSection() {
         <SimpleGrid columns={[1]} gap={10} px={0}>
           <GridItem>
             <Stack px={0} gap={12} align={'center'}>
-              <Flex
-                minW={'100%'}
-                width={'100%'}
-                flexDirection={'column'}
-                gap={[8]}>
+              <Flex minW={'100%'} width={'100%'} flexDirection={'column'} gap={[8]}>
                 <Parallax baseVelocity={-0.5}>
                   <Flex gap={[4, 6, 8]} pr={[2, 3, 4]}>
                     {RAFFLE_IMAGES.map(
@@ -803,7 +800,7 @@ export default function RRRSection() {
           <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
             <Text>Next Raffle</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              April 26th 23:59 UTC{' '}
+              April 27th 23:59 UTC{' '}
             </Text>
             <Text
               w={'100%'}
@@ -830,7 +827,6 @@ export default function RRRSection() {
               </Flex>
             )}
 
-            
             {/* <Text
               fontSize={'xl'}
               p={4}
@@ -840,8 +836,6 @@ export default function RRRSection() {
               preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be
               updated )
             </Text> */}
-
-            
 
             {won && (
               <Flex
@@ -855,81 +849,116 @@ export default function RRRSection() {
                 textAlign={'center'}
                 bgColor={colorMode === 'light' ? 'white' : 'whiteAlpha.200'}
                 rounded={'lg'}>
+                <Text>🎁 You have won 🎁 </Text>
                 <Text>
-                  🎁 You have won 🎁 </Text><Text><strong>{won.prize}</strong> from the{' '}
-                  <strong>{won.date}</strong> Raffle 
+                  <strong>{won.prize}</strong> from the <strong>{won.date}</strong> Raffle
                 </Text>
-                {prizeRequest && prizeRequest.length === 0 ? <Stack gap={4} w={'100%'}>
-
-                {won.prize.includes('domain') && <Input
-                  placeholder={`Enter ${won.prize} Name`}
-                  size={'lg'}
-                  variant={'filled'}
-                  value={path}
-                  fontSize={['lg']}
-                  isDisabled={isLoading}
-                  borderWidth="1px"
-                  borderColor={colorMode === 'dark' ? 'whiteAlpha.500' : 'blackAlpha.500'}
-                  rounded={'2xl'}
-                  px={[6]}
-                  onChange={(e) => setPath(e.target.value.toLowerCase())}
-                  bg={colorMode === 'dark' ? 'blackAlpha.300' : 'whiteAlpha.700'}
-                />}
-                {!typing && <Button
-                  minWidth={['100%', '100%', 'fit-content']}
-                  colorScheme="green"
-                  size={['md',"lg"]}
-                  gap={2}
-                  rounded={'full'}
-                  bgGradient={
-                    colorMode === 'light'
-                      ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                      : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                  }
-                  _hover={{
-                    bgGradient:
-                      colorMode === 'light'
-                        ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                        : 'linear(to-r, var(--venom0), var(--bluevenom0))',
-                  }}
-                  color={'white'}
-                  height={['66px']}
-                  isDisabled={
-                    !isValidName(path) || nameExists || feeIsLoading || typing || (path.length < won.prize.slice(0,1)) || isLoading//|| mintedOnTestnet === 0
-                  }
-                  onClick={reqName}
-                  isLoading={feeIsLoading || typing || isLoading}
-                  >
-                  {path}.venom {nameExists ? 'not available' : 'available. Get Name'}
-                </Button>}
-                </Stack> : <Stack><Text bgGradient={
-                colorMode === 'light'
-                  ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                  : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-              }
-              bgClip="text" fontSize={'3xl'}>
-                  {prizeRequest && prizeRequest[0].winner_name}</Text>
-                  <Text>{prizeRequest && prizeRequest[0].completed_tx ? 'has been sent to your wallet ✅' : 'is being sent to your wallet 🔃'}
-                </Text>
-                {prizeRequest && prizeRequest[0].completed_tx && <Link
-                            style={{ textDecoration: 'underline' }}
-                            href={(prizeRequest[0].prize.includes('VENOM') ? VENOMSCAN_TX : VENOMSCAN_NFT) + prizeRequest[0].completed_tx}
-                            target="_blank">
-                            {' '}
-                            TX Hash{' '}
-                          </Link>}
-                
-                
-                </Stack>}
+                {prizeRequest && prizeRequest.length === 0 ? (
+                  <Stack gap={4} w={'100%'}>
+                    {won.prize.includes('domain') && (
+                      <Input
+                        placeholder={`Enter ${won.prize} Name`}
+                        size={'lg'}
+                        variant={'filled'}
+                        value={path}
+                        fontSize={['lg']}
+                        isDisabled={isLoading}
+                        borderWidth="1px"
+                        borderColor={colorMode === 'dark' ? 'whiteAlpha.500' : 'blackAlpha.500'}
+                        rounded={'2xl'}
+                        px={[6]}
+                        onChange={(e) => setPath(e.target.value.toLowerCase())}
+                        bg={colorMode === 'dark' ? 'blackAlpha.300' : 'whiteAlpha.700'}
+                      />
+                    )}
+                    {!typing && (
+                      <Button
+                        minWidth={['100%', '100%', 'fit-content']}
+                        colorScheme="green"
+                        size={['md', 'lg']}
+                        gap={2}
+                        rounded={'full'}
+                        bgGradient={
+                          colorMode === 'light'
+                            ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
+                            : 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                        }
+                        _hover={{
+                          bgGradient:
+                            colorMode === 'light'
+                              ? 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                              : 'linear(to-r, var(--venom0), var(--bluevenom0))',
+                        }}
+                        color={'white'}
+                        height={['66px']}
+                        isDisabled={
+                          !isValidName(path) ||
+                          nameExists ||
+                          feeIsLoading ||
+                          typing ||
+                          path.length < won.prize.slice(0, 1) ||
+                          isLoading //|| mintedOnTestnet === 0
+                        }
+                        onClick={reqName}
+                        isLoading={feeIsLoading || typing || isLoading}>
+                        {path}.venom {nameExists ? 'not available' : 'available. Get Name'}
+                      </Button>
+                    )}
+                  </Stack>
+                ) : (
+                  <Stack>
+                    <Text
+                      bgGradient={
+                        colorMode === 'light'
+                          ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                          : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                      }
+                      bgClip="text"
+                      fontSize={'3xl'}>
+                      {prizeRequest && prizeRequest[0].winner_name}
+                    </Text>
+                    <Text>
+                      {prizeRequest && prizeRequest[0].completed_tx
+                        ? 'has been sent to your wallet ✅'
+                        : 'is being sent to your wallet 🔃'}
+                    </Text>
+                    {prizeRequest && prizeRequest[0].completed_tx && (
+                      <Link
+                        style={{ textDecoration: 'underline' }}
+                        href={
+                          (prizeRequest[0].prize.includes('VENOM') ? VENOMSCAN_TX : VENOMSCAN_NFT) +
+                          prizeRequest[0].completed_tx
+                        }
+                        target="_blank">
+                        {' '}
+                        TX Hash{' '}
+                      </Link>
+                    )}
+                  </Stack>
+                )}
               </Flex>
             )}
           </Flex>
           <Text fontSize={'2xl'}>Previous Raffles</Text>
           <Flex gap={3} direction={'column'} w={'100%'}>
-            <Tabs colorScheme="green" rounded={'2xl'} defaultIndex={RAFFLE_WINNERS.length-1} variant={'solid-rounded'} size={'lg'} w={'100%'}>
-              <TabList>
+            <Tabs
+              colorScheme="green"
+              rounded={'2xl'}
+              defaultIndex={RAFFLE_WINNERS.length - 1}
+              variant={'solid-rounded'}
+              size={'lg'}
+              w={'100%'}
+              isLazy>
+              <TabList
+                overflowY="hidden"
+                sx={{
+                  scrollbarWidth: 'none',
+                  '::-webkit-scrollbar': {
+                    display: 'none',
+                  },
+                }}>
                 {RAFFLE_WINNERS.map((day, i) => (
-                  <Tab fontWeight={'bold'} key={'tab-prize-' + day.date + '-' + i}>
+                  <Tab fontWeight={'bold'} key={'tab-prize-' + day.date + '-' + i} flexShrink={0}>
                     {day.date}
                   </Tab>
                 ))}
