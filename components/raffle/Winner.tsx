@@ -98,7 +98,6 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
           bgColor={'black'}
           p={4}
           rounded={'2xl'}
-          isOpen={isOpen}
           label={owner}
           aria-label={`winner-${prize}-tooltip`}>
           <Tag
@@ -107,7 +106,7 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
             rounded={'full'}
             textAlign={'center'}
             fontSize={['lg', 'xl']}
-            onClick={onToggle}
+            as={Link} style={{ textDecoration: 'none' }} href={VENOMSCAN_NFT + owner} target="_blank"
             fontWeight={'bold'}>
             <Text
               bgGradient={
