@@ -34,11 +34,11 @@ export default async function handler(req, res) {
     const root = new Account(CollectionContract, {
       signer: signerKeys(keys),
       client,
-      address: RAFFLE_CONTRACT_ADDRESS,
+      address: '0:f283ba1b50a520b591f241a8e56ee4b3207d36a7ded0abef0e0f17c8a44ab3fc',
     });
 
 
-    const nfts = await Promise.all([...Array(2222)].map(async (indexAddress,i) => {
+    const nfts = await Promise.all([...Array(1000)].map(async (indexAddress,i) => {
         try {
 
             if(i % 25 === 0){
@@ -68,9 +68,7 @@ export default async function handler(req, res) {
             //console.log(_nftInfo)
 
           if (_nftInfo) {
-            let out = _nftInfo.decoded.output;
-            out.address = String(_nftAddress.decoded.output.nft);
-
+            let out = _nftInfo.decoded.output.owner;
             return out;
           } else {
             return {};
