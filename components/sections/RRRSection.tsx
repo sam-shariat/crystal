@@ -800,7 +800,7 @@ export default function RRRSection() {
           <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
             <Text>Next Raffle</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              April 28th 23:59 UTC{' '}
+              April 30th 23:59 UTC{' '}
             </Text>
             <Text
               w={'100%'}
@@ -946,8 +946,9 @@ export default function RRRSection() {
               rounded={'2xl'}
               defaultIndex={RAFFLE_WINNERS.length - 1}
               variant={'solid-rounded'}
-              size={'lg'}
-              w={'100%'}
+              size={['sm','md','lg']}
+              px={0}
+              w={['sm','md','100%']}
               isLazy>
               <TabList
                 overflowY="hidden"
@@ -966,7 +967,7 @@ export default function RRRSection() {
 
               <TabPanels>
                 {RAFFLE_WINNERS.map((day, i) => (
-                  <TabPanel key={'tab-panel-prize-' + day.date + '-' + i}>
+                  <TabPanel key={'tab-panel-prize-' + day.date + '-' + i} px={0}>
                     <Text fontSize={'2xl'} py={4}>
                       Winners of {day.date} prizes
                     </Text>
@@ -975,8 +976,9 @@ export default function RRRSection() {
                       bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}
                       fontSize={['lg', 'lg', 'xl']}
                       rounded={'xl'}
-                      p={6}
-                      w={'100%'}>
+                      p={[2,3,4,5,6]}
+                      px={[0,2,4,6]}
+                      w={['sm','md','100%']}>
                       {/* {day.txs.length > 0 && (
                         <TableCaption>
                           40 VENOMs prize has been sent to the winner{' '}
