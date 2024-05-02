@@ -800,7 +800,7 @@ export default function RRRSection() {
           <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
             <Text>Next Raffle</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              April 30th 23:59 UTC{' '}
+              May 2nd 23:59 UTC{' '}
             </Text>
             <Text
               w={'100%'}

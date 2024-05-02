@@ -954,6 +954,36 @@ export const RAFFLE_WINNERS = [
       {owner : '0:f815ed37b16ea15922f1dc62274b9cc17f0f4128fcc89ae2c47093af26817096', prize: '5-char domain', tx: '', name: ''}
     ],
   },
+  {
+    date: 'April 30th',
+    day: 9,
+    txs :[
+      'd80e4820b1a46bdbdef85bc3d1735c0ab67788b3968c78f66d7d83d051f84f95'
+    ],
+    winners: [
+      {owner : '0:4516edead8c3cb93b0bbbb4e385172d77329caca4d8675f08e48be923bb40329', prize: '40 VENOMS', tx: 'd80e4820b1a46bdbdef85bc3d1735c0ab67788b3968c78f66d7d83d051f84f95', name:''},
+      {owner : '0:9bf296149260b8fc947638406dab8aafd71ceb008a026138643a17cf679a2377', prize: '3-char domain', tx: '', name: ''},
+      {owner : '0:a050600f516251c75a9dafd15c65ce3d9bb06b34f8644f391bbca3c501dfda19', prize: '4-char domain', tx: '', name: ''},
+      {owner : '0:56cb4d8fe48ebef61a635806acfc87a9e8b810c969748f75743e8838ab3c08aa', prize: '4-char domain', tx: '', name: ''},
+      {owner : '0:b1337a06eda59a43c73b41f50d99117675884fca14e4e32b26258bde4c764312', prize: '5-char domain', tx: '', name: ''},
+      {owner : '0:10e2f4674282efb68c2472a4ebdc0c453b9467d717ebc5d2e71dba32bcf9c061', prize: '5-char domain', tx: '', name: ''},
+      {owner : '0:24d0039f8281769cf400b98341f0e73b1a9115cc4e879d17bd941dc7f7adcd40', prize: '5-char domain', tx: '', name: ''}
+    ],
+  },
+  {
+    date: 'May 1st',
+    day: 10,
+    txs :[
+      'efd896cee6dc4fcaccb09aa25857f6438e3d68f455241e3bfe3bf0713ba8bdd9'
+    ],
+    winners: [
+      {owner : '0:b9abb2020d66c03dd606f9a3f9a05faf281b773affe3f8e176b3461a6240c21e', prize: '40 VENOMS', tx: 'efd896cee6dc4fcaccb09aa25857f6438e3d68f455241e3bfe3bf0713ba8bdd9', name:''},
+      {owner : '0:cd30dcb71928f196b58fb7df9f5e3be96142f744d42c4c6b99e87942c0460805', prize: '3-char domain', tx: '', name: ''},
+      {owner : '0:67e791aa0170ea44b14528fe8564ddee9c3466ec0e7eff35fcc38e3cf10108c2', prize: '4-char domain', tx: '', name: ''},
+      {owner : '0:e5f9c7fcdf9fd0e3af33b2731fe207d1d6604dec94d862ced2c993cdd062e717', prize: '4-char domain', tx: '', name: ''},
+      {owner : '0:9b69fdd68748944d449bfed5fe4c66961769ac579d23b5d7748fa20922c23bf6', prize: '5-char domain', tx: '', name: ''},
+      {owner : '0:01ea56c617604e8edc923d2d57a29bd108f6e8f0d143dff57af11fb860e75f77', prize: '5-char domain', tx: '', name: ''},
+      {owner : '0:9c402ea498f5c52d7aedacf7e907de73b2f2550ac1e54fca71e7ee07c4837d3c', prize: '5-char domain', tx: '', name: ''}
+    ],
+  }
 ];
-
-
