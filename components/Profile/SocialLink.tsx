@@ -16,7 +16,7 @@ import {
   useLineIconsAtom,
   variantAtom,
 } from 'core/atoms';
-import { getColor, getIconColor, getIconInButtonColor } from 'core/utils';
+import { getColor, getIconColor, getIconInButtonColor, getUrl } from 'core/utils';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 
@@ -26,6 +26,9 @@ interface Props {
   onlyIcon: boolean;
   color?: string;
 }
+
+
+
 export default function SocialLink({ title, url, onlyIcon, color }: Props) {
   const lightMode = useAtomValue(lightModeAtom);
   const lineMode = useAtomValue(useLineIconsAtom);
@@ -35,11 +38,12 @@ export default function SocialLink({ title, url, onlyIcon, color }: Props) {
   const buttonBg = useAtomValue(buttonBgColorAtom);
   const font = useAtomValue(fontAtom);
   const [hover, setHover] = useState(false);
+  const finalUrl = getUrl(title.toLowerCase(),url) ;
 
   return (
     <>
       {onlyIcon ? (
-        <ChakraLink href={url} target="_blank" id={`venom-id-${title}-link`}>
+        <ChakraLink href={finalUrl} target="_blank" id={`venom-id-${title}-link`}>
           <Tooltip
             borderRadius={4}
             label={<Text p={2}>{title}</Text>}
@@ -62,9 +66,11 @@ export default function SocialLink({ title, url, onlyIcon, color }: Props) {
           </Tooltip>
         </ChakraLink>
       ) : (
-        <ChakraLink href={url} target="_blank" id={`venom-id-${title}-link`} _hover={{textDecoration:'none'}}>
+        <ChakraLink href={finalUrl} target="_blank" id={`venom-id-${title}-link`} _hover={{textDecoration:'none'}}>
           <Button
-            size="lg"
+            size={'lg'}
+            fontSize={'lg'}
+            height={'64px'}
             display={'flex'}
             gap={2}
             rounded={round}
@@ -78,6 +84,7 @@ export default function SocialLink({ title, url, onlyIcon, color }: Props) {
             onMouseEnter={() => setHover(true)}
             onMouseMove={() => setHover(true)}
             onMouseOut={() => setHover(false)}
+            px={3}
             w={'100%'}>
             
               <LinkIcon
@@ -88,9 +95,12 @@ export default function SocialLink({ title, url, onlyIcon, color }: Props) {
                       ? getIconInButtonColor('pop', buttonBg, lightMode)
                       : getIconInButtonColor(variant, buttonBg, lightMode)
                 }
+                size={36}
               />
             <Text
               onMouseEnter={() => setHover(true)}
+              w={'100%'} 
+              textAlign={'center'}
               color={
                 variant === 'fill' && hover
                   ? getColor('pop', buttonBg, lightMode)

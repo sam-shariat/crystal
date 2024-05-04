@@ -30,7 +30,8 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
   const provider = useAtomValue(venomProviderAtom);
   const connectedAccount = useAtomValue(connectedAccountAtom);
   const { isOpen, onToggle } = useDisclosure();
-  const [notMobile] = useMediaQuery('(min-width: 769px)');
+  const [notMobile] = useMediaQuery('(min-width: 768px)');
+  const [small] = useMediaQuery('(min-width: 376px)');
   const [_name, setName] = useState(owner);
 
   const getOwnerName = async () => {
@@ -67,7 +68,7 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
                 py={1}
                 rounded={'full'}
                 textAlign={'center'}
-                fontSize={['lg', 'xl']}
+                fontSize={!small ? 'md' : ['lg', 'xl']}
                 onClick={onToggle}
                 fontWeight={'bold'}>
                 transaction
@@ -82,7 +83,7 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
                 py={1}
                 rounded={'full'}
                 textAlign={'center'}
-                fontSize={['lg', 'xl']}
+                fontSize={!small ? 'md' : ['lg', 'xl']}
                 onClick={onToggle}
                 fontWeight={'bold'}>
                 {name}
@@ -91,7 +92,7 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
           )}
         </Stack>
       </Td>
-      <Td>
+      <Td >
         <Tooltip
           hasArrow
           color="white"
@@ -105,7 +106,7 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
             py={1}
             rounded={'full'}
             textAlign={'center'}
-            fontSize={['lg', 'xl']}
+            fontSize={!small ? 'md' : ['lg', 'xl']}
             as={Link} style={{ textDecoration: 'none' }} href={VENOMSCAN_NFT + owner} target="_blank"
             fontWeight={'bold'}>
             <Text
@@ -119,7 +120,7 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
                 ? notMobile
                   ? _name
                   : _name.length > 13
-                  ? _name.slice(0, 12) + '...'
+                  ? _name.slice(0, 10) + '...'
                   : _name
                 : truncAddress(owner)}
             </Text>

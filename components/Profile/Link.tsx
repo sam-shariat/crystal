@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   AspectRatio,
   Skeleton,
+  Center,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import NftLink from './NftLink';
@@ -28,6 +29,7 @@ import { AVAILABLE_LINKS, SITE_PROFILE_URL, SITE_URL } from 'core/utils/constant
 import Donate from './Donate';
 import Pay from './Pay';
 import EmbedModal from './EmbedModal';
+//import { motion, Variants } from 'framer-motion';
 
 interface Props {
   type: string;
@@ -52,6 +54,25 @@ export default function Link({ type, icon, title, url, image, content, styles, c
   const [isLoading, setIsLoading] = useState(true);
   //console.log(type, title);
 
+  // const cardVariants = (i:number) => {
+  //   const _var: Variants = {
+  //     offscreen: {
+  //       opacity: 0,
+  //       y: 200,
+  //     },
+  //     onscreen: {
+  //       opacity: 1,
+  //       y: 0,
+  //       transition: {
+  //         type: 'spring',
+  //         bounce: 0.4,
+  //         duration: 0.8
+  //       },
+  //     },
+  //   };
+  //   return _var;
+  // };
+
   return (
     <>
       {(type === 'simple link' || type === 'pdf document') && (
@@ -68,7 +89,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           id={`venom-id-${title}-link`}>
           <Button
             size={styles?.size === 'sm' ? 'md' : 'lg'}
-            fontSize={styles?.size === 'lg' ? 'xl' : styles?.size === 'md' ? 'lg' : 'mg'}
+            fontSize={styles?.size === 'lg' ? 'xl' : styles?.size === 'md' ? 'lg' : 'md'}
             height={styles?.size === 'lg' ? '80px' : styles?.size === 'md' ? '64px' : '44px'}
             rounded={round}
             variant={variant}
@@ -76,21 +97,22 @@ export default function Link({ type, icon, title, url, image, content, styles, c
             color={getColor(variant, buttonBg, lightMode)}
             placeContent={'center'}
             placeItems={'center'}
+            px={2}
             width={'100%'}>
             {icon}
-            <Text px={2}>{title}</Text>
+            <Text px={2} w={'100%'} textAlign={'center'}>{title}</Text>
           </Button>
         </ChakraLink>
       )}
 
-      {(type === 'simple text' || type === 'text') && (
+      {(type === 'simple text' || type === 'text paragraph') && (
         <Stack gap={2} w={'100%'}>
           {!content && (
             <Text p={2} fontWeight={'bold'} fontSize="xl" textAlign="center">
               {title}
             </Text>
           )}
-          {content && <Text p={2}>{content}</Text>}
+          {content && <Text p={2} textAlign="center">{content}</Text>}
         </Stack>
       )}
 
@@ -174,7 +196,8 @@ export default function Link({ type, icon, title, url, image, content, styles, c
       {type === 'payment button' && <Pay title={title} content={String(content)} style={styles} />}
 
       {type === 'tweet' && (
-        <Box w={'100%'} borderRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16} maxW={'550px'}>
+        <Center w={'100%'}>
+        <Box w={'100%'} borderRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16} maxW={['default','550px']}>
           <Tweet
             tweetId={String(url.match(reg)?.at(2))}
             onLoad={() => setIsLoading(false)}
@@ -182,6 +205,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           />
           {isLoading && <Skeleton width={'100%'} rounded={'lg'} height={'200px'} />}
         </Box>
+        </Center>
       )}
 
       {type === 'soundcloud track' && (
@@ -201,6 +225,6 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           }
         </Box>
       )}
-    </>
+      </>
   );
 }

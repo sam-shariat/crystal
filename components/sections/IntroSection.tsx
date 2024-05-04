@@ -410,7 +410,7 @@ export default function IntroSection() {
                     filter: 'blur(20px)',
                     transition: { ease: 'backOut', duration: 0.2 },
                   }}>
-                  <Box as={lightMode ? LightMode : DarkMode}>
+                  <Flex as={lightMode ? LightMode : DarkMode} w={'100%'} flexDir={'column'}>
                     <HStack gap={4}>
                       <Box maxW={notMobile ? '160px' : '100px'}>
                         <Avatar
@@ -466,7 +466,7 @@ export default function IntroSection() {
                         links: links,
                       }}
                     />
-                  </Box>
+                  </Flex>
                 </motion.div>
               </Center>
             </Flex>

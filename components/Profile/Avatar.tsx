@@ -1,8 +1,8 @@
 import { ComponentType, useEffect, useState } from 'react';
 import { Image, ImageProps } from '@chakra-ui/react';
 import { motion, MotionProps } from 'framer-motion';
+import { BaseNftJson } from 'core/utils/nft';
 import axios from 'axios';
-import { BaseNftJson } from 'core/utils/reverse';
 
 const ImageMotion = motion<MotionProps | ImageProps>(Image as ComponentType);
 interface Props {

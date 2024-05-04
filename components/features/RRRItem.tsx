@@ -15,7 +15,7 @@ import { LinkIcon } from 'components/logos';
   export default function RRRItem({ image }: Props) {
     const { colorMode } = useColorMode();
     return (
-        <Center gap={3} border={'none'} rounded={'md'} minW={300} minH={160}>
+        <Center gap={3} border={'2px dashed'} rounded={'md'} minW={300} minH={160}>
             <ImageBox srcUrl={image} rounded='lg' />
         </Center>
     );

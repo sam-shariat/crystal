@@ -40,6 +40,12 @@ import {
   TabPanels,
   TabPanel,
   Input,
+  Modal,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import { useTranslate } from 'core/lib/hooks/use-translate';
 import RaffleAbi from 'abi/RaffleCollection.abi.json';
@@ -92,6 +98,7 @@ import MintSuccessModal from 'components/claiming/MintSuccessModal';
 import Winner from 'components/raffle/Winner';
 import { isValidName } from 'ethers/lib/utils';
 import { checkPrize, reqPrize } from 'core/utils/prize';
+import PrizePool from 'components/raffle/PrizePool';
 
 export default function RRRSection() {
   let timer: any;
@@ -121,14 +128,21 @@ export default function RRRSection() {
   const win = useRef(null);
   const toast = useToast();
   const maxSupply = 2222;
+  let _domains = 0;
+  RAFFLE_WINNERS.map((w) => w.winners.map((wallet) => {
+    if(wallet.tx !== ''){
+      _domains++;
+    }}));
+  const domains = _domains;
   const { scrollYProgress } = useScroll();
+  console.log(scrollYProgress);
   const bg = useMotionValue('#dbdbdb00');
   const bgcolor = useTransform(
     scrollYProgress,
     [0, 1],
     [
-      colorMode === 'light' ? '#13131300' : '#2bb67300',
-      colorMode === 'light' ? '#239960ff' : '#2bb673ff',
+      colorMode === 'light' ? '#ffffff00' : '#ffffff00',
+      colorMode === 'light' ? '#10a9b6ff' : '#10a9b6ff',
     ]
   );
   useAnimationFrame((_t, delta) => {
@@ -555,7 +569,7 @@ export default function RRRSection() {
           __json.address = nftAddress;
           setMinted(true);
           setMintedNft(__json);
-          onOpen();
+          //onOpen();
           toast.closeAll();
         }
         setIsMinting(false);
@@ -594,16 +608,12 @@ export default function RRRSection() {
         minH="90vh"
         py={16}
         pb={0}>
-        <SimpleGrid columns={[1]} gap={10}>
+          
+        <SimpleGrid columns={[1,1,1]} gap={[10,10,10,2]} placeItems={'center'}>
           <GridItem>
-            <Stack px={[4, 4, 6, 10]} gap={12} align={'center'}>
-              <Heading
-                as={'h3'}
-                fontWeight="bold"
-                fontSize={['4xl', '4xl', '5xl', '5xl', '6xl']}
-                textAlign={['center']}>
-                the Radiant Riddle Raffle
-              </Heading>
+            <Stack px={[0, 4, 6]} gap={12} align={'center'}>
+              <Center flexDirection={'column'} p={[4,6,8,16]} rounded={'2xl'} gap={8} w={'100%'}>
+                
               <ImageBox srcUrl="/logos/rrraffle.svg" />
               <Button
                 as={Link}
@@ -611,27 +621,52 @@ export default function RRRSection() {
                 target="_blank"
                 py={4}
                 style={{ textDecoration: 'none' }}
+                pl={1}
+                width={'max-content'}
+                justifyContent={'center'}
+                gap={2}
+                colorScheme={colorMode === 'light' ? 'black' : 'light'}
+                rounded={'full'}
+                variant={'outline'}
+                display={'flex'}
+                height={['48px', '56px']}
+                fontSize={['sm', 'xl']}>
+                  <LinkIcon type='https://ipfs.io/ipfs/QmV66mFU5LaPgczSy3Xbv2Fto5BdjP2TZNLeXztsWkAxgu/New%20Project%20(3).png' size={'md'} />
+                Presented for the VenomTokenForge
+              </Button>
+
+              <Text fontWeight="bold" fontSize={['2xl', '4xl']} textAlign={['center']}>
+              RRRaffle HAS WON
+              <Text
+                  fontWeight={'bold'}
+                  bgGradient={
+                    colorMode === 'light'
+                      ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                      : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                  }
+                  bgClip="text">
+              🏆 THE 12TH PLACE 🏆
+              </Text>
+              </Text>
+              <Button
+                as={Link}
+                href="https://twitter.com/VenomFoundation/status/1783947503592685602"
+                target="_blank"
+                py={4}
+                style={{ textDecoration: 'none' }}
                 px={6}
                 width={'max-content'}
                 justifyContent={'center'}
                 gap={2}
-                colorScheme={colorMode === 'light' ? 'dark' : 'light'}
+                colorScheme={'twitter'}
                 rounded={'full'}
                 variant={'outline'}
-                display={'block'}
+                display={'flex'}
                 height={['48px', '56px']}
                 fontSize={['sm', 'xl']}>
-                Presented for the TokenForge Hackathon
+                  <LinkIcon type='x' />
+                Winner Announcement Post
               </Button>
-              <Text fontWeight="bold" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['center']}>
-                A Lottery NFT Collection featuring{' '}
-                <Text
-                  fontWeight={'bold'}
-                  color={colorMode === 'light' ? 'var(--venom3)' : 'var(--venom0)'}>
-                  {' '}
-                  2,222 items{' '}
-                </Text>
-              </Text>
               <Stack gap={4} align={'center'} w={['100%', '100%', 'md']}>
                 <Button
                   as={Link}
@@ -690,8 +725,9 @@ export default function RRRSection() {
                   </Flex>
                 </Button>
               </Stack>
-            </Stack>
-          </GridItem>
+              </Center>
+              </Stack>
+              </GridItem>
         </SimpleGrid>
       </Container>
       <Container
@@ -787,29 +823,72 @@ export default function RRRSection() {
               )} */}
             </Stack>
           </GridItem>
+          <GridItem>
+          <Stack px={[4, 4, 6]} gap={4} align={'center'} minH={'90vh'} justify={'center'}>
+              <Center flexDirection={'column'} p={[4,6,8,12]} bgColor={colorMode === 'light' ? 'whiteAlpha.800' : 'blackAlpha.700'} rounded={'2xl'} gap={6} w={'100%'} maxW={'container.lg'}>
+              <Heading
+                as={'h3'}
+                fontWeight="bold"
+                fontSize={['4xl','4xl','5xl','6xl']}
+                textAlign={['center']}>
+                <Box as={'span'} color={'pink.400'}>R</Box>adiant <Box as={'span'} color={'pink.500'}>R</Box>iddle <Box as={'span'} color={'pink.500'}>R</Box>affle
+              </Heading>
+              <Text fontWeight="bold" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['center']} py={3}>
+                A Lottery NFT Collection featuring <Box as='span'
+                  fontWeight={'bold'}
+                  color={colorMode === 'light' ? 'var(--venom3)' : 'var(--venom0)'}>
+                  2,222 
+                </Box> Items, Each NFT Offers an opportunity to Win 1 Prize from The Prize Pool
+                
+              </Text>
+              <Stack>
+              <Text
+                fontSize={['2xl', '3xl']}
+                border={'1px solid'}
+                px={6}
+                textAlign={'center'}
+                w={['100%','sm','md']}
+                rounded={'2xl'}>
+                EVERYDAY, FOR 30 DAYS
+              </Text>
+              </Stack>
+              <Stack gap={2} align={'center'} py={2} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'} rounded={'2xl'} fontSize={'lg'} w={['100%','sm','md']}>
+              <Text
+                fontSize={['xl', '2xl']}
+                px={6}
+                fontWeight="bold"
+                py={3}
+                rounded={'2xl'}><strong>
+                {RAFFLE_WINNERS.length} of 30</strong> Raffles Completed
+              </Text>
+              <Center gap={2} borderTop={'1px solid #77777777'} w={'100%'} p={4}><LinkIcon type='venom' size={32}/> {RAFFLE_WINNERS.length * 40} of 1200 $VENOM Airdropped</Center>
+              <Center gap={2} borderTop={'1px solid #77777777'} w={'100%'} p={4}><LinkIcon type='venomid' size={22}/> {domains} of 210 .venom domains Sent</Center>
+              </Stack>
+              <Button colorScheme='venom' onClick={onOpen} size={'lg'} variant={'solid'} w={['100%','sm','md']} height={'64px'} fontSize={'2xl'}><Center bg={colorMode === 'dark' ? 'blackAlpha.800':'white'} bgClip={'text'} gap={3}><Text > 🏆 </Text>Winners Table <Text> 🏆 </Text></Center></Button>
+              <PrizePool />
+              </Center>
+              
+            </Stack>
+          </GridItem>
         </SimpleGrid>
       </Container>
 
-      <Container
-        maxW="container.xl"
-        display="grid"
-        placeContent="center"
-        placeItems="center"
-        py={16}>
-        <Flex direction={'column'} gap={[16, 12, 10]} w={'100%'}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={'full'}>
+        <ModalOverlay bg="blackAlpha.700" backdropFilter="auto" backdropBlur={'6px'} />
+        <ModalContent bg={colorMode === 'light' ? 'var(--white)' : 'var(--dark1)'}>
+          <ModalHeader textAlign={'center'} display={'flex'} gap={2} justifyContent={'center'} fontSize={['2xl','3xl']}>
+            🏆 Winners Table 🏆<ModalCloseButton /></ModalHeader>
+          <ModalBody display={'flex'} justifyContent={'center'} alignContent={'center'} w={'100%'}>
+        
+     
+        <Flex direction={'column'} gap={[16, 12, 10]} w={'100%'} >
           <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
-            <Text>Next Raffle</Text>
+            <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              May 2nd 23:59 UTC{' '}
-            </Text>
-            <Text
-              w={'100%'}
-              fontSize={'xl'}
-              p={4}
-              rounded={'2xl'}
-              bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
-              Winners of each daily raffle will be updated on this table and will be available for
-              all 30 days.
+              May 4th 23:59 UTC{' '}
             </Text>
             {mints !== null && mints > 0 && (
               <Flex
@@ -939,7 +1018,10 @@ export default function RRRSection() {
               </Flex>
             )}
           </Flex>
-          <Text fontSize={'2xl'}>Previous Raffles</Text>
+          <Text fontSize={'2xl'} 
+              p={4}
+              rounded={'2xl'}
+              bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>Previous Raffles</Text>
           <Flex gap={3} direction={'column'} w={'100%'}>
             <Tabs
               colorScheme="green"
@@ -973,12 +1055,12 @@ export default function RRRSection() {
                     </Text>
                     <Table
                       variant="simple"
-                      bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}
+                      bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.400'}
                       fontSize={['lg', 'lg', 'xl']}
                       rounded={'xl'}
                       p={[2,3,4,5,6]}
                       px={[0,2,4,6]}
-                      w={['sm','md','100%']}>
+                      w={['100%']}>
                       {/* {day.txs.length > 0 && (
                         <TableCaption>
                           40 VENOMs prize has been sent to the winner{' '}
@@ -1017,8 +1099,11 @@ export default function RRRSection() {
             </Tabs>
           </Flex>
         </Flex>
+      </ModalBody>
+      </ModalContent>
+      </Modal>
 
-        {mintedNft && (
+      {/* mintedNft && (
           <MintSuccessModal
             address={String(mintedNft?.address)}
             image={String(mintedNft?.preview?.source)}
@@ -1026,84 +1111,8 @@ export default function RRRSection() {
             open={isOpen}
             _onClose={onClose}
           />
-        )}
-      </Container>
-
-      <Container
-        maxW="container.xl"
-        display="grid"
-        placeContent="center"
-        placeItems="center"
-        minH="100vh"
-        pb={16}>
-        <SimpleGrid columns={[1]} gap={10}>
-          <GridItem
-            display={'flex'}
-            justifyContent={'center'}
-            bg={colorMode === 'light' ? 'whiteAlpha.800' : 'blackAlpha.600'}
-            rounded={'2xl'}
-            border={'1px solid #77777750'}>
-            <Stack px={[4, 4, 6, 10]} py={12} textAlign={'center'}>
-              <Text fontWeight="bold" fontSize={['2xl']} textAlign={['center']} py={2}>
-                Each NFT Offers an exciting opportunity
-              </Text>
-              <Text
-                fontWeight="bold"
-                fontSize={['4xl', '5xl']}
-                color={colorMode === 'light' ? 'black' : 'white'}>
-                🎁 To Win 🎁
-              </Text>
-              <Text fontWeight="bold" fontSize={['2xl', '3xl']} textAlign={['center']}>
-                1 Prize from The Pool
-              </Text>
-
-              <Text
-                fontWeight="bold"
-                fontSize={['5xl', '6xl']}
-                bgGradient={'linear(to-r, var(--venom1), var(--bluevenom1))'}
-                bgClip={'text'}
-                textAlign={['center']}>
-                EVERYDAY
-              </Text>
-              <Text fontWeight="bold" fontSize={['4xl', '5xl']} textAlign={['center']}>
-                FOR 30 DAYS
-              </Text>
-              <SimpleGrid columns={[1, 1, 1, 2]} gap={6} py={6}>
-                <Prize
-                  name={'3-letter .venom domains'}
-                  value="$2400"
-                  icon={<Logo w={notMobile ? '76px' : '38px'} h={notMobile ? '60px' : '30px'} />}
-                  number={30}
-                />
-                <Prize
-                  name={'4-letter .venom domains'}
-                  value="$2400"
-                  icon={<Logo w={notMobile ? '76px' : '38px'} h={notMobile ? '60px' : '30px'} />}
-                  number={60}
-                />
-                <Prize
-                  name={'5-letter .venom domains'}
-                  value="$400"
-                  icon={<Logo w={notMobile ? '76px' : '38px'} h={notMobile ? '60px' : '30px'} />}
-                  number={90}
-                />
-                <Prize
-                  name={'40 $VENOM Tokens'}
-                  value="$600"
-                  icon={<LinkIcon type="venom" size={notMobile ? 76 : 38} />}
-                  number={30}
-                />
-              </SimpleGrid>
-              <Text fontWeight="bold" fontSize={['xl', '3xl']} textAlign={['center']}>
-                🪙 Total Prize Pool Value: ~$6,000 🪙
-              </Text>
-              <Text fontWeight="bold" fontSize={['xl']} textAlign={['center']} pt={8}>
-                Items from this collection can be used as wallpaper images on the Venom ID platform
-              </Text>
-            </Stack>
-          </GridItem>
-        </SimpleGrid>
-      </Container>
+        )*/}
+      
       <Container
         ref={win}
         maxW="container.xl"
@@ -1124,7 +1133,7 @@ export default function RRRSection() {
                 borderBottom={'2px solid'}
                 fontSize={['4xl', '4xl', '5xl', '5xl', '6xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
-                Utility
+                Utility 
               </Heading>
               <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
                 <li>Daily raffles with mentioned prizes for 30 days to random NFT holders</li>
@@ -1151,21 +1160,18 @@ export default function RRRSection() {
                 borderBottom={'2px solid'}
                 fontSize={['4xl', '4xl', '5xl', '5xl', '6xl']}
                 textAlign={['center', 'center', 'center', 'left']}>
-                FAQ
+                FAQ 
               </Heading>
 
               <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
-                <li>Free For Venom ID Owners!</li>
+                <li>If you are among the .venom domain winners, you will be asked to input your desired domain and we will register it to your wallet (No Fee Required)!</li>
               </Text>
 
               <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
-                <li>1 VENOM For Public Minting, 2 Per Wallet</li>
+                <li>If you are among the 40 VENOM token winners, your prize will be airdropped to your wallet!</li>
               </Text>
               <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
-                <li>Rewards will be distributed after all Items are minted </li>
-              </Text>
-              <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
-                <li>Winners will be selected publicly and visible in this page everyday </li>
+                <li>All Previous Winners are/will be visible on this page until 1st august ( Winners Table above )</li>
               </Text>
               <Text fontWeight="normal" fontSize={['xl', 'xl', '2xl', '2xl']} textAlign={['left']}>
                 <li>Stay tuned for more details as we provide updates!</li>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { truncAddress } from './stringUtils';
-import { MAX_NAME_LENGTH, MIN_NAME_LENGTH } from './constants';
+import { MAX_NAME_LENGTH, MIN_NAME_LENGTH, SOCIAL_URLS } from './constants';
 import { BaseNftJson } from './reverse';
 //import crypto from 'crypto';
 
@@ -277,6 +277,26 @@ const getIconInButtonColor = (variant: string, buttonBg: string, lightMode: bool
   return colorString;
 };
 
+const getUrl = (type: string, url: string): string => {
+  switch (type) {
+    case 'email':
+    case 'phone':
+    case 'skype':
+      return url.includes(SOCIAL_URLS[type]) ? url : SOCIAL_URLS[type] + url;
+
+    case 'substack':
+    case 'slack':
+      return url.includes(SOCIAL_URLS[type].slice(0, -1))
+        ? withHttps(url)
+        : withHttps(url + '.' + SOCIAL_URLS[type]);
+
+    default:
+      return url.includes(SOCIAL_URLS[type].slice(0, -1))
+        ? withHttps(url)
+        : withHttps(SOCIAL_URLS[type] + url);
+  }
+};
+
 const getRandomNumber = (min: number, max: number) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -374,6 +394,7 @@ export {
   sleep,
   isValidEmail,
   capFirstLetter,
+  getUrl,
   arrayRemove,
   arrayRemoveDuplicates,
   isValidUsername,
