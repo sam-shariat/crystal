@@ -9,11 +9,12 @@ import {
   Stack,
   useMediaQuery,
   useDisclosure,
+  Avatar,
 } from '@chakra-ui/react';
 import { LinkIcon, Logo } from 'components/logos';
 import { connectedAccountAtom, venomProviderAtom } from 'core/atoms';
-import { truncAddress } from 'core/utils';
-import { VENOMSCAN_NFT, VENOMSCAN_TX } from 'core/utils/constants';
+import { sleep, truncAddress } from 'core/utils';
+import { AVATAR_API_URL, VENOMSCAN_NFT, VENOMSCAN_TX } from 'core/utils/constants';
 import { lookupNames } from 'core/utils/reverse';
 import { useAtomValue } from 'jotai';
 import React, { useEffect, useState } from 'react';
@@ -35,6 +36,7 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
   const [_name, setName] = useState(owner);
 
   const getOwnerName = async () => {
+    await sleep(300); 
     const _name = await lookupNames(provider, owner);
     console.log(_name);
     if (_name.length > 0) setName(_name[0]);
@@ -53,8 +55,8 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
           <>
             {prize.includes('VENOM') ? (
               <LinkIcon type="venom" color="#2bb673" />
-            ) : (
-              <Logo w={'35px'} h={'26px'} />
+            ) : prize.includes('PUNK') ? (<LinkIcon type="https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png" size={'md'} />
+          ) : (<Logo w={'35px'} h={'26px'} />
             )}
           </>
         )}
@@ -103,12 +105,21 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
           aria-label={`winner-${prize}-tooltip`}>
           <Tag
             px={3}
+            pl={_name.includes('.venom') ? 1 : 3}
             py={1}
+            gap={2}
             rounded={'full'}
             textAlign={'center'}
             fontSize={!small ? 'md' : ['lg', 'xl']}
             as={Link} style={{ textDecoration: 'none' }} href={VENOMSCAN_NFT + owner} target="_blank"
             fontWeight={'bold'}>
+              {_name.includes('.venom') && <Avatar
+                    
+                    icon={<LinkIcon type="RiUserLine" size={22} color="#ffffff" />}
+                    rounded={'full'}
+                    src={AVATAR_API_URL + _name + '&v='+Math.random()}
+                    size={['md']}
+                  />}
             <Text
               bgGradient={
                 lightMode

@@ -15,6 +15,7 @@ import {
   Collapse,
   Heading,
   useMediaQuery,
+  Center,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import {
@@ -93,6 +94,31 @@ export default function CommunitySection() {
             <Flex flexDirection={'column'} w={'100%'} gap={6} my={12}>
               {/* <MintNft /> */}
               <EarlyAdopters />
+              <Button
+                w={'100%'}
+                h={['288px','288px','220px']}
+                size={'lg'}
+                as={Link}
+                style={{ textDecoration: 'none' }}
+                href={'winners/punks-avatar-challenge'}
+                target="_blank"
+                gap={6}
+                flexDir={['column','column','row']}
+                justifyContent={['center', 'center']}>
+                <ImageBox srcUrl='screens/punksavatarchallenge.png' rounded='2xl'/>
+
+                  <Stack textAlign={['center','center','left']}>
+                
+                <Text bgGradient={
+                    colorMode === 'light'
+                      ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                      : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                  }
+                  bgClip="text" fontSize={'2xl'} fontWeight={'bold'}>Image Avatar Challenge</Text>
+                <Text> With Venom-Punks.com</Text>
+                <Text >Winners Announced</Text>
+                </Stack>
+              </Button>
               <Button
                 w={'100%'}
                 h={['220px', '220px', '160px']}

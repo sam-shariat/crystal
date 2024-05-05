@@ -626,7 +626,7 @@ export default function EarlyAdopters() {
 
     //checkOwnVid();
     //checkOwnVidVen();
-    checkMinteds();
+    //checkMinteds();
   }, [provider, connectedAccount]);
 
   return (
@@ -881,8 +881,7 @@ export default function EarlyAdopters() {
               gap={2}
               rounded={'lg'}
               fontSize={'xl'}>
-              📢 The Venom ID Early Adopter program is closed on venom testnet. <br/>🎉 Congratulations to all our early adopters! 
-              <br/><br/>If you missed the chance, don't worry. There will be more opportunities coming your way on mainnet. Remember, we are still in the early stages. Stay tuned for exciting updates!
+              📢 The Venom ID Early Adopter program is opening on June 2024
             </Flex>
              {/* {minteds && minteds?.length > 0 && <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>}
             {earlyAdopterContract?.methods && <>

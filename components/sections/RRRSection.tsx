@@ -133,7 +133,7 @@ export default function RRRSection() {
     if(wallet.tx !== ''){
       _domains++;
     }}));
-  const domains = _domains;
+  const domains = _domains - RAFFLE_WINNERS.length;
   const { scrollYProgress } = useScroll();
   console.log(scrollYProgress);
   const bg = useMotionValue('#dbdbdb00');
@@ -864,69 +864,18 @@ export default function RRRSection() {
               <Center gap={2} borderTop={'1px solid #77777777'} w={'100%'} p={4}><LinkIcon type='venom' size={32}/> {RAFFLE_WINNERS.length * 40} of 1200 $VENOM Airdropped</Center>
               <Center gap={2} borderTop={'1px solid #77777777'} w={'100%'} p={4}><LinkIcon type='venomid' size={22}/> {domains} of 210 .venom domains Sent</Center>
               </Stack>
-              <Button colorScheme='venom' onClick={onOpen} size={'lg'} variant={'solid'} w={['100%','sm','md']} height={'64px'} fontSize={'2xl'}><Center bg={colorMode === 'dark' ? 'blackAlpha.800':'white'} bgClip={'text'} gap={3}><Text > 🏆 </Text>Winners Table <Text> 🏆 </Text></Center></Button>
-              <PrizePool />
-              </Center>
-              
-            </Stack>
-          </GridItem>
-        </SimpleGrid>
-      </Container>
 
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        size={'full'}>
-        <ModalOverlay bg="blackAlpha.700" backdropFilter="auto" backdropBlur={'6px'} />
-        <ModalContent bg={colorMode === 'light' ? 'var(--white)' : 'var(--dark1)'}>
-          <ModalHeader textAlign={'center'} display={'flex'} gap={2} justifyContent={'center'} fontSize={['2xl','3xl']}>
-            🏆 Winners Table 🏆<ModalCloseButton /></ModalHeader>
-          <ModalBody display={'flex'} justifyContent={'center'} alignContent={'center'} w={'100%'}>
-        
-     
-        <Flex direction={'column'} gap={[16, 12, 10]} w={'100%'} >
-          <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
-            <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
-            <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              May 4th 23:59 UTC{' '}
-            </Text>
-            {mints !== null && mints > 0 && (
+              {won && (
               <Flex
                 gap={3}
-                w={['100%', '100%']}
-                fontSize={['lg', 'lg', 'xl', '2xl']}
-                p={3}
-                h={'80px'}
-                justify={'center'}
-                align={'center'}
-                textAlign={'center'}
-                bgColor={colorMode === 'light' ? 'white' : 'whiteAlpha.200'}
-                rounded={'lg'}>
-                You own {mints} RRRaffle(s)!
-              </Flex>
-            )}
-
-            {/* <Text
-              fontSize={'xl'}
-              p={4}
-              rounded={'2xl'}
-              bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
-              <strong>Note : </strong>Domain Winners of first round will be able to choose their
-              preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be
-              updated )
-            </Text> */}
-
-            {won && (
-              <Flex
-                gap={3}
-                w={['100%', '100%']}
+                w={['100%','sm','md']}
                 fontSize={['lg', 'lg', 'xl']}
                 p={4}
                 justify={'center'}
                 align={'center'}
                 direction={'column'}
                 textAlign={'center'}
-                bgColor={colorMode === 'light' ? 'white' : 'whiteAlpha.200'}
+                bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.400'}
                 rounded={'lg'}>
                 <Text>🎁 You have won 🎁 </Text>
                 <Text>
@@ -1017,6 +966,60 @@ export default function RRRSection() {
                 )}
               </Flex>
             )}
+
+              <Button colorScheme='venom' onClick={onOpen} size={'lg'} variant={'solid'} w={['100%','sm','md']} height={'64px'} fontSize={'2xl'}><Center bg={colorMode === 'dark' ? 'blackAlpha.800':'white'} bgClip={'text'} gap={3}><Text > 🏆 </Text>Winners Table <Text> 🏆 </Text></Center></Button>
+              <PrizePool />
+              </Center>
+              
+            </Stack>
+          </GridItem>
+        </SimpleGrid>
+      </Container>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size={'full'}>
+        <ModalOverlay bg="blackAlpha.700" backdropFilter="auto" backdropBlur={'6px'} />
+        <ModalContent bg={colorMode === 'light' ? 'var(--white)' : 'var(--dark1)'}>
+          <ModalHeader textAlign={'center'} display={'flex'} gap={2} justifyContent={'center'} fontSize={['2xl','3xl']}>
+            🏆 Winners Table 🏆<ModalCloseButton /></ModalHeader>
+          <ModalBody display={'flex'} justifyContent={'center'} alignContent={'center'} w={'100%'}>
+        
+     
+        <Flex direction={'column'} gap={[16, 12, 10]} w={'100%'} >
+          <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
+            <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
+            <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
+              May 5th 23:59 UTC{' '}
+            </Text>
+            {mints !== null && mints > 0 && (
+              <Flex
+                gap={3}
+                w={['100%', '100%']}
+                fontSize={['lg', 'lg', 'xl', '2xl']}
+                p={3}
+                h={'80px'}
+                justify={'center'}
+                align={'center'}
+                textAlign={'center'}
+                bgColor={colorMode === 'light' ? 'white' : 'whiteAlpha.200'}
+                rounded={'lg'}>
+                You own {mints} RRRaffle(s)!
+              </Flex>
+            )}
+
+            {/* <Text
+              fontSize={'xl'}
+              p={4}
+              rounded={'2xl'}
+              bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
+              <strong>Note : </strong>Domain Winners of first round will be able to choose their
+              preferred domain name on this page on April 23rd 22:00 UTC. ( this page will be
+              updated )
+            </Text> */}
+
+            
           </Flex>
           <Text fontSize={'2xl'} 
               p={4}
