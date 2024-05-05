@@ -35,7 +35,7 @@ const Contest: NextPage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={des} />
-        <meta name="twitter:image" content={`${SITE_URL}/ogs/rafffle.jpg`} />
+        <meta name="twitter:image" content={`${SITE_URL}/ogs/${contest}`} />
         <meta name="og:title" content={title} />
         <meta name="og:description" content={des} />
         <meta name="og:image" content={`${SITE_URL}/ogs/${contest}`} />
