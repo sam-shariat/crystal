@@ -1495,7 +1495,7 @@ export const WINNERS_AVATAR_CHALLENGE = [
     name: '',
   },
   {
-    owner: '0:29d3b29b08f4d50c35b4f032217a0ca5ac76f23ae0cd7519861483b6fea897c4',
+    owner: '0:c3b482ae29606c6f02df534279cb92cdb0a59268a648d2865472abc773af15b5',
     prize: '5-char domain',
     tx: '',
     name: '',
