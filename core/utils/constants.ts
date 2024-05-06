@@ -1413,7 +1413,107 @@ export const RAFFLE_WINNERS = [
       },
     ],
   },
+  {
+    date: 'May 4th',
+    day: 13,
+    txs: ['1ce8cd9d8c6c1fafc21f997413dc25cb36125cf47da24bb84fda84a11586ebc5'],
+    winners: [
+      {
+        owner: '0:e7933da162e4539563edfef9495ac3fb6ed39e7ca85defcccae6503e50b53cbb',
+        prize: '40 VENOMS',
+        tx: '1ce8cd9d8c6c1fafc21f997413dc25cb36125cf47da24bb84fda84a11586ebc5',
+        name: '',
+      },
+      {
+        owner: '0:74917062452044fa9068e94480a518c5fc0febca3435857a73c7128f5ff74820',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:e3777a263643bf940196fd856e432ae2be7b11e5c26ddff1620637e4a6d3ac16',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:203703a6a3c2747a1bde8444287d235bc1e0812ad9ef114b666190ff06e3d1c2',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:b4f4f5f37873a5f7afda4c8b84feadcd6941acbe7eab538e0258d6cb68e4c4d0',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:b6b33d4631523d0504787202a4b67c9f7a1674612f1e4c9f3ddbbdf68c99063e',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:16d1e4c13934f92a4f1522229c4f2774dd43f81feefb0faa69a5ffb1f81d6f40',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
+  },
+  {
+    date: 'May 5th',
+    day: 14,
+    txs: ['a92c893018248a85c67ada46a15d24d238f68e6ce3caf4fb90aacb32cc3dbd00'],
+    winners: [
+      {
+        owner: '0:107e86f498d4c7be5d86548c50767c79e66a9e92912f27b2bc458b709a30d79c',
+        prize: '40 VENOMS',
+        tx: 'a92c893018248a85c67ada46a15d24d238f68e6ce3caf4fb90aacb32cc3dbd00',
+        name: '',
+      },
+      {
+        owner: '0:0472b2b7dbb0bb245ac0d855674addd3a2b14b5f9648225879d94be1fbda4861',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:a18a50590d5a60f0275ff0dd24f895a99a5d351ec69970aea55a243995df7204',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:cae2624e38257b0161691a68329ac6d4d7680e14de4c698c71e9a8e5c381c06e',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:e11c5ddc734873f3c101fe7923cddd27d1c714d1cdbc4a2a35f7e3edd8aecf61',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:5bc6784c9f15c41118c2c926ff0aaa5823fc3df87cbc142028023e8c1f5556b8',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:65ec578190fe0ca030b4ac15ad6d31f4e9d6c192b2571e08482a7978d2e62a38',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
+  }
+  
 ];
+
 
 export const SOCIAL_URLS: any = {
   twitter: 'twitter.com/',

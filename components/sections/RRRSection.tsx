@@ -991,7 +991,7 @@ export default function RRRSection() {
           <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
             <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              May 5th 23:59 UTC{' '}
+              May 6th 23:59 UTC{' '}
             </Text>
             {mints !== null && mints > 0 && (
               <Flex
