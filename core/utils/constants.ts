@@ -1541,7 +1541,7 @@ export const RAFFLE_WINNERS = [
         name: '',
       },
       {
-        owner: '0:d76b2c338ae8c614b9264b338d527c994d8e82a7c13690bf2300a313bff76b4e',
+        owner: '0:54bd8f629133336e80a42cafee7555e2638a980ac11e9f3251210ba98b1aa58c',
         prize: '5-char domain',
         tx: '',
         name: '',
