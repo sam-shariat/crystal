@@ -1237,8 +1237,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:a050600f516251c75a9dafd15c65ce3d9bb06b34f8644f391bbca3c501dfda19',
         prize: '4-char domain',
-        tx: '',
-        name: '',
+        tx: '0:775e185097803b61563f4b0d789842cd59202de75bbfeafe0e12e3a4cf1ffad8',
+        name: '7777.venom',
       },
       {
         owner: '0:56cb4d8fe48ebef61a635806acfc87a9e8b810c969748f75743e8838ab3c08aa',
@@ -1510,9 +1510,66 @@ export const RAFFLE_WINNERS = [
         name: '',
       },
     ],
+  },
+  {
+    date: 'May 6th',
+    day: 14,
+    txs: ['57e1c396b07ec1a1e59b4514ba92409ac301a56597fe8ecb85aaa99e5c990e53'],
+    winners: [
+      {
+        owner: '0:8ed63343f2cf0d4064b8ea2498cbe8d7d0858ae97d172e73c8b0bd3255192510',
+        prize: '40 VENOMS',
+        tx: '57e1c396b07ec1a1e59b4514ba92409ac301a56597fe8ecb85aaa99e5c990e53',
+        name: '',
+      },
+      {
+        owner: '0:3c44b265031539b92af98c2c3b4db3bf64d0f696fd6099552d8b8011d5ebb4f7',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:869b427caf160c973e4b3353396d0593e9f1168b1f181eab650cbde398dc7353',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:42266e99cc007b523544eee5cb9be8d20f2082c0b9d62b9aaf60034ce2b73deb',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:d76b2c338ae8c614b9264b338d527c994d8e82a7c13690bf2300a313bff76b4e',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:982f2a2d2a57a0c215f0368497d44182eb0d21ecb5be89ff43d5aade7bf116c0',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:32f4bcf5ed33f6084018aabeb1fcf6d5751c7a1f02c6bd1813edb7c38f0b9197',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
   }
   
 ];
+
+
+
+
+
+
+
+
 
 
 export const SOCIAL_URLS: any = {
