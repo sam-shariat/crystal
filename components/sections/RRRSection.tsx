@@ -737,10 +737,10 @@ export default function RRRSection() {
         display="grid"
         placeContent="center"
         placeItems="center"
-        py={16}>
-        <SimpleGrid columns={[1]} gap={10} px={0}>
+        pb={16}>
+        <SimpleGrid columns={[1]} gap={10} px={0} >
           <GridItem>
-            <Stack px={0} gap={12} align={'center'}>
+            <Stack px={0} gap={12} align={'center'} py={20}>
               <Flex minW={'100%'} width={'100%'} flexDirection={'column'} gap={[8]}>
                 <Parallax baseVelocity={-0.5}>
                   <Flex gap={[4, 6, 8]} pr={[2, 3, 4]}>
@@ -991,7 +991,7 @@ export default function RRRSection() {
           <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
             <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              May 8th 23:59 UTC{' '}
+              May 9th 23:59 UTC{' '}
             </Text>
             {mints !== null && mints > 0 && (
               <Flex
