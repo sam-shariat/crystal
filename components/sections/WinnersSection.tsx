@@ -349,7 +349,7 @@ export default function WinnersSection({ challenge }: WinnersProps) {
                     Winners Announced
                   </Text>
                   <Center gap={2} borderTop={'1px solid #77777777'} w={'100%'} p={4}>
-                    <LinkIcon type="https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png" size={'md'} /> 0 of 10 PUNK NFTS Airdropped
+                    <LinkIcon type="https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png" size={'md'} /> 10 of 10 PUNK NFTS Airdropped
                   </Center>
                   <Center gap={2} borderTop={'1px solid #77777777'} w={'100%'} p={4}>
                     <LinkIcon type="venomid" size={22} /> {domains} of 30 .venom domains Sent
