@@ -40,6 +40,7 @@ import ImageBox from 'components/claiming/ImageBox';
 import EarlyAdopters from 'components/early/EarlyAdopters';
 import ContributionSection from 'components/contribution/ContributionSection';
 import MintNft from 'components/early/MintNft';
+import NextLink from 'next/link';
 
 export default function CommunitySection() {
   const { colorMode } = useColorMode();
@@ -98,10 +99,9 @@ export default function CommunitySection() {
                 w={'100%'}
                 h={['288px','288px','220px']}
                 size={'lg'}
-                as={Link}
+                as={NextLink}
                 style={{ textDecoration: 'none' }}
                 href={'winners/punks-avatar-challenge'}
-                target="_blank"
                 gap={6}
                 flexDir={['column','column','row']}
                 justifyContent={['center', 'center']}>
