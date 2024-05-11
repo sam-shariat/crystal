@@ -1805,7 +1805,6 @@ export const RAFFLE_WINNERS = [
       },
     ],
   }
-  
 ];
 
 
