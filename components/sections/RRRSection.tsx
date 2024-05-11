@@ -982,18 +982,15 @@ export default function RRRSection() {
         size={'full'}>
         <ModalOverlay bg="blackAlpha.700" backdropFilter="auto" backdropBlur={'6px'} />
         <ModalContent bg={colorMode === 'light' ? 'var(--white)' : 'var(--dark1)'}>
-          <ModalHeader textAlign={'center'} display={'flex'} gap={2} justifyContent={'center'} fontSize={['2xl','3xl']}>
+          <ModalHeader textAlign={'center'} display={'flex'} gap={2} justifyContent={'center'} fontSize={['2xl','3xl']} py={12}>
             🏆 Winners Table 🏆<ModalCloseButton /></ModalHeader>
           <ModalBody display={'flex'} justifyContent={'center'} alignContent={'center'} w={'100%'}>
         
      
         <Flex direction={'column'} gap={[16, 12, 10]} w={'100%'} >
           <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
-            <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
-            <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              May 12th 23:59 UTC{' '}
-            </Text>
-            {mints !== null && mints > 0 && (
+
+          {mints !== null && mints > 0 && (
               <Flex
                 gap={3}
                 w={['100%', '100%']}
@@ -1008,6 +1005,12 @@ export default function RRRSection() {
                 You own {mints} RRRaffle(s)!
               </Flex>
             )}
+            
+            <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
+            <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
+              May 12th 23:59 UTC{' '}
+            </Text>
+            
 
             {/* <Text
               fontSize={'xl'}
@@ -1021,10 +1024,7 @@ export default function RRRSection() {
 
             
           </Flex>
-          <Text fontSize={'2xl'} 
-              p={4}
-              rounded={'2xl'}
-              bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>Previous Raffles</Text>
+          <Text fontSize={'2xl'} >Previous Raffles</Text>
           <Flex gap={3} direction={'column'} w={'100%'}>
             <Tabs
               colorScheme="green"
@@ -1045,7 +1045,7 @@ export default function RRRSection() {
                 }}>
                 {RAFFLE_WINNERS.map((day, i) => (
                   <Tab fontWeight={'bold'} key={'tab-prize-' + day.date + '-' + i} flexShrink={0}>
-                    {day.date}
+                    {day.day}
                   </Tab>
                 ))}
               </TabList>
@@ -1053,9 +1053,17 @@ export default function RRRSection() {
               <TabPanels>
                 {RAFFLE_WINNERS.map((day, i) => (
                   <TabPanel key={'tab-panel-prize-' + day.date + '-' + i} px={0}>
-                    <Text fontSize={'2xl'} py={4}>
-                      Winners of {day.date} prizes
-                    </Text>
+                    <Center display={'flex'} justifyContent={'left'} gap={3} fontSize={'3xl'} p={4} py={8}>
+                      Winners of <Text
+                      fontSize={'3xl'}
+                  fontWeight={'bold'}
+                  bgGradient={
+                    colorMode === 'light'
+                      ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
+                      : 'linear(to-r, var(--venom0), var(--bluevenom0))'
+                  }
+                  bgClip="text">{day.date}</Text>
+                    </Center>
                     <Table
                       variant="simple"
                       bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.400'}
