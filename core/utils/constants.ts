@@ -1563,12 +1563,12 @@ export const RAFFLE_WINNERS = [
   {
     date: 'May 7th',
     day: 16,
-    txs: [''],
+    txs: ['b39b39de8bd9a713760fb5bc3bb444d23cfbd177a8c48e3909f14f59a517bc19'],
     winners: [
       {
         owner: '0:399105551b960a0d42128d2dfe893260519c29df49818da68f22bb3566676fb8',
         prize: '40 VENOMS',
-        tx: '',
+        tx: 'b39b39de8bd9a713760fb5bc3bb444d23cfbd177a8c48e3909f14f59a517bc19',
         name: '',
       },
       {
@@ -1612,12 +1612,12 @@ export const RAFFLE_WINNERS = [
   {
     date: 'May 8th',
     day: 17,
-    txs: [''],
+    txs: ['be7e463c9a9bc004709543a52af883090ba14462ff86aa4502b5e01e3965bae2'],
     winners: [
       {
         owner: '0:c9d3cf47d5e200c98ccf7b775ec73f640cf90e1eae8f212d15e36d37e4a42d32',
         prize: '40 VENOMS',
-        tx: '',
+        tx: 'be7e463c9a9bc004709543a52af883090ba14462ff86aa4502b5e01e3965bae2',
         name: '',
       },
       {
@@ -1661,12 +1661,12 @@ export const RAFFLE_WINNERS = [
   {
     date: 'May 9th',
     day: 18,
-    txs: [''],
+    txs: ['63ed95638e9fb77331e2223b0942968b51ac3744611bcd2032dbf1fe9990fdc8'],
     winners: [
       {
         owner: '0:1f999757deaee3082de3558b0e0f0640f39390fb871a806220590240fe206b02',
         prize: '40 VENOMS',
-        tx: '',
+        tx: '63ed95638e9fb77331e2223b0942968b51ac3744611bcd2032dbf1fe9990fdc8',
         name: '',
       },
       {
@@ -1710,12 +1710,12 @@ export const RAFFLE_WINNERS = [
   {
     date: 'May 10th',
     day: 19,
-    txs: [''],
+    txs: ['ea77c81d064f240d2df5853ae76c6f816f06f84b2d2bb23d11d699aebbb02634'],
     winners: [
       {
         owner: '0:3601e9bd7042cf51a1271208b7667e38bcefebcb8f9fe217b872e9a4a4674822',
         prize: '40 VENOMS',
-        tx: '',
+        tx: 'ea77c81d064f240d2df5853ae76c6f816f06f84b2d2bb23d11d699aebbb02634',
         name: '',
       },
       {
@@ -1759,12 +1759,12 @@ export const RAFFLE_WINNERS = [
   {
     date: 'May 11th',
     day: 20,
-    txs: [''],
+    txs: ['0bc3076fb8a7285a2f6f10df14c0f3741b6a636f58e22b9cf417e4828cf2dcfc'],
     winners: [
       {
         owner: '0:58708285eeb4e8b6f99865437c9553b5f68ee118ebaebed90542d17bdc25842d',
         prize: '40 VENOMS',
-        tx: '',
+        tx: '0bc3076fb8a7285a2f6f10df14c0f3741b6a636f58e22b9cf417e4828cf2dcfc',
         name: '',
       },
       {
