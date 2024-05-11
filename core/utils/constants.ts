@@ -1513,7 +1513,7 @@ export const RAFFLE_WINNERS = [
   },
   {
     date: 'May 6th',
-    day: 14,
+    day: 15,
     txs: ['57e1c396b07ec1a1e59b4514ba92409ac301a56597fe8ecb85aaa99e5c990e53'],
     winners: [
       {
@@ -1559,17 +1559,254 @@ export const RAFFLE_WINNERS = [
         name: '',
       },
     ],
+  },
+  {
+    date: 'May 7th',
+    day: 16,
+    txs: [''],
+    winners: [
+      {
+        owner: '0:399105551b960a0d42128d2dfe893260519c29df49818da68f22bb3566676fb8',
+        prize: '40 VENOMS',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:e99d4a326f90e24edc7e76c6e4a3e8849dbe4b1178b8a3bfa93c4cf9fa3f955e',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:e5b05b2b7b6bbb32cabef8155a6fd68276c8bae633db5a2359b0011fbe7df4a4',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:995f60a4dbe426b2a2762312d216eebd190abc8c175c7265f92c297e051217a4',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:eac96499b3c3e1a48754eadbad2d87fd3045e6960693191e277bd9e241389ef5',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:4cd2c8ef07afdbcf701a5e39e53ce75bb466f300ce9084cb85d33c716b4f30dc',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:14d7aae23c0b9abd969f3104840d6b35271925a54e9ea91b7f16939e5f055b83',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
+  },
+  {
+    date: 'May 8th',
+    day: 17,
+    txs: [''],
+    winners: [
+      {
+        owner: '0:c9d3cf47d5e200c98ccf7b775ec73f640cf90e1eae8f212d15e36d37e4a42d32',
+        prize: '40 VENOMS',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:7ea3372b6ff546d8a2ae82e7ba67edec9fe0a58971cd49a36f787cb282ef505a',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:5711679296a7c70b4b5252ce70c3dd30e17a0ba29fae293dacc389ddbe638a97',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:7db4b10c1f3ab8cb8c19426eeb8b8a10c5a04e53434ed9d98de786be38fc01fd',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:f76421fcc23426bcaf0cf8071b4f90858acc26961f13a8e32af8b337bd6b1558',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:6df28067b1aa9b875c7b0981e743599142fd4ccfb1b0894b367c0e097f0d28cb',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:6ec8c37cd8e3cd397484b35692e5ada59591fbbe3ac97de6ebe128295d967cf7',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
+  },
+  {
+    date: 'May 9th',
+    day: 18,
+    txs: [''],
+    winners: [
+      {
+        owner: '0:1f999757deaee3082de3558b0e0f0640f39390fb871a806220590240fe206b02',
+        prize: '40 VENOMS',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:a60885229dadfc9ba9873b25df7e1b3e5935fc08bd896147dde7ad7ea735a173',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:ec1adc7a910b21b261da24c7d8e33dc9f0f070ae40bc2798d8e048ceb3e3588b',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:ef14372b8d6a0fb2727e8acba00a0fe44b5bcce8423bc4ea48b89efa2ff18f33',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:7561b4d3d519a34a28dedeafcd5ca35d89e7553b726e10d7d581823467fa3e9c',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:960ad847b82efa32e076c318da6acdff63337325dcf6b5883c1acaff0fc6bb88',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:b116d8d61e6b71fd4e7f38cf0d5f0921a2b4872ebdccea0868d4c15c992482a4',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
+  },
+  {
+    date: 'May 10th',
+    day: 19,
+    txs: [''],
+    winners: [
+      {
+        owner: '0:3601e9bd7042cf51a1271208b7667e38bcefebcb8f9fe217b872e9a4a4674822',
+        prize: '40 VENOMS',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:cf7e19c72302483a331da960a8d85014285fa9522a2cc169d3d4eefee6617537',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:389557204dc73d5a9dc161c5fd309260011b73c7b574f09c9e17bc3ab3052138',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:07035e4acd005b576c7a02b92a71feafe6a1d016b7b9bbb55e418d6d26cc7e11',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:b4b87997cf1f4297a6fc6fb837af4a3e11a5db5feb83f4da6a1fee9eb3f2c50d',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:b9abb2020d66c03dd606f9a3f9a05faf281b773affe3f8e176b3461a6240c21e',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:7e3635cf2257e58128b97d4a1105dc77fb5311a0b7e56b645dfec4a6a102765c',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
+  },
+  {
+    date: 'May 11th',
+    day: 20,
+    txs: [''],
+    winners: [
+      {
+        owner: '0:58708285eeb4e8b6f99865437c9553b5f68ee118ebaebed90542d17bdc25842d',
+        prize: '40 VENOMS',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:e6d5d2c8ea6287c3e032b33f582f85a98cfb4abf57eb1757aa0aab8b0055cd2c',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:7bd18e4142ffdaa5f3db7bfadc0adbd827e05b5977766abf1ef45d9ced37ce1e',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:177a4d360c229fb8bf25463d460336ba485b91e626378af1f2f1e6be0898669a',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:34d34a58e63edf96cd3a66f3376052c5a481104576fbc1d70b4b8e027d5b85af',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:1fec5aca38554b3e3cebf6f12cfe058d1a00ca2ac117b15d78b6fc596d9f0164',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:32f4bcf5ed33f6084018aabeb1fcf6d5751c7a1f02c6bd1813edb7c38f0b9197',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
   }
   
 ];
-
-
-
-
-
-
-
-
 
 
 export const SOCIAL_URLS: any = {
