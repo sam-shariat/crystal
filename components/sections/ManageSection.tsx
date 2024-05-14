@@ -107,6 +107,9 @@ function ManageSection() {
       //setIsLoading(false);
       return;
     }
+
+    console.log('codeHash : ',codeHash);
+    
     // Fetch all Indexes by hash
     const indexesAddresses = await getAddressesFromIndex(codeHash, provider);
     if (!indexesAddresses || !indexesAddresses.length) {

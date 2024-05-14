@@ -14,7 +14,7 @@ import {
 import { LinkIcon, Logo } from 'components/logos';
 import { connectedAccountAtom, venomProviderAtom } from 'core/atoms';
 import { sleep, truncAddress } from 'core/utils';
-import { AVATAR_API_URL, VENOMSCAN_NFT, VENOMSCAN_TX } from 'core/utils/constants';
+import { AVATAR_API_URL, SITE_PROFILE_URL, VENOMSCAN_NFT, VENOMSCAN_TX } from 'core/utils/constants';
 import { lookupNames } from 'core/utils/reverse';
 import { useAtomValue } from 'jotai';
 import React, { useEffect, useState } from 'react';
@@ -111,7 +111,7 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
             rounded={'full'}
             textAlign={'center'}
             fontSize={!small ? 'md' : ['lg', 'xl']}
-            as={Link} style={{ textDecoration: 'none' }} href={VENOMSCAN_NFT + owner} target="_blank"
+            as={Link} style={{ textDecoration: 'none' }} href={_name.includes('.venom') ? SITE_PROFILE_URL + _name : VENOMSCAN_NFT + owner} target="_blank"
             fontWeight={'bold'}>
               {_name.includes('.venom') && <Avatar
                     

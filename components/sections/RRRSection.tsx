@@ -1008,7 +1008,7 @@ export default function RRRSection() {
             
             <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              May 12th 23:59 UTC{' '}
+              May 14th 23:59 UTC{' '}
             </Text>
             
 
@@ -1024,7 +1024,7 @@ export default function RRRSection() {
 
             
           </Flex>
-          <Text fontSize={'2xl'} >Previous Raffles</Text>
+          <Text fontSize={'2xl'} p={4}>Previous Raffles</Text>
           <Flex gap={3} direction={'column'} w={'100%'}>
             <Tabs
               colorScheme="green"
