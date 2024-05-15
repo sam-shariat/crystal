@@ -586,6 +586,7 @@ const ManagePage: NextPage = () => {
           setTitle(res.data.title ?? '');
           setSubtitle(res.data.subtitle ?? '');
           setBio(res.data.bio);
+          
           //setBtc(res.data.btcAddress);
           //setEth(res.data.ethAddress);
           setAvatar(res.data.avatar);

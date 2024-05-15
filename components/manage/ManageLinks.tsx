@@ -95,7 +95,7 @@ export default function ManageLinks({ json, nftAddress }: Props) {
     }
     // @ts-ignore: Unreachable code error
     setLinksArray(_links);
-  }, []);
+  }, [json.links]);
 
   // @ts-ignore: Unreachable code error
   const onSortEnd = ({ oldIndex, newIndex }) => {
