@@ -558,7 +558,7 @@ const ManagePage: NextPage = () => {
             setBio('');
             setBtc('');
             setEth('');
-            setAvatar('');
+            setAvatar(String(nftJson.avatar)?.includes('not set') ? '' : String(nftJson.avatar));
             setTitle('');
             setSubtitle('');
             setAvatarShape('round');
@@ -589,7 +589,7 @@ const ManagePage: NextPage = () => {
           
           //setBtc(res.data.btcAddress);
           //setEth(res.data.ethAddress);
-          setAvatar(res.data.avatar);
+          setAvatar(nftJson.avatar?.includes('not set') ? res.data.avatar : nftJson.avatar);
           setAvatarShape(res.data.avatarShape ?? 'round');
           setSocialIcons(res.data.socialIcons ?? true);
           setSocialButtons(res.data.socialButtons ?? true);
