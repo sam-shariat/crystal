@@ -852,7 +852,7 @@ export default function RRRSection() {
                 EVERYDAY, FOR 30 DAYS
               </Text>
               </Stack>
-              <Stack gap={2} align={'center'} py={2} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'} rounded={'2xl'} fontSize={'lg'} w={['100%','sm','md']}>
+              <Stack gap={2} align={'center'} py={2} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'} rounded={'2xl'} fontSize={['lg','xl']} w={['100%','sm','md']}>
               <Text
                 fontSize={['xl', '2xl']}
                 px={6}
@@ -1008,7 +1008,7 @@ export default function RRRSection() {
             
             <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              May 14th 23:59 UTC{' '}
+              May 15th 23:59 UTC{' '}
             </Text>
             
 
