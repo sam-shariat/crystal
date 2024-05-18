@@ -41,6 +41,7 @@ import EarlyAdopters from 'components/early/EarlyAdopters';
 import ContributionSection from 'components/contribution/ContributionSection';
 import MintNft from 'components/early/MintNft';
 import NextLink from 'next/link';
+import ChallengesSection from 'components/challenges/ChallengesSection';
 
 export default function CommunitySection() {
   const { colorMode } = useColorMode();
@@ -93,32 +94,9 @@ export default function CommunitySection() {
             </Flex>
 
             <Flex flexDirection={'column'} w={'100%'} gap={6} my={12}>
+              <ChallengesSection />
               {/* <MintNft /> */}
               <EarlyAdopters />
-              <Button
-                w={'100%'}
-                h={['288px','288px','220px']}
-                size={'lg'}
-                as={NextLink}
-                style={{ textDecoration: 'none' }}
-                href={'winners/punks-avatar-challenge'}
-                gap={6}
-                flexDir={['column','column','row']}
-                justifyContent={['center', 'center']}>
-                <ImageBox srcUrl='screens/punksavatarchallenge.png' rounded='2xl'/>
-
-                  <Stack textAlign={['center','center','left']}>
-                
-                <Text bgGradient={
-                    colorMode === 'light'
-                      ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                      : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                  }
-                  bgClip="text" fontSize={'2xl'} fontWeight={'bold'}>Image Avatar Challenge</Text>
-                <Text> With Venom-Punks.com</Text>
-                <Text >Winners Announced</Text>
-                </Stack>
-              </Button>
               <Button
                 w={'100%'}
                 h={['220px', '220px', '160px']}

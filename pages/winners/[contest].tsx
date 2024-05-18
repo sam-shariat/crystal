@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { GetServerSidePropsContext, NextPage } from 'next';
 import Head from 'next/head';
 import { SITE_DESCRIPTION, SITE_URL, SITE_TITLE, WINNERS } from 'core/utils/constants';
 import { Seo } from 'components/Layout/Seo';
@@ -8,25 +8,29 @@ import { capFirstLetter } from 'core/utils';
 import { useEffect, useState } from 'react';
 import { Center, Spinner } from '@chakra-ui/react';
 
-const Contest: NextPage = () => {
-  const router = useRouter();
-  const contest = String(router.query.contest).replaceAll('-', '');;
-  const des = 'Venom ID | .venom domains on the venom blockchain';
-  const [title,setTitle] = useState('Venom ID Challenge')
-  const [challenge, setChallenge] = useState<any | null>(null)
 
-  useEffect(()=> {
-    try {
-      const _challenge = WINNERS[contest];
-      console.log(_challenge);
-      if(_challenge) setTitle(_challenge.title);
-      if(_challenge) setChallenge(_challenge);
-      //console.log(contest);
-    } catch (e) {
-      console.log(e);
-    }
-  },[contest])
-  
+interface ContestPageProps {
+  challenge: any;
+  title: string;
+  contest: string;
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { query } = context;
+  const contest = String(query.contest).replaceAll('-', '');
+  const challenge = WINNERS[contest];
+  const title = challenge.title;
+  return {
+    props: {
+      challenge,
+      contest,
+      title
+    },
+  };
+}
+
+const Contest: NextPage<ContestPageProps> = ({ challenge, title, contest }) => {
+  const des = 'Venom ID Challenge : ' + challenge.challenge;
 
   return (
     <>

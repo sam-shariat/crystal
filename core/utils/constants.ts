@@ -10,9 +10,10 @@ export const SITE_URL = 'https://venomid.network/';
 export const SITE_URL_SHORT = 'venomid.network';
 export const VID_IMAGE_API = 'https://img.venomid.network/api/';
 export const SITE_TITLE = 'Venom ID';
-export const SITE_DESCRIPTION = 'Empower Your Digital Presence with one simple name';
+export const SITE_DESCRIPTION =
+  'DNS for the Venom Blockchain, Empower Your Digital Presence with one simple name';
 export const SITE_FULL_DESCRIPTION =
-  'With VenomID, you can assign human-readable names to your blockchain and non-blockchain resources like Venom, BTC and ETH addresses, Links and more';
+  '.Venom Domains from Venom ID allow you to assign human-readable names to your blockchain and non-blockchain resources like Venom, BTC and ETH addresses, Links and more';
 export const NFT_IMAGE_URL = 'https://ipfs.io/ipfs/QmUvfedgHDXdiMsq5nfLPGLQrR4QAYXHzR5SETBZQ6RGyd';
 export const SITE_MANAGE_URL = 'https://venomid.tools/';
 export const SITE_PROFILE_URL = 'https://venomid.link/';
@@ -338,6 +339,10 @@ export const BG_IMAGES: BgImageItem[] = [
   { bg: 'var(--bg7Gradient)', lightMode: false },
   { bg: 'var(--bg8Gradient)', lightMode: false },
   { bg: 'var(--bg9Gradient)', lightMode: false },
+  {
+    bg: 'url(https://ipfs.io/ipfs/QmedReDFjSXa9fuNppt2ubDftwL4sfttwENUySHrNEdhKL/stax4.webp)',
+    lightMode: false,
+  },
 ];
 
 export const AVAILABLE_LINKS: LinkType[] = [
@@ -938,8 +943,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:6a003cc55aa6c4bba516dcff83385b55a5f4a0b4fafee92812678988052583fe',
         prize: '3-char domain',
-        tx: '',
-        name: '',
+        tx: '0:dc3ac5d5c33b44ab506c988d2ddb9aafa4df94b120f67d69c71014e886998def',
+        name: 'not.venom',
       },
       {
         owner: '0:cd8b606d1f0f0ca96cba7ca666c164b19a40155402c77fa86187ea4a883e8b73',
@@ -1330,8 +1335,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:29c49bcc18f96d22edc5805340d56b7b467f85a105b6a3427a091935eca68ef5',
         prize: '3-char domain',
-        tx: '',
-        name: '',
+        tx: '0:01e04e3f64de90ca0dba4886a2343770c124ca7f1384a5e3f9eb5506402ae4e4',
+        name: 'www.venom',
       },
       {
         owner: '0:6d9849d5b51d79c277f49a3f5394e148191e36226f50a2a0d1e216234ee9d3b9',
@@ -1348,8 +1353,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:b065889422ce4cb6d0abf7b41ed7dc65775c70a7ef7df4197d60c721c82b344a',
         prize: '5-char domain',
-        tx: '',
-        name: '',
+        tx: '0:9c0a0018271daef5af87f8e419bb09521da7a50174dfab93c04ef4077f87a11b',
+        name: 'honey.venom',
       },
       {
         owner: '0:21aefb77d452a1472f1b07725ee3ed51991f2036179ad187ddf2a354cb538928',
@@ -1446,8 +1451,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:b4f4f5f37873a5f7afda4c8b84feadcd6941acbe7eab538e0258d6cb68e4c4d0',
         prize: '5-char domain',
-        tx: '',
-        name: '',
+        tx: '0:bb157040427129415f0c6f408cc08189e03e007cb6dc61f0d3c7cc3f1246b202',
+        name: 'trash.venom',
       },
       {
         owner: '0:b6b33d4631523d0504787202a4b67c9f7a1674612f1e4c9f3ddbbdf68c99063e',
@@ -1532,8 +1537,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:869b427caf160c973e4b3353396d0593e9f1168b1f181eab650cbde398dc7353',
         prize: '4-char domain',
-        tx: '',
-        name: '',
+        tx: '0:56ad8966cbfb0cad74cedd6bd55e9c3d895f689a7dbd6bba3aeeacb08c40606b',
+        name: 'moon.venom',
       },
       {
         owner: '0:42266e99cc007b523544eee5cb9be8d20f2082c0b9d62b9aaf60034ce2b73deb',
@@ -1820,8 +1825,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:0fdcaf71809fa83e761d29a40efedf0a111ac63a7cde5faabbd50af91d6a3f3f',
         prize: '3-char domain',
-        tx: '',
-        name: '',
+        tx: '0:d9a0818c7112593ce8d17f5677765bdd9dd72404c9b42c288e6ce7a645cf17f1',
+        name: 'gym.venom',
       },
       {
         owner: '0:62d04df4b39428ab5f5eb41e8271d603a6ca0141e4cf9081b08960c567e17ebb',
@@ -1838,8 +1843,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:1b1138f3ba3bd5cc50d04f14dd7da2ba70f367d15c2495eca952477a9a326b6d',
         prize: '5-char domain',
-        tx: '',
-        name: '',
+        tx: '0:50fb94737b7421e11458a732772a4cd0380982b630089ed5bba05d842ab581a9',
+        name: 'habib.venom',
       },
       {
         owner: '0:878bb4fe995c642501ccb288c9b3eb5efdb48e55b3bbf53947519639c5155f20',
@@ -1924,8 +1929,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:b0dad4c4d89187ada9c4752b42bc9e48510ecd37685ba4a53c9ae5d021fccb70',
         prize: '4-char domain',
-        tx: '',
-        name: '',
+        tx: '0:7a2a6becd592269a0076241cf8e7c0366b7431a4e06da032592a675dfca55df7',
+        name: 'defi.venom',
       },
       {
         owner: '0:0bbbd58858059338455bebd072ee6ff3cb661dfa196dcb18f85e9e71ca64a6c1',
@@ -1947,6 +1952,202 @@ export const RAFFLE_WINNERS = [
       },
       {
         owner: '0:47cdebb84a778d63cded1ad7325a6ee7a0a91d49724b72bbd1dedb9092e7c0b6',
+        prize: '5-char domain',
+        tx: '0:d54f2142478dcf237b3ff0794e8ddfb560d67fe68e93109e832179e3ea9d91e7',
+        name: 'block.venom',
+      },
+    ],
+  },
+  {
+    date: 'May 15th',
+    day: 24,
+    txs: ['de50c5edbff8eddc95126f764c4d7b902f5d95e237c8e06f067c54884a1d2f93'],
+    winners: [
+      {
+        owner: '0:c74a06b138762b1057cf8ef61a58ac7f6f573aade0454fa26083499ab456e3ba',
+        prize: '40 VENOMS',
+        tx: 'de50c5edbff8eddc95126f764c4d7b902f5d95e237c8e06f067c54884a1d2f93',
+        name: '',
+      },
+      {
+        owner: '0:536a0b3c7d580f2475281f92f196435a4b23f5d8a7c3c19cd4212328df9d3075',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:9320ffc62705ec6999298bdbb760ef0120d637321b2069ec3edebad26da3c3ed',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:8edef49d929e058b2bf462ec20a94cfc774579a0e5d747c38f6e09cf304769cb',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:9b62539804f693768a752205432cb4b57923f14b519e340a83d921559df8bfc0',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:601b1b1438d6346a90e6e0803d857142a3217642c27b8f190cc6b37b18f7eed6',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:021215b6fba59112b93684ebe68c32e4527f517716efb101aab38e011d30213f',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
+  },
+  {
+    date: 'May 16th',
+    day: 25,
+    txs: ['aabd730665f4362b0bc9700a3696bbb7a469b747cd0eb6a6d2d8fdcbc4f09179'],
+    winners: [
+      {
+        owner: '0:1dcce922aac2904b3c494ffe179e81d6fc48abe369482be19f99c3b8cc245a4c',
+        prize: '40 VENOMS',
+        tx: 'aabd730665f4362b0bc9700a3696bbb7a469b747cd0eb6a6d2d8fdcbc4f09179',
+        name: '',
+      },
+      {
+        owner: '0:6e0d9a66ac4f384119c9fc02ef74aaff4a73aeb0532c96b4c56e2a2420593c70',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:627c6ebc0d3423eff59da83e81d5d266e768f63863a94302e69e6bc988f85570',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:6d9df5385147815b08c16888f44ac48d2a98a46ad7355051ca49bb30aa69c940',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:c823a0636ea2da9c836fc7bea31e6ad6775baaf9bfb02ddca03607459df4ba6b',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:68933fe0c07c1b3183d24d87cff6f2802b20343ebd716477cfdabb46fab0027b',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:8a6addf9c205319449b148e85f0b477179ef023f59136efc31ca8f55380d725b',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
+  },
+  {
+    date: 'May 17th',
+    day: 26,
+    txs: ['1de3ce96e2d33a32fe975179288d6c70b60b88cca04578e92140767308fdcce2'],
+    winners: [
+      {
+        owner: '0:f35d3048ab0d0383e9fbf01fa3cc28160b087a6fada534e9e461a840b42bf542',
+        prize: '40 VENOMS',
+        tx: '1de3ce96e2d33a32fe975179288d6c70b60b88cca04578e92140767308fdcce2',
+        name: '',
+      },
+      {
+        owner: '0:1f450f09a9ab14fe45e10e2178e7acb86a3e17fa0d97652995ab7ad90eaab5f0',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:a7d5b62afa9e1fe582031879c0b0272281970262adefe780dca77babe3645eb0',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:d45750781e82ab935c869e60ca125b3fd538f7eb9432da694d84ab5a9d8c3815',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:b9f504fd32f231c6f22998288a70b90e411c6fd0267adeb0e9637f20e0bcecdf',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:ec4b82acdeba83589657e2a81cc345e130074a99c5e461a76e93a66bead0c178',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:0d5109846e868c8708fbd8d3a8b0463cee613b6ab3c2611a0f320c8eb1b0d1b5',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+    ],
+  },
+  {
+    date: 'May 18th',
+    day: 27,
+    txs: ['0ce9a09d4060ee2e496d28a1e086eeb7d8449a79695dcc9458af8360587dea09'],
+    winners: [
+      {
+        owner: '0:d5379f1049dcc8250e483fd061b4f7fea126e208860ebd8f70cc18e9d642f40b',
+        prize: '40 VENOMS',
+        tx: '0ce9a09d4060ee2e496d28a1e086eeb7d8449a79695dcc9458af8360587dea09',
+        name: '',
+      },
+      {
+        owner: '0:a7cb16870d8d703938fd8e5a63da09ead769408440f9a535532fab7e2dbbbd31',
+        prize: '3-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:d094934cacd46ddd6707166a54700bbab9bce2d1e45111f056f8ef458c09c94c',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:d2fcafd1499c71c780f699a59444f1e346a046b08710e55d30a58192f631e2f5',
+        prize: '4-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:83453646f12072f96bea4cdb93c679982a72583056e23f17047be17caa9859fc',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:21aaf8acd2490714890e056ef84e3c16cae34a8a76c42ef548f1bfd1f676d05b',
+        prize: '5-char domain',
+        tx: '',
+        name: '',
+      },
+      {
+        owner: '0:2e7acbb3ebb3a04cdf6ab37cccb50fbdf334a6bfef5902726a059bcbc1c7abc9',
         prize: '5-char domain',
         tx: '',
         name: '',
@@ -1991,7 +2192,7 @@ export const SOCIAL_URLS: any = {
   email: 'mailto:',
 };
 
-export const WINNERS_AVATAR_CHALLENGE = [
+export const WINNERS_PUNKS_AVATAR_CHALLENGE = [
   {
     date: '30 .Venom Domains',
     day: 1,
@@ -2248,15 +2449,55 @@ export const WINNERS_AVATAR_CHALLENGE = [
   },
 ];
 
-export const WINNERS: any = {
+export const WINNERS: {
+  [key: string]: {
+    title: string;
+    sent: string;
+    domain: string;
+    slug: string;
+    link: string;
+    tweet: string;
+    challenge: string;
+    prize_img: string;
+    prizes: string[];
+    image: string;
+    screenImage: string;
+    winners: any[];
+    status: string;
+  }
+} = {
+  staxavatarchallenge: {
+    title: 'STAX Avatar Image Challenge',
+    sent: '0',
+    domain:'stax.venom',
+    slug: 'stax-avatar-challenge',
+    link: 'STAX COIN FLIP',
+    tweet: '',
+    challenge:
+      'Set STAX NFT as your avatar on your .venom domain ID and save your avatar, you can use the static stax image if you do not own a stax nft! (full guides in the tweet)',
+    prize_img:
+      'https://ipfs.io/ipfs/QmRFe5HjkmjEoE7P77zzq4QKqzGP5fDivwCiDZ9ci4zb7Y/photo_2024-03-26_22-24-00.jpg',
+    prizes: ['10 STAX NFTS', '30 .venom Domains'],
+    image: 'staxavatarchallenge.jpg',
+    screenImage: 'staxavatarchallenge.png',
+    winners: WINNERS_PUNKS_AVATAR_CHALLENGE,
+    status: 'Starts May 20th',
+  },
   punksavatarchallenge: {
-    title: 'Avatar Image Challenge with Venom-Punks.Com',
+    title: 'Punks Avatar Image Challenge',
+    sent: '10',
+    domain:'punks.venom',
+    slug: 'punks-avatar-challenge',
+    link: 'Venom-Punks.Com',
     tweet: 'https://twitter.com/Venomid_network/status/1779553947612774631',
     challenge:
       'Set venom-punks image as your avatar on your .venom domain ID and save your avatar! (full guides in the tweet)',
-    prize: '30 .venom Domains & 10 PUNKS',
+    prize_img:
+      'https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png',
+    prizes: ['10 PUNK NFTS', '30 .venom Domains'],
     image: 'punksavatarchallenge.jpg',
     screenImage: 'punksavatarchallenge.png',
-    winners: WINNERS_AVATAR_CHALLENGE,
-  },
+    winners: WINNERS_PUNKS_AVATAR_CHALLENGE,
+    status: 'Winners Announced',
+  }
 };

@@ -18,7 +18,7 @@ async function getClient() {
     TonClient.useBinaryLibrary(libNode);
     client = new TonClient({
       network: {
-        endpoints: ['https://gql-testnet.venom.foundation/graphql'],
+        endpoints: ['https://gql.venom.foundation/graphql'],
       },
     });
   }
@@ -110,7 +110,7 @@ export default async function handler(req, res) {
     //res.status(200).json({json:json,jsonUrl:jsonUrl});
 
     if (withDetails) {
-      if (jsonUrl && jsonUrl.indexOf('not set') < 0) {
+      if (jsonUrl && !jsonUrl.includes('not set')) {
         const result = await axios.get(String('https://ipfs.io/ipfs/' + jsonUrl));
         res.status(200).json({
           owner: owner,

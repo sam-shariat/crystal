@@ -9,10 +9,9 @@ import {
 import { Seo } from 'components/Layout/Seo';
 
 const Home: NextPage = () => {
-  const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL;
   return (
     <>
-      <Seo />
+      
       <Head>
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={SITE_TITLE} />
@@ -23,6 +22,7 @@ const Home: NextPage = () => {
         <link rel="shortcut icon" href="/favicon.ico?v=0.0.2"/>
 
       </Head>
+      <Seo />
       <ClaimSection />
       {/* <EarlyAdopterSection /> */}
       {/* <IntroSection />

@@ -1,10 +1,9 @@
-import { OLD_TESTNET_ROOT_CONTRACT_ADDRESS } from 'core/utils/constants';
+import { ROOT_CONTRACT_ADDRESS } from 'core/utils/constants';
 const { TonClient, signerKeys } = require('@eversdk/core');
 const { libNode } = require('@eversdk/lib-node');
 const { Account } = require('@eversdk/appkit');
 const { RootContract } = require('abi/RootContract');
 const { NftContract } = require('abi/NftContract');
-import axios from 'axios';
 
 let client = null;
 
@@ -14,7 +13,7 @@ async function getClient() {
     TonClient.useBinaryLibrary(libNode);
     client = new TonClient({
       network: {
-        endpoints: ['https://gql-testnet.venom.foundation/graphql'],
+        endpoints: ['https://gql.venom.foundation/graphql'],
       },
     });
   }
@@ -38,7 +37,7 @@ export default async function handler(req, res) {
     const root = new Account(RootContract, {
       signer: signerKeys(keys),
       client,
-      address: OLD_TESTNET_ROOT_CONTRACT_ADDRESS,
+      address: ROOT_CONTRACT_ADDRESS,
     });
 
     let _codeHash = await root.runLocal('expectedCertificateCodeHash', {
@@ -77,38 +76,25 @@ export default async function handler(req, res) {
               }
             }`
         const result  = (await client.net.query({query})).result;
+        if(result.data.accounts.length > 0){
+          const nft = new Account(NftContract, {
+            signer: signerKeys(keys),
+            client,
+            address: result.data.accounts[0].id,
+          });
+      
+          let json = await nft.runLocal('getJson', {
+            answerId: 0,
+            type:0
+          });
+      
 
-        //console.log(`Account 1 balance is ${result.data.blockchain.account.info.balance}\n`);
-
-
-    // console.log(addresses);
-    // if (!addresses.accounts || addresses.accounts.length === 0) {
-    //   return [];
-    // }
-
-    // const nfts = await Promise.all(addresses.accounts.map(async (indexAddress) => {
-    //   try {
-    //     console.log(indexAddress)
-    //     const nftContract = new provider.Contract(nftAbi, indexAddress);
-    //     const getJsonAnswer = (await nftContract.methods.getJson({ answerId: 0 } as never).call()) as { json: string };
-    //     const _nftJson = JSON.parse(getJsonAnswer.json ?? "{}") as BaseNftJson;
-    //     if (address === _nftJson.target) {
-    //       return String(_nftJson.name);
-    //     } else {
-    //       return '';
-    //     }
-    //   } catch (e) {
-    //     return '';
-    //   }
-    // }));
-    let isEarly = false;
-    let count = 0;
-    if(result.data.accounts.length > 0){
-      isEarly = true;
-      count = result.data.accounts.length;
-    };
-    
-    res.status(200).json({isEarly , count });
+          res.status(200).json({data : JSON.parse(json.decoded.output.json)});
+        } else {
+          res.status(200).send('');
+        }
+        
+        
     
     
   } catch (err) {

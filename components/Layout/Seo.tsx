@@ -14,8 +14,7 @@ interface Props {
 }
 
 export function Seo({title = SITE_TITLE,description = SITE_DESCRIPTION}: Props) {
-  const origin =
-    typeof window !== 'undefined' && window.location.href ? window.location.href : SITE_URL;
+  const origin = SITE_URL;
   return (
     <DefaultSeo
       title={title}
@@ -41,8 +40,9 @@ export function Seo({title = SITE_TITLE,description = SITE_DESCRIPTION}: Props) 
             width: 512,
             height: 512,
             secureUrl: SITE_URL + 'logos/vid.png',
+            type: 'image/png'
           }
-        ],
+        ]
       }}
       twitter={{
         handle: `@${SOCIAL_TWITTER}`,

@@ -15,9 +15,7 @@ import { LinkIcon } from 'components/logos';
     const { colorMode } = useColorMode();
     return (
         <Flex gap={3} align={'center'} border={'1px solid #77777750'} rounded={'full'} bg={colorMode === 'light' ? 'white' : 'black'}>
-        <Avatar color='white' bgGradient={colorMode === 'light'
-                ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                : 'linear(to-r, var(--venom0), var(--bluevenom0))'} icon={<LinkIcon type='RiUserLine' size={22} color='#ffffff'/>} rounded={'full'} src={avatar} size={size}/>
+        <Avatar color='white' icon={<LinkIcon type='RiUserLine' size={22} color='#ffffff'/>} rounded={'full'} src={avatar} size={size}/>
           <Text
             fontWeight={'semibold'}
             textAlign={'left'}

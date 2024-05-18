@@ -346,10 +346,10 @@ export default function WinnersSection({ challenge }: WinnersProps) {
                   fontSize={'lg'}
                   w={['100%', 'sm', 'md']}>
                   <Text fontSize={['xl', '2xl']} px={6} fontWeight="bold" py={3} rounded={'2xl'}>
-                    Winners Announced
+                    {challenge.status}
                   </Text>
                   <Center gap={2} borderTop={'1px solid #77777777'} w={'100%'} p={4}>
-                    <LinkIcon type="https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png" size={'md'} /> 10 of 10 PUNK NFTS Airdropped
+                    <LinkIcon type={challenge.prize_img} size={'md'} /> {challenge.sent} of {challenge.prizes[0]} Airdropped
                   </Center>
                   <Center gap={2} borderTop={'1px solid #77777777'} w={'100%'} p={4}>
                     <LinkIcon type="venomid" size={22} /> {domains} of 30 .venom domains Sent
@@ -461,6 +461,7 @@ export default function WinnersSection({ challenge }: WinnersProps) {
                 <Button
                   colorScheme="venom"
                   onClick={onOpen}
+                  isDisabled={challenge.status !== 'Winners Announced'}
                   size={'lg'}
                   variant={'solid'}
                   w={['100%', 'sm', 'md']}
@@ -475,7 +476,7 @@ export default function WinnersSection({ challenge }: WinnersProps) {
                 </Button>
                 </Stack>
                 <Flex w={'100%'}>
-                <Links
+                {challenge.tweet !== '' ? <Links
                   json={{
                     links: [
                       {
@@ -488,7 +489,7 @@ export default function WinnersSection({ challenge }: WinnersProps) {
                       },
                     ],
                   }}
-                />
+                /> : <Center w={'100%'}>Twitter Post will be published soon</Center>}
                 </Flex>
                 </SimpleGrid>
               </Center>

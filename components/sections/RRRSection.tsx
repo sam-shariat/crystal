@@ -1008,7 +1008,7 @@ export default function RRRSection() {
             
             <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
-              May 15th 23:59 UTC{' '}
+              May 19th 23:59 UTC{' '}
             </Text>
             
 
