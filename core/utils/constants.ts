@@ -2481,7 +2481,7 @@ export const WINNERS: {
     image: 'staxavatarchallenge.jpg',
     screenImage: 'staxavatarchallenge.png',
     winners: WINNERS_PUNKS_AVATAR_CHALLENGE,
-    status: 'Starts May 20th',
+    status: 'Open for Participation',
   },
   punksavatarchallenge: {
     title: 'Punks Avatar Image Challenge',
