@@ -19,8 +19,10 @@ export default function DomainTag({ name }: Props) {
       py={1}
       display={'flex'}
       alignItems={'center'}
+      maxW={'max-content'}
       gap={2}
       rounded={'full'}
+      _hover={{border: '1px solid #77777799'}}
       textAlign={'center'}
       fontSize={!small ? 'md' : ['lg', 'xl']}
       as={Link}

@@ -1,4 +1,5 @@
 import { BgColorItem, LinkType, BgImageItem } from 'types';
+import { WINNERS_PUNKS_AVATAR_CHALLENGE, WINNERS_STAX_AVATAR_CHALLENGE } from './challenges';
 
 export const MINT_OPEN = true;
 export const MINT_TOTAL_SUPPLY: number = 10000;
@@ -2192,263 +2193,6 @@ export const SOCIAL_URLS: any = {
   email: 'mailto:',
 };
 
-export const WINNERS_PUNKS_AVATAR_CHALLENGE = [
-  {
-    date: '30 .Venom Domains',
-    day: 1,
-    txs: [],
-    winners: [
-      {
-        owner: '0:c6470a5611a68615a46b6249af4546f815919f14c96a56ca3d176cf0164e0b77',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:e7374d9761f69699fe13fb5717163ed5f838b6bb0c3fa56e4443c11240b555db',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:1a9609350c5b8800a607e5aa95c6c8aafd7dd707587910c6c65d7b903dee389d',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:b504dce149ad1ca70d8adf3f9ad58a2f72ebb35943fa7ff1bbb4a9f85d294dcd',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:d46e6215d0a0af9cf1f3241870951422dccacafad04f8b2d952e06bdb59d2efd',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:8c0b01f7f54cb53d38f3cdd5b900862921c359a64be0d9e67c567106bc5946dc',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:c3b482ae29606c6f02df534279cb92cdb0a59268a648d2865472abc773af15b5',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:61cf62b39f7c56726a8dd3c4956773a4cfa3e45cdfcd4d99b602913734b742df',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:bf25cd0fd21a5c521732f496f056b83053c967bee7f2f8bc34c850a02f517479',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:c6f40738671abf3a5ec245e29c289acb022328c7c60a3d27e98b5d13a749da28',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:9bfe51c6f1d7bd33e27fbf4af63ccbc030aba4a40872c1ed7b4e334fb9c0ab65',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:c6f40738671abf3a5ec245e29c289acb022328c7c60a3d27e98b5d13a749da28',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:ab20469b14cb294436b7a53948f8ff65eb6de8ae2722e3b16954af8f4d931367',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:e500055ad125b62a8f0e35d64ebe06ebea795db74155c9be648d2e0ea3f710af',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:b3a628a01673752b34d261df908f9439bc567cb64f256d98f8d69b91eb582637',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:c6f40738671abf3a5ec245e29c289acb022328c7c60a3d27e98b5d13a749da28',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:a8d50a30c43c2e7f8f49faa64108053c40c36ea104dfd9e34ef6edf7d484f1a9',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:250e9c32d03f91bcaa5fe616d1ea04dfd3b24b21979b5e19a128969ff29c89e6',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:59aad3d6178a42a4c055e5df10aa3a0b9f30c9d38fc55b38667637bd3c8921e3',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:ac0c59be67694accc57d80214f7ffd374de52af4db526ccc3520fcc9cc0cc5e8',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:08b7b908554c4e4a25341e64146923d05bce66303a219b6e32240568154521fd',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:94f9014a8787253b83f010efa7a2da4a63ee705f6578b182571a5e3da7545472',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:abda4b53fe11b8313c23ace236b23fb18cd312abdecde762c2749e8957aca752',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:b9cf272f67c83626990b753037dbca4e2dd77132c170b9060e647cae25ac8e5a',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:dd90174de76a9b684738d9078a733acbbbe58f891944e3369a951eb4eb10f1ca',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:68749086e6aea302a7b5d0c5208a4134e7864477698f9bb184226f89796b5aa7',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:21ec4b7f34f23e5436e47c4c4d854ff1e621c8eb6588de6a100bd7ecd7f0da62',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:c198e850181e9d090b6fa3799d38a3fa47b30e5fc89c60a86016dd989f41b24b',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:24f0be391374434c6af85949efe7056e7923e9f5728022d0241788f870e4da94',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:6dca815ddf9e630f3ad06569c3d6a3696467cd578d05ee6cd9a5afbf322fb613',
-        prize: '5-char domain',
-        tx: '',
-        name: '',
-      },
-    ],
-  },
-  {
-    date: '10 PUNKS from VENOM-PUNKS.COM',
-    day: 2,
-    txs: [],
-    winners: [
-      {
-        owner: '0:8f28d1412cd07e38a22901a4a19f4bd94f2b14071c13da0491deaaa83525072d',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:3806110da22e7d39ee67efda8d9d2a81d7f92f8d07018fa324ece1869398e33a',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:f25ad30d0389bf5cd8b15dbc4b29c816226832095d9ea55fa04fbf8063b112d3',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:96bd9f59a15dcb8cc06d951572c983b89ee7d6126ff30c4d57505db5504011c7',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:2dbe212cee53a21a21b7041fd6621c2c61109add7cd4690b8531b0939c981999',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:a60bd9fb90dc79ee77fc4b8441640685b4132d0304a13c6b0cd9c17efd66a4b9',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:8cad3948bb7e99074d2774cc93db80e55054cdb6b54241ede9fbab90a9b8e26a',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:192101ad6c9974295761a28d9e57c400a56b6dc0332bb4063ca17b5c7beb189e',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:108c1b876e3285d3cf64240e2634d25f9740e2382ea6b626fadfe90dfed57b5d',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-      {
-        owner: '0:1cb836d9593638aa3e9b968fab442b7759b9f78f95bbd6f81f8b1df022fa81a4',
-        prize: 'PUNK NFT',
-        tx: '',
-        name: '',
-      },
-    ],
-  },
-];
-
 export const WINNERS: {
   [key: string]: {
     title: string;
@@ -2481,7 +2225,7 @@ export const WINNERS: {
     image: 'staxavatarchallenge.jpg',
     screenImage: 'staxavatarchallenge.png',
     winners: WINNERS_PUNKS_AVATAR_CHALLENGE,
-    status: 'Enter Challenge',
+    status: 'Open till May 28th',
   },
   punksavatarchallenge: {
     title: 'Punks Avatar Image Challenge',
@@ -2497,7 +2241,7 @@ export const WINNERS: {
     prizes: ['10 PUNK NFTS', '30 .venom Domains'],
     image: 'punksavatarchallenge.jpg',
     screenImage: 'punksavatarchallenge.png',
-    winners: WINNERS_PUNKS_AVATAR_CHALLENGE,
+    winners: WINNERS_STAX_AVATAR_CHALLENGE,
     status: 'Winners Announced',
   }
 };
