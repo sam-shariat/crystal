@@ -339,10 +339,10 @@ export const BG_IMAGES: BgImageItem[] = [
   { bg: 'var(--bg7Gradient)', lightMode: false },
   { bg: 'var(--bg8Gradient)', lightMode: false },
   { bg: 'var(--bg9Gradient)', lightMode: false },
-  {
-    bg: 'url(https://ipfs.io/ipfs/QmedReDFjSXa9fuNppt2ubDftwL4sfttwENUySHrNEdhKL/stax4.webp)',
-    lightMode: false,
-  },
+  // {
+  //   bg: 'url(https://ipfs.io/ipfs/QmedReDFjSXa9fuNppt2ubDftwL4sfttwENUySHrNEdhKL/stax4.webp)',
+  //   lightMode: false,
+  // },
 ];
 
 export const AVAILABLE_LINKS: LinkType[] = [
