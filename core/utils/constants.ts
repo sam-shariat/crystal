@@ -2481,7 +2481,7 @@ export const WINNERS: {
     image: 'staxavatarchallenge.jpg',
     screenImage: 'staxavatarchallenge.png',
     winners: WINNERS_PUNKS_AVATAR_CHALLENGE,
-    status: 'Open for Participation',
+    status: 'Enter Challenge',
   },
   punksavatarchallenge: {
     title: 'Punks Avatar Image Challenge',
