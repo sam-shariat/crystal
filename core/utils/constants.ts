@@ -2472,7 +2472,7 @@ export const WINNERS: {
     domain:'stax.venom',
     slug: 'stax-avatar-challenge',
     link: 'STAX COIN FLIP',
-    tweet: '',
+    tweet: 'https://twitter.com/Venomid_network/status/1792241267428192357',
     challenge:
       'Set STAX NFT as your avatar on your .venom domain ID and save your avatar, you can use the static stax image if you do not own a stax nft! (full guides in the tweet)',
     prize_img:
