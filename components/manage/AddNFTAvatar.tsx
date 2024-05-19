@@ -50,6 +50,7 @@ import {
   OPENSEA_URL,
   VENOMART_NFT,
   VENTORY_NFT,
+  WINNERS,
   ZERO_ADDRESS,
 } from 'core/utils/constants';
 import { Avatar } from 'components/Profile';
@@ -412,22 +413,22 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
           <DrawerHeader gap={3} display={'flex'} flexDirection={notMobile ? 'row' : 'column'}>
             <HStack gap={2} flexGrow={1}>
               <Text flexGrow={1}>Pick {type === 'avatar' ? 'Avatar' : 'NFT'}</Text>
-              {/* {type === 'avatar' && (
+              {type === 'avatar' && (
                 <Button
                   aria-label="venom-punks-nfts"
                   onClick={() => {
-                    setAvatar(String("https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png"));
+                    setAvatar(String(WINNERS['staxavatarchallenge'].prize_img));
                     //setEditingAvatarFile(undefined);
                     onClose();
                   }}
                   gap={2}>
-                  {notMobile ? 'Venom-Punks.Com Avatar' : ''}{' '}
+                  {notMobile ? 'STAX NFT Avatar' : ''}{' '}
                   <LinkIcon
-                    type="https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png"
+                    type={String(WINNERS['staxavatarchallenge'].prize_img)}
                     size={'md'}
                   />
                 </Button>
-              )} */}
+              )}
               <Button aria-label="change-view" onClick={() => setListView(!listView)} gap={2}>
                 {notMobile ? (listView ? 'Bigger' : 'Smaller') : ''}{' '}
                 {listView ? <RiLayoutGridLine size={'24'} /> : <RiGridLine size={'24'} />}
