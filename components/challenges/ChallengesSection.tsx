@@ -80,7 +80,7 @@ export default function ChallengesSection() {
               </Stack>
             </Flex>
           </AccordionButton>
-          <AccordionPanel p={[4,6,8]} minWidth="100%" maxW={'container.md'}>
+          <AccordionPanel p={[4,6,8]} minWidth="100%" maxW={'container.md'} h={'max-content'}>
             <SimpleGrid columns={[1]} gap={[4,6,8]} fontSize={['md', 'lg']}>
               {Object.entries(WINNERS).map(([key, value]) => (
                 <>

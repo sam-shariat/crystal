@@ -13,6 +13,7 @@ interface ContestPageProps {
   challenge: any;
   title: string;
   contest: string;
+  image: string;
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -20,16 +21,18 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const contest = String(query.contest).replaceAll('-', '');
   const challenge = WINNERS[contest];
   const title = challenge.title;
+  const image = SITE_URL + 'ogs/' + challenge.image;
   return {
     props: {
       challenge,
       contest,
       title,
+      image
     },
   };
 }
 
-const Contest: NextPage<ContestPageProps> = ({ challenge, title, contest }) => {
+const Contest: NextPage<ContestPageProps> = ({ challenge, title, contest, image }) => {
   const des = 'Venom ID Challenge : ' + challenge.challenge;
 
   return (
@@ -40,10 +43,10 @@ const Contest: NextPage<ContestPageProps> = ({ challenge, title, contest }) => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={des} />
-        <meta name="twitter:image" content={`${SITE_URL}ogs/${contest}`} />
+        <meta name="twitter:image" content={image} />
         <meta name="og:title" content={title} />
         <meta name="og:description" content={des} />
-        <meta name="og:image" content={`${SITE_URL}ogs/${contest}`} />
+        <meta name="og:image" content={image} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
