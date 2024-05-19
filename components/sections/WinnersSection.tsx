@@ -516,7 +516,7 @@ export default function WinnersSection({ challenge }: WinnersProps) {
                 <Text fontSize={'3xl'} fontWeight={'bold'}  w={'100%'} p={4}
                 rounded={'2xl'}
                 bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}>
-                  Winners of {challenge.prize}
+                  Winners of {challenge.title}
                 </Text>
               </Flex>
               <Flex gap={3} direction={'column'} w={'100%'}>

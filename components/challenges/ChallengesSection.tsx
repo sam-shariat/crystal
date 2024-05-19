@@ -80,16 +80,17 @@ export default function ChallengesSection() {
               </Stack>
             </Flex>
           </AccordionButton>
-          <AccordionPanel py={4} minWidth="100%">
-            <SimpleGrid columns={[1]} gap={4} fontSize={['md', 'lg']}>
+          <AccordionPanel p={[4,6,8]} minWidth="100%" maxW={'container.md'}>
+            <SimpleGrid columns={[1]} gap={[4,6,8]} fontSize={['md', 'lg']}>
               {Object.entries(WINNERS).map(([key, value]) => (
                 <>
                 {value && <Stack
                   gap={4}
                   rounded={'2xl'}
                   key={key + '-box'}
-                  p={[4]}
-                  bgColor={colorMode === 'light' ? 'whiteAlpha.500' : 'blackAlpha.500'}>
+                  p={[4,6,8]}
+                  border={'1px solid #77777777'}
+                  bgColor={colorMode === 'light' ? 'whiteAlpha.300' : 'whiteAlpha.200'}>
                   <DomainTag name={value.domain} />
                   <ImageBox srcUrl={`screens/${value.screenImage}`} rounded="2xl" size={'100%'}/>
                   <Stack textAlign={['left']} p={4}>
@@ -121,9 +122,7 @@ export default function ChallengesSection() {
                     variant={'solid'}
                     colorScheme={
                       value.status === 'Winners Announced'
-                        ? lightMode
-                          ? 'blackAlpha'
-                          : 'light'
+                        ? 'gray'
                         : 'venom'
                     }
                     flexDir={['column']}

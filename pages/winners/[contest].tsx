@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { capFirstLetter } from 'core/utils';
 import { useEffect, useState } from 'react';
 import { Center, Spinner } from '@chakra-ui/react';
-
+import { DefaultSeo } from 'next-seo';
 
 interface ContestPageProps {
   challenge: any;
@@ -24,7 +24,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     props: {
       challenge,
       contest,
-      title
+      title,
     },
   };
 }
@@ -34,19 +34,26 @@ const Contest: NextPage<ContestPageProps> = ({ challenge, title, contest }) => {
 
   return (
     <>
-      <Seo title={title} description={des} />
+      <DefaultSeo title={title} description={des} />
+
       <Head>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={des} />
-        <meta name="twitter:image" content={`${SITE_URL}/ogs/${contest}`} />
+        <meta name="twitter:image" content={`${SITE_URL}ogs/${contest}`} />
         <meta name="og:title" content={title} />
         <meta name="og:description" content={des} />
-        <meta name="og:image" content={`${SITE_URL}/ogs/${contest}`} />
+        <meta name="og:image" content={`${SITE_URL}ogs/${contest}`} />
         <link rel="icon" type="image/png" href="/logos/vidicon.png" />
       </Head>
 
-      {challenge && challenge.title && challenge.title.length > 10 ? <WinnersSection challenge={challenge} /> : <Center minH={'90vh'}><Spinner /></Center>}
+      {challenge && challenge.title && challenge.title.length > 10 ? (
+        <WinnersSection challenge={challenge} />
+      ) : (
+        <Center minH={'90vh'}>
+          <Spinner />
+        </Center>
+      )}
     </>
   );
 };
