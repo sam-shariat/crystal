@@ -48,6 +48,31 @@ export const initVenomConnect = async () => {
             // connector: ,
             // authConnector: ,
           },
+          {
+            // NPM package
+            package: ProviderRpcClient,
+            packageOptions: {
+              fallback:
+                VenomConnect.getPromise('venomwallet', 'mobile') || (() => Promise.reject()),
+              forceUseFallback: true,
+            },
+            packageOptionsStandalone: {
+              fallback: standaloneFallback,
+              forceUseFallback: true,
+            },
+
+            // Setup
+            id: 'mobile',
+            type: 'mobile',
+
+            // name: "Custom Name",
+            // logo: "",
+
+            // High-level setup
+            // options: ,
+            // connector: ,
+            // authConnector: ,
+          },
         ],
         defaultWalletWaysToConnect: [
           // List of enabled options

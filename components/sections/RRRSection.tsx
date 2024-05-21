@@ -122,6 +122,7 @@ export default function RRRSection() {
   const [prizeRequest, setPrizeRequest] = useState<any[]>();
   const [minted, setMinted] = useState(false);
   const [mints, setMints] = useState<number | null>(null);
+  const [day, setDay] = useState<number>(29);
   const [idMints, setIdMints] = useState<number | null>(null);
   const [mintedNft, setMintedNft] = useState<BaseNftJson | null>();
   const rootContract = useAtomValue(rootContractAtom);
@@ -990,7 +991,7 @@ export default function RRRSection() {
         <Flex direction={'column'} gap={[16, 12, 10]} w={'100%'} >
           <Flex gap={6} direction={'column'} fontSize={['lg', 'lg', 'xl', '2xl']} w={'100%'}>
 
-          {mints !== null && mints > 0 && (
+          {/* {mints !== null && mints > 0 && (
               <Flex
                 gap={3}
                 w={['100%', '100%']}
@@ -1004,12 +1005,12 @@ export default function RRRSection() {
                 rounded={'lg'}>
                 You own {mints} RRRaffle(s)!
               </Flex>
-            )}
+            )} */}
             
-            <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
+            {/* <Text>Next Raffle / Day {RAFFLE_WINNERS.length+1}</Text>
             <Text fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'}>
               May 19th 23:59 UTC{' '}
-            </Text>
+            </Text> */}
             
 
             {/* <Text
@@ -1024,12 +1025,36 @@ export default function RRRSection() {
 
             
           </Flex>
-          <Text fontSize={'2xl'} p={4}>Previous Raffles</Text>
+          {/* <Text  fontSize={'3xl'} fontWeight={'bold'} borderBottom={'1px'} w={'100%'} textAlign={'center'}>Raffles By Day</Text> */}
+          <Center><Center maxW={'container.md'} gap={8}><Button
+                  height={'68px'}
+                  rounded={'full'}
+                  isDisabled={day === 0}
+                  colorScheme="venom"
+                  size={'lg'}
+                  onClick={() => setDay((y) => (y > 1 ? y - 1 : 1))}>
+                  <LinkIcon type='RiArrowLeftSLine' />
+                  
+                </Button>
+                <Text fontSize={['xl', '2xl', '3xl']} flexGrow={1} textAlign={'center'}>
+                  Raffle Day {day+1}
+                </Text>
+                <Button
+                  height={'68px'}
+                  colorScheme="venom"
+                  rounded={'full'}
+                  isDisabled={day === 29}
+                  size={'lg'}
+                  onClick={() => setDay((y) => y + 1)}>
+                  <LinkIcon type='RiArrowRightSLine' />
+                </Button></Center></Center>
           <Flex gap={3} direction={'column'} w={'100%'}>
             <Tabs
               colorScheme="green"
               rounded={'2xl'}
+              isFitted
               defaultIndex={RAFFLE_WINNERS.length - 1}
+              index={day}
               variant={'solid-rounded'}
               size={['sm','md','lg']}
               px={0}
@@ -1044,7 +1069,7 @@ export default function RRRSection() {
                   },
                 }}>
                 {RAFFLE_WINNERS.map((day, i) => (
-                  <Tab fontWeight={'bold'} key={'tab-prize-' + day.date + '-' + i} flexShrink={0}>
+                  <Tab fontWeight={'bold'} key={'tab-prize-' + day.date + '-' + i} flexShrink={0} onClick={()=> setDay(day.day-1)}>
                     {day.day}
                   </Tab>
                 ))}

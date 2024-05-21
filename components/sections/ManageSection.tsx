@@ -101,6 +101,7 @@ function ManageSection() {
     setIsLoading(true);
     setNames([]);
     const saltedCode = await saltCode(provider, String(account?.address), _contractAddress);
+    console.log('salted code ',saltedCode)
     // Hash it
     const codeHash = await provider.getBocHash(String(saltedCode));
     if (!codeHash) {

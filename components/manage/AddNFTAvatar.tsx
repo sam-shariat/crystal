@@ -190,6 +190,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
         const saltedCode = await saltCode(provider, String(account?.address), ZERO_ADDRESS);
         // Hash it
         const codeHash = await provider.getBocHash(String(saltedCode));
+        console.log(codeHash)
         if (!codeHash) {
           setIsLoading(false);
           return;

@@ -391,12 +391,7 @@ export default function ConnectButton() {
               <Flex gap={2} align={'center'}>
                 {primaryName?.name !== '' ? (
                   <Avatar
-                    color="white"
-                    bgGradient={
-                      colorMode === 'light'
-                        ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                        : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                    }
+                    color={colorMode === 'dark' ? 'var(--white)' : 'var(--dark0)'}
                     icon={<LinkIcon type="RiUserLine" size={22} color="#ffffff" />}
                     rounded={'full'}
                     src={AVATAR_API_URL + primaryName?.name}
@@ -449,12 +444,7 @@ export default function ConnectButton() {
               <Flex p={5} alignItems="center" gap={2}>
                 {primaryName?.name !== '' ? (
                   <Avatar
-                    color="white"
-                    bgGradient={
-                      colorMode === 'light'
-                        ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                        : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                    }
+                    color={colorMode === 'dark' ? 'var(--white)' : 'var(--dark0)'}
                     icon={<LinkIcon type="RiUserLine" size={22} color="#ffffff" />}
                     rounded={'full'}
                     src={AVATAR_API_URL + primaryName?.name}
