@@ -83,6 +83,10 @@ import {
   IPFS_RECORD_ID,
   AVATAR_RECORD_ID,
   DISPLAY_RECORD_ID,
+  LOCATION_RECORD_ID,
+  DESCRIPTION_RECORD_ID,
+  TARGET_ETH_RECORD_ID,
+  STYLES_RECORD_ID,
 } from 'core/utils/constants';
 import { ConnectButton } from 'components/venomConnect';
 import { getNft } from 'core/utils/nft';
@@ -158,8 +162,8 @@ const ManagePage: NextPage = () => {
 
   useEffect(()=> {
     //setLastChange(Date.now());
-    console.log(Date.now());
-    console.log(socials);
+    //console.log(Date.now());
+    //console.log(socials);
   },[title,subtitle,links,socials,wallets,lightMode,avatarShape,bgColor,buttonBgColor,variant,font,avatar,socialButtons,walletButtons,socialIcons,lineIcons])
 
   const getJson = () => {
@@ -278,38 +282,71 @@ const ManagePage: NextPage = () => {
         structure: [{ name: 'ipfsdata', type: 'string' }] as const,
       });
       
-      // let _records = [];
+      const _records = new Map();
 
-      // _records.push({key: IPFS_RECORD_ID, value: tvmCell.boc});
+      _records.set(IPFS_RECORD_ID, tvmCell.boc);
 
-      // //if(avatar !== ''){
-      //   const avatarCell = await provider.packIntoCell({
-      //     data: { avatar: String(avatar) },
-      //     structure: [{ name: 'avatar', type: 'string' }] as const,
-      //   });
-      //   _records.push({key: AVATAR_RECORD_ID, value: avatarCell.boc})
-      // //}
+      if(avatar !== ''){
+        const avatarCell = await provider.packIntoCell({
+          data: { avatar: String(avatar) },
+          structure: [{ name: 'avatar', type: 'string' }] as const,
+        });
+        _records.set(AVATAR_RECORD_ID, avatarCell.boc)
+      }
 
-      // if(title !== ''){
-      //   const displayCell = await provider.packIntoCell({
-      //     data: { display: String(title) },
-      //     structure: [{ name: 'display', type: 'string' }] as const,
-      //   });
-      //   _records.push({key: DISPLAY_RECORD_ID, value: displayCell.boc})
-      // }
+      if(title !== ''){
+        const displayCell = await provider.packIntoCell({
+          data: { display: String(title) },
+          structure: [{ name: 'display', type: 'string' }] as const,
+        });
+        _records.set(DISPLAY_RECORD_ID,displayCell.boc)
+      }
 
-      // const records_ = new Map();
+      if(subtitle !== ''){
+        const locationCell = await provider.packIntoCell({
+          data: { location: String(subtitle) },
+          structure: [{ name: 'location', type: 'string' }] as const,
+        });
+        _records.set(LOCATION_RECORD_ID,locationCell.boc)
+      }
 
-      // _records.map((obj) => {
-      //   records_.set(obj.key, obj.value);
-      // });
+      if(bio.length > 10){
+        const descriptionCell = await provider.packIntoCell({
+          data: { description: String(bio) },
+          structure: [{ name: 'description', type: 'string' }] as const,
+        });
+        _records.set(DESCRIPTION_RECORD_ID,descriptionCell.boc)
+      }
 
+      const ethWallet = wallets.filter((w)=> w.key.toLowerCase().includes('eth'));
+
+      if(ethWallet.length > 0){
+        const ethCell = await provider.packIntoCell({
+          data: { eth: String(ethWallet[0].value) },
+          structure: [{ name: 'eth', type: 'string' }] as const,
+        });
+        _records.set(TARGET_ETH_RECORD_ID,ethCell.boc)
+      }
+
+      const styles: any = {
+        light: lightMode,
+        font: font,
+        avatarShape: avatarShape
+      };
+
+      const stylesCell = await provider.packIntoCell({
+        data: { styles: Buffer.from(JSON.stringify(styles), 'binary').toString('base64') },
+        structure: [{ name: 'styles', type: 'string' }] as const,
+      });
+      
+      _records.set(STYLES_RECORD_ID,stylesCell.boc)
+
+      const records = Array.from(_records);
+      
+      console.log(records);
 
       // @ts-ignore: Unreachable code error
-      //const saveTx = await nftContract.methods.setRecords({ records: _records})
-      //const saveTx = await nftContract.methods.setRecord({ key: AVATAR_RECORD_ID, value: avatarCell.boc })
-
-      const saveTx = await nftContract.methods.setRecord({ key: IPFS_RECORD_ID, value: tvmCell.boc })
+      const saveTx = await nftContract.methods.setRecords({ records: records})
         .send({
           amount: String(MIN_FEE),
           bounce: true,
@@ -506,7 +543,7 @@ const ManagePage: NextPage = () => {
 
           // console.log('getting nft');
           const nftJson = await getNft(provider, new Address(nftAddress));
-          console.log(nftJson);
+          //console.log(nftJson);
           if (
             String(nftJson.info.owner) !== connectedAccount ||
             String(nftJson.info.manager) !== connectedAccount

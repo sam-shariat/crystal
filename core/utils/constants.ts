@@ -63,9 +63,6 @@ export enum CertificateStatus {
   EXPIRED,
 }
 
-export const TARGET_RECORD_ID = 0;
-export const TARGET_ETH_RECORD_ID = 1;
-
 export const DISPLAY_RECORD_ID = 10;
 export const AVATAR_RECORD_ID = 11;
 export const HEADER_RECORD_ID = 12;
@@ -265,6 +262,17 @@ export const EXAMPLE_WALLETS: any = {
   solana: 'BfiZDeHXzuz8pz5EGM6eUv1B1hLsGJQPRoxqYsBRKW3i',
   tron: 'TR22H7PLMm1BUaGfhmfnPY7VLEhG2U6y3t',
 };
+
+export const TARGET_VENOM_RECORD_ID = 0;
+export const TARGET_ETH_RECORD_ID = 1;
+export const TARGET_BTC_RECORD_ID = 2;
+export const TARGET_MATIC_RECORD_ID = 3;
+export const TARGET_ARB_RECORD_ID = 4;
+export const TARGET_BNB_RECORD_ID = 5;
+export const TARGET_AVAX_RECORD_ID = 6;
+export const TARGET_OP_RECORD_ID = 7;
+export const TARGET_SOL_RECORD_ID = 8;
+export const TARGET_TRX_RECORD_ID = 9;
 
 export const SOCIALS: string[] = [
   'Twitter',
@@ -2101,8 +2109,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:0d5109846e868c8708fbd8d3a8b0463cee613b6ab3c2611a0f320c8eb1b0d1b5',
         prize: '5-char domain',
-        tx: '',
-        name: '',
+        tx: '0:5cd9fd6c2a531c64267f1abd9c23f0c2750bda386f48a3293dcb86914e8464b7',
+        name: 'sextoy.venom',
       },
     ],
   },
@@ -2218,8 +2226,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:d8a17189b46ec5f91db14f4a58990fb68bd58ca693725d0c3cfb809f4eda4949',
         prize: '3-char domain',
-        tx: '',
-        name: '',
+        tx: '0:22121e7459389bf671066fbf9ee1f867184b3d6bc58b0ff0acffa8bd82942a7e',
+        name: 'nyc.venom',
       },
       {
         owner: '0:ba49cd7ce948b7fbff38fe190f1c0db189d46cbbbefc9145aaf462445b77732b',
@@ -2372,7 +2380,7 @@ export const WINNERS: {
     image: 'staxavatarchallenge.jpg',
     screenImage: 'staxavatarchallenge.png',
     winners: WINNERS_PUNKS_AVATAR_CHALLENGE,
-    status: 'Open till May 28th',
+    status: 'Ended',
   },
   punksavatarchallenge: {
     title: 'Punks Avatar Image Challenge',

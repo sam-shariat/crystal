@@ -42,18 +42,6 @@ export default async function handler(req, res) {
     const client = await getClient();
     const keys = await client.crypto.generate_random_sign_keys();
 
-    // const collection = new Account(CollectionContract, {
-    //   signer: signerKeys(keys),
-    //   client,
-    //   address: CONTRACT_ADDRESS,
-    // });
-
-    // const collectionv1 = new Account(CollectionContract, {
-    //   signer: signerKeys(keys),
-    //   client,
-    //   address: CONTRACT_ADDRESS_V1,
-    // });
-
     const root = new Account(RootContract, {
       signer: signerKeys(keys),
       client,
