@@ -7,19 +7,28 @@ Trust that your virtual identity management is secure, seamless and above all, s
 ## website 
 
 Website: [venomid.network](https://venomid.network/)
+
 Docs: [docs.venomid.network](https://docs.venomid.network/)
-[OasisGallery Marketplace](https://oasis.gallery/collection/0:2b353a0c36c4c86a48b0392c69017a109c8941066ed1747708fc63b1ac79e408)
-[VenomArt Marketplace](https://venomart.io/collection/0:2b353a0c36c4c86a48b0392c69017a109c8941066ed1747708fc63b1ac79e408)
-[Twitter](https://twitter.com/venomid_network)
-[Telegram](https://t.me/@venomid_network)
-[Medium](https://medium.com/@venomidapp)
-[LinkedIn](https://www.linkedin.com/company/venom-id)
+
+Discord: [discord.venomid.network](https://discord.venomid.network/)
+
+Oasis Marketplace: [OasisGallery Marketplace](https://oasis.gallery/collection/0:2b353a0c36c4c86a48b0392c69017a109c8941066ed1747708fc63b1ac79e408)
+
+VenomArt Marketplace: [VenomArt Marketplace](https://venomart.io/collection/0:2b353a0c36c4c86a48b0392c69017a109c8941066ed1747708fc63b1ac79e408)
+
+Twitter: [Twitter](https://twitter.com/venomid_network)
+
+Telegram: [Telegram](https://t.me/@venomid_network)
+
+Medium: [Medium](https://medium.com/@venomidapp)
+
+LinkedIn: [LinkedIn](https://www.linkedin.com/company/venom-id)
 
 ## contract address on venom mainnet
 [0:2b353a0c36c4c86a48b0392c69017a109c8941066ed1747708fc63b1ac79e408](https://venomscan.com/accounts/0:2b353a0c36c4c86a48b0392c69017a109c8941066ed1747708fc63b1ac79e408)
 
 ## smart contracts source code
-[https://github.com/sam-shariat/venomid](https://github.com/sam-shariat/venomid)
+[https://github.com/venomid-network/venomid-contracts](https://github.com/venomid-network/venomid-contracts)
 
 ## Useful Resources
 
