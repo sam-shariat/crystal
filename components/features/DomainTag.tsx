@@ -23,6 +23,7 @@ export default function DomainTag({ name }: Props) {
       gap={2}
       rounded={'full'}
       _hover={{border: '1px solid #77777799'}}
+      border={'1px solid #ffffff00'}
       textAlign={'center'}
       fontSize={!small ? 'md' : ['lg', 'xl']}
       as={Link}

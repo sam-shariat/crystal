@@ -100,6 +100,7 @@ import { isValidName } from 'ethers/lib/utils';
 import { checkPrize, reqPrize } from 'core/utils/prize';
 import PrizePool from 'components/raffle/PrizePool';
 import { Links } from 'components/Profile';
+import DomainTag from 'components/features/DomainTag';
 
 interface WinnersProps {
   challenge: any;
@@ -310,12 +311,7 @@ export default function WinnersSection({ challenge }: WinnersProps) {
                 <SimpleGrid columns={[1, 1, 1,2]} gap={12} py={6} placeContent={'center'} placeItems={'center'}>
                   <Stack gap={3} w={'100%'} p={[4,6,8]} bgColor={colorMode === 'light' ? 'white' : 'blackAlpha.300'}
                   rounded={'2xl'}>
-                    <Text fontSize={['2xl']} fontWeight={'bold'} bgGradient={
-                    colorMode === 'light'
-                      ? 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                      : 'linear(to-r, var(--venom0), var(--bluevenom0))'
-                  }
-                  bgClip="text">Title</Text>
+                    <DomainTag name={challenge.domain} />
                 <Text fontSize={['lg', 'xl']} fontWeight={'bold'}>{challenge.title}</Text>
                 <Text fontSize={['2xl']} fontWeight={'bold'} bgGradient={
                     colorMode === 'light'
