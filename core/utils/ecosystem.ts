@@ -6,7 +6,7 @@ export const ECOSYSTEM_APPS = [
         categories: [
             'Collection', 'Gaming', 'Casino'
         ],
-        description:'The Premier Casino & Gamin Platform with 90% revenue share ',
+        description:'The Premier Casino & Gaming Platform with 90% revenue share ',
         domain: 'stax.venom',
         link: 'https://venom.stax.live/',
         image: 'stax.venom',
