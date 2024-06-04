@@ -74,12 +74,12 @@ export default function EcosystemSection() {
                         <Text fontSize={'4xl'} fontWeight={'bold'}>Ecosystem Dapps</Text>
                         <Box>
                             <Button m={1} onClick={() => setCat('All')} isActive={cat === 'All'} variant={'outline'}>All</Button>
-                            {ECOSYSTEM_CATEGORIES.map((item) => <Button m={1} onClick={() => setCat(item)} isActive={cat === item} variant={'outline'}>{item}</Button>)}
+                            {ECOSYSTEM_CATEGORIES.map((item) => <Button m={1} onClick={() => setCat(item)} key={'dapp-cat-'+item} isActive={cat === item} variant={'outline'}>{item}</Button>)}
                         </Box>
                         <SimpleGrid columns={[1, 1, 2, 3]} gap={[10, 10, 10, 6]} placeItems={'center'}>
 
                             {apps.map((app) =>
-                                <Card gap={0} w={'100%'} bgColor={lightMode ? 'white' : 'whiteAlpha.100'} rounded={'xl'}>
+                                <Card gap={0} w={'100%'} bgColor={lightMode ? 'white' : 'whiteAlpha.100'} rounded={'xl'} key={'dapp-card-'+app.domain}>
                                     <CardHeader display={'flex'} justifyContent={'space-between'}>
                                         <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'bold'}>
                                             {app.title}
@@ -97,7 +97,7 @@ export default function EcosystemSection() {
                                             <Text>{app.description}</Text>
 
                                             <Flex>
-                                                {app.categories.map((appCat) => <Badge p={2} m={1} rounded={'full'}>{appCat}</Badge>)}
+                                                {app.categories.map((appCat) => <Badge key={'dapp-badge-'+app.domain+'-'+appCat} p={2} m={1} rounded={'full'}>{appCat}</Badge>)}
                                             </Flex>
                                         </Stack>
                                     </CardBody>
