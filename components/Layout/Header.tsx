@@ -73,21 +73,17 @@ export default function Header() {
     <>
       {!notMobile && (
         <Center px={[4, 4, 0]} fontSize={'lg'} py={2} bgGradient={'linear(to-r, var(--venom), var(--bluevenom1))'} color={'white'}>
-          <motion.div
-                  animate={{ scale: [1, 1.1, 1] }} // Scale animation
-                  transition={{ duration: 1.5, repeat: Infinity }} // Animation duration and loop
-                ><NextLink href="/rrraffle" passHref>
+          <NextLink href="/community" passHref>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     rounded={'full'}
                     gap={2}
-                    isActive={pathname === '/rrraffle'}
+                    isActive={pathname === '/community'}
                     size={'lg'}>
-                    <ImageBox srcUrl='/logos/rrraffle.svg' size={'200px'} />
-                    
+                    <ImageBox srcUrl="/screens/contribute.png" size={'46px'} />
+                    Community
                   </Button></NextLink>
-                </motion.div>
-              
+                
         </Center>
       )}
       <Box
@@ -139,27 +135,24 @@ export default function Header() {
             <HStack dir="ltr">
               {notMobile && (
                 
-                  <motion.div
-                    animate={{ scale: [1, 1.1, 1] }} // Scale animation
-                    transition={{ duration: 1.5, repeat: Infinity }} // Animation duration and loop
-                  ><NextLink href="/rrraffle" passHref>
+                  <NextLink href="/community" passHref>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       rounded={'full'}
                       gap={2}
-                      mx={4}
                       w={'200px'}
-                      isActive={pathname === '/rrraffle'}
+                      color={pathname === '/community' ? 'var(--venom1)' : 'inherit'}
+                      isActive={pathname === '/community'}
                       size={'lg'}>
-                      <ImageBox srcUrl='/logos/rrraffle.svg' size={'180px'} />
+                        <ImageBox srcUrl="/screens/contribute.png" size={'46px'} />
+                        Community
                     </Button></NextLink>
-                  </motion.div>
                 
               )}
 
               {isConnected && (
                 <NextLink href="/manage" passHref>
-                  <Button variant="ghost" rounded={'full'} gap={2} isActive={dashboard}>
+                  <Button variant="ghost" rounded={'full'} gap={2} isActive={dashboard} size={['md','md','lg']}>
                     <LinkIcon
                       type="RiApps2Line"
                       size={24}
@@ -254,14 +247,16 @@ export default function Header() {
                           </Button>
                         </NextLink>
 
+                        <NextLink href={'/ecosystem'} passHref>
+                        
+                          <Button variant="ghost" width="100%" onClick={onClose} colorScheme={pathname === '/ecosystem' ? 'green' : 'gray'} justifyContent="left">
+                            {t('Ecosystem')}
+                          </Button>
+                        </NextLink>
+
                         <Link href={ROADMAP_URL} target="_blank">
                           <Button variant="ghost" width="100%" justifyContent="left">
                             {t('RoadMap')}
-                          </Button>
-                        </Link>
-                        <Link href={GUIDES_URL} target="_blank">
-                          <Button variant="ghost" width="100%" justifyContent="left">
-                            {t('Guides')}
                           </Button>
                         </Link>
                         <Link href={DOCS_URL} target="_blank">
@@ -269,11 +264,12 @@ export default function Header() {
                             {t('Developers')}
                           </Button>
                         </Link>
-                        <Link href={GRINDING_URL} target="_blank">
+                        <Link href={GUIDES_URL} target="_blank">
                           <Button variant="ghost" width="100%" justifyContent="left">
-                            {t('Reveiw Us')}
+                            {t('Guides')}
                           </Button>
                         </Link>
+                        
 
                         <NextLink href={'/terms'} passHref>
                           <Button

@@ -49,13 +49,20 @@ import { RiCloseLine, RiExternalLinkLine, RiRestartLine } from 'react-icons/ri';
 import axios from 'axios';
 import { ThirdwebNftMedia } from '@thirdweb-dev/react';
 import { BaseNftJson } from 'core/utils/reverse';
+import { Styles } from 'types';
 
 interface Props {
-  defaultType: string;
-  key?: string;
+  url: string;
+  title: string;
+  link: string;
+  address: string;
+  alt?: string;
+  loading?: boolean;
+  color?: string;
+  styles?: Styles;
 }
 
-export default function NftGallery() {
+export default function NftGallery({ url, title, link, address, styles, alt, loading, color }: Props) {
   const { colorMode } = useColorMode();
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -66,7 +73,7 @@ export default function NftGallery() {
   const [loaded, setLoaded] = useState(false);
   const [nftjsons, setNftJsons] = useState<BaseNftJson[] | undefined>(undefined);
   const [nftjson, setNftJson] = useState<BaseNftJson | undefined>(undefined);
-  const eth = useAtomValue(ethAtom);
+  const eth = String(styles?.eth);
   const lightMode = useAtomValue(lightModeAtom);
 
   function fullScreen(index: number) {

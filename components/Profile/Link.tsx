@@ -29,6 +29,7 @@ import { AVAILABLE_LINKS, SITE_PROFILE_URL, SITE_URL } from 'core/utils/constant
 import Donate from './Donate';
 import Pay from './Pay';
 import EmbedModal from './EmbedModal';
+import NftGallery from './NftGallery';
 //import { motion, Variants } from 'framer-motion';
 
 interface Props {
@@ -136,6 +137,18 @@ export default function Link({ type, icon, title, url, image, content, styles, c
         />
       )}
 
+      {/* {type === 'nft gallery' && (
+        <NftGallery
+          url={String(image)}
+          link={url}
+          title={title}
+          address={String(content)}
+          styles={styles}
+          alt={title}
+          color={color ? color : 'default'}
+        />
+      )} */}
+
       {type === 'image link' && (
         <ChakraLink
           w={'100%'}
@@ -151,6 +164,7 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           <ImageLink url={String(image)} alt={title} />
         </ChakraLink>
       )}
+
 
       {type === 'ipfs image' && (
         <Box
@@ -197,14 +211,14 @@ export default function Link({ type, icon, title, url, image, content, styles, c
 
       {type === 'tweet' && (
         <Center w={'100%'}>
-        <Box w={'100%'} borderRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16} maxW={['default','550px']}>
-          <Tweet
-            tweetId={String(url.match(reg)?.at(2))}
-            onLoad={() => setIsLoading(false)}
-            options={{ theme: lightMode ? 'light' : 'dark', width: '100%', height: '200px' }}
-          />
-          {isLoading && <Skeleton width={'100%'} rounded={'lg'} height={'200px'} />}
-        </Box>
+          <Box w={'100%'} borderRadius={round === 'none' ? 0 : round === 'md' ? 8 : 16} maxW={['default', '550px']}>
+            <Tweet
+              tweetId={String(url.match(reg)?.at(2))}
+              onLoad={() => setIsLoading(false)}
+              options={{ theme: lightMode ? 'light' : 'dark', width: '100%', height: '200px' }}
+            />
+            {isLoading && <Skeleton width={'100%'} rounded={'lg'} height={'200px'} />}
+          </Box>
         </Center>
       )}
 
@@ -225,6 +239,6 @@ export default function Link({ type, icon, title, url, image, content, styles, c
           }
         </Box>
       )}
-      </>
+    </>
   );
 }

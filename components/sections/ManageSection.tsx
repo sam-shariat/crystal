@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAddressesFromIndex, getNft, getNftByIndex, saltCode } from 'core/utils/nft';
+import { getAccountsFromIndex, getAddressesFromIndex, getNft, getNftByIndex, saltCode } from 'core/utils/nft';
 import NextLink from 'next/link';
 import { Avatar } from 'components/Profile';
 import {
@@ -74,6 +74,7 @@ import MigrateModal from 'components/manage/MigrateModal';
 import { useRouter } from 'next/router';
 import { BaseNftJson, getAllNames } from 'core/utils/reverse';
 import { LinkIcon } from 'components/logos';
+import { formatDateDifference } from 'core/utils/stringUtils';
 
 function ManageSection() {
   const { provider } = useVenomProvider();
@@ -93,14 +94,17 @@ function ManageSection() {
   const [primaryName, setPrimaryName] = useAtom(primaryNameAtom);
   const [notMobile] = useMediaQuery('(min-width: 800px)');
   const { colorMode } = useColorMode();
-  const web3Name = createWeb3Name();
-  const { pathname } = useRouter();
+  const [nextPage, setNextPage] = useState('');
+  const [pageNum, setPageNum] = useState(1);
+  const web3Name = createWeb3Name();  
+  const { pathname} = useRouter();
+  const [page, setPage] = useState<string | undefined>();
 
   const loadByContract = async (_contractAddress: string) => {
     if (!provider || !provider.isInitialized) return;
     setIsLoading(true);
     setNames([]);
-    const saltedCode = await saltCode(provider, String(account?.address), _contractAddress);
+    const saltedCode = await saltCode(provider, String(account?.address), ROOT_CONTRACT_ADDRESS);
     console.log('salted code ',saltedCode)
     // Hash it
     const codeHash = await provider.getBocHash(String(saltedCode));
@@ -109,17 +113,23 @@ function ManageSection() {
       return;
     }
 
-    console.log('codeHash : ',codeHash);
-    
     // Fetch all Indexes by hash
-    const indexesAddresses = await getAddressesFromIndex(codeHash, provider);
-    if (!indexesAddresses || !indexesAddresses.length) {
+    const indexesAddresses = await getAccountsFromIndex(codeHash, provider, 50, page === '' ? undefined : page);
+    if (!indexesAddresses.accounts || !indexesAddresses.accounts.length) {
       //setIsLoading(false);
       return;
     }
+
+    console.log(indexesAddresses);
+
+    if(indexesAddresses.continuation){
+      setNextPage(indexesAddresses.continuation);
+    } else {
+      setNextPage('');
+    }
     // Fetch all nfts
     const _nfts = await Promise.all(
-      indexesAddresses.map(async (indexAddress) => {
+      indexesAddresses.accounts.map(async (indexAddress) => {
         try {
           let _nftJson = await getNftByIndex(provider, indexAddress);
           //console.log(_nftJson)
@@ -132,7 +142,7 @@ function ManageSection() {
                 _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
               } else {
                 _nftJson.avatar = ''; //_nftJson.preview?.source;
-              }
+              }                                       
             } else {
               _nftJson.avatar = ''; //_nftJson.preview?.source;
             }
@@ -143,7 +153,9 @@ function ManageSection() {
             'en-US',
             options as Intl.DateTimeFormatOptions
           );
-          _nftJson.expire_date = new Date(Number(_nftJson.expire_time) * 1000).toLocaleString();
+          //_nftJson.expire_date = new Date(Number(_nftJson.expire_time) * 1000).toLocaleString();
+          _nftJson.expire_date = formatDateDifference(new Date(Number(_nftJson.expire_time) * 1000))
+          
           setNames((n) => [...(n ? n : []), String(_nftJson.name)]);
           _nftJson.manageUrl = '/manage/' + _nftJson.address;
 
@@ -160,46 +172,46 @@ function ManageSection() {
     //setNftJsons()
   };
 
-  const loadByDb = async () => {
-    if (!provider || !provider.isInitialized) return;
-    setIsLoading(true);
-    console.log('loading db');
-    const result = (await getNftsByAddress(String(account?.address))).data;
-    console.log(result);
-    //console.log(rows[0]);
-    if (result.nfts.length > 0) {
-      result.nfts.map(async (nft: any) => {
-        try {
-          let _nftJson = await getNft(provider, nft.address);
-          const ipfsData = _nftJson.attributes?.find(
-            (att: any) => att.trait_type === 'DATA'
-          )?.value;
-          // if (ipfsData !== '') {
-          //   _nftJson.avatar = SITE_URL + 'api/avatar?name=' + _nftJson.name?.slice(0,-4) ;
-          // }
+  // const loadByDb = async () => {
+  //   if (!provider || !provider.isInitialized) return;
+  //   setIsLoading(true);
+  //   console.log('loading db');
+  //   const result = (await getNftsByAddress(String(account?.address))).data;
+  //   console.log(result);
+  //   //console.log(rows[0]);
+  //   if (result.nfts.length > 0) {
+  //     result.nfts.map(async (nft: any) => {
+  //       try {
+  //         let _nftJson = await getNft(provider, nft.address);
+  //         const ipfsData = _nftJson.attributes?.find(
+  //           (att: any) => att.trait_type === 'DATA'
+  //         )?.value;
+  //         // if (ipfsData !== '') {
+  //         //   _nftJson.avatar = SITE_URL + 'api/avatar?name=' + _nftJson.name?.slice(0,-4) ;
+  //         // }
 
-          if (ipfsData !== '') {
-            const res = await axios.get(ipfsGateway + ipfsData);
-            if (res) {
-              _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
-            } else {
-              _nftJson.avatar = ''; //_nftJson.preview?.source;
-            }
-          } else {
-            _nftJson.avatar = ''; //_nftJson.preview?.source;
-          }
-          _nftJson.manageUrl = '/oldManage/' + _nftJson.address;
-          _nftJson.external_url = `${SITE_PROFILE_URL}o/${_nftJson.name}`;
-          _nftJson.network = 'venom';
-          setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
-        } catch (e: any) {
-          // console.log('error getting venomid nft ', indexAddress);
-        }
-      });
-    } else {
-      console.log('nothing in db');
-    }
-  };
+  //         if (ipfsData !== '') {
+  //           const res = await axios.get(ipfsGateway + ipfsData);
+  //           if (res) {
+  //             _nftJson.avatar = res.data.avatar ?? ''; //_nftJson.preview?.source;
+  //           } else {
+  //             _nftJson.avatar = ''; //_nftJson.preview?.source;
+  //           }
+  //         } else {
+  //           _nftJson.avatar = ''; //_nftJson.preview?.source;
+  //         }
+  //         _nftJson.manageUrl = '/oldManage/' + _nftJson.address;
+  //         _nftJson.external_url = `${SITE_PROFILE_URL}o/${_nftJson.name}`;
+  //         _nftJson.network = 'venom';
+  //         setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
+  //       } catch (e: any) {
+  //         // console.log('error getting venomid nft ', indexAddress);
+  //       }
+  //     });
+  //   } else {
+  //     console.log('nothing in db');
+  //   }
+  // };
 
   const loadVenomNFTs = async () => {
     try {
@@ -209,19 +221,7 @@ function ManageSection() {
       setNftJsons([]);
       setIsLoading(true);
       setListIsEmpty(false);
-      if (pathname.includes('old')) {
-        await loadByContract(CONTRACT_ADDRESS);
-        await loadByContract(CONTRACT_ADDRESS_V1);
-        //await loadByContract(CONTRACT_ADDRESS_V2);
-        await loadByDb();
-      } else {
-        await loadByContract(ROOT_CONTRACT_ADDRESS);
-
-        // const __nftjsons = await getAllNames(provider,connectedAccount,100);
-        // setNftJsons(__nftjsons);
-        // console.log(__nftjsons)
-      }
-
+      await loadByContract(ROOT_CONTRACT_ADDRESS);
       setLoaded(true);
       setIsLoading(false);
     } catch (e) {
@@ -291,7 +291,7 @@ function ManageSection() {
           return;
         }
 
-        if (!loaded || network !== _network || ethAddress !== _ethAddress) {
+        if (!loaded || network !== _network || ethAddress !== _ethAddress || page || page === '') {
           console.log(network);
           if (network === 'venom') {
             loadVenomNFTs();
@@ -306,7 +306,15 @@ function ManageSection() {
       if (!isConnected) setNftJsons([]);
     }
     getNfts();
-  }, [isConnected, provider, network, ethAddress]);
+  }, [isConnected, provider, network, ethAddress, page]);
+
+  const reload = async ()=> {
+    if(network === 'venom'){
+      await loadVenomNFTs();
+    } else {
+      await loadEthNFTs();
+    }
+  }
 
   return (
     <Box>
@@ -367,18 +375,19 @@ function ManageSection() {
                   gap={2}>
                   show main
                 </Button>} */}
+
                 <Button
                   aria-label="reload-nfts"
                   key={`reload-${network}-nfts`}
                   rounded={'full'}
                   size={'lg'}
-                  onClick={network === 'venom' ? loadVenomNFTs : loadEthNFTs}
+                  onClick={reload}
                   gap={2}>
                   {notMobile ? 'Reload' : ''} <RiRestartLine size={'24'} />
                 </Button>
               </Flex>
               {isLoading && (
-                <Center width={'100%'} height={200}>
+                <Center width={'100%'} height={500}>
                   <Spinner size="lg" />
                 </Center>
               )}
@@ -596,8 +605,34 @@ function ManageSection() {
                 </Flex>
               </Flex>
             ))}
+            
           </Stack>
+          {nftjsons && nftjsons?.length > 0 && (
+          <Flex align={'center'} py={8} gap={4} justify={'end'}>
+            
+            <Text fontSize={['xl']} textAlign={'center'}>
+                  Page {pageNum}
+                </Text>
+          <Button
+                  rounded={'full'}
+                  isDisabled={page === undefined || page === '' || isLoading}
+                  colorScheme="venom"
+                  size={'lg'}
+                  onClick={() => {setPageNum(1);setPage('');}}>
+                  <LinkIcon type='RiArrowLeftDoubleFill' />
+                </Button>
+                <Button
+                  colorScheme="venom"
+                  rounded={'full'}
+                  isDisabled={nextPage === undefined || nextPage === '' || isLoading}
+                  size={'lg'}
+                  onClick={() => {setPageNum((y) => y + 1);setPage(nextPage);}}>
+                  <LinkIcon type='RiArrowRightSLine' />
+                  
+                </Button>
 
+                
+          </Flex>)}
           {listIsEmpty && !isLoading && (
             <Center display="flex" flexDirection="column" gap={4} minH={'75%'}>
               <Text fontSize="xl">

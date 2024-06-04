@@ -28,10 +28,10 @@ export default function Footer() {
               twitter: TWITTER_URL + SOCIAL_TWITTER,
               telegram: TELEGRAM_URL,
               //zealy: ZEALY_URL,
-              ylide: YLIDE_URL,
+              //ylide: YLIDE_URL,
               medium: MEDIUM_URL,
               youtube: YOUTUBE_URL,
-              //github: GITHUB_URL,
+              github: GITHUB_URL,
             },
           }}
         />

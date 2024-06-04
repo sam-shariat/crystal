@@ -682,7 +682,7 @@ export default function EarlyAdopters() {
           </Flex>
         </AccordionButton>
         <AccordionPanel py={4} minWidth="100%">
-          <Stack gap={6} fontSize={['md', 'lg']}>
+          <Stack gap={6} fontSize={['md', 'lg']} textAlign={'center'}>
             {/* <Flex
               align={'center'}
               bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
@@ -876,12 +876,16 @@ export default function EarlyAdopters() {
 
             <Flex
               align={'center'}
-              bg={colorMode === 'light' ? 'blackAlpha.100' : 'whiteAlpha.100'}
+              //bg={colorMode === 'light' ? 'blackAlpha.100' : 'whiteAlpha.100'}
               p={4}
+              textAlign={'center'}
+              w={'100%'}
               gap={2}
               rounded={'lg'}
               fontSize={'xl'}>
-              📢 The Venom ID Early Adopter program is opening on June 2024
+                <Text textAlign={'center'} w={'100%'}>
+              📢 The Venom ID Early Adopter program is opening on June 14th 2024
+              </Text>
             </Flex>
              {/* {minteds && minteds?.length > 0 && <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>}
             {earlyAdopterContract?.methods && <>

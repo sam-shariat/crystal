@@ -94,8 +94,41 @@ export default function CommunitySection() {
             </Flex>
 
             <Flex flexDirection={'column'} w={'100%'} gap={6} my={12}>
-              <ChallengesSection />
               {/* <MintNft /> */}
+              <NextLink href="/rrraffle" passHref>
+              <Button
+                w={'100%'}
+                h={['220px']}
+                size={'lg'}
+                color={'white'}
+                bg={'blackAlpha.900'}
+                colorScheme='blackAlpha'
+                border={'1px solid #77777799'}
+                gap={6}
+                rounded={'2xl'}
+                flexDir={['column', 'column']}
+                justifyContent={['center']}>
+                  
+                <Flex flexDirection={'column'} align={['center', 'center']} gap={4}>
+                <ImageBox srcUrl='/logos/rrraffle.svg' size={notMobile ? '180px' : '180px'} />
+                  
+                  <Text display={['none', 'none', 'block']} fontSize={'xl'}>
+                  RRRaffle Collection
+                  </Text>
+                  <Flex
+                    fontWeight={'normal'}
+                    flexDirection={['column', 'column', 'row']}
+                    gap={2}
+                    align={['center', 'center', 'start']}>
+                    <Text>Collection of 2222 NFT Wallpapers </Text>
+                    <Text>With Multiple Utilities</Text>
+                  </Flex>
+                  <Text fontWeight={'normal'}> 12th on TokenForge Hackathon!</Text>
+                </Flex>
+              </Button>
+              </NextLink>
+              <ChallengesSection />
+              
               <EarlyAdopters />
               <Button
                 w={'100%'}
@@ -129,7 +162,7 @@ export default function CommunitySection() {
                   <Text fontWeight={'normal'}> Get early access to perks!</Text>
                 </Flex>
               </Button>
-              <Button
+              {/* <Button
                 w={'100%'}
                 h={['220px', '220px', '160px']}
                 size={'lg'}
@@ -160,7 +193,7 @@ export default function CommunitySection() {
                   </Flex>
                   <Text fontWeight={'normal'}> We care about every message!</Text>
                 </Flex>
-              </Button>
+              </Button> */}
 
               <Button
                 w={'100%'}

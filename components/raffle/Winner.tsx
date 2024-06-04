@@ -56,7 +56,7 @@ const Winner = ({ owner, prize, tx, name }: WinnerProps) => {
             {prize.includes('VENOM') ? (
               <LinkIcon type="venom" color="#2bb673" />
             ) : prize.includes('PUNK') ? (<LinkIcon type="https://ipfs.io/ipfs/QmdwW8egQuQAYsEYgdz1coTExinMrjfheAYHm4PxX6stJB/punks.venom.png" size={'md'} />
-          ) : (<Logo w={'35px'} h={'26px'} />
+          ) : prize.includes('STAX') ? <LinkIcon type="https://ipfs.io/ipfs/QmRFe5HjkmjEoE7P77zzq4QKqzGP5fDivwCiDZ9ci4zb7Y/photo_2024-03-26_22-24-00.jpg" size={'md'} /> : (<Logo w={'35px'} h={'26px'} />
             )}
           </>
         )}

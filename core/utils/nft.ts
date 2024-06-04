@@ -120,7 +120,16 @@ export const getNftsByIndexes = async (provider: ProviderRpcClient, indexAddress
   };
 
   // Method, that return Index'es addresses by single query with fetched code hash
-  export const getAddressesFromIndex = async (codeHash: string,provider: ProviderRpcClient, limit?: number): Promise<Address[] | undefined> => {
-    const addresses = await provider?.getAccountsByCodeHash({ codeHash, limit });
+  export const getAddressesFromIndex = async (codeHash: string,provider: ProviderRpcClient, limit?: number, continuation?: string): Promise<Address[] | undefined> => {
+    const addresses = await provider?.getAccountsByCodeHash({ codeHash, limit , continuation });
+    console.log(addresses);
     return addresses?.accounts;
+  };
+
+  export const getAccountsFromIndex = async (codeHash: string,provider: ProviderRpcClient, limit?: number, continuation?: string): Promise<{
+    accounts: Address[];
+    continuation: string | undefined;
+}> => {
+    const addresses = await provider?.getAccountsByCodeHash({ codeHash, limit , continuation });
+    return addresses;
   };

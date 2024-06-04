@@ -111,7 +111,7 @@ export const IPFS_IO_URL = 'https://ipfs.io/ipfs/';
 export const SOCIAL_TWITTER = 'venomid_network';
 export const TWITTER_URL = 'https://twitter.com/';
 export const DISCORD_URL = 'https://discord.gg/XPwdhCAMXQ';
-export const GITHUB_URL = 'https://github.com/sam-shariat/venomidapp';
+export const GITHUB_URL = 'https://github.com/venomid-network';
 export const TELEGRAM_URL = 'https://t.me/venomid_network';
 export const DOCS_URL = 'https://docs.venomid.network/developer-docs/overview';
 export const ROADMAP_URL = 'https://docs.venomid.network/overview/roadmap';
@@ -2366,8 +2366,8 @@ export const WINNERS: {
   };
 } = {
   staxavatarchallenge: {
-    title: 'STAX Avatar Image Challenge',
-    sent: '0',
+    title: 'STAX Avatar Challenge',
+    sent: '10',
     domain: 'stax.venom',
     slug: 'stax-avatar-challenge',
     link: 'STAX COIN FLIP',
@@ -2376,14 +2376,14 @@ export const WINNERS: {
       'Set STAX NFT as your avatar on your .venom domain ID and save your avatar, you can use the static stax image if you do not own a stax nft! (full guides in the tweet)',
     prize_img:
       'https://ipfs.io/ipfs/QmRFe5HjkmjEoE7P77zzq4QKqzGP5fDivwCiDZ9ci4zb7Y/photo_2024-03-26_22-24-00.jpg',
-    prizes: ['10 STAX NFTS', '30 .venom Domains'],
+    prizes: ['10 STAX NFTS', '60 .venom Domains'],
     image: 'staxavatarchallenge.jpg',
     screenImage: 'staxavatarchallenge.png',
-    winners: WINNERS_PUNKS_AVATAR_CHALLENGE,
-    status: 'Ended',
+    winners: WINNERS_STAX_AVATAR_CHALLENGE,
+    status: 'Winners Announced',
   },
   punksavatarchallenge: {
-    title: 'Punks Avatar Image Challenge',
+    title: 'Punks Avatar Challenge',
     sent: '10',
     domain: 'punks.venom',
     slug: 'punks-avatar-challenge',
@@ -2396,7 +2396,7 @@ export const WINNERS: {
     prizes: ['10 PUNK NFTS', '30 .venom Domains'],
     image: 'punksavatarchallenge.jpg',
     screenImage: 'punksavatarchallenge.png',
-    winners: WINNERS_STAX_AVATAR_CHALLENGE,
+    winners: WINNERS_PUNKS_AVATAR_CHALLENGE,
     status: 'Winners Announced',
   },
 };

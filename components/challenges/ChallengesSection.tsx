@@ -37,58 +37,35 @@ export default function ChallengesSection() {
 
   return (
     <>
-      <Accordion
-        allowToggle
-        allowMultiple={false}
-        defaultIndex={[0]}
-        className="challenges"
-        borderRadius={10}
-        minWidth={'100%'}
-        size="lg"
-        backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
-        display={'flex'}>
-        <AccordionItem border={0} borderRadius={10} width={'100%'}>
-          <AccordionButton
-            width={'100%'}
-            as={Button}
-            justifyContent={'center'}
-            bgGradient={useColorModeValue(
-              'linear(to-r, var(--venom1), var(--bluevenom1))',
-              'linear(to-r, var(--venom2), var(--bluevenom2))'
-            )}
-            _expanded={{
-              bgGradient: useColorModeValue(
-                'linear(to-r, var(--venom1), var(--bluevenom1))',
-                'linear(to-r, var(--venom2), var(--bluevenom2))'
-              ),
-              borderBottomRadius: 0,
-            }}
-            _hover={{
-              bgGradient: useColorModeValue(
-                'linear(to-r, var(--venom0), var(--bluevenom0))',
-                'linear(to-r, var(--venom0), var(--bluevenom0))'
-              ),
-            }}
-            color={'white'}
-            h={'120px'}>
-            <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
-              <LinkIcon type="RiTrophyLine" size={small ? '46' : '36'} />
-              <Stack gap={1} justify={'left'}>
-                <Text fontWeight={'bold'} display={'flex'} flex={1} fontSize={['xl', '2xl']}>
-                  Challenges
-                </Text>
-              </Stack>
-            </Flex>
-          </AccordionButton>
-          <AccordionPanel p={[4,6,8]} minWidth="100%" maxW={'container.md'} h={'max-content'} key={'challenges-boxes-'+Object.entries(WINNERS).length} overflow={'auto'}>
-            <SimpleGrid columns={[1]} gap={[4,6,8]} fontSize={['md', 'lg']}>
-              {Object.entries(WINNERS).map(([key, value]) => (
-                <>
+      <Flex direction={'column'} gap={8}>
+        <Center
+          width={'100%'}
+          justifyContent={'center'}
+          bgGradient={useColorModeValue(
+            'linear(to-r, var(--bluevenom1), var(--venom1))',
+            'linear(to-r, var(--bluevenom2), var(--venom2))'
+          )}
+          rounded={'2xl'}
+          color={'white'}
+          h={'120px'}>
+          <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
+            <LinkIcon type="RiTrophyLine" size={small ? '46' : '36'} />
+            <Stack gap={1} justify={'left'}>
+              <Text fontWeight={'bold'} display={'flex'} flex={1} fontSize={['xl', '2xl']}>
+                Recent Challenges
+              </Text>
+            </Stack>
+          </Flex>
+        </Center>
+        <Flex minWidth="100%" maxW={'container.md'} h={'max-content'} key={'challenges-boxes-' + Object.entries(WINNERS).length}>
+          <SimpleGrid columns={[1, 1, 1, 2]} gap={[4, 6, 8]} fontSize={['md', 'lg']}>
+            {Object.entries(WINNERS).map(([key, value]) => (
+              <>
                 {value && <Stack
                   gap={4}
                   rounded={'2xl'}
                   key={key + '-box'}
-                  p={[4,6,8]}
+                  p={[4, 6, 8]}
                   border={'1px solid #77777777'}
                   bgColor={colorMode === 'light' ? 'whiteAlpha.300' : 'whiteAlpha.200'}>
                   <DomainTag name={value.domain} />
@@ -105,10 +82,13 @@ export default function ChallengesSection() {
                       fontWeight={'bold'}>
                       {value.title}
                     </Text>
-                    <Flex gap={2} justify={'space-between'} align={'center'}>
+                    <Flex gap={2} justify={'space-between'} direction={['column']}>
                       <Text> {value.link}</Text>
+
+                      <Text>{value.status}</Text>
                     </Flex>
                   </Stack>
+
                   <Button
                     w={'100%'}
                     key={key + '-button'}
@@ -128,15 +108,14 @@ export default function ChallengesSection() {
                     }
                     flexDir={['column']}
                     justifyContent={['center']}>
-                    <Text>{value.status}</Text>
+                    <Text>View Challenge</Text>
                   </Button>
                 </Stack>}
-                </>
-              ))}
-            </SimpleGrid>
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
+              </>
+            ))}
+          </SimpleGrid>
+        </Flex>
+      </Flex>
     </>
   );
 }

@@ -29,6 +29,7 @@ const ImageBox = ({ srcUrl, size, animation, draggable, rounded, shadow }: Props
       onDragEnd={(e, info) => {}}
       whileTap={{ cursor: draggable ? 'grabbing' : 'default' }}
       src={srcUrl}
+      
       width={size ? size : ['xs','sm','sm','sm','md']}
       boxShadow={shadow ?? 
         (srcUrl.includes('.gif') || srcUrl.includes('.png') || srcUrl.includes('.svg'))
