@@ -17,7 +17,7 @@ const Ecosystem: NextPage = () => {
         <meta name="twitter:description" content={des} />
         <meta
           name="twitter:image"
-          content={`${SITE_URL}/ogs/rafffle.jpg`}
+          content={`${SITE_URL}/ogs/ecosystem.jpg`}
         />
         <meta name="og:title" content={title} />
         <meta name="og:description" content={des} />

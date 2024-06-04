@@ -13,6 +13,17 @@ export const ECOSYSTEM_APPS = [
         integrated: true
     },
     {
+        title: 'RRRaffle',
+        categories: [
+            'Collection', 'Utility'
+        ],
+        description:'2222 Image Wallpapers usable on the Venom ID Platform',
+        domain: 'rrrafle.venom',
+        image: 'rrrafle.venom',
+        link: 'https://venomid.network/rrraffle',
+        integrated: true
+    },
+    {
         title: 'VENOM ART',
         categories: [
             'NFT Marketplace', 'NFT Launchpad'
@@ -23,17 +34,7 @@ export const ECOSYSTEM_APPS = [
         image: 'stax.venom',
         integrated: false
     },
-    {
-        title: 'RRRaffle',
-        categories: [
-            'Collection', 'Utility'
-        ],
-        description:'2222 Image Wallpapers usable on the Venom ID Platform',
-        domain: 'rrrafle.venom',
-        image: 'rrrafle.venom',
-        link: 'https://venomid.network/rrraffle',
-        integrated: false
-    },
+    
 ]
 
 export interface EcosystemAppType {
