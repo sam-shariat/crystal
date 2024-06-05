@@ -427,7 +427,7 @@ function ManageSection() {
                       {String(nft.name).toLowerCase()}
                     </Text>
                     <Text flexGrow={1} fontWeight={'normal'} fontSize={['md', 'lg']} opacity={0.5}>
-                      expires on {String(nft.expire_date).toLowerCase()}
+                      expires in {String(nft.expire_date).toLowerCase()}
                     </Text>
                   </Stack>
                 </Flex>

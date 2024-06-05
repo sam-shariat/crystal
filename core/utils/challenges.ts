@@ -473,8 +473,8 @@ export const WINNERS_STAX_AVATAR_CHALLENGE = [{
   {
     owner: '0:4559ad1493edc1c572951087a633dc6782046b991b617a555ef53489a15dafb0',
     prize: '5-char domain',
-    tx: '',
-    name: '',
+    tx: '0:2a04a02313c3b40dca57aaa56f75f7787ec93aff49526a32feaf8de23197251c',
+    name: 'louise.venom',
   },
   {
     owner: '0:aa442e3bffed362f8e415fe5df060bf8e7603abf9a3844d8b5e40a6588a0cd17',

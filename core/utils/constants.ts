@@ -976,8 +976,8 @@ export const RAFFLE_WINNERS = [
       {
         owner: '0:00d6d867baf113a9fb580a37f77d0fcd444cff2e203438626b290a27702e97c6',
         prize: '5-char domain',
-        tx: '',
-        name: '',
+        tx: '0:1b8bc6afded444d343066dad64c3749a87210bb2547f7b3d8d8a9a8f1f90c915',
+        name: 'darkeh.venom',
       },
       {
         owner: '0:ab5e2796764d83cf9a08bc4cf341b38ad05a0703332846c9ddfa9dbfa067fbf2',
