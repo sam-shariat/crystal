@@ -120,7 +120,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
     if (!nft) return;
     let avatarURL = nft.files
       ? !nft?.files[0]?.mimetype.includes('metadata') || !nft?.files[0]?.mimetype.includes('json')
-        ? nft.files[0].source
+        ? nft.files[0] ? nft.files[0].source : nft.preview?.source
         : nft.preview?.source
       : nft.preview?.source;
 
