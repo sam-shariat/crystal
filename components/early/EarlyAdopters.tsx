@@ -884,7 +884,7 @@ export default function EarlyAdopters() {
               rounded={'lg'}
               fontSize={'xl'}>
                 <Text textAlign={'center'} w={'100%'}>
-              📢 The Venom ID Early Adopter program is opening on June 14th 2024
+              Early Adopter program is opening on July 14th 2024
               </Text>
             </Flex>
              {/* {minteds && minteds?.length > 0 && <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>}

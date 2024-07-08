@@ -44,7 +44,7 @@ import {
 import { capFirstLetter, getAvatarUrl, sleep, truncAddress } from 'core/utils';
 import { LinkIcon } from 'components/logos';
 import { useConnect, useVenomProvider } from 'venom-react-hooks';
-import { getAddressesFromIndex, getNftByIndex, getNftsByIndexes, saltCode } from 'core/utils/nft';
+import { getAccountsFromIndex, getAddressesFromIndex, getNftByIndex, getNftsByIndexes, saltCode } from 'core/utils/nft';
 import {
   AVATAR_API_URL,
   OPENSEA_URL,
@@ -98,7 +98,9 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
   const setEditingAvatarFile = useSetAtom(editingAvatarFileAtom);
   const [avatarNft, setAvatarNft] = useAtom(avatarNftAtom);
   const avatarShape = useAtomValue(avatarShapeAtom);
-
+  const [page, setPage] = useState<string | undefined>();
+  const [nextPage, setNextPage] = useState('');
+  const [pageNum, setPageNum] = useState(1);
   const eth = useAtomValue(ethAtom);
   const [avatar, setAvatar] = useAtom(avatarAtom);
 
@@ -184,7 +186,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
       //// console.log('loading all nfts', account?.address);
       if (network.includes('venom')) {
         if (!provider?.isInitialized) return;
-        setNftJsons([]);
+        //setNftJsons([]);
         setIsLoading(true);
         setListIsEmpty(false);
         const saltedCode = await saltCode(provider, String(account?.address), ZERO_ADDRESS);
@@ -196,14 +198,23 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
           return;
         }
         // Fetch all Indexes by hash
-        const indexesAddresses = await getAddressesFromIndex(codeHash, provider);
-        if (!indexesAddresses || !indexesAddresses.length) {
-          if (indexesAddresses && !indexesAddresses.length) setListIsEmpty(true);
-          setIsLoading(false);
+
+        const indexesAddresses = await getAccountsFromIndex(codeHash, provider, 50, page === '' ? undefined : page);
+        if (!indexesAddresses.accounts || !indexesAddresses.accounts.length) {
+          //setIsLoading(false);
           return;
         }
+
+        console.log(indexesAddresses);
+
+        if(indexesAddresses.continuation){
+          setNextPage(indexesAddresses.continuation);
+        } else {
+          setNextPage('');
+        }
+        
         // Fetch all nfts
-        indexesAddresses.map(async (indexAddress) => {
+        indexesAddresses.accounts.map(async (indexAddress) => {
           try {
             const _nftJson = await getNftByIndex(provider, indexAddress);
             setNftJsons((nfts) => [...(nfts ? nfts : []), _nftJson]);
@@ -387,12 +398,16 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
         loadNFTs();
       }
 
+      if(page){
+        loadNFTs();
+      }
+
       if (!account) setListIsEmpty(false);
     }
     if (isOpen) {
       getNfts();
     }
-  }, [isOpen, network]);
+  }, [isOpen, network, page]);
 
   return (
     <>
@@ -414,7 +429,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
           <DrawerHeader gap={3} display={'flex'} flexDirection={notMobile ? 'row' : 'column'}>
             <HStack gap={2} flexGrow={1}>
               <Text flexGrow={1}>Pick {type === 'avatar' ? 'Avatar' : 'NFT'}</Text>
-              {type === 'avatar' && (
+              {/* {type === 'avatar' && (
                 <Button
                   aria-label="venom-punks-nfts"
                   onClick={() => {
@@ -429,12 +444,12 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
                     size={'md'}
                   />
                 </Button>
-              )}
+              )} */}
               <Button aria-label="change-view" onClick={() => setListView(!listView)} gap={2}>
                 {notMobile ? (listView ? 'Bigger' : 'Smaller') : ''}{' '}
                 {listView ? <RiLayoutGridLine size={'24'} /> : <RiGridLine size={'24'} />}
               </Button>
-              <Button aria-label="reload-nfts" onClick={loadNFTs} gap={2}>
+              <Button aria-label="reload-nfts" onClick={()=> { setNftJsons([]); setPage(undefined); loadNFTs(); }} gap={2}>
                 {notMobile ? 'Reload' : ''} <RiRestartLine size={'24'} />
               </Button>
               {notMobile && <NetworkModal />}
@@ -484,7 +499,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
                       flexDirection={'column'}
                       alignItems={'center'}
                       justifyContent={'center'}>
-                      <Box width={listView ? 100 : 150} maxH={250}>
+                      <Box width={listView ? 100 : 150} maxH={listView ? 250 : 300}>
                         {String(nft.preview?.mimetype).includes('mp4') &&
                         !nft.network?.includes('venom') ? (
                           <Center width={listView ? 100 : 150} height={180}>
@@ -508,7 +523,7 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
                         ) : (
                           <Avatar
                             noanimate
-                            maxH={230}
+                            maxH={listView ? 230 : 280}
                             nodrag
                             shape={type === 'avatar' ? avatarShape : 'round'}
                             shadow="none"
@@ -539,13 +554,28 @@ export default function AddNFTAvatar({ defaultType, key }: Props) {
                   </Center>
                 </Button>
               ))}
+
+              
             </SimpleGrid>
+
+            
             {isLoading && (
               <Center width={'100%'} height={200}>
                 <Spinner size="lg" />
               </Center>
             )}
-
+<Center w={'100%'}>
+                <Button
+                  colorScheme="venom"
+                  rounded={'full'}
+                  my={4}
+                  isDisabled={nextPage === undefined || nextPage === '' || isLoading}
+                  size={'lg'}
+                  onClick={() => {setPageNum((y) => y + 1);setPage(nextPage);}}>
+                  Load More
+                  
+                </Button>
+                </Center>
             {listIsEmpty && !isLoading && (
               <Center display="flex" flexDirection="column" gap={4} minH={200}>
                 <Text fontSize="xl">
