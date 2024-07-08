@@ -46,13 +46,15 @@ export default function EcosystemSection() {
     const { colorMode } = useColorMode();
     const lightMode = colorMode === 'light';
     const [cat, setCat] = useState('All');
-    const [apps, setApps] = useState<EcosystemAppType[]>([]);
+    const [apps, setApps] = useState<EcosystemAppType[] | undefined>(undefined);
 
     useEffect(() => {
         if (cat === 'All') {
-            setApps(ECOSYSTEM_APPS);
+            setApps(undefined);
         } else {
-            setApps(ECOSYSTEM_APPS.filter((item) => item.categories.includes(cat)));
+            setApps(()=> ECOSYSTEM_APPS.filter((item) => item.categories.includes(cat)));
+            console.log(cat)
+            console.log(ECOSYSTEM_APPS.filter((item) => item.categories.includes(cat)))
         }
 
     }, [cat])
@@ -76,10 +78,10 @@ export default function EcosystemSection() {
                             <Button m={1} onClick={() => setCat('All')} isActive={cat === 'All'} variant={'outline'}>All</Button>
                             {ECOSYSTEM_CATEGORIES.map((item) => <Button m={1} onClick={() => setCat(item)} key={'dapp-cat-'+item} isActive={cat === item} variant={'outline'}>{item}</Button>)}
                         </Box>
-                        <SimpleGrid columns={[1, 1, 2, 3]} gap={[10, 10, 10, 6]} placeItems={'center'}>
+                        <SimpleGrid columns={[1, 1, 2, 2, 3]} gap={[10, 10, 10, 6]} placeItems={'center'} key={cat}>
 
-                            {apps.map((app) =>
-                                <Card gap={0} w={'100%'} bgColor={lightMode ? 'white' : 'whiteAlpha.100'} rounded={'xl'} key={'dapp-card-'+app.domain}>
+                            {(apps ? apps : ECOSYSTEM_APPS).map((app) =>
+                                <Card gap={0} w={'100%'} bgColor={lightMode ? 'white' : 'whiteAlpha.100'} rounded={'xl'} key={'dapp-card-'+app.title}>
                                     <CardHeader display={'flex'} justifyContent={'space-between'}>
                                         <Text fontSize={['2xl', '2xl', '2xl']} fontWeight={'bold'}>
                                             {app.title}
@@ -92,13 +94,14 @@ export default function EcosystemSection() {
                                             bgColor={'black'}><Button variant={'ghost'}><Logo /></Button></Tooltip>}</CardHeader>
                                     <CardBody py={0}>
                                         <Stack gap={4} w={'100%'} >
-                                            <ImageBox srcUrl={AVATAR_API_URL + app.domain} shadow='none' />
+                                            <Flex gap={3} justify={'center'} align={'center'} py={2}>
+                                            <ImageBox srcUrl={app.image} shadow='none' size={'100px'} rounded='xl' />
 
                                             <Text>{app.description}</Text>
-
-                                            <Flex>
-                                                {app.categories.map((appCat) => <Badge key={'dapp-badge-'+app.domain+'-'+appCat} p={2} m={1} rounded={'full'}>{appCat}</Badge>)}
                                             </Flex>
+                                            <Center>
+                                                {app.categories.map((appCat) => <Badge key={'dapp-badge-'+app.domain+'-'+appCat} p={2} m={1} rounded={'full'}>{appCat}</Badge>)}
+                                            </Center>
                                         </Stack>
                                     </CardBody>
                                     <CardFooter>
