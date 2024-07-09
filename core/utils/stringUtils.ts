@@ -1,6 +1,6 @@
-function truncAddress(address: string) {
+function truncAddress(address: string, size: number = 5) {
   if (address === '') return ''
-  return address.slice(0, 5) + '...' + address.slice(address.length - 4);
+  return address.slice(0, size) + '...' + address.slice(address.length - 4);
 }
 
 function isValidUsername(name: string) {

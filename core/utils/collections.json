@@ -1,0 +1,403 @@
+{
+    "items": [
+      {
+        "address": "0:0d16c74a210724fce890494858caa5ef6731cfc34cafc422e97a944cbaf6c042",
+        "title": "Elemental Game",
+        "description": "Fight on the field of battle in a game with elements of strategy and luck",
+        "preview": {
+          "source": "https://ipfs.io/ipfs/bafybeihd5xr3ywlety32vbbhujmwxljyloxlwqchwizxn3ymkqgi2t2xli/elemgame.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://ipfs.io/ipfs/bafybeihd5xr3ywlety32vbbhujmwxljyloxlwqchwizxn3ymkqgi2t2xli/elemgame.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": "https://venomid.link/elemgame"
+      },
+      {
+        "address": "0:2172fdf5a4091b90aeacc2003a61a82f27d743aa7b5426711d9fa48036b8f59e",
+        "title": "RRRaffle",
+        "description": "A Lottery NFT Collection featuring 2,222 items! Each NFT Offers an exciting opportunity 🎁 To Win 🎁 1 Prize from The Prize Pool (~$6000), EVERYDAY, FOR 30 DAYS, Starting Right After All Items Are Minted! ",
+        "preview": {
+          "source": "https://ipfs.io/ipfs/Qmb1Qr55YGtC1FEuMuKHhGjthX7Sht3ihmB8nQDFervKDC/rrraffle-collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [],
+        "external_url": "https://venomid.network/rrraffle"
+      },
+      {
+        "address": "0:443cf5a6c17c9f8863646ed88b8b568679a171e0634c4ef2828282a86844d525",
+        "title": "VenomApes.com",
+        "description": "VENOM APES is first generative APES collection on the Venom Blockchain consist 10000 unique Art Apes.",
+        "preview": {
+          "source": "https://api.venomapes.com/static/icon.png",
+          "mimetype": "image/jpeg"
+        },
+        "files": [],
+        "external_url": "https://VenomApes.com",
+        "mint_price": "10"
+      },
+      {
+        "address": "0:1ef57a435d7c0306051d1a05965496def5609b5304ae44ac1d54a5bd85a1389c",
+        "title": "Serpaints",
+        "description": "Explore our curated selection of NFTs, where each piece showcases the Serpents' mastery of different art styles, from classical to contemporary, abstract to hyperrealism. Witness the serpent's journey through the realms of art, as they slither gracefully across digital canvases, leaving behind a trail of mesmerizing visuals and boundless creativity.",
+        "preview": {
+          "source": "https://bafybeiewsvvb3nktrfvhklfvoec4rt2zmvlarsrajsphrutyfmuqb42xni.ipfs.w3s.link/Logo.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://bafybeiewsvvb3nktrfvhklfvoec4rt2zmvlarsrajsphrutyfmuqb42xni.ipfs.w3s.link/Logo.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": "https://serpaint.art"
+      },
+      {
+        "address": "0:453827c43ae3bb39c29b10b3b9113d0e83710431a576998a482f639c90761f3c",
+        "title": "Wifey Bob",
+        "description": "Honey, dinner is served.",
+        "preview": {
+          "source": "https://wifey-bob.mypinata.cloud/ipfs/QmVgPLvTSg5dhPsp2doqeSgGxtvFUdhAMpMuR6TnqhXWCm/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://wifey-bob.mypinata.cloud/ipfs/QmVgPLvTSg5dhPsp2doqeSgGxtvFUdhAMpMuR6TnqhXWCm/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:595854c64806ba184084f730a288c8869c66f9c612cfdaef80a5dc0d6b6a1737",
+        "title": "Venom Rabbits",
+        "description": "The Venom Rabbits collection has SEXY written all over it. 3333 Sexy generated Rabbits on Venom blockchain.",
+        "preview": {
+          "source": "https://static.venomrabbits.com/mixed/596.png",
+          "mimetype": "image/png"
+        },
+        "files": [
+          {
+            "source": "https://static.venomrabbits.com/mixed/596.png",
+            "mimetype": "image/png"
+          }
+        ],
+        "external_url": "https://VenomRabbits.com",
+        "mint_price": "20"
+      },
+      {
+        "address": "0:fb0f53fbb6f5008525cb9b1f7c456e6b26e61231a1decacf6d1931babdb717ad",
+        "title": "Venom Time",
+        "description": "Venom Time is a fusion of technology and art ",
+        "preview": {
+          "source": "https://ipfs.io/ipfs/QmbsgGCAfwZetPbmZjnsdtyfRK6PR2xehe68vYttetyTg8/watch.gif",
+          "mimetype": "image/gif"
+        },
+        "files": [],
+        "external_url": "https://venom-time.com/"
+      },
+      {
+        "address": "0:b6a0888d66cadbb5ef2304081271881b7cc2acbebe6f375310a3f77cba2e8a7e",
+        "title": "TRUE ESSENCE",
+        "description": "This collection is imbued with an intoxicating array of wildly fantastical colors, which transform ordinary vistas into the realms of otherworldly creatures. Each artwork deliberately obscures the line between good and evil, leaving viewers in suspense—uncertain whether they're beholding a charmingly whimsical character or a monster poised to unleash its venom at any moment…\n\nThis collection comes from Koozma Corbut, an artist who combines classical photography with modern visualization technologies to enrich his pieces with deep emotional resonance and cutting-edge visual flair.\n\nIn Q2 2024, buyers of NFTs will gain access to a service enabling them to download high-resolution originals of artworks. This addition will allow owners to physically print their digital pieces at any print shop, bringing Koozma Corbut's vibrant and fantastical creations from the digital realm into the tangible world. The link to the service will appear on his Instagram (https://www.instagram.com/koozma_corbut/), so stay tuned for updates!",
+        "preview": {
+          "source": "https://bafkreib67dzicdmtr2agvglmx7zg6tjjljmhuxctx4i2yx6nus2m4x7goq.ipfs.w3s.link",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://bafybeibw57hhien3nexx2emuxoap2k27jgpx7tgkja5huk22zigatfv4ve.ipfs.w3s.link",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": "https://www.instagram.com/koozma_corbut/"
+      },
+      {
+        "address": "0:80a2a53b917c43134fecbfa1a347218a305ff7b6d21be387cdf28f026ea76202",
+        "title": "Venom Frogs",
+        "description": "Venom Frogs. No Promises. Maybe it is not only art.",
+        "preview": {
+          "source": "https://ipfs.io/ipfs/QmZakag9Z6zW2g3D4VZBWsYv95HHU9gxDhGVLXn6aaHLpU",
+          "mimetype": "image/png"
+        },
+        "files": [],
+        "external_url": "https://venomfrogs.com",
+        "mint_price": "22.33"
+      },
+      {
+        "address": "0:b79f3ed15167a4ca8ffa97914437baefea7fb59b9ce5405a9e40412866464104",
+        "title": "LogoVenom",
+        "description": "Unique collection of 100 VENOM logos modified with AI",
+        "preview": {
+          "source": "https://logovenom.github.io/images/0.png",
+          "mimetype": "image/png"
+        },
+        "files": [
+          {
+            "source": "https://logovenom.github.io/images/0.png",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": "https://logovenom.github.io"
+      },
+      {
+        "address": "0:5a38a95e1cf747bafb61009217eff486d3dd657d7c1006cd5d0e018852676803",
+        "title": "RING",
+        "description": "Welcome to \"Ring\" - the blockchain game that's more addictive than your favorite online quests and crypto investments combined!\nWe've cooked up mechanics so intuitive even a n00b could get it, all wrapped up in a plot juicier than a crypto pump and dump.\nEach NFT character in the \"Ring\" universe is as unique as your rarest loot drop, with their own style, stats, and snarky one-liners.\nFrom lucky breaks to risky moves, every hero's got their perks and pitfalls, so choose wisely: do you chase fast gains or opt for safety and stability?\nTeam up with your crew to stack those sats and level up together - because let's face it, solo play is for NPCs.\nWith plot twists unfolding across Europe's finest cities, your wit, cunning, and maybe just a dash of luck will be the keys to untangling our most mind-bending puzzles yet.\nOur goal? Equip you with everything you need to pwn the game and reach those sweet, sweet achievements. See you in the Ring 😏",
+        "preview": {
+          "source": "https://ring.mypinata.cloud/ipfs/QmYScm574BGtMz4jcdGRJKbUduL8RkbbJHJBhbvZJSoc1i/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://ring.mypinata.cloud/ipfs/QmYScm574BGtMz4jcdGRJKbUduL8RkbbJHJBhbvZJSoc1i/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:062000b62afb922fa11bd57c227d5c788059cefd9338785ef6b2fc6a1a4316d4",
+        "title": "Venom Lions",
+        "description": "1111 Venom Lions: Captivating, rare, and ready to roar into your collection 🦁🦁",
+        "preview": {
+          "source": "https://ipfs.io/ipfs/QmcUVnn6nko4f3nWbt13GxbUbVkLxK1BHQjk4V2cpQ84XY/lions_logo.gif",
+          "mimetype": "image/gif"
+        },
+        "files": [
+          {
+            "source": "https://ipfs.io/ipfs/QmcUVnn6nko4f3nWbt13GxbUbVkLxK1BHQjk4V2cpQ84XY/lions_logo.gif",
+            "mimetype": "image/gif"
+          }
+        ],
+        "external_url": "https://venomlions.art/"
+      },
+      {
+        "address": "0:33cdc5c22e384f2c1e27496e611246c2167c226b59c0bd00a49884f304a8ca07",
+        "title": "MEMETRIX",
+        "description": "Digital assets for the Memetrix ecosystem, uniquely crafted through AI, representing meme coins and used for strategic gameplay and trading.",
+        "preview": {
+          "source": "https://cdn.memetrix.art/icon.webp",
+          "mimetype": "image/webp"
+        },
+        "files": [
+          {
+            "source": "https://cdn.memetrix.art/icon.webp",
+            "mimetype": "image/webp"
+          }
+        ],
+        "external_url": "https://memetrix.art"
+      },
+      {
+        "address": "0:abfa2f828affb72c2ba907dee4f6ed3806b06c9507920a5c17ad0eca26aa29d9",
+        "title": "Venoms",
+        "description": "The deadliest creatures on the block and the hottest fashionistas in town. Who says poisonous creatures can't have killer style?",
+        "preview": {
+          "source": "https://venoms.mypinata.cloud/ipfs/QmRPfH9RKcuwarLCVEZeT3ax1pbRvVV4PhrZxUNKseyxsh/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://venoms.mypinata.cloud/ipfs/QmRPfH9RKcuwarLCVEZeT3ax1pbRvVV4PhrZxUNKseyxsh/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:e0a4956e9831312e267c98afdc92e78ad96223456d3d28affd5d9005ac70c569",
+        "title": "Venomous Ladies",
+        "description": "Life in 3178 is not simple, and they have evolved - for better or for worse. Venomous, but still Ladys. Do you dare to own one?",
+        "preview": {
+          "source": "https://venomous-ladies.mypinata.cloud/ipfs/QmbCdnYvxWMdfxdoseDDqL9xCkTTSTgu3L3hW2shJdARpA/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://venomous-ladies.mypinata.cloud/ipfs/QmbCdnYvxWMdfxdoseDDqL9xCkTTSTgu3L3hW2shJdARpA/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:fc3c386032bab48b5a9f2835f66d6827b7130de73ad514a279338e496a900e73",
+        "title": "MOAI",
+        "description": "Is he stoned or….a stone?",
+        "preview": {
+          "source": "https://moai.mypinata.cloud/ipfs/QmVfE6eLPdK7pW4Be3xfK2Zjsp65tATaXN8zGwaG8UgB2a/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://moai.mypinata.cloud/ipfs/QmVfE6eLPdK7pW4Be3xfK2Zjsp65tATaXN8zGwaG8UgB2a/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:0412526af7cbf353f06b2f51944bf821c19a9231aa9ed0ae6f925e798d39fdc7",
+        "title": "KIDCASH",
+        "description": "If your father chose a kid, who would he choose instead of you?",
+        "preview": {
+          "source": "https://kidcash.mypinata.cloud/ipfs/QmSMFkPzJNW5DpwpSQouvUEtu8vtSMZFPJV1Bi5E1KHMzT/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://kidcash.mypinata.cloud/ipfs/QmSMFkPzJNW5DpwpSQouvUEtu8vtSMZFPJV1Bi5E1KHMzT/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:3337f303b90ee5b6ec0bb40fb037ab89056eb2629d7fafb4a678f66436fe9b06",
+        "title": "Turbo Traders",
+        "description": "In profit we trust. PUMPIT",
+        "preview": {
+          "source": "https://turbo-traders.mypinata.cloud/ipfs/QmQHEbLJt1Q8N3pB3hGWDcX5STT3gCq4xoBQY88wADRMBH/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://turbo-traders.mypinata.cloud/ipfs/QmQHEbLJt1Q8N3pB3hGWDcX5STT3gCq4xoBQY88wADRMBH/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:20ad1d05677ec006cf25681dfb121479cb555d061f164f2f9ecf8d128344a363",
+        "title": "Burger Man",
+        "description": "These patties are ready to party.  It's time to let your taste buds (and your imagination) run wild.",
+        "preview": {
+          "source": "https://burger-man.mypinata.cloud/ipfs/QmZusgjJgFgeHS8eTEZ3jyj2WvxmPVSREyQyEQbbLfmZpA/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://burger-man.mypinata.cloud/ipfs/QmZusgjJgFgeHS8eTEZ3jyj2WvxmPVSREyQyEQbbLfmZpA/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:82eed7825cf2ecbc3238527b389d152bbc7a0367332778244aa6e07a405be35a",
+        "title": "Danger Pipboys",
+        "description": "Life after Venom-pocalypse. Enter at your own pr***t",
+        "preview": {
+          "source": "https://danger-pipboys.mypinata.cloud/ipfs/QmbkdavSSi12cDrrag5suDZsLKJg2rXHpUHai1akp9cUb9/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://danger-pipboys.mypinata.cloud/ipfs/QmbkdavSSi12cDrrag5suDZsLKJg2rXHpUHai1akp9cUb9/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:b72620ed0f4186127180c6c07863caf3bde5ff9838a2bbed8aec864c34176abd",
+        "title": "Venom Viperpunk",
+        "description": "10,000 Venom ViperPunks NFT Collection backed by $VIPER Token.",
+        "preview": {
+          "source": "https://ipfs.io/ipfs/bafybeifacv3shohqq7fvncypyumfxqxp7wcr7olcutie76to6h7dethltu/",
+          "mimetype": "image/gif"
+        },
+        "files": [
+          {
+            "source": "https://ipfs.io/ipfs/bafybeifacv3shohqq7fvncypyumfxqxp7wcr7olcutie76to6h7dethltu/",
+            "mimetype": "image/gif"
+          }
+        ],
+        "external_url": "https://viperpunk.io/"
+      },
+      {
+        "address": "0:372393af96be58f13fe4f3be1eca9474fe5029ebc8765fa167b95afad05f4854",
+        "title": "V Runes",
+        "description": "Fossils fuelling Venom est.2024",
+        "preview": {
+          "source": "https://venom-runes.mypinata.cloud/ipfs/QmVSRuqQaK95Y62RyAwxTLJHqTpibwAwa2abE2roLHaUoD/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://venom-runes.mypinata.cloud/ipfs/QmVSRuqQaK95Y62RyAwxTLJHqTpibwAwa2abE2roLHaUoD/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:b3a060c949c69e32f06e55fd6d3ccb45969348a28c910a19719c56769d40d714",
+        "title": "Bear Market Survivors",
+        "description": "We've laughed in the face of financial chaos. These are battle scars, a proof of our resilience. Immortalize your defiance, and let's ride Venom like there's no tomorrow.",
+        "preview": {
+          "source": "https://bear-market-survivors.mypinata.cloud/ipfs/QmYo4pRktRkDsvXrspePt2wbLo3yz2Z6bDhAwZgkcrwFMW/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://bear-market-survivors.mypinata.cloud/ipfs/QmYo4pRktRkDsvXrspePt2wbLo3yz2Z6bDhAwZgkcrwFMW/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+        "address": "0:4d6c03bcb72d404873302d63f65051f19db620a818bff5fc64111fa1fcf85a3f",
+        "title": "Ape Club",
+        "description": "Straight from the streets into Venom. Ape in.",
+        "preview": {
+          "source": "https://ape-club.mypinata.cloud/ipfs/QmTjasMDrhh9eYtVaGCqFSbikr9XWTNv5ukEu5iY8VAtju/collection.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+            "source": "https://ape-club.mypinata.cloud/ipfs/QmTjasMDrhh9eYtVaGCqFSbikr9XWTNv5ukEu5iY8VAtju/background.jpg",
+            "mimetype": "image/jpeg"
+          }
+        ],
+        "external_url": ""
+      },
+      {
+      "address": "0:db9c46c5738eea90bce46dd7b353e5022f98219916bac535b29f54f27773af6b",
+      "title": "Cyberpunk Tarot Cards",
+      "description": "The Cyberpunk Tarot Cards offer a unique twist on traditional tarot imagery, infusing the archetypal symbols with elements from the futuristic, dystopian world of cyberpunk.",
+      "preview": {
+          "source": "https://plum-leading-ferret-575.mypinata.cloud/ipfs/QmaJhdpc15xTpcxE5JJqRfzVNdx3oaj5GncjS4kbBofYBa",
+          "mimetype": "image/jpeg"
+      },
+      "files": [
+        {
+          "source": "https://plum-leading-ferret-575.mypinata.cloud/ipfs/QmVRnmwTPz3jGsx6RYEcCAWp4DGW93Qijji2gXHdyATcP8",
+          "mimetype": "image/jpeg"
+        }
+      ],
+      "external_url": "https://cybertarot.store/"
+      },
+      {
+        "address": "0:a56806adf3555e80e9f118886c4a3d1dca9061bd6302bd675b653c72255c226e",
+        "title": "The Ocean Sirens",
+        "description": "In the depths of the ocean, a sisterhood of mermaids known as 'The Ocean Sirens' have united to safeguard the marine realm. With their enchanting voices and boundless wisdom, they navigate the underwater world, protecting its inhabitants and embarking on adventures together. Each mermaid brings her unique strengths and qualities to the sisterhood, forging an unbreakable bond as they uphold the beauty and balance of the sea.",
+        "preview": {
+          "source": "https://purple-definite-trout-798.mypinata.cloud/ipfs/QmNqvT15cWoiYX7PpwKzeLrwszMxaKEsJy4Wxg9rTL9p8X/logo.jpg",
+          "mimetype": "image/jpeg"
+        },
+        "files": [
+          {
+          "source": "https://purple-definite-trout-798.mypinata.cloud/ipfs/QmNqvT15cWoiYX7PpwKzeLrwszMxaKEsJy4Wxg9rTL9p8X/collection_wallpaper.jpg",
+          "mimetype": "image/jpeg"
+        }
+        ],
+        "external_url": ""
+      }
+    ]
+  }
