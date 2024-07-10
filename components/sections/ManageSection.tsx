@@ -54,6 +54,7 @@ import {
   SITE_URL,
   VENOMART_NFT,
   VENOMSCAN_NFT,
+  VENTORY_NFT,
   ZERO_ADDRESS,
 } from 'core/utils/constants';
 import {
@@ -555,6 +556,32 @@ function ManageSection() {
                               />
                             }>
                             Sell on VenomArt
+                          </MenuItem>
+                        )}
+
+                        {nft.network === 'venom' && !nft.manageUrl?.includes('old') && (
+                          <MenuItem
+                            size={'lg'}
+                            as={Link}
+                            height={'48px'}
+                            bgColor={colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400'}
+                            sx={{
+                              textDecoration: 'none',
+                              _hover: {
+                                textDecoration: 'none',
+                                bgColor:
+                                  colorMode === 'light' ? 'blackAlpha.200' : 'whiteAlpha.300',
+                              },
+                            }}
+                            href={VENTORY_NFT + nft.address}
+                            target="_blank"
+                            icon={
+                              <LinkIcon
+                                type="https://ipfs.io/ipfs/QmawqexybALShCzreHJj9Akjg7o9xyeLrk65iJk3kuVGH2/VENTORY.svg"
+                                size={'sm'}
+                              />
+                            }>
+                            Sell on Ventory
                           </MenuItem>
                         )}
 

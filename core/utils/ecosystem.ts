@@ -69,6 +69,17 @@ export const ECOSYSTEM_APPS = [
         integrated: false
     },
     {
+        title: 'Segmint',
+        categories: [
+            'Collection', 'Gaming'
+        ],
+        description:'Pixels game - take your place in blockchain history!',
+        domain: '',
+        link: 'https://segmint.app/',
+        image: 'https://ipfs.io/ipfs/QmPxbvWGQtXwkYeC2KDanTBUgYEHnmV3sAosUiuoGwXMeB/segmint.jpg',
+        integrated: false
+    },
+    {
         title: 'Dragons Land',
         categories: [
             'Collection', 'Gaming'
