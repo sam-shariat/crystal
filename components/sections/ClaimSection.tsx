@@ -56,6 +56,7 @@ import {
   TLD,
   VARIATIONS_VIDS,
   VENOMART_COLLECTION,
+  VENTORY_COLLECTION,
 } from 'core/utils/constants';
 import { invalidUsernameMessage, isValidUsername, sleep } from 'core/utils';
 import { LinkIcon, Logo, LogoIcon } from 'components/logos';
@@ -482,6 +483,11 @@ const ClaimSection = () => {
               </Button>
             </AnimateScale>
             <AnimateScale delay={1.6}>
+            <Button as={Link} target='_blank' href={VENTORY_COLLECTION + ROOT_CONTRACT_ADDRESS} p={4} rounded={'2xl'} h={'100px'} display={'flex'} flexDir={'column'} gap={2} w={['100%','100%','auto']}>
+                <Flex gap={4} align={'center'}><LinkIcon type={'https://ipfs.io/ipfs/QmawqexybALShCzreHJj9Akjg7o9xyeLrk65iJk3kuVGH2/VENTORY.svg'} size={'lg'}/><Stack gap={0}><Text textAlign={'left'}>Collection On</Text><Text fontSize={['2xl','2xl','2xl']} fontWeight={'light'}>VENTORY</Text></Stack></Flex>
+              </Button>
+            </AnimateScale>
+            <AnimateScale delay={1.9}>
             <Button as={Link} target='_blank' href={OASIS_COLLECTION + ROOT_CONTRACT_ADDRESS} p={4} rounded={'2xl'} h={'100px'} display={'flex'} flexDir={'column'} gap={2} w={['100%','100%','auto']}>
                 <Flex gap={4} align={'center'}><LinkIcon type={'https://ipfs.io/ipfs/QmNXPY57PSu72UZwoDyXsmHJT7UQ4M9EfPcyZwpi3xqMQV/oasisgallery.svg.svg'} size={'lg'}/><Stack gap={0}><Text textAlign={'left'}>Collection On</Text><Text fontSize={['2xl','2xl','2xl']} fontWeight={'light'}>Oasis Gallery</Text></Stack></Flex>
               </Button>
