@@ -233,22 +233,20 @@ export default function IntroSection() {
         </SimpleGrid>
       </Container>
       <Flex minW={'100%'} width={'100%'} flexDirection={'column'} gap={[8,12,16]} pb={20} opacity={.7}>
-        <Parallax baseVelocity={-0.5}>
+        
           <Flex gap={[4,6,8]}>
             {VARIATIONS_VIDS.map((vid)=> <DomainName name={vid.vid} avatar={vid.avatar} size={['md','lg','xl']} key={`VenomID-${vid.vid}`}/>)}
           </Flex>
-        </Parallax>
-        <Parallax baseVelocity={+0.5}>
+        
           {/* <Flex gap={8}>
             
           {VARIATIONS.map((vid)=> <DomainName name={vid.vid} avatar={vid.avatar} size={['md','lg','xl']} key={`VenomID-${vid.vid}`}/>)}
           </Flex> */}
           <Flex gap={[4,6,8]}>
-            {VARIATIONS_VIDS.map((vid)=> <DomainName name={vid.vid} avatar={vid.avatar} size={['md','lg','xl']} key={`VenomID-${vid.vid}`}/>)}
+            {VARIATIONS_VIDS.reverse().map((vid)=> <DomainName name={vid.vid} avatar={vid.avatar} size={['md','lg','xl']} key={`VenomID-${vid.vid}`}/>)}
           </Flex>
 
           
-        </Parallax>
 
         {/* <Parallax baseVelocity={+2}>
            

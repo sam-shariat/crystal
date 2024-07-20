@@ -398,8 +398,8 @@ export const FONTS = ['Poppins', 'Lato', 'Pixelify Sans', 'Space Mono', 'Playfai
 export const VARIATIONS = [
   {
     avatar:
-      'https://ipfs.io/ipfs/QmQvTRLhNmUru9w1WT1JB9om9cjADHVwu2aVdmBWYN2qNA/_cc53c525-8cdd-45a2-865c-e0fc244ad96d.jpg',
-    avatarShape: 'hex',
+      'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head1.png',
+    avatarShape: 'none',
     bg: BG_IMAGES[7].bg,
     lightMode: BG_IMAGES[7].lightMode,
     buttonBg: BUTTON_BG_COLORS[1],
@@ -412,8 +412,8 @@ export const VARIATIONS = [
     vid: 'jonathon.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmWhLFCef3k23F51h4y1bH4Nr38FmKcy959hBFuX7atngk/samoel.vid',
-    avatarShape: 'circle',
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head2.png',
+    avatarShape: 'none',
     bg: BG_IMAGES[3].bg,
     lightMode: BG_IMAGES[3].lightMode,
     buttonBg: BUTTON_BG_COLORS[1],
@@ -426,8 +426,8 @@ export const VARIATIONS = [
   },
   {
     avatar:
-      'https://ipfs.io/ipfs/QmeEghR8KgWde6tELkTPLXVZdupRarPyYsb6yr74XrdA7Y/vid-avatar%20(1).jpg',
-    avatarShape: 'circle',
+      'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head3.png',
+    avatarShape: 'none',
     bg: BG_IMAGES[8].bg,
     lightMode: BG_IMAGES[8].lightMode,
     buttonBg: BUTTON_BG_COLORS[1],
@@ -441,8 +441,8 @@ export const VARIATIONS = [
   },
   {
     avatar:
-      'https://ipfs.io/ipfs/QmQJqujUTHNj28W4tHXEEQh54Mwi5YuWUVjJFFePowUR3n/_b69ba694-3bb6-4cea-99a7-16fceddfafc3.jpg',
-    avatarShape: 'hex',
+      'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head4.png',
+    avatarShape: 'none',
     bg: BG_IMAGES[5].bg,
     lightMode: BG_IMAGES[5].lightMode,
     buttonBg: BUTTON_BG_COLORS[4],
@@ -457,8 +457,8 @@ export const VARIATIONS = [
   },
   {
     avatar:
-      'https://ipfs.io/ipfs/QmUkwpstMppjJDi6s8YLK7iGaaVYWJvrmv1yhvKHM8VpK5/05882773ea2030c4cc8ee5cabc7b7a4c.png',
-    avatarShape: 'round',
+      'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head7.png',
+    avatarShape: 'none',
     bg: BG_COLORS[10].color,
     lightMode: BG_COLORS[10].lightMode,
     buttonBg: BUTTON_BG_COLORS[1],
@@ -472,8 +472,8 @@ export const VARIATIONS = [
   },
   {
     avatar:
-      'https://ipfs.io/ipfs/QmTNgHnxMXqcno1A85vG3qxpsJty91FJDfXh6Mfi7HwRyB/vidiconcircle%20(1).png',
-    avatarShape: 'round',
+      'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head9.png',
+    avatarShape: 'none',
     bg: BG_IMAGES[4].bg,
     lightMode: BG_IMAGES[4].lightMode,
     buttonBg: BUTTON_BG_COLORS[1],
@@ -489,36 +489,44 @@ export const VARIATIONS = [
 
 export const VARIATIONS_VIDS = [
   {
-    avatar: 'https://ipfs.io/ipfs/QmXTudZtDkgcKJEPrH7TwCpGSmWkD84jD221ad96CAX6Q3/aichar8.jpg',
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head4.png',
     vid: 'boo.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmcG2ACTvtgtvW1MUV71S2ey6fXcFXtowSicxDE4bLb1Vs/aichar7.jpg',
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head2.png',
     vid: 'luc.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmXfa45TwRkSRaaERMpTFQmFKHoAzqHqZj28H9Sk9jMC3k/aichar4.jpg',
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head3.png',
     vid: 'john.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmTJhU4AChpi59NEWzCDNu3tV6Wxbrwpc9mmTu4USe5n8f/aichar2.jpg',
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head1.png',
     vid: 'alice.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmUhcvFsmos6HxdvUg2D2kuaeTJ3wpS76gUtNe8wdNgCt3/aichar3.jpg',
-    vid: 'alex.venom',
-  },
-  {
-    avatar: 'https://ipfs.io/ipfs/QmRy2qg6MevBD99bEFxXiD1yQ7q3AQbsnwcccHHTshcfKQ/aichar1.jpg',
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head6.png',
     vid: 'sara.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmR2QUrwXRAdXWUjMdDwzNKGtxynrTgLrub772GgtbdkLn/aichar6.jpg',
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head7.png',
     vid: 'mary.venom',
   },
   {
-    avatar: 'https://ipfs.io/ipfs/QmcbmCyGL1x1JFa4mAAyZZ1CJDdTqdjYqKFWo7G4cx48cK/aichar5.jpg',
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head8.png',
     vid: 'joe.venom',
+  },
+  {
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head9.png',
+    vid: 'mike.venom',
+  },
+  {
+    avatar: 'https://ipfs.io/ipfs/QmTnYiVvCLLs5VzD9wzrdx9JDeVQ6GsGyiTabt1VCAUVFA/Head10.png',
+    vid: 'nick.venom',
+  },
+  {
+    avatar: 'https://ipfs.io/ipfs/QmbRS5gSjZpZwFskghcS6NqqMcVAGyB9mjiurdMPoLfZU3',
+    vid: 'max.venom',
   },
 ];
 
@@ -2340,7 +2348,7 @@ export const SOCIAL_URLS: any = {
   applemusic: 'music.apple.com/profile/',
   clubhouse: 'joinclubhouse.com/',
   etsy: 'etsy.com/shop/',
-  discord: 'discord.gg/',
+  discord: 'discord:',
   skype: 'skype:',
   slack: 'slack.com/',
   telegram: 't.me/',

@@ -37,16 +37,46 @@ export default function ChallengesSection() {
 
   return (
     <>
-      <Flex direction={'column'} gap={8}>
-        <Center
-          width={'100%'}
+      <Accordion
+      allowToggle
+      allowMultiple={false}
+      //defaultIndex={[0]}
+      // onChange={(e) => {
+      //   if(e === 0){
+      //     onOpen();
+      //   } else {
+      //     onClose();
+      //   }
+      // }}
+      className="earlyAdopters"
+      borderRadius={10}
+      minWidth={'100%'}
+      size="lg"
+      backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
+      display={'flex'}>
+      <AccordionItem border={0} borderRadius={10} width={'100%'}>
+        <AccordionButton
+          //width={'100%'}
+          as={Button}
           justifyContent={'center'}
-          bgGradient={useColorModeValue(
-            'linear(to-r, var(--bluevenom1), var(--venom1))',
-            'linear(to-r, var(--bluevenom2), var(--venom2))'
-          )}
-          rounded={'2xl'}
-          color={'white'}
+          // bgGradient={useColorModeValue(
+          //   'linear(to-r, var(--venom1), var(--bluevenom1))',
+          //   'linear(to-r, var(--venom2), var(--bluevenom2))'
+          // )}
+          // _expanded={{
+          //   bgGradient: useColorModeValue(
+          //     'linear(to-r, var(--venom1), var(--bluevenom1))',
+          //     'linear(to-r, var(--venom2), var(--bluevenom2))'
+          //   ),
+          //   borderBottomRadius: 0,
+          // }}
+          // _hover={{
+          //   bgGradient: useColorModeValue(
+          //     'linear(to-r, var(--venom0), var(--bluevenom0))',
+          //     'linear(to-r, var(--venom0), var(--bluevenom0))'
+          //   ),
+          // }}
+          // color={'white'}
           h={'120px'}>
           <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
             <LinkIcon type="RiTrophyLine" size={small ? '46' : '36'} />
@@ -56,9 +86,9 @@ export default function ChallengesSection() {
               </Text>
             </Stack>
           </Flex>
-        </Center>
-        <Flex minWidth="100%" maxW={'container.md'} h={'max-content'} key={'challenges-boxes-' + Object.entries(WINNERS).length}>
-          <SimpleGrid columns={[1, 1, 1, 2]} gap={[4, 6, 8]} fontSize={['md', 'lg']}>
+        </AccordionButton>
+        <AccordionPanel minWidth="100%" maxW={'container.md'} h={'max-content'} key={'challenges-boxes-' + Object.entries(WINNERS).length}>
+          <SimpleGrid columns={[1, 1, 1, 2]} gap={[4, 6, 8]} fontSize={['md', 'lg']} pt={4}>
             {Object.entries(WINNERS).map(([key, value]) => (
               <>
                 {value && <Stack
@@ -114,8 +144,9 @@ export default function ChallengesSection() {
               </>
             ))}
           </SimpleGrid>
-        </Flex>
-      </Flex>
+        </AccordionPanel>
+      </AccordionItem>
+      </Accordion>
     </>
   );
 }

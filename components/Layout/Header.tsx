@@ -45,7 +45,7 @@ import { useTranslate } from 'core/lib/hooks/use-translate';
 import { LinkIcon, Logo, VenomFoundation } from 'components/logos';
 import Footer from './Footer';
 import LogoLink from './LogoLink';
-import { DOCS_URL, GRINDING_URL, GUIDES_URL, ROADMAP_URL } from 'core/utils/constants';
+import { DOCS_URL, GRINDING_URL, GUIDES_URL, ROADMAP_URL, VARIATIONS_VIDS } from 'core/utils/constants';
 import { motion } from 'framer-motion';
 import ImageBox from 'components/claiming/ImageBox';
 export default function Header() {
@@ -80,7 +80,7 @@ export default function Header() {
                     gap={2}
                     isActive={pathname === '/community'}
                     size={'lg'}>
-                    <ImageBox srcUrl="/screens/contribute.png" size={'46px'} />
+                    <ImageBox srcUrl={VARIATIONS_VIDS[9].avatar} size={'46px'} shadow='none'/>
                     Community
                   </Button></NextLink>
                 
@@ -144,7 +144,7 @@ export default function Header() {
                       color={pathname === '/community' ? 'var(--venom1)' : 'inherit'}
                       isActive={pathname === '/community'}
                       size={'lg'}>
-                        <ImageBox srcUrl="/screens/contribute.png" size={'46px'} />
+                        <ImageBox srcUrl={VARIATIONS_VIDS[9].avatar} size={'46px'} shadow='none'/>
                         Community
                     </Button></NextLink>
                 

@@ -237,9 +237,11 @@ const ClaimSection = () => {
       
     }
 
-    checkActive();
+    if(path === ''){
+      checkActive();
+    }
     
-  }, [connectedAccount, reload]);
+  }, [connectedAccount, reload, path]);
 
   const [notMobile] = useMediaQuery('(min-width: 992px)');
 

@@ -21,7 +21,15 @@ import {
   Link,
   Center,
   Spinner,
+  Avatar,
+  Card,
+  CardBody,
+  CardFooter,
+  Heading,
+  IconButton,
+  Tooltip,
 } from '@chakra-ui/react';
+
 import axios from 'axios';
 import ImageBox from 'components/claiming/ImageBox';
 import { LinkIcon } from 'components/logos';
@@ -47,21 +55,28 @@ import {
   SITE_URL,
   TWITTER_FOLLOW_URL,
   TWITTER_RETWEET_URL,
+  VARIATIONS_VIDS,
   VENTORY_NFT_V1_ADDRESS,
   VENTORY_NFT_V2_ADDRESS,
   ZEALY_URL,
 } from 'core/utils/constants';
 import getNftsByAddress from 'core/utils/getNftsByAddress';
-import { getAddressesFromIndex, getNftByIndex, saltCode } from 'core/utils/nft';
+import {
+  getAccountsFromIndex,
+  getAddressesFromIndex,
+  getNftByIndex,
+  saltCode,
+} from 'core/utils/nft';
 import { getTwitterAuthUrl, refreshAccessToken } from 'core/utils/twitterUtils';
 import { getZealyByTwitterId } from 'core/utils/zealyUtils';
 import { useAtom, useAtomValue } from 'jotai';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useConnect, useSendExternalMessage, useVenomProvider } from 'venom-react-hooks';
 import { Address, Transaction } from 'everscale-inpage-provider';
 import { sleep } from 'core/utils';
 import { BaseNftJson } from 'core/utils/reverse';
 import InfoModal from './InfoModal';
+import ImageSlide from 'components/Profile/ImageSlide';
 
 export default function EarlyAdopters() {
   const { colorMode } = useColorMode();
@@ -99,6 +114,10 @@ export default function EarlyAdopters() {
   const toast = useToast();
   const { t } = useTranslate();
   const { provider } = useVenomProvider();
+
+  const images = useMemo(() => [VARIATIONS_VIDS[2].avatar, VARIATIONS_VIDS[7].avatar, VARIATIONS_VIDS[8].avatar, VARIATIONS_VIDS[9].avatar], [])
+
+  const captions = useMemo(() => [VARIATIONS_VIDS[2].vid, VARIATIONS_VIDS[7].vid, VARIATIONS_VIDS[8].vid, VARIATIONS_VIDS[9].vid], [])
 
   const getJson = (name: string, image: string, imageType: string = 'image/svg') => {
     const _json = {
@@ -244,7 +263,6 @@ export default function EarlyAdopters() {
     }
   };
 
-
   const openWindow = (url: string, e: any) => {
     window.open(url, 'newwindow', 'width=420,height=800');
     e !== null && e.preventDefault();
@@ -306,12 +324,12 @@ export default function EarlyAdopters() {
   useEffect(() => {
     if (twitterFollowed && twitterUser.id !== '') {
       if (twitterUser.id !== '') {
-      setTwitterVerified(true);
-    } else {
-      setTwitterVerified(false);
+        setTwitterVerified(true);
+      } else {
+        setTwitterVerified(false);
+      }
     }
-  }
-}, [twitterFollowed, twitterUser]);
+  }, [twitterFollowed, twitterUser]);
 
   const _validateZealy = async () => {
     setZealyLoading(true);
@@ -358,42 +376,86 @@ export default function EarlyAdopters() {
         return;
       }
     } else {
-       if (twitterFollowed.length > 10) {
-      //   if (twitterRetweeted.length > 10) {
-          setTwitterVerified(true);
+      if (twitterFollowed.length > 10) {
+        //   if (twitterRetweeted.length > 10) {
+        setTwitterVerified(true);
+        setTwitterLoading(false);
+        return;
+        //   } else {
+        //     setTwitterLoading(true);
+        //     window.open(TWITTER_RETWEET_URL, 'self', 'width=420,height=800');
+        //     setTimeout(() => {
+        //       setTwitterRetweeted(Buffer.from(`retweeted-on-${Date.now()}`).toString('base64'));
+        //       setTwitterLoading(false);
+        //     }, 3000);
+        //   }
+      } else {
+        setTwitterLoading(true);
+        window.open(TWITTER_FOLLOW_URL, 'self', 'width=420,height=800');
+        setTimeout(() => {
+          setTwitterFollowed(Buffer.from(`followed-on-${Date.now()}`).toString('base64'));
           setTwitterLoading(false);
-          return;
-      //   } else {
-      //     setTwitterLoading(true);
-      //     window.open(TWITTER_RETWEET_URL, 'self', 'width=420,height=800');
-      //     setTimeout(() => {
-      //       setTwitterRetweeted(Buffer.from(`retweeted-on-${Date.now()}`).toString('base64'));
-      //       setTwitterLoading(false);
-      //     }, 3000);
-      //   }
-       } else {
-         setTwitterLoading(true);
-         window.open(TWITTER_FOLLOW_URL, 'self', 'width=420,height=800');
-         setTimeout(() => {
-           setTwitterFollowed(Buffer.from(`followed-on-${Date.now()}`).toString('base64'));
-           setTwitterLoading(false);
-         }, 5000);
-       }
+        }, 5000);
+      }
     }
   };
 
-  const loadByContract = async (_contractAddress: string) => {
+  const loadByContract = async (_contractAddress: string): Promise<number> => {
     if (!provider || !provider.isInitialized) return 0;
-    const saltedCode = await saltCode(provider, String(connectedAccount), _contractAddress);
+    setIsLoading(true);
+    let score: number = 0;
+    const saltedCode = await saltCode(provider, String(connectedAccount), ROOT_CONTRACT_ADDRESS);
+    console.log('salted code ', saltedCode);
     // Hash it
     const codeHash = await provider.getBocHash(String(saltedCode));
-    // Fetch all Indexes by hash
-    const indexesAddresses = await getAddressesFromIndex(codeHash, provider);
-    if (indexesAddresses) {
-      return indexesAddresses?.length;
-    } else {
+    if (!codeHash) {
+      //setIsLoading(false);
       return 0;
     }
+
+    // Fetch all Indexes by hash
+    const indexesAddresses = await getAccountsFromIndex(codeHash, provider, 50);
+    if (!indexesAddresses.accounts || !indexesAddresses.accounts.length) {
+      //setIsLoading(false);
+      return 0;
+    }
+
+    if (indexesAddresses.continuation) {
+      score += 10;
+    }
+
+    // Fetch all nfts
+    await Promise.all(
+      indexesAddresses.accounts.map(async (indexAddress) => {
+        try {
+          let _nftJson = await getNftByIndex(provider, indexAddress);
+          switch (_nftJson.name?.length) {
+            case 9:
+              score += 100;
+              break;
+
+            case 10:
+              score += 40;
+              break;
+
+            case 11:
+              score += 2;
+              break;
+
+            default:
+              score += 1;
+              break;
+          }
+          //console.log(_nftJson)
+        } catch (e: any) {
+          // console.log('error getting venomid nft ', indexAddress);
+          return {};
+        }
+      })
+    );
+
+    console.log(score);
+    return score;
   };
 
   const loadMinteds = async () => {
@@ -401,7 +463,7 @@ export default function EarlyAdopters() {
     if (!provider || !provider.isInitialized) return;
     setMinteds([]);
     setMintedStrings([]);
-    const { count } = await earlyAdopterContract.methods.totalSupply({answerId:0}).call();
+    const { count } = await earlyAdopterContract.methods.totalSupply({ answerId: 0 }).call();
     setTotalSupply(count);
     const saltedCode = await saltCode(
       provider,
@@ -554,28 +616,28 @@ export default function EarlyAdopters() {
   const _checkOwnVid = async () => {
     setOwnVidLoading(true);
     const v0nfts = await loadByContract(ROOT_CONTRACT_ADDRESS);
-    const v1nfts = await loadByContract(CONTRACT_ADDRESS);
-    const v2nfts = await loadByContract(CONTRACT_ADDRESS_V1);
+    //const v1nfts = await loadByContract(CONTRACT_ADDRESS);
+    //const v2nfts = await loadByContract(CONTRACT_ADDRESS_V1);
     //const v3nfts = await loadByDb();
 
     //console.log(v1nfts, v2nfts, v3nfts);
     let _no = 0;
     if (Number(v0nfts) > 0) {
       _no += 1;
-    };
+    }
 
-    if (Number(v1nfts) > 0) {
-      setOwnVid(true);
-      _no += 1;
-    } else {
-      setOwnVid(false);
-    }
-    if (Number(v2nfts) > 0) {
-      setOwnVid1(true);
-      _no += 1;
-    } else {
-      setOwnVid1(false);
-    }
+    // if (Number(v1nfts) > 0) {
+    //   setOwnVid(true);
+    //   _no += 1;
+    // } else {
+    //   setOwnVid(false);
+    // }
+    // if (Number(v2nfts) > 0) {
+    //   setOwnVid1(true);
+    //   _no += 1;
+    // } else {
+    //   setOwnVid1(false);
+    // }
 
     // if (Number(v3nfts) > 0) {
     //   setOwnVid2(true);
@@ -584,11 +646,11 @@ export default function EarlyAdopters() {
     //   setOwnVid2(false);
     // }
 
-    //console.log(v0nfts,v1nfts, v2nfts, v3nfts);
+    console.log(v0nfts);
 
     setOwnVidChecked(true);
     setOwnVidLoading(false);
-    setOwnVids(_no);
+    setOwnVids(v0nfts);
   };
 
   const _checkOwnVidVen = async () => {
@@ -624,7 +686,7 @@ export default function EarlyAdopters() {
     if (!connectedAccount || connectedAccount === '') return;
     //if (!isOpen) return;
 
-    //checkOwnVid();
+    checkOwnVid();
     //checkOwnVidVen();
     //checkMinteds();
   }, [provider, connectedAccount]);
@@ -641,48 +703,60 @@ export default function EarlyAdopters() {
       //     onClose();
       //   }
       // }}
-      className="bio"
+      className="earlyAdopters"
       borderRadius={10}
-      minWidth={'100%'}
+      w={'100%'}
       size="lg"
-      backgroundColor={colorMode === 'dark' ? 'whiteAlpha.100' : 'blackAlpha.100'}
+      backgroundColor={colorMode === 'dark' ? 'blackAlpha.700' : 'whiteAlpha.700'}
       display={'flex'}>
       <AccordionItem border={0} borderRadius={10} width={'100%'}>
         <AccordionButton
-          //width={'100%'}
+          width={'100%'}
           as={Button}
           justifyContent={'center'}
-          // bgGradient={useColorModeValue(
-          //   'linear(to-r, var(--venom1), var(--bluevenom1))',
-          //   'linear(to-r, var(--venom2), var(--bluevenom2))'
-          // )}
-          // _expanded={{
-          //   bgGradient: useColorModeValue(
-          //     'linear(to-r, var(--venom1), var(--bluevenom1))',
-          //     'linear(to-r, var(--venom2), var(--bluevenom2))'
-          //   ),
-          //   borderBottomRadius: 0,
-          // }}
-          // _hover={{
-          //   bgGradient: useColorModeValue(
-          //     'linear(to-r, var(--venom0), var(--bluevenom0))',
-          //     'linear(to-r, var(--venom0), var(--bluevenom0))'
-          //   ),
-          // }}
-          //color={'white'}
-          h={'120px'}>
+          _expanded={{ bgColor: colorMode === 'light' ? 'whiteAlpha.400' : 'blackAlpha.400' }}
+          border={'1px solid #77777733'}
+          //color={colorMode === 'dark' ? 'white' : 'black'}
+          h={'140px'}>
+            
           <Flex gap={[3, 4]} alignItems={'center'} justify={'center'}>
-            <LinkIcon type="RiVerifiedBadgeLine" size={small ? '46' : '36'} />
+            <Avatar src={VARIATIONS_VIDS[9].avatar} size={['md', 'lg', 'lg', 'lg', 'xl']} />
             <Stack gap={1} justify={'left'}>
-            <Text fontWeight={'bold'} display={'flex'} flex={1} fontSize={['xl', '2xl']}>
-              Early Adopters Program
-            </Text>
-            {totalSupply > 0 && <Text fontSize={'2xl'} fontWeight={'light'} textAlign={'left'} >{totalSupply} total mints</Text>}
+              <Text fontWeight={'bold'} display={'flex'} flex={1} fontSize={['xl', '2xl']}>
+                Early Adopters Program
+              </Text>
+              <Text
+                fontSize={'2xl'}
+                fontWeight={'bold'}
+                textAlign={'left'}
+                fontFamily={'Pixelify Sans'}>
+                Angry Venomites
+              </Text>
+              {totalSupply > 0 && (
+                <Text fontSize={'2xl'} fontWeight={'light'} textAlign={'left'}>
+                  {totalSupply} total mints
+                </Text>
+              )}
             </Stack>
           </Flex>
         </AccordionButton>
-        <AccordionPanel py={4} minWidth="100%">
-          <Stack gap={6} fontSize={['md', 'lg']} textAlign={'center'}>
+        <AccordionPanel py={8} minWidth="100%" px={4} fontFamily={'Pixelify Sans'}>
+        <SimpleGrid columns={[1,1,1,2]} placeItems={'center'} alignItems={'center'}>
+        <Box maxW={'sm'} p={4}>
+            
+            
+        <ImageSlide images={images} captions={captions} controls={false} showCaptions={false} rounded='2xl' minH='300'/>
+
+              
+          </Box>
+          <Flex flexDirection={'column'} gap={4} p={2} fontSize={['lg']} align={['center','center','center','start']} textAlign={['center','center','center','left']}>
+            <Heading fontFamily={'Pixelify Sans'}>
+              Angry Venomites
+            </Heading>
+            <Text >
+              Collection of 3333 Angry Avatars Coming to the Venom Blockchain!
+            </Text>
+            <Text >Part of Venom ID Early Adopters Program</Text>
             {/* <Flex
               align={'center'}
               bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
@@ -873,329 +947,76 @@ export default function EarlyAdopters() {
                 {ownVidVenChecked ? (ownVidVen ? 'Yes' : 'No') : 'Check'}
               </Button>
             </Flex> */}
+            {/* <SimpleGrid
+              gap={[2, 2, 4]}
+              columns={[2, 2, 4]}
+              py={4}
+              placeContent={'center'}
+              alignContent={'center'}>
+              {[VARIATIONS_VIDS[2], VARIATIONS_VIDS[7], VARIATIONS_VIDS[8], VARIATIONS_VIDS[9]].map(
+                (vid) => (
+                  <Card
+                    bg={colorMode === 'light' ? 'var(--lightGradient)' : 'var(--darkGradient)'}
+                    rounded={'xl'}>
+                    <CardBody>
+                      <Avatar
+                        src={vid.avatar}
+                        rounded={'none'}
+                        size={['xl', '2xl']}
+                        key={`VenomID-${vid.vid}`}
+                      />
+                    </CardBody>
+                    <CardFooter>
+                      <Text fontWeight={'bold'} textAlign={'center'} w={'100%'}>
+                        {vid.vid}
+                      </Text>
+                    </CardFooter>
+                  </Card>
+                )
+              )}
+            </SimpleGrid> */}
+            <Text fontSize={['xl']} fontWeight={'bold'}>
+              For The first 3333 .venom domain owners
+            </Text>
 
-            <Flex
-              align={'center'}
-              //bg={colorMode === 'light' ? 'blackAlpha.100' : 'whiteAlpha.100'}
-              p={4}
-              textAlign={'center'}
-              w={'100%'}
-              gap={2}
-              rounded={'lg'}
-              fontSize={'xl'}>
-                <Text textAlign={'center'} w={'100%'}>
-              Early Adopter program will be available after 3000 domains are registered !
-              </Text>
-            </Flex>
-             {/* {minteds && minteds?.length > 0 && <Text textAlign={'center'} fontSize={'xl'} fontWeight={'bold'}>Your OAT(s)</Text>}
-            {earlyAdopterContract?.methods && <>
-            {!isLoading ? (
-              <Flex
-                align={'center'}
-                //bg={useColorModeValue('blackAlpha.100', 'blackAlpha.100')}
-                p={4}
-                rounded={'lg'}
-                justify={'center'}>
-                <SimpleGrid gap={8} columns={[1, 1, 2, 3]} spacing={'32px'}>
+            <Button
+              w={'300px'}
+              size={'lg'}
+              isDisabled={true}
+              isLoading={isMinting || isConfirming}
+              colorScheme="venom"
+              loadingText={
+                isMinting ? 'Minting ...' : isConfirming ? 'Confirming ...' : 'Loading ...'
+              }
+              rounded={'full'}>
+              MINT COMING SOON
+            </Button>
+            
 
-                  {minteds?.map((nft)  => <Flex key={nft.name+'-badge-flex'} flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
-                      
-                      <ImageBox srcUrl={String(nft.preview?.source)} size={200} rounded='full'/>
-                      <Text textAlign={'center'}>{nft.name}</Text>
-                      <Button
-                        w={'100%'}
-                        color={'white'}
-                        isDisabled={isMinting || isConfirming}
-                        isLoading={isMinting || isConfirming}
-                        loadingText={
-                          isMinting
-                            ? 'Minting ...'
-                            : isConfirming
-                            ? 'Confirming ...'
-                            : 'Loading ...'
-                        }
-                        onClick={()=> openWindow(
-                                ETHERSCAN_URLS['venom'] +
-                                  nft.address,
-                                null
-                              )
-                        }
-                        rounded={'full'}
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                            : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                        }>View on Explorer
-                      </Button>
-                    </Flex>)} */}
-                  {/* {twitterVerified && (
-                    <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'}>
-                      {mintedStrings?.includes('Crypto Explorer') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
-                      
-                      <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['explorer'].src} size={250} />
-                      <Text>Crypto Explorer OAT</Text>
-                      <Button
-                        w={'100%'}
-                        color={'white'}
-                        isDisabled={isMinting || isConfirming}
-                        isLoading={isMinting || isConfirming}
-                        loadingText={
-                          isMinting
-                            ? 'Minting ...'
-                            : isConfirming
-                            ? 'Confirming ...'
-                            : 'Loading ...'
-                        }
-                        onClick={() =>
-                          mintedStrings?.includes('Crypto Explorer')
-                            ? openWindow(
-                                ETHERSCAN_URLS['venom'] +
-                                  minteds?.filter((m) => m.name === 'Crypto Explorer')[0].address,
-                                null
-                              )
-                            : mintBadge(
-                                'Crypto Explorer',
-                                EARLY_ADOPTER_IMAGES['explorer'].src,
-                                EARLY_ADOPTER_IMAGES['explorer'].type
-                              )
-                        }
-                        rounded={'full'}
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                            : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                        }>
-                        {mintedStrings?.includes('Crypto Explorer')
-                          ? 'Minted. View on explorer'
-                          : 'Mint'}
-                      </Button>
-                    </Flex>
-                  )}
-                  {(zealyVerified || ownVids > 1) && (
-                    <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
-                      {mintedStrings?.includes('Venom ID Pioneer') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
-                      <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['pioneer'].src} size={250} />
-                      <Text>Venom ID Pioneer OAT</Text>
-                      <Button
-                        w={'100%'}
-                        color={'white'}
-                        isDisabled={isMinting || isConfirming}
-                        isLoading={isMinting || isConfirming}
-                        loadingText={
-                          isMinting
-                            ? 'Minting ...'
-                            : isConfirming
-                            ? 'Confirming ...'
-                            : 'Loading ...'
-                        }
-                        onClick={() =>
-                          mintedStrings?.includes('Venom ID Pioneer')
-                            ? openWindow(
-                                ETHERSCAN_URLS['venom'] +
-                                  minteds?.filter((m) => m.name === 'Venom ID Pioneer')[0].address,
-                                null
-                              )
-                            : mintBadge(
-                                'Venom ID Pioneer',
-                                EARLY_ADOPTER_IMAGES['pioneer'].src,
-                                EARLY_ADOPTER_IMAGES['pioneer'].type
-                              )
-                        }
-                        rounded={'full'}
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                            : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                        }>
-                        {mintedStrings?.includes('Venom ID Pioneer')
-                          ? 'Minted. View on explorer'
-                          : 'Mint'}
-                      </Button>
-                    </Flex>
-                  )}
-
-                  {ownVidVen && (
-                    <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
-                      {mintedStrings?.includes('Venom ID Identorian') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
-                      <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['identorian'].src} size={250} />
-                      <Text>Venom ID Identorian OAT</Text>
-                      <Button
-                        w={'100%'}
-                        color={'white'}
-                        isDisabled={isMinting || isConfirming}
-                        isLoading={isMinting || isConfirming}
-                        loadingText={
-                          isMinting
-                            ? 'Minting ...'
-                            : isConfirming
-                            ? 'Confirming ...'
-                            : 'Loading ...'
-                        }
-                        onClick={() =>
-                          mintedStrings?.includes('Venom ID Identorian')
-                            ? openWindow(
-                                ETHERSCAN_URLS['venom'] +
-                                  minteds?.filter((m) => m.name === 'Venom ID Identorian')[0]
-                                    .address,
-                                null
-                              )
-                            : mintBadge(
-                                'Venom ID Identorian',
-                                EARLY_ADOPTER_IMAGES['identorian'].src,
-                                EARLY_ADOPTER_IMAGES['identorian'].type
-                              )
-                        }
-                        rounded={'full'}
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                            : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                        }>
-                        {mintedStrings?.includes('Venom ID Identorian')
-                          ? 'Minted. View on explorer'
-                          : 'Mint'}
-                      </Button>
-                    </Flex>
-                  )}
-
-                  {ownVids > 0 && (
-                    <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
-                      {mintedStrings?.includes('Venom ID Family') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
-                      <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['family'].src} size={250} />
-                      <Text>Venom ID Family OAT</Text>
-                      <Button
-                        w={'100%'}
-                        color={'white'}
-                        isDisabled={isMinting || isConfirming}
-                        isLoading={isMinting || isConfirming}
-                        loadingText={
-                          isMinting
-                            ? 'Minting ...'
-                            : isConfirming
-                            ? 'Confirming ...'
-                            : 'Loading ...'
-                        }
-                        onClick={() =>
-                          mintedStrings?.includes('Venom ID Family')
-                            ? openWindow(
-                                ETHERSCAN_URLS['venom'] +
-                                  minteds?.filter((m) => m.name === 'Venom ID Family')[0].address,
-                                null
-                              )
-                            : mintBadge(
-                                'Venom ID Family',
-                                EARLY_ADOPTER_IMAGES['family'].src,
-                                EARLY_ADOPTER_IMAGES['family'].type
-                              )
-                        }
-                        rounded={'full'}
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                            : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                        }>
-                        {mintedStrings?.includes('Venom ID Family')
-                          ? 'Minted. View on explorer'
-                          : 'Mint'}
-                      </Button>
-                    </Flex>
-                  )}
-
-                  {((ownVids > 2 && zealyVerified) ||
-                    (zealyVerified && zealyUser.xp >= 500 && zealyUser.rank < 201)) && (
-                      <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
-                      {mintedStrings?.includes('Venom ID Maverick') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
-                        <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['maverick'].src} size={250} />
-                        <Text>Venom ID Maverick OAT</Text>
-                        <Button
-                          w={'100%'}
-                          color={'white'}
-                          isDisabled={isMinting || isConfirming}
-                          isLoading={isMinting || isConfirming}
-                          loadingText={
-                            isMinting
-                              ? 'Minting ...'
-                              : isConfirming
-                              ? 'Confirming ...'
-                              : 'Loading ...'
-                          }
-                          onClick={() =>
-                            mintedStrings?.includes('Venom ID Maverick')
-                              ? openWindow(
-                                  ETHERSCAN_URLS['venom'] +
-                                    minteds?.filter((m) => m.name === 'Venom ID Maverick')[0]
-                                      .address,
-                                  null
-                                )
-                              : mintBadge(
-                                  'Venom ID Maverick',
-                                  EARLY_ADOPTER_IMAGES['maverick'].src,
-                                  EARLY_ADOPTER_IMAGES['maverick'].type
-                                )
-                          }
-                          rounded={'full'}
-                          bgGradient={
-                            colorMode === 'light'
-                              ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                              : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                          }>
-                          {mintedStrings?.includes('Venom ID Maverick')
-                            ? 'Minted. View on explorer'
-                            : 'Mint'}
-                        </Button>
-                      </Flex>
-                    )}
-                  {twitterVerified && ownVids > 1 && zealyUser.xp > 1500 && zealyUser.rank < 50 && (
-                    <Flex flexDir={'column'} justify={'center'} gap={4} align={'center'} p={4}>
-                      {mintedStrings?.includes('Venom ID Champion') && <Badge position={'absolute'} colorScheme='green' zIndex={1000} mt={'-320px'} ml={'-200px'} rounded={'lg'} display={'flex'} gap={2} p={2} justifyContent={'center'} alignItems={'center'}><LinkIcon type="RiVerifiedBadgeFill" size={'24'} />Minted</Badge>}
-                      <ImageBox srcUrl={EARLY_ADOPTER_IMAGES['champion'].src} size={250} />
-                      <Text>Venom ID Champion OAT</Text>
-                      <Button
-                        w={'100%'}
-                        color={'white'}
-                        isDisabled={isMinting || isConfirming}
-                        isLoading={isMinting || isConfirming}
-                        loadingText={
-                          isMinting
-                            ? 'Minting ...'
-                            : isConfirming
-                            ? 'Confirming ...'
-                            : 'Loading ...'
-                        }
-                        onClick={() =>
-                          mintedStrings?.includes('Venom ID Champion')
-                            ? openWindow(
-                                ETHERSCAN_URLS['venom'] +
-                                  minteds?.filter((m) => m.name === 'Venom ID Champion')[0].address,
-                                null
-                              )
-                            : mintBadge(
-                                'Venom ID Champion',
-                                EARLY_ADOPTER_IMAGES['champion'].src,
-                                EARLY_ADOPTER_IMAGES['champion'].type
-                              )
-                        }
-                        rounded={'full'}
-                        bgGradient={
-                          colorMode === 'light'
-                            ? 'linear(to-r, var(--venom1), var(--bluevenom1))'
-                            : 'linear(to-r, var(--venom2), var(--bluevenom2))'
-                        }>
-                        {mintedStrings?.includes('Venom ID Champion')
-                          ? 'Minted. View on explorer'
-                          : 'Mint'}
-                      </Button>
-                    </Flex>
-                  )} */}
-{/*                   
+            {/*                   
 
 
                 </SimpleGrid>
               </Flex>
             ) : (<Center minH={'100px'}><Spinner size={'lg'} /></Center>)} */}
-            
+
             {/* <InfoModal /> */}
-          </Stack>
+          </Flex>
+          </SimpleGrid>
+          <Stack justify={'center'} align={'center'} gap={4} textAlign={'center'} pt={12}>
+              
+              <Text>Score is based on the number and length of your domains</Text>
+              <Text>Rarity of your NFT will be based on your Score</Text>
+              <Center gap={4} w={['100%','xs']}><Stack gap={0} w={'100%'}>
+                <Text fontSize={'2xl'} textAlign={'left'}>Your</Text>
+                <Text fontSize={'2xl'} textAlign={'left'}>Score</Text>
+              </Stack>
+              <Text
+                color={colorMode === 'dark' ? 'var(--venom0)' : 'var(--venom)'}
+                fontSize={'6xl'}>
+                {ownVids}
+              </Text></Center>
+            </Stack>
         </AccordionPanel>
       </AccordionItem>
     </Accordion>

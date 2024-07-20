@@ -60,7 +60,7 @@ export default function CommunitySection() {
 
   return (
     <>
-      <Box>
+      <Box w={'100%'}>
         <Container
           as="main"
           maxW="container.lg"
@@ -73,11 +73,12 @@ export default function CommunitySection() {
           <Box py={6} gap={20} width={'100%'}>
             <Flex
               align={'center'}
-              justify={'center'}
+              justify={'space-between'}
               gap={8}
+              w={'100%'}
               my={20}
               flexDir={['column', 'column', 'column', 'row']}>
-              <Stack>
+              <Stack w={'100%'}>
                 <Heading
                   fontSize={['4xl', '5xl', '6xl']}
                   fontWeight={'bold'}
@@ -86,14 +87,48 @@ export default function CommunitySection() {
                 </Heading>
                 <Text
                   fontSize={['xl', '2xl', '3xl']}
+                  w={'100%'}
                   textAlign={['center', 'center', 'center', 'left']}>
                   Collaborate, Innovate, and Share
                 </Text>
               </Stack>
-              <ImageBox srcUrl="/screens/contribute.png" animation />
+              <ImageBox srcUrl="/screens/contribute.png" animation size={'300px'}/>
             </Flex>
-
-            <Flex flexDirection={'column'} w={'100%'} gap={6} my={12}>
+            <EarlyAdopters />
+            <NextLink href="/rrraffle" passHref>
+              <Button
+                mt={6}
+                w={'100%'}
+                h={['220px']}
+                size={'lg'}
+                color={'white'}
+                bg={'blackAlpha.900'}
+                colorScheme='blackAlpha'
+                border={'1px solid #77777733'}
+                gap={6}
+                rounded={'2xl'}
+                flexDir={['column', 'column']}
+                justifyContent={['center']}>
+                  
+                <Flex flexDirection={'column'} align={['center', 'center']} gap={4}>
+                <ImageBox srcUrl='/logos/rrraffle.svg' size={notMobile ? '180px' : '180px'} />
+                  
+                  <Text display={['none', 'none', 'block']} fontSize={'xl'}>
+                  RRRaffle Collection
+                  </Text>
+                  <Flex
+                    fontWeight={'normal'}
+                    flexDirection={['column', 'column', 'row']}
+                    gap={2}
+                    align={['center', 'center', 'start']}>
+                    <Text>Collection of 2222 NFT Wallpapers </Text>
+                    <Text>With Multiple Utilities</Text>
+                  </Flex>
+                  <Text fontWeight={'normal'}> 12th on TokenForge Hackathon!</Text>
+                </Flex>
+              </Button>
+              </NextLink>
+            <Flex flexDirection={'column'} w={'100%'} gap={6} my={6}>
               {/* <MintNft /> */}
               <Flex gap={4} flexDirection={['column','column','column','row']}>
               <Button
@@ -124,7 +159,7 @@ export default function CommunitySection() {
                     align={['center', 'center', 'start']}>
                     <Text>Transfer Tokens and NFTs</Text>                    
                   </Flex>
-                  <Text fontWeight={'normal'}> To any .venom domain or Address!</Text>
+                  <Text fontWeight={'normal'}> To any .venom domain!</Text>
                 </Flex>
               </Button>
               
@@ -160,41 +195,9 @@ export default function CommunitySection() {
                 </Flex>
               </Button>
               </Flex>
-              <NextLink href="/rrraffle" passHref>
-              <Button
-                w={'100%'}
-                h={['220px']}
-                size={'lg'}
-                color={'white'}
-                bg={'blackAlpha.900'}
-                colorScheme='blackAlpha'
-                border={'1px solid #77777733'}
-                gap={6}
-                rounded={'2xl'}
-                flexDir={['column', 'column']}
-                justifyContent={['center']}>
-                  
-                <Flex flexDirection={'column'} align={['center', 'center']} gap={4}>
-                <ImageBox srcUrl='/logos/rrraffle.svg' size={notMobile ? '180px' : '180px'} />
-                  
-                  <Text display={['none', 'none', 'block']} fontSize={'xl'}>
-                  RRRaffle Collection
-                  </Text>
-                  <Flex
-                    fontWeight={'normal'}
-                    flexDirection={['column', 'column', 'row']}
-                    gap={2}
-                    align={['center', 'center', 'start']}>
-                    <Text>Collection of 2222 NFT Wallpapers </Text>
-                    <Text>With Multiple Utilities</Text>
-                  </Flex>
-                  <Text fontWeight={'normal'}> 12th on TokenForge Hackathon!</Text>
-                </Flex>
-              </Button>
-              </NextLink>
+              
               <ChallengesSection />
               
-              <EarlyAdopters />
               <Button
                 w={'100%'}
                 h={['220px', '220px', '160px']}

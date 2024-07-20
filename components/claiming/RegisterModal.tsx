@@ -266,7 +266,7 @@ export default function RegisterModal() {
           });
           setPath('');
           if (primaryName?.name === '') {
-            setPrimaryName({ name: `${name}.${TLD}`, nftAddress: nftAddress });
+            //setPrimaryName({ name: `${name}.${TLD}`, nftAddress: nftAddress });
           }
         }
         setIsMinting(false);
