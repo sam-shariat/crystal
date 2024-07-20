@@ -423,7 +423,7 @@ export default function EarlyAdopters() {
     }
 
     if (indexesAddresses.continuation) {
-      score += 10;
+      score += 50;
     }
 
     // Fetch all nfts
