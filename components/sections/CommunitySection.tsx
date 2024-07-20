@@ -92,7 +92,7 @@ export default function CommunitySection() {
                   Collaborate, Innovate, and Share
                 </Text>
               </Stack>
-              <ImageBox srcUrl="/screens/contribute.png" animation size={'300px'}/>
+              <ImageBox srcUrl="/screens/contribute.png" animation size={'300px'} />
             </Flex>
             <EarlyAdopters />
             <NextLink href="/rrraffle" passHref>
@@ -103,18 +103,17 @@ export default function CommunitySection() {
                 size={'lg'}
                 color={'white'}
                 bg={'blackAlpha.900'}
-                colorScheme='blackAlpha'
+                colorScheme="blackAlpha"
                 border={'1px solid #77777733'}
                 gap={6}
                 rounded={'2xl'}
                 flexDir={['column', 'column']}
                 justifyContent={['center']}>
-                  
                 <Flex flexDirection={'column'} align={['center', 'center']} gap={4}>
-                <ImageBox srcUrl='/logos/rrraffle.svg' size={notMobile ? '180px' : '180px'} />
-                  
+                  <ImageBox srcUrl="/logos/rrraffle.svg" size={notMobile ? '180px' : '180px'} />
+
                   <Text display={['none', 'none', 'block']} fontSize={'xl'}>
-                  RRRaffle Collection
+                    RRRaffle Collection
                   </Text>
                   <Flex
                     fontWeight={'normal'}
@@ -127,77 +126,77 @@ export default function CommunitySection() {
                   <Text fontWeight={'normal'}> 12th on TokenForge Hackathon!</Text>
                 </Flex>
               </Button>
-              </NextLink>
+            </NextLink>
             <Flex flexDirection={'column'} w={'100%'} gap={6} my={6}>
               {/* <MintNft /> */}
-              <Flex gap={4} flexDirection={['column','column','column','row']}>
-              <Button
-                h={['220px', '220px', '160px']}
-                size={'lg'}
-                w={'100%'}
-                as={Link}
-                href={SITE_MANAGE_URL}
-                target='_blank'
-                style={{ textDecoration: 'none' }}
-                gap={6}
-                flexDir={['column', 'column', 'row']}
-                justifyContent={['center', 'center', 'start']}>
-                <Flex align={'center'} gap={4}>
-                  <LinkIcon type="RiSendPlane2Line" size={notMobile ? '70' : '40'} />
-                  <Text display={['block', 'block', 'none']} fontSize={'xl'}>
-                    Transfer Tools
-                  </Text>
-                </Flex>
-                <Flex flexDirection={'column'} align={['center', 'center', 'start']} gap={2}>
-                  <Text display={['none', 'none', 'block']} fontSize={'xl'}>
-                  Transfer Tools
-                  </Text>
-                  <Flex
-                    fontWeight={'normal'}
-                    flexDirection={['column', 'column', 'row']}
-                    gap={2}
-                    align={['center', 'center', 'start']}>
-                    <Text>Transfer Tokens and NFTs</Text>                    
+              <Flex gap={4} flexDirection={['column', 'column', 'column', 'row']}>
+                <Button
+                  h={['220px', '220px', '160px']}
+                  size={'lg'}
+                  w={'100%'}
+                  as={Link}
+                  href={SITE_MANAGE_URL}
+                  target="_blank"
+                  style={{ textDecoration: 'none' }}
+                  gap={6}
+                  flexDir={['column', 'column', 'row']}
+                  justifyContent={['center', 'center', 'start']}>
+                  <Flex align={'center'} gap={4}>
+                    <LinkIcon type="RiSendPlane2Line" size={notMobile ? '70' : '40'} />
+                    <Text display={['block', 'block', 'none']} fontSize={'xl'}>
+                      Transfer Tools
+                    </Text>
                   </Flex>
-                  <Text fontWeight={'normal'}> To any .venom domain!</Text>
-                </Flex>
-              </Button>
-              
-              <Button
-                h={['220px', '220px', '160px']}
-                size={'lg'}
-                w={'100%'}
-                as={Link}
-                href={'/ecosystem'}
-                target='_blank'
-                style={{ textDecoration: 'none' }}
-                gap={6}
-                flexDir={['column', 'column', 'row']}
-                justifyContent={['center', 'center', 'start']}>
-                <Flex align={'center'} gap={4}>
-                  <LinkIcon type="RiApps2Line" size={notMobile ? '70' : '40'} />
-                  <Text display={['block', 'block', 'none']} fontSize={'xl'}>
-                    Ecosystem Apps
-                  </Text>
-                </Flex>
-                <Flex flexDirection={'column'} align={['center', 'center', 'start']} gap={2}>
-                  <Text display={['none', 'none', 'block']} fontSize={'xl'}>
-                  Ecosystem Apps
-                  </Text>
-                  <Flex
-                    fontWeight={'normal'}
-                    flexDirection={['column', 'column', 'row']}
-                    gap={2}
-                    align={['center', 'center', 'start']}>
-                    <Text>Explore Dapps on Venom</Text>                    
+                  <Flex flexDirection={'column'} align={['center', 'center', 'start']} gap={2}>
+                    <Text display={['none', 'none', 'block']} fontSize={'xl'}>
+                      Transfer Tools
+                    </Text>
+                    <Flex
+                      fontWeight={'normal'}
+                      flexDirection={['column', 'column', 'row']}
+                      gap={2}
+                      align={['center', 'center', 'start']}>
+                      <Text>Transfer Tokens and NFTs</Text>
+                    </Flex>
+                    <Text fontWeight={'normal'}> To any .venom domain!</Text>
                   </Flex>
-                  <Text fontWeight={'normal'}>Find the best on Venom!</Text>
-                </Flex>
-              </Button>
+                </Button>
+
+                <Button
+                  h={['220px', '220px', '160px']}
+                  size={'lg'}
+                  w={'100%'}
+                  as={Link}
+                  href={'/ecosystem'}
+                  target="_blank"
+                  style={{ textDecoration: 'none' }}
+                  gap={6}
+                  flexDir={['column', 'column', 'row']}
+                  justifyContent={['center', 'center', 'start']}>
+                  <Flex align={'center'} gap={4}>
+                    <LinkIcon type="RiApps2Line" size={notMobile ? '70' : '40'} />
+                    <Text display={['block', 'block', 'none']} fontSize={'xl'}>
+                      Ecosystem Apps
+                    </Text>
+                  </Flex>
+                  <Flex flexDirection={'column'} align={['center', 'center', 'start']} gap={2}>
+                    <Text display={['none', 'none', 'block']} fontSize={'xl'}>
+                      Ecosystem Apps
+                    </Text>
+                    <Flex
+                      fontWeight={'normal'}
+                      flexDirection={['column', 'column', 'row']}
+                      gap={2}
+                      align={['center', 'center', 'start']}>
+                      <Text>Explore Dapps on Venom</Text>
+                    </Flex>
+                    <Text fontWeight={'normal'}>Find the best on Venom!</Text>
+                  </Flex>
+                </Button>
               </Flex>
-              
+
               <ChallengesSection />
-              
+
               <Button
                 w={'100%'}
                 h={['220px', '220px', '160px']}
@@ -298,7 +297,6 @@ export default function CommunitySection() {
               </Button>
 
               {/* <ContributionSection /> */}
-
             </Flex>
           </Box>
         </Container>

@@ -67,6 +67,8 @@ import {
   getNftByIndex,
   saltCode,
 } from 'core/utils/nft';
+import NextLink from 'next/link';
+
 import { getTwitterAuthUrl, refreshAccessToken } from 'core/utils/twitterUtils';
 import { getZealyByTwitterId } from 'core/utils/zealyUtils';
 import { useAtom, useAtomValue } from 'jotai';
@@ -1007,7 +1009,7 @@ export default function EarlyAdopters() {
               
               <Text>Score is based on the number and length of your domains</Text>
               <Text>Rarity of your NFT will be based on your Score</Text>
-              <Center gap={4} w={['100%','xs']}><Stack gap={0} w={'100%'}>
+              <Center gap={4} w={['300px','xs']}><Stack gap={0} w={'100%'}>
                 <Text fontSize={'2xl'} textAlign={'left'}>Your</Text>
                 <Text fontSize={'2xl'} textAlign={'left'}>Score</Text>
               </Stack>
@@ -1016,6 +1018,9 @@ export default function EarlyAdopters() {
                 fontSize={'6xl'}>
                 {ownVids}
               </Text></Center>
+              <NextLink href="/" passHref>
+              <Button size={['md','lg']}>Register domains to get more score</Button>
+              </NextLink>
             </Stack>
         </AccordionPanel>
       </AccordionItem>
